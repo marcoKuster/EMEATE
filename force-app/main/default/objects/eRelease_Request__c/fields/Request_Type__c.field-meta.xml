@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Type__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Use &quot;Emergency Late Checkin&quot; for checkin requests after release freeze. 
+Use &quot;Planned eRelease&quot; for scheduled eReleases. 
+Use &quot;Emergency Release&quot; in all other cases.</inlineHelpText>
+    <label>Request Type</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Emergency Release</fullName>
+                <default>false</default>
+                <label>Emergency Release</label>
+            </value>
+            <value>
+                <fullName>Emergency Late Checkin</fullName>
+                <default>false</default>
+                <label>Emergency Late Checkin</label>
+            </value>
+            <value>
+                <fullName>Planned eRelease</fullName>
+                <default>false</default>
+                <label>Planned eRelease</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

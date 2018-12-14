@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Agile Accelerator --></label>
+        <name>Agile_Accelerator</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Agile Accelerator --></label>
+        <name>Agile_Accelerator_LEX</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Field TE --></label>
+        <name>Field_TE</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Force.com --></label>
+        <name>Force_com</name>
+    </customApplications>
+    <customLabels>
+        <label><!-- Bugs --></label>
+        <name>ADM_Bugs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancel --></label>
+        <name>ADM_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Work has already been committed to this sprint --></label>
+        <name>ADM_Commitment_Exists_On_Sprint</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Definition of Ready Met --></label>
+        <name>ADM_Definition_of_Ready_Met</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error --></label>
+        <name>ADM_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Investigations --></label>
+        <name>ADM_Investigations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OK --></label>
+        <name>ADM_OK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Would you like to proceed message on Sprint Commitment modal --></label>
+        <name>ADM_Sprint_Commitment_Proceed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Your sprint contains work items with the following statuses: --></label>
+        <name>ADM_Sprint_Commitment_Sprint_Contains_NonVelocity_Items_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message shown on commitment modal if sprint contains non-velocity statuses --></label>
+        <name>ADM_Sprint_Commitment_Sprint_Contains_NonVelocity_Items_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total Work Count --></label>
+        <name>ADM_Sprint_Commitment_Total_Work_Count</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Days Left --></label>
+        <name>ADM_Sprint_VirtualWall_Header_Days_Left</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Story Points --></label>
+        <name>ADM_Story_Points</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- To Do --></label>
+        <name>ADM_To_Do</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- User Stories --></label>
+        <name>ADM_User_Stories</name>
+    </customLabels>
+    <customTabs>
+        <label><!-- Kanban Board --></label>
+        <name>ADM_Kanban_Board</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Backlog Manager --></label>
+        <name>ADM_Unified_Wall</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Settings --></label>
+        <name>Gus_Settings</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- My Current Teams --></label>
+        <name>MyTeam</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- My Teams --></label>
+        <name>My_Teams</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Work Manager --></label>
+        <name>Work_Manager</name>
+    </customTabs>
+    <flowDefinitions>
+        <flows>
+            <fullName>Automation_of_Work_for_Field-2</fullName>
+        </flows>
+        <fullName>Automation_of_Work_for_Field</fullName>
+    </flowDefinitions>
+    <quickActions>
+        <label><!-- Bug --></label>
+        <name>Bug</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Unused Bug --></label>
+        <name>Custom_Bug</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Unused Story --></label>
+        <name>Custom_Story</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- LogACall --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewTask --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Story --></label>
+        <name>Story</name>
+    </quickActions>
+</Translations>

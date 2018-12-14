@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>User Business Hours</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>User Business Hours</value>
+    </caseValues>
+    <fields>
+        <help><!-- Specify your working hours based on your location. This is used to improve the accuracy of SLAs of Work you own. If you don&apos;t specify a value, GUS will use the setting for your team. --></help>
+        <label><!-- Business Hours --></label>
+        <name>Business_Hours__c</name>
+        <relationshipLabel><!-- User Business Hours --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- User Business Hours --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>User Business Hours Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- Business Hours is a required field --></errorMessage>
+        <name>Business_Hours_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- User is a required field --></errorMessage>
+        <name>User_Required</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Package_Coverage</fullName>
+    <columns>NAME</columns>
+    <columns>Actual_Coverage__c</columns>
+    <columns>Module_Name__c</columns>
+    <columns>Scrum_Team__c</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>NCLOC__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>ADM_Coverage__c.Package</value>
+    </filters>
+    <filters>
+        <field>Scrum_Team__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Coverage of package w/o Scrum team</label>
+</ListView>

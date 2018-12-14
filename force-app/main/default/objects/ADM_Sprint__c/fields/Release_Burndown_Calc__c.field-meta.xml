@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Burndown_Calc__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Internal field used by the system to figure out if it should calculate a release burndown for this sprint. This field is updated by a Time Based Workflow and causes a trigger action to fire and calculate the Release_Burndown_Item__c</description>
+    <externalId>false</externalId>
+    <label>Release Burndown Calculated</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

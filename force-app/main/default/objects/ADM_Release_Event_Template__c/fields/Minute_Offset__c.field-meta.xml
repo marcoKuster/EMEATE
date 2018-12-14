@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Minute_Offset__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of minutes that this event item is offset from the Scheduled Release Date. Note: Either Start Time or Hour and Minute Offset can be used.</inlineHelpText>
+    <label>Minute Offset</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

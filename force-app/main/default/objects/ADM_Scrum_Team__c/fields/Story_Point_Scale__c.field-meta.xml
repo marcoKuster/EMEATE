@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Story_Point_Scale__c</fullName>
+    <defaultValue>&quot;1,2,3,5,8,13,21&quot;</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the story point scale your team uses. This field must be a number comma separated list. By default it will be Fibonacci sequence through 21.</inlineHelpText>
+    <label>Story Point Scale</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

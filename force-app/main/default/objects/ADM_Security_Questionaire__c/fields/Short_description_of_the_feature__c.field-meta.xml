@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Short_description_of_the_feature__c</fullName>
+    <description>Provide a short description of the feature or initiative.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Provide a short description of the feature or initiative.</inlineHelpText>
+    <label>Short description of the feature</label>
+    <length>1000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

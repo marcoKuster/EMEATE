@@ -1,0 +1,191 @@
+<apex:component id="teamSelector" layout="none" controller="ADM_TeamSelectorController">
+<apex:attribute required="true" name="destinationUrl" type="String" description="Link of the destination" />
+<apex:attribute required="true" name="destinationLabel" type="String" description="Label of the destination URL" />
+<apex:attribute required="false" name="destinationparam" type="String" description="Query string parameter for Team ID" default="teamid" />
+
+<apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+<apex:includeScript value="{!$Resource.ADM_common_js}" />
+
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','true', 'false')}">
+	<apex:stylesheet value="{!URLFOR($Resource.SLDS042, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<style>
+	body{background:#8C99A3 !important;}	
+	</style>
+	<div class="slds">
+		<div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open" style="margin-top:-200px;">
+			<div class="slds-modal__container" style="max-width:340px;">
+				<div class="slds-modal__header">
+					<h2 class="slds-text-heading--medium">Team Picker</h2>
+				</div>
+				<div class="slds-modal__content">
+					<div class="slds-text-body--regular">
+										<apex:outputPanel layout="none" rendered="{!currentTeamCount > 0}">
+							{!t.FirstName}, it looks like you belong to multiple teams. Select a team below to continue to the {!destinationLabel}:<br/><br/>
+
+								<div class="slds-form-element__control">
+							    	<apex:variable var="cnt" value="{!0}" /> 
+									<apex:repeat var="teams" value="{!allocations}" rendered="{!destinationparam != 'currentSprintId'}">
+										<label class="slds-radio" for="label{!cnt}">
+											
+											<apex:outputPanel layout="none" rendered="{!cnt == 0}">
+											<input name="{!destinationparam}" type="radio" value="{!teams.Scrum_Team__c}" id="label{!cnt}" checked="checked" />
+											</apex:outputPanel>
+											<apex:outputPanel layout="none" rendered="{!cnt != 0}">
+												<input name="{!destinationparam}" type="radio" value="{!teams.Scrum_Team__c}" id="label{!cnt}" />
+											</apex:outputPanel>
+											<span class="slds-radio--faux"></span>
+											<span class="slds-form-element__label">{!teams.Scrum_Team__r.Name}<apex:outputPanel layout="none" rendered="{!IF(ISBLANK(teams.Role__c),false,true)}">, {!teams.Role__c}</apex:outputPanel></span>
+										</label>
+							        <apex:variable var="cnt" value="{!cnt+1}"/>
+									</apex:repeat>
+									
+									<apex:repeat var="team" value="{!teamSprintMap}" rendered="{!destinationparam == 'currentSprintId'}">
+										<label class="slds-radio" for="label{!cnt}">
+											
+											<apex:outputPanel layout="none" rendered="{!cnt == 0}">
+											<input name="{!destinationparam}" type="radio" value="{!teamSprintMap[team]}" id="label{!cnt}" checked="checked" />
+											</apex:outputPanel>
+											<apex:outputPanel layout="none" rendered="{!cnt != 0}">
+												<input name="{!destinationparam}" type="radio" value="{!teamSprintMap[team]}" id="label{!cnt}" />
+											</apex:outputPanel>
+											<span class="slds-radio--faux"></span>
+											<span class="slds-form-element__label">{!team}</span>
+										</label>
+							        <apex:variable var="cnt" value="{!cnt+1}"/>
+									</apex:repeat>
+								</div>
+
+						</apex:outputPanel>
+						<apex:outputPanel layout="none" rendered="{!currentTeamCount == 0}">
+					        {!t.FirstName}, the {!destinationLabel} requires a team ID. We don't have any teams associated to you. Please <a href="/{!allTeamsLink}">pick a team</a> and then select {!destinationLabel} from the team page.
+				        </apex:outputPanel>
+					</div>
+				</div>
+				<div class="slds-modal__footer">
+					<div style="float:left;margin-top:10px;"><a href="/{!allTeamsLink}" onClick="return false;sforce.one.navigateToSObject('ADM_Scrum_Team__c');">Show All Teams</a></div>
+					<apex:outputPanel layout="none" rendered="{!currentTeamCount > 0}">
+						<button id="continueBtn" class="slds-button slds-button--brand">Continue</button>
+					</apex:outputPanel>
+					<apex:outputPanel layout="none" rendered="{!currentTeamCount == 0}">
+						<button class="slds-button slds-button--brand" onClick="sforce.one.navigateToSObject('ADM_Scrum_Team__c');">Pick A Team</button>
+					</apex:outputPanel>
+				</div>
+			</div>
+		</div>
+	</div>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}">
+	
+		<style>
+		@font-face{font-family:'ProximaNova';src:url({!$Resource.proximanovasoft_regular_webfont}) format('truetype');font-weight:300;font-style:normal;}
+		@font-face{font-family:'ProximaNova';src:url({!$Resource.proximanovasoft_medium_webfont}) format('truetype');font-weight:500;font-style:normal;}
+		@font-face{font-family:'ProximaNova';src:url({!$Resource.proximanovasoft_semibold_webfont}) format('truetype');font-weight:700;font-style:normal;}
+		@font-face{font-family:'ProximaNova';src:url({!$Resource.proximanovasoft_bold_webfont}) format('truetype');font-weight:900;font-style:normal;}
+		
+		#teamSelectorDialog{box-sizing: border-box;font-family:'ProximaNova';text-align:center;margin:50px auto;width:320px;padding:17px;background-color:#F0F1F2;border-radius:8px;color:#293f54;border: 1px #C9C9C9 solid;box-shadow: 0px 3px 6px rgba(0,0,0,0.3);}
+		#teamSelectorDialog img{margin:0 auto;border-radius:8px;width:60px;height:60px;}
+		#teamSelectorHeadline{font-size:16px;font-weight:600;color:#344A5F;margin:10px;-webkit-font-smoothing:antialiased;}
+		#teamSelectorTable{display:table;margin:0px auto;text-align:left;}
+		.teamSelectorRow{display:table-row;}
+		.teamSelectorCell{font-size:13px;font-weight:300;color:#344A5F;display:table-cell;padding:4px 8px;}
+		#teamSelectorDialog input[type=radio]{background-color:#fff;-webkit-box-shadow: none;box-shadow: none;border: 1px solid transparent;box-sizing: border-box;padding: 0;margin-right: 7px;border-color: #bbc0c4;-webkit-appearance: none;border-style: solid;border-width: 1px;height: 22px;width: 22px;display: inline-block;vertical-align: middle;border-radius: 100%; line-height: normal;font-family: inherit;font-size: 100%;margin: 0;margin-right:5px;}
+		#teamSelectorDialog input[type=radio]:checked{background: #2a94d6 !important;}
+		#teamSelectorDialog input[type=radio]:checked:after{display:block;position:relative;content:'';left:5px;top:5px;height:10px;width:10px;border-radius:100%;background:#fff;}    
+		#teamSelectorDialog button{-webkit-appearance:none;background:#2A94D6;border:0;border-radius:5px;box-sizing:border-box;cursor:pointer;display:block;font-family:ProximaNova,Arial,sans-serif;font-size:16px;font-weight:normal;height:34px;margin:20px auto 0px auto;padding:7px 6px;}
+		#teamSelectorDialog button span{-webkit-font-smoothing:auto;color:#fff;display:inline;font-family:ProximaNova,Arial,sans-serif;font-size:16px;font-weight:bold;}
+		#teamSelectorShowAllTeams{text-align:right;margin-top:10px;margin-right:-10px;margin-bottom:-10px;}
+		#teamSelectorShowAllTeams a{color:#888;}
+		</style>
+		<div id="teamSelectorDialog">
+		    <img src="{!t.SmallPhotoUrl}" />
+			<apex:outputPanel layout="none" rendered="{!currentTeamCount > 0}">
+				<div id="teamSelectorHeadline">
+			        {!t.FirstName}, it looks like you belong to multiple teams. Select a team below to continue to the {!destinationLabel}:
+			    </div>
+			    
+			    
+			    <div id="teamSelectorTable">
+			    	<apex:variable var="cnt" value="{!0}" /> 
+					<apex:repeat var="teams" value="{!allocations}" rendered="{!destinationparam != 'currentSprintId'}">
+					<div class="teamSelectorRow">
+						<div class="teamSelectorCell">
+						
+						
+							<apex:outputPanel layout="none" rendered="{!cnt != 0}">
+								<input name="{!destinationparam}" type="radio" value="{!teams.Scrum_Team__c}" id="team{!teams.Scrum_Team__c}" />
+							</apex:outputPanel>
+							<apex:outputPanel layout="none" rendered="{!cnt == 0}">
+								<input name="{!destinationparam}" type="radio" value="{!teams.Scrum_Team__c}" id="team{!teams.Scrum_Team__c}" checked="checked" />
+							</apex:outputPanel>
+							
+							
+							<label for="team{!teams.Scrum_Team__c}">{!teams.Scrum_Team__r.Name}<apex:outputPanel layout="none" rendered="{!IF(ISBLANK(teams.Role__c),false,true)}">, {!teams.Role__c}</apex:outputPanel></label>
+			            </div>    
+			        </div>
+			        <apex:variable var="cnt" value="{!cnt+1}"/>
+					</apex:repeat>
+					
+					<apex:repeat var="team" value="{!teamSprintMap}" rendered="{!destinationparam == 'currentSprintId'}">
+						<div class="teamSelectorRow">
+							<div class="teamSelectorCell">
+							
+							
+								<apex:outputPanel layout="none" rendered="{!cnt != 0}">
+									<input name="{!destinationparam}" type="radio" value="{!teamSprintMap[team]}" id="team{!teamSprintMap[team]}" />
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!cnt == 0}">
+									<input name="{!destinationparam}" type="radio" value="{!teamSprintMap[team]}" id="team{!teamSprintMap[team]}" checked="checked" />
+								</apex:outputPanel>
+								
+								
+								<label for="team{!teamSprintMap[team]}">{!team}</label>
+				            </div>    
+				        </div>
+			        	<apex:variable var="cnt" value="{!cnt+1}"/>
+					</apex:repeat>
+			    </div>
+			    <button type="submit" id="continueBtn">
+			    	<span>Continue</span>
+			    </button>
+			    <div id="teamSelectorShowAllTeams"><a href="/{!allTeamsLink}">Show All Teams</a></div>
+			</apex:outputPanel>
+			<apex:outputPanel layout="none" rendered="{!currentTeamCount == 0}">
+				<div id="teamSelectorHeadline">
+			        {!t.FirstName}, the {!destinationLabel} requires a team ID. We don't have any teams associated to you. Please <a href="/{!allTeamsLink}">pick a team</a> and then select {!destinationLabel} from the team page.
+			    </div>
+	
+			    <button type="submit" onClick="checkAndNavigateToURL('/{!allTeamsLink}');">
+			    	<span>Pick a Team</span>
+			    </button>
+	
+			</apex:outputPanel>
+	
+		</div>
+	
+</apex:outputPanel>
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$("#continueBtn").click(function(){
+            var urlToNavigate ='';
+            if('{!destinationUrl}'){
+                 urlToNavigate = '{!destinationUrl}?{!destinationparam}=' + $('input[name="{!destinationparam}"]:checked').val();
+            }
+            else{
+                urlToNavigate = '/' + $('input[name="{!destinationparam}"]:checked').val();
+            }
+            console.log('navigating to url ' + urlToNavigate);
+            if (typeof sforce == 'object' && sforce.one) {
+                sforce.one.navigateToURL(urlToNavigate);
+
+				if (sforce.console && sforce.console.isInConsole()) {
+                    sforce.one.navigateToList('{!sprintListViewId}', null, 'ADM_Sprint__c');
+                }
+            } else {
+                location.href=urlToNavigate;
+            }
+		});
+	});
+</script>
+
+</apex:component>

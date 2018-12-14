@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Signoff__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Team signs off by checking the box.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Team signs off by checking the box.</inlineHelpText>
+    <label>Team Signoff</label>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

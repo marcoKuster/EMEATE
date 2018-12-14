@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Specify_Target_Instances</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISPICKVAL(Deploy_to_all_Instances__c, &quot;No - specific instances&quot;), 
+OR( ISBLANK(Target_Instances__c), 
+BEGINS(Target_Instances__c, &quot;Specify target instances for this fix as a comma-separated list when not all instances are to receive this fix.&quot;)))</errorConditionFormula>
+    <errorDisplayField>Target_Instances__c</errorDisplayField>
+    <errorMessage>You must specify target instances for this fix as a comma-separated list when not all instances are to receive this fix.</errorMessage>
+</ValidationRule>

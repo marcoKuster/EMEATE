@@ -1,0 +1,29 @@
+<aura:component controller="ADM_SprintVirtualWallController">
+	<ltng:require scripts="{!$Resource.ADM_SprintShared_Resource}"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.filtersUpdated}"/>
+    <aura:handler event="c:ADM_Event_Filter_Work" action="{!c.filtersUpdated}"/>
+
+    <aura:registerEvent name="filterWork" type="c:ADM_Event_Filter_Work"/>
+
+    <aura:attribute name="user" type="Object"/>
+    <aura:attribute name="sprintData" type="Object"/>
+
+    <span class="slds-m-right_x-small">
+        <button aura:id="user-button" class="slds-button user-button" onclick="{!c.selectUser}" id="{!v.user.Id}" title="{!v.user.Name}">
+			<aura:if isTrue="{!v.user.SmallPhotoUrl}">
+				<span class="slds-avatar">
+	                <img src="{!v.user.SmallPhotoUrl}" alt="{!v.user.Name}"/>
+	            </span>
+	            <span class="slds-assistive-text">{!v.user.Name}</span>
+
+			<aura:set attribute="else">
+				<aura:if isTrue="{!v.user.initials}">
+					<p class="slds-text-heading--small">{!v.user.initials}</p>
+				</aura:if>
+			</aura:set>
+			</aura:if>
+        </button>
+    </span>
+
+</aura:component>

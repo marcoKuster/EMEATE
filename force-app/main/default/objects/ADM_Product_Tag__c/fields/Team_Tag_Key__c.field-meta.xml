@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Tag_Key__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>A compound key consisting of the team ID and tag name used to ensure tag names are unique within a single team</description>
+    <externalId>false</externalId>
+    <label>Team Tag Key</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

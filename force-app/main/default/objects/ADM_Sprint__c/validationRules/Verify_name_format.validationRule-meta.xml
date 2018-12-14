@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verify_name_format</fullName>
+    <active>false</active>
+    <description>Will verify that the name of the sprint fits the following format:
+20YY.MM[a-z] - &lt;letters&gt;</description>
+    <errorConditionFormula>OR(
+    NOT( CONTAINS( &quot;2&quot;, LEFT(Name, 1) ) ),
+    NOT( CONTAINS( &quot;0&quot;, MID(Name, 2, 1) ) ),
+    NOT( CONTAINS( &quot;0123456789&quot;, MID(Name, 3, 1) ) ),
+    NOT( CONTAINS( &quot;0123456789&quot;, MID(Name, 4, 1) ) ),
+    NOT( CONTAINS(&quot;.&quot;, MID(Name, 5,1) ) ),
+    NOT( CONTAINS( &quot;0123456789&quot;, MID(Name, 6, 1) ) ),
+    NOT( CONTAINS( &quot;0123456789&quot;, MID(Name, 7, 1) ) ),
+    NOT( CONTAINS(&quot; abcdef0123456789&quot;, MID(Name, 8,1) ) )
+)</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Your sprint should follow the format: YYYY.MM(0-9 or a-f) - &lt;Team Name&gt;4 digit year, 2 digit month, optional (0-9 or a-f) - &lt;your team name&gt;</errorMessage>
+</ValidationRule>

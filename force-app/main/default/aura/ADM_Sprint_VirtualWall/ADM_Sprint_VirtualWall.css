@@ -1,0 +1,22 @@
+.THIS {
+    margin-bottom: -2.5rem;
+}
+
+.THIS .sprint-header-wrapper {
+    z-index:5
+}
+
+.THIS .fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

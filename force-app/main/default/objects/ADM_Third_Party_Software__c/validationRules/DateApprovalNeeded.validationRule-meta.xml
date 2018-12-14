@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DateApprovalNeeded</fullName>
+    <active>true</active>
+    <description>Date Approval Needed</description>
+    <errorConditionFormula>Date_Approval_Needed_By__c  &lt;  TODAY() + 28</errorConditionFormula>
+    <errorDisplayField>Date_Approval_Needed_By__c</errorDisplayField>
+    <errorMessage>Date Approval Needed By can not be less than 28 days from today.</errorMessage>
+</ValidationRule>

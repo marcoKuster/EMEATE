@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Planning_Must_Be_Enabled_Case</fullName>
+    <active>false</active>
+    <description>Release Planning must be enabled to enable Case Creation.</description>
+    <errorConditionFormula>Enable_Release_Planning__c != true &amp;&amp; Enable_Release_Planning_Case_Creation__c == true</errorConditionFormula>
+    <errorDisplayField>Enable_Release_Planning__c</errorDisplayField>
+    <errorMessage>Release Planning must be enabled to enable Case Creation.</errorMessage>
+</ValidationRule>

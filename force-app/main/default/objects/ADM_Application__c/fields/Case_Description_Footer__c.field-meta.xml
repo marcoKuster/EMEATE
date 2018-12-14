@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Description_Footer__c</fullName>
+    <description>This field is appended to the bottom of the Description field of the Case created by Release Planning (when enabled).</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the text to be appended to the bottom of the Description field of the Case created by Release Planning (if enabled).</inlineHelpText>
+    <label>Case Description Footer</label>
+    <length>4000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>6</visibleLines>
+</CustomField>

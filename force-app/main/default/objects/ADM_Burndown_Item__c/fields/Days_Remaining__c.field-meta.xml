@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_Remaining__c</fullName>
+    <description>Stores the days remaining in the current sprint. Do not modify by hand as this is used by Apex for burndown calculation.</description>
+    <externalId>false</externalId>
+    <label>Days Remaining</label>
+    <precision>2</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

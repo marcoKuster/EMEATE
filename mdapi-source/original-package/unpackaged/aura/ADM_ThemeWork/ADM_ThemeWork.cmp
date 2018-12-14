@@ -1,0 +1,246 @@
+<aura:component controller="ADM_ThemeAssignWorkListViewController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="themeWorkData" type="ADM_Work__c[]"/>
+    <aura:attribute type="Boolean" name="sortAsc" />
+    <aura:attribute type="String" name="sortField" />
+    <aura:attribute type="boolean" name="displayHeader" default="false" />
+    <aura:attribute type="boolean" name="noOfItems" />
+    <aura:registerEvent name="showSpinnerEvent" type="c:ADM_Event_Show_Spinner"/>
+    <aura:handler event="c:ADM_Event_Show_Spinner" action="{!c.handleShowSpinner}"/>
+    <aura:if isTrue="{!v.displayHeader}">
+      <lightning:card title="{! 'Work (' + (v.noOfItems) + ')' }" iconName="custom:custom62" class="adm-theme-card">
+        <aura:if isTrue="{! (v.noOfItems) }">
+    
+   <div class="slds-m-horizontal_medium">
+    <table class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout" role="grid">
+    <thead>
+        <tr class="slds-line-height_reset">
+            
+            <th class="slds-is-sortable slds-text-title_caps" onclick="{!c.sortByName}" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text" >Sort </span>
+                    <span class="slds-truncate" title="WORK ID" >WORK ID</span>
+                    <div class="slds-icon_container" >
+                        <aura:if isTrue="{!(v.sortField == 'Name')}">
+                            <aura:if isTrue="{!v.sortAsc}">
+								<lightning:icon iconName="utility:arrowup" size="x-small" />
+                            <aura:set attribute="else">
+								<lightning:icon iconName="utility:arrowdown" size="x-small" />
+                            </aura:set>
+                            </aura:if>
+                        </aura:if>
+
+                    </div>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-128" class="slds-assistive-text">WORK ID Column</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-128" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+            <th class="slds-is-sortable slds-text-title_caps" onclick="{!c.sortByAssignee}" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="ASSIGNEE">ASSIGNEE</span>
+                    <div class="slds-icon_container">
+                        <aura:if isTrue="{!(v.sortField == 'Assignee__r.Name')}">
+                            <aura:if isTrue="{!v.sortAsc}">
+								<lightning:icon iconName="utility:arrowup" size="x-small" />
+                            <aura:set attribute="else">
+								<lightning:icon iconName="utility:arrowdown" size="x-small" />
+                            </aura:set>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-129" class="slds-assistive-text">ASSIGNEE Column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-129" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+            <th class="slds-is-sortable slds-text-title_caps" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="SUBJECT">SUBJECT</span>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-130" class="slds-assistive-text">SUBJECT column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-130" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+            <th class="slds-is-sortable slds-text-title_caps" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="TYPE">TYPE</span>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-131" class="slds-assistive-text">TYPE column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-131" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+
+            <th class="slds-is-sortable slds-text-title_caps" onclick="{!c.sortByPriority}" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="PRIORITY">PRIORITY</span>
+                    <div class="slds-icon_container">
+                        <aura:if isTrue="{!(v.sortField == 'Priority__c')}">
+                            <aura:if isTrue="{!v.sortAsc}">
+								<lightning:icon iconName="utility:arrowup" size="x-small" />
+                            <aura:set attribute="else">
+								<lightning:icon iconName="utility:arrowdown" size="x-small" />
+                            </aura:set>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-129" class="slds-assistive-text">PRIORITY Column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-129" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+            <th class="slds-is-sortable slds-text-title_caps" onclick="{!c.sortByBuild}" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="SCHEDULED BUILD">SCHEDULED BUILD</span>
+                    <div class="slds-icon_container">
+                        <aura:if isTrue="{!(v.sortField == 'Scheduled_Build_Name__c')}">
+                            <aura:if isTrue="{!v.sortAsc}">
+								<lightning:icon iconName="utility:arrowup" size="x-small" />
+                            <aura:set attribute="else">
+								<lightning:icon iconName="utility:arrowdown" size="x-small" />
+                            </aura:set>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-133" class="slds-assistive-text">SCHEDULED BUILD column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-133" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+            <th class="slds-is-sortable slds-text-title_caps" onclick="{!c.sortByTeam}" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="TEAM">TEAM</span>
+                    <div class="slds-icon_container">
+                        <aura:if isTrue="{!(v.sortField == 'Scrum_Team_Name__c')}">
+                            <aura:if isTrue="{!v.sortAsc}">
+								<lightning:icon iconName="utility:arrowup" size="x-small" />
+                            <aura:set attribute="else">
+								<lightning:icon iconName="utility:arrowdown" size="x-small" />
+                            </aura:set>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-133" class="slds-assistive-text">TEAM column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-133" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+            <th class="slds-is-sortable slds-text-title_caps" onclick="{!c.sortByStatus}" scope="col">
+                <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="0">
+                    <span class="slds-assistive-text">Sort </span>
+                    <span class="slds-truncate" title="STATUS">STATUS</span>
+                    <div class="slds-icon_container">
+                        <aura:if isTrue="{!(v.sortField == 'Status__c')}">
+                            <aura:if isTrue="{!v.sortAsc}">
+								<lightning:icon iconName="utility:arrowup" size="x-small" />
+                            <aura:set attribute="else">
+								<lightning:icon iconName="utility:arrowdown" size="x-small" />
+                            </aura:set>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+                    <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                </a>
+                <div class="slds-resizable">
+                    <label for="cell-resize-handle-133" class="slds-assistive-text">STATUS column width</label>
+                    <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-133" tabindex="0"/>
+                    <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+                    </span>
+                </div>
+            </th>
+                
+        </tr>
+    </thead>
+    <tbody>
+    <aura:iteration items="{!v.themeWorkData}" var="workItem">
+        
+    <tr id="{!workItem.Id}" class="slds-hint-parent">
+      <th scope="row">
+        <div class="slds-truncate" title="{!workItem.Name}">
+          <lightning:button value="{!workItem.Id}" variant="base" label="{!workItem.Name}" onclick="{!c.openWorkModal}" />
+        </div>
+      </th>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.Assingee__r.Name}">{!workItem.Assignee__r.Name}</div>
+      </td>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.Subject__c}">{!workItem.Subject__c}</div>
+      </td>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.RecordTypeName}">{!workItem.RecordTypeName}</div>
+      </td>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.Priority__c}">{!workItem.Priority__c}</div>
+      </td>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.Scheduled_Build_Name__c}">{!workItem.Scheduled_Build_Name__c}</div>
+      </td>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.Scrum_Team__r.Name}">{!workItem.Scrum_Team_Name__c}</div>
+      </td>
+      <td role="gridcell">
+        <div class="slds-truncate" title="{!workItem.Status__c}">{!workItem.Status__c}</div>
+      </td>
+      <td role="gridcell" >
+        <div class="slds-p-horizontal--small sprint-actions" title="Work Actions">
+                <div title="Work Actions">
+                    <lightning:buttonMenu alternativeText="Work Actions" onselect="{!c.workAction}" menuAlignment="right" iconSize="x-small">
+                        <lightning:menuItem label="Edit work" value="{!workItem.Id}"  class="slds-border--bottom" iconName="utility:edit"/>
+                        <lightning:menuItem label="View work" value="{!workItem.Id}" class="slds-border--bottom" iconName="utility:new_window"/>
+                        <lightning:menuItem label="Remove Theme" value="{!workItem.Id}" class="slds-border--bottom" iconName="utility:clear"/>
+                    </lightning:buttonMenu>
+                </div>
+            </div>
+      </td>
+    </tr>
+  </aura:iteration>
+  </tbody>
+
+</table>
+       </div>
+    </aura:if>
+    </lightning:card>
+ </aura:if>
+</aura:component>

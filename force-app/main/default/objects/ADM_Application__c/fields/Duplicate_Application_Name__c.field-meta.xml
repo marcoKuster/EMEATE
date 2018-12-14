@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duplicate_Application_Name__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>This field is set by the ADM_Application.trigger with the Application record&#39;s name to detect when duplicate names are used.</description>
+    <externalId>false</externalId>
+    <label>Duplicate Application Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

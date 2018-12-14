@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed__c</fullName>
+    <description>Formula designed as per request in the story https://gus.my.salesforce.com/apex/adm_userstorydetail?id=a07B00000011BKiIAM&amp;sfdc.override=1</description>
+    <externalId>false</externalId>
+    <formula>OR(Case_Status__c  = &#39;Closed - Resolved&#39;,Case_Status__c = &#39;Closed - Feature Req/Bug&#39;,Case_Status__c = &#39;Closed - No response from customer&#39;, Case_Status__c = &#39;Closed - Cust Credit&#39;, Case_Status__c = &#39;Closed - Write Off&#39;, Case_Status__c = &#39;Closed - WO/Collect&#39;,
+Case_Status__c = &#39;Closed - Future Consideration&#39;,Case_Status__c = &#39;Closed - Rejected&#39;,
+Case_Status__c = &#39;Closed - Duplicate&#39;,Case_Status__c = &#39;Closed - Request Submitted&#39;,
+Case_Status__c = &#39;Closed - Completed&#39;,Case_Status__c = &#39;Closed - Reviewed&#39;,
+Case_Status__c = &#39;Closed - Request Received&#39;,Case_Status__c = &#39;Complete/Closed&#39;,
+Case_Status__c = &#39;Closed - Feature Request Submitted&#39;,Case_Status__c = &#39;Bug Fix Submitted&#39;,
+Case_Status__c = &#39;Fulfilled&#39;, Case_Status__c = &#39;Approved&#39;,
+Case_Status__c = &#39;Rejected&#39;, Case_Status__c = &#39;Closed-Sent to Feature Roadmap Owner&#39;, Case_Status__c = &#39;Closed-Workaround provided&#39;,
+Case_Status__c = &#39;Closed-Feature Implemented/Exists&#39;,Case_Status__c = &#39;Closed - Directed to IdeaExchange&#39;,
+Case_Status__c = &#39;Closed - No response from Sales (Closed)&#39;, Case_Status__c = &#39;Implemented&#39;,
+Case_Status__c = &#39;Closed - Routed to Internal Helpdesk&#39;, Case_Status__c = &#39;Closed&#39;,
+Case_Status__c = &#39;Closed – Delivered&#39;, Case_Status__c = &#39;Closed – Withdrawn&#39;, Case_Status__c = &#39;Closed – Feature Exists&#39;,
+Case_Status__c = &#39;Closed – Workaround&#39;, Case_Status__c = &#39;Closed – IdeaExchange&#39;, Case_Status__c = &#39;Closed - Implemented&#39;,
+Case_Status__c = &#39;Closed - Request out of Scope&#39;, Case_Status__c = &#39;Closed - Cust. Invoiced (Sales Ops only)&#39;, Case_Status__c = &#39;Closed - Never&#39;,
+Case_Status__c = &#39;Auto-response&#39;, Case_Status__c = &#39;Closed - No response from Partner&#39;, Case_Status__c = &#39;Closed - Support Issue&#39;,
+Case_Status__c = &#39;Closed - Services/Sales Issue&#39;, Case_Status__c = &#39;Closed - Product Issue&#39;, Case_Status__c = &#39;Closed - Forward to Partner&#39;,
+Case_Status__c = &#39;Closed - Edition Upgrade Needed&#39;, Case_Status__c = &#39;Closed - Self Service&#39;, Case_Status__c = &#39;Closed - Customer Closed&#39;,
+Case_Status__c = &#39;Closed - Partner Resolved&#39;, Case_Status__c = &#39;No Action Needed&#39;, Case_Status__c = &#39;Closed - No CSAT&#39;)</formula>
+    <label>Closed</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

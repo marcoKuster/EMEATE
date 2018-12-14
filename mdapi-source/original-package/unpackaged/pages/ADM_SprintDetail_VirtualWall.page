@@ -1,0 +1,6 @@
+<apex:page standardController="ADM_Sprint__c" extensions="ADM_SprintDetailExtension" showHeader="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" sidebar="false" id="sprintDetailVirtualWall"  showChat="false" title="{!ADM_Sprint__c.Name}" docType="html-5.0" applyBodyTag="false">
+<c:ADM_Sprint_Tabs sprint="{!ADM_Sprint__c}" selectedTabId="virtualwall">
+    <c:ADM_Sprint_VirtualWall_Sds sprintId="{!ADM_Sprint__c.Id}" teamId="{!ADM_Sprint__c.Scrum_Team__c}" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','true', 'false')}" />
+    <c:ADM_Sprint_VirtualWall sprintId="{!ADM_Sprint__c.Id}" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" />
+</c:ADM_Sprint_Tabs>
+</apex:page>

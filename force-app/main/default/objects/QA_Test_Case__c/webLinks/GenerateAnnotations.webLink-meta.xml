@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GenerateAnnotations</fullName>
+    <availability>online</availability>
+    <description>Button will link to the generated annotations page</description>
+    <displayType>massActionButton</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Generate Annotations</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>var selectedIds= getRecordIds();
+var queryString = &quot;&quot;;
+var pageDestination = &quot;/apex/GenerateAnnotations?cases=&quot;;
+
+if (selectedIds.length == 0){
+  alert(&quot;Please select at least one test case to generate annotations for&quot;);
+} else {
+  for (var i in selectedIds){
+    var tcID = selectedIds[i];
+    if (typeof(tcID) != &quot;string&quot;)continue;
+    queryString += tcID + &quot;;&quot;;
+  }
+  queryString = queryString.substring(0, queryString.length-1);
+  window.location.href=pageDestination+queryString;
+}</url>
+</WebLink>

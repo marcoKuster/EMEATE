@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Signoff_Date__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+ OR( ISPICKVAL(Team_Signoff_Status__c, &quot;Yes / meets criteria&quot;), ISPICKVAL(Team_Signoff_Status__c, &quot;Yes / does not meet criteria&quot;)), 
+ LastModifiedDate , null
+  )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Signoff Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_retrospectives</fullName>
+    <booleanFilter>1 OR 2</booleanFilter>
+    <columns>NAME</columns>
+    <columns>User__c</columns>
+    <columns>Manager__c</columns>
+    <columns>Review_Period__c</columns>
+    <columns>Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Is_Current_User_the_manager__c</field>
+        <operation>equals</operation>
+        <value>TRUE</value>
+    </filters>
+    <filters>
+        <field>Is_Current_User_the_owner__c</field>
+        <operation>equals</operation>
+        <value>TRUE</value>
+    </filters>
+    <label>My retrospectives</label>
+</ListView>

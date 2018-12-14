@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Type__c</fullName>
+    <description>The Release Type of the Release this Release Event is associated with.</description>
+    <externalId>false</externalId>
+    <formula>TEXT(Release__r.Release_Type__c)</formula>
+    <label>Release Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order</fullName>
+    <active>false</active>
+    <description>Throw error message when Order is negative</description>
+    <errorConditionFormula>Order__c  &lt; 0</errorConditionFormula>
+    <errorDisplayField>Order__c</errorDisplayField>
+    <errorMessage>Order cannot be Negative</errorMessage>
+</ValidationRule>

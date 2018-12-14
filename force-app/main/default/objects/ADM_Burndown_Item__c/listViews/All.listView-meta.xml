@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>Date__c</columns>
+    <columns>Days_Remaining__c</columns>
+    <columns>Hours_Remaining__c</columns>
+    <columns>Points_Remaining__c</columns>
+    <columns>Scrum_Team__c</columns>
+    <columns>Sprint__c</columns>
+    <columns>Task__c</columns>
+    <columns>Task_ID__c</columns>
+    <columns>Type__c</columns>
+    <columns>Work__c</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

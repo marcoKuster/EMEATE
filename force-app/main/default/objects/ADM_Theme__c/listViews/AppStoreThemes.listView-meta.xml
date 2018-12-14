@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AppStoreThemes</fullName>
+    <booleanFilter>1</booleanFilter>
+    <columns>Scrum_Team__c</columns>
+    <columns>NAME</columns>
+    <columns>Description__c</columns>
+    <columns>Theme_Rank__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Scrum_Team__c</field>
+        <operation>equals</operation>
+        <value>Opportunity to Quote,Order to Cash,Webstore</value>
+    </filters>
+    <label>AppStore Themes</label>
+</ListView>

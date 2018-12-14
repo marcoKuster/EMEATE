@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X162_Team_Dependencies1</fullName>
+    <columns>NAME</columns>
+    <columns>Dependent_Team__c</columns>
+    <columns>Deliverable__c</columns>
+    <columns>Deliver_By__c</columns>
+    <columns>Provider_Team__c</columns>
+    <columns>Provider_User_Story__c</columns>
+    <columns>Dependency_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Dependent_Team__c</field>
+        <operation>contains</operation>
+        <value>Knowledge</value>
+    </filters>
+    <label>162 Knowledge Dependencies</label>
+</ListView>

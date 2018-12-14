@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>One_2Week_Response_Only</fullName>
+    <active>true</active>
+    <errorConditionFormula>(EA_2Week_Risk_Response__c &amp;&amp; EA_2Week_NotReady_Response__c) || (EA_2Week_Ready_Response__c &amp;&amp; EA_2Week_Risk_Response__c) || (EA_2Week_Ready_Response__c &amp;&amp; EA_2Week_NotReady_Response__c)</errorConditionFormula>
+    <errorMessage>Choose only one of the responses in the 2 Week Overall Assessment section.</errorMessage>
+</ValidationRule>

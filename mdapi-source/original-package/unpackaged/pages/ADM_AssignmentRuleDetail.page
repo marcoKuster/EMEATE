@@ -1,0 +1,69 @@
+<apex:page standardController="ADM_Assignment_Rule__c" extensions="ADM_AssignmentRuleController">
+ 
+<apex:stylesheet value="{!$Resource.ADM_common_css}" />
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'css/redmond/jquery-ui-1.9.2.custom.css')}" />    
+     
+<apex:form >   
+	<div class="gusFieldset">
+   		<div class="gusLegend">Assignment Rule Detail</div>
+        <apex:pageMessages id="pm" escape="false" /> 
+        <div class="gusFormToolbar gusFormToolbarTop">            
+        	<apex:commandButton action="{!edit}" value="Edit"/>
+            <apex:commandButton action="{!delete}" value="Delete"/>
+            <apex:commandButton action="{!cloneRule}" value="Clone" rendered="{!OR($Profile.Name == 'System Administrator', $Profile.Name == 'GUS Manager', $Profile.Name == 'GUS QA Manager')}" />
+        </div>  
+        <div class="gusForm">
+	        <div class="gusForm2Column">              
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Scrum_Team_Assignment__c" value="{!ADM_Assignment_Rule__c.Scrum_Team_Assignment__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Assignee_Assignment__c" value="{!ADM_Assignment_Rule__c.Assignee_Assignment__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Tech_Writer_Assignment__c" value="{!ADM_Assignment_Rule__c.Tech_Writer_Assignment__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="UE_Engineer__c" value="{!ADM_Assignment_Rule__c.UE_Engineer__c}" />
+	         	
+	        </div>
+	        <div class="gusForm2Column">
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Product_Owner__c" value="{!ADM_Assignment_Rule__c.Product_Owner__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="QA_Assignment__c" value="{!ADM_Assignment_Rule__c.QA_Assignment__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Systest_Assignment__c" value="{!ADM_Assignment_Rule__c.Systest_Assignment__c}" />
+	         	
+	        </div>  
+     	</div>
+	</div>     
+	<div class="gusFieldset">
+   		<div class="gusLegend">Investigation Assignments</div>
+        <div class="gusForm">
+	         <div class="gusForm2Column">              
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Sev_1_Assignee__c" value="{!ADM_Assignment_Rule__c.Sev_1_Assignee__c}" />
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Sev_3_Assignee__c" value="{!ADM_Assignment_Rule__c.Sev_3_Assignee__c}" />
+	         	 <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Exception_Request_POC__c" value="{!ADM_Assignment_Rule__c.Exception_Request_POC__c}" />
+	         </div>
+	          <div class="gusForm2Column">              
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Sev_2_Assignee__c" value="{!ADM_Assignment_Rule__c.Sev_2_Assignee__c}" />
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Sev_4_Assignee__c" value="{!ADM_Assignment_Rule__c.Sev_4_Assignee__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Senior_Management_POC_Assignment__c" value="{!ADM_Assignment_Rule__c.Senior_Management_POC_Assignment__c}" />
+	         </div>
+     	</div>    	     
+ 	</div> 
+ 	<div class="gusFieldset">
+   		<div class="gusLegend">Other Information</div>
+        <div class="gusForm">
+	         <div class="gusForm1Column">              
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="Additional_Emails__c" value="{!ADM_Assignment_Rule__c.Additional_Emails__c}" />
+	         </div>
+	    </div>
+	    <div class="gusForm">     
+	         <div class="gusForm2Column"> 
+	         	 <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="LastModifiedById" value="{!ADM_Assignment_Rule__c.LastModifiedById}" />
+	             <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="CreatedById" value="{!ADM_Assignment_Rule__c.CreatedById}" />
+	         </div>
+	         <div class="gusForm2Column"> 
+	         	 <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="LastModifiedDate" value="{!ADM_Assignment_Rule__c.LastModifiedDate}" />
+	         	 <c:ADM_FormRow object="{!ADM_Assignment_Rule__c}" type="ADM_Assignment_Rule__c"  required="false" readonly="true" field="CreatedDate" value="{!ADM_Assignment_Rule__c.CreatedDate}" />
+	         </div>
+     	</div>    	     
+ 	</div>
+</apex:form>                  
+<div class="gusFieldset">
+	<div class="gusLegend">Tag Assignments</div>         
+	<apex:relatedList list="Tag_Assignments__r"/>
+</div>
+</apex:page>

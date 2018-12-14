@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_Context__c</fullName>
+    <description>Inform Only -- This Approver will receive notification when an approval request is made.
+May Approve -- This Approver, or any other Approver with the same role, may approve the request.
+Must Approve -- This Approver must approve all requests. If multiple Approvers have Must Approve context for a role, all of them will be required to approve the request.
+Notify When Approved -- The Approver will be notified only when the request has been Approved.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Inform Only -- will receive all notifications; 
+May Approve -- may approve the request;
+Must Approve -- must approve all requests; 
+Notify When Approved -- will be notified only when the request has been Approved.
+Primary -- Cloud
+Secondary -- Cloud</inlineHelpText>
+    <label>Approval Context</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Approver_Role__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Inform Only</fullName>
+                <default>false</default>
+                <label>Inform Only</label>
+            </value>
+            <value>
+                <fullName>May Approve</fullName>
+                <default>false</default>
+                <label>May Approve</label>
+            </value>
+            <value>
+                <fullName>Must Approve</fullName>
+                <default>false</default>
+                <label>Must Approve</label>
+            </value>
+            <value>
+                <fullName>Notify When Approved</fullName>
+                <default>false</default>
+                <label>Notify When Approved</label>
+            </value>
+            <value>
+                <fullName>Primary</fullName>
+                <default>false</default>
+                <label>Primary</label>
+            </value>
+            <value>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+                <label>Secondary</label>
+            </value>
+            <value>
+                <fullName>Exception Primary</fullName>
+                <default>false</default>
+                <label>Exception Primary</label>
+            </value>
+            <value>
+                <fullName>Exception Secondary</fullName>
+                <default>false</default>
+                <label>Exception Secondary</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Release Coverage</controllingFieldValue>
+            <controllingFieldValue>Cloud Leader</controllingFieldValue>
+            <valueName>Primary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Release Coverage</controllingFieldValue>
+            <controllingFieldValue>Cloud Leader</controllingFieldValue>
+            <valueName>Secondary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Release Engineer</controllingFieldValue>
+            <controllingFieldValue>Release Manager</controllingFieldValue>
+            <controllingFieldValue>TechOps Engineer</controllingFieldValue>
+            <controllingFieldValue>TechOps Manager</controllingFieldValue>
+            <controllingFieldValue>Buildmaster</controllingFieldValue>
+            <controllingFieldValue>Development Engineer</controllingFieldValue>
+            <controllingFieldValue>Development Manager</controllingFieldValue>
+            <controllingFieldValue>Distribution List</controllingFieldValue>
+            <controllingFieldValue>Executive</controllingFieldValue>
+            <controllingFieldValue>Functional</controllingFieldValue>
+            <controllingFieldValue>Performance</controllingFieldValue>
+            <controllingFieldValue>Quality Engineer</controllingFieldValue>
+            <controllingFieldValue>QE Manager</controllingFieldValue>
+            <valueName>Inform Only</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Release Engineer</controllingFieldValue>
+            <controllingFieldValue>Release Manager</controllingFieldValue>
+            <controllingFieldValue>TechOps Engineer</controllingFieldValue>
+            <controllingFieldValue>TechOps Manager</controllingFieldValue>
+            <controllingFieldValue>Buildmaster</controllingFieldValue>
+            <controllingFieldValue>Development Engineer</controllingFieldValue>
+            <controllingFieldValue>Development Manager</controllingFieldValue>
+            <controllingFieldValue>Executive</controllingFieldValue>
+            <controllingFieldValue>Functional</controllingFieldValue>
+            <controllingFieldValue>Performance</controllingFieldValue>
+            <controllingFieldValue>Quality Engineer</controllingFieldValue>
+            <controllingFieldValue>QE Manager</controllingFieldValue>
+            <valueName>May Approve</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Release Engineer</controllingFieldValue>
+            <controllingFieldValue>Release Manager</controllingFieldValue>
+            <controllingFieldValue>TechOps Engineer</controllingFieldValue>
+            <controllingFieldValue>TechOps Manager</controllingFieldValue>
+            <controllingFieldValue>Buildmaster</controllingFieldValue>
+            <controllingFieldValue>Development Engineer</controllingFieldValue>
+            <controllingFieldValue>Development Manager</controllingFieldValue>
+            <controllingFieldValue>Executive</controllingFieldValue>
+            <controllingFieldValue>Functional</controllingFieldValue>
+            <controllingFieldValue>Performance</controllingFieldValue>
+            <controllingFieldValue>Quality Engineer</controllingFieldValue>
+            <controllingFieldValue>QE Manager</controllingFieldValue>
+            <valueName>Must Approve</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Release Engineer</controllingFieldValue>
+            <controllingFieldValue>Release Manager</controllingFieldValue>
+            <controllingFieldValue>TechOps Engineer</controllingFieldValue>
+            <controllingFieldValue>TechOps Manager</controllingFieldValue>
+            <controllingFieldValue>Buildmaster</controllingFieldValue>
+            <controllingFieldValue>Development Engineer</controllingFieldValue>
+            <controllingFieldValue>Development Manager</controllingFieldValue>
+            <controllingFieldValue>Distribution List</controllingFieldValue>
+            <controllingFieldValue>Executive</controllingFieldValue>
+            <controllingFieldValue>Functional</controllingFieldValue>
+            <controllingFieldValue>Performance</controllingFieldValue>
+            <controllingFieldValue>Quality Engineer</controllingFieldValue>
+            <controllingFieldValue>QE Manager</controllingFieldValue>
+            <valueName>Notify When Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cloud Leader</controllingFieldValue>
+            <valueName>Exception Primary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cloud Leader</controllingFieldValue>
+            <valueName>Exception Secondary</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

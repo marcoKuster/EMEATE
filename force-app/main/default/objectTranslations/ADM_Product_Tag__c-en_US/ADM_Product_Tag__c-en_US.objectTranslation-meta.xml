@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>TE Activity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>TE Activities</value>
+    </caseValues>
+    <layouts>
+        <layout>Product Tag Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Configure Product Tag Fields --></label>
+        <name>Configure_Product_Tag_Fields</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Team is a required a field --></errorMessage>
+        <name>Team_is_Requied</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Manage_Additional_Fields --></label>
+        <name>Manage_Additional_Fields</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Assignment_Rule --></label>
+        <name>New_Assignment_Rule</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Work --></label>
+        <name>New_Work</name>
+    </webLinks>
+</CustomObjectTranslation>

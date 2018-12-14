@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <description>Where the question will be categorized under.</description>
+    <externalId>false</externalId>
+    <label>Category</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Admin</fullName>
+                <default>true</default>
+                <label>Admin</label>
+            </value>
+            <value>
+                <fullName>Data Management</fullName>
+                <default>false</default>
+                <label>Data Management</label>
+            </value>
+            <value>
+                <fullName>Error Handling</fullName>
+                <default>false</default>
+                <label>Error Handling</label>
+            </value>
+            <value>
+                <fullName>Functionality</fullName>
+                <default>false</default>
+                <label>Functionality</label>
+            </value>
+            <value>
+                <fullName>Globalization</fullName>
+                <default>false</default>
+                <label>Globalization</label>
+            </value>
+            <value>
+                <fullName>Help</fullName>
+                <default>false</default>
+                <label>Help</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Performance and System Testing</fullName>
+                <default>false</default>
+                <label>Performance and System Testing</label>
+            </value>
+            <value>
+                <fullName>Platform Testing</fullName>
+                <default>false</default>
+                <label>Platform Testing</label>
+            </value>
+            <value>
+                <fullName>Application Testing</fullName>
+                <default>false</default>
+                <label>Application Testing</label>
+            </value>
+            <value>
+                <fullName>Core Testing</fullName>
+                <default>false</default>
+                <label>Core Testing</label>
+            </value>
+            <value>
+                <fullName>Regression Testing</fullName>
+                <default>false</default>
+                <label>Regression Testing</label>
+            </value>
+            <value>
+                <fullName>Security</fullName>
+                <default>false</default>
+                <label>Security</label>
+            </value>
+            <value>
+                <fullName>UI testing</fullName>
+                <default>false</default>
+                <label>UI testing</label>
+            </value>
+            <value>
+                <fullName>Upgrade Script</fullName>
+                <default>false</default>
+                <label>Upgrade Script</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

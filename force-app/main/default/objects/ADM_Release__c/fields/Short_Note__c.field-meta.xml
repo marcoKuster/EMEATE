@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Short_Note__c</fullName>
+    <description>This is a column mapping from BUG.RELEASE table column SHORT_NOTE</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use this field to provide a short description of the release.</inlineHelpText>
+    <label>Short Note</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

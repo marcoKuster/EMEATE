@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>x150SolutionOverviews</fullName>
+    <columns>NAME</columns>
+    <columns>Product_Manager__c</columns>
+    <columns>Big_Marketing_Push__c</columns>
+    <columns>Description__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>150 Solution Overviews</label>
+</ListView>

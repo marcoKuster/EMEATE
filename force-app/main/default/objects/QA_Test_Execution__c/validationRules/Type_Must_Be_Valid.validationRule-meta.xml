@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_Must_Be_Valid</fullName>
+    <active>false</active>
+    <description>Users should use a valid picklist value</description>
+    <errorConditionFormula>CASE(  Type__c  ,
+&quot;Manual&quot;, 1,
+&quot;Ftest&quot;, 1,
+&quot;Silktest&quot;, 1,
+&quot;Utest&quot;, 1,
+&quot;.Net&quot;, 1,
+&quot;CTI - script&quot;, 1,
+&quot;Client Automation&quot;, 1,
+&quot;Selenium&quot;, 1,
+&quot;Systest&quot;, 1,
+&quot;ProdTest - Selenium&quot;, 1,
+&quot;ProdTest - API&quot;, 1,
+&quot;ProdTest - Extended&quot;, 1,
+0) = 0</errorConditionFormula>
+    <errorDisplayField>Type__c</errorDisplayField>
+    <errorMessage>Incorrect Type Value. Must be picked from the list</errorMessage>
+</ValidationRule>

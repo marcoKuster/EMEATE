@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Staggered_Release__c</fullName>
+    <externalId>false</externalId>
+    <label>Staggered Release</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GUS</fullName>
+                <default>false</default>
+                <label>GUS</label>
+            </value>
+            <value>
+                <fullName>SB</fullName>
+                <default>false</default>
+                <label>SB</label>
+            </value>
+            <value>
+                <fullName>R0</fullName>
+                <default>false</default>
+                <label>R0</label>
+            </value>
+            <value>
+                <fullName>R1</fullName>
+                <default>false</default>
+                <label>R1</label>
+            </value>
+            <value>
+                <fullName>R2</fullName>
+                <default>false</default>
+                <label>R2</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

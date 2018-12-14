@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release Event</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Release Events</value>
+    </caseValues>
+    <fields>
+        <label><!-- Application Name --></label>
+        <name>Application_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Type --></label>
+        <name>Application_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Customer-facing name for this Release Event. When field is blank, the event is not customer-facing. --></help>
+        <label><!-- Customer Facing Name --></label>
+        <name>Customer_Facing_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Space-separated list of instances which will participate in this Release Event (eg, &quot;NA1 NA2 CS3&quot;) --></help>
+        <label><!-- Deployment Instances --></label>
+        <name>Deployment_Instances__c</name>
+    </fields>
+    <fields>
+        <help><!-- Person to contact for issues and questions about this Release Event. --></help>
+        <label><!-- Event Contact --></label>
+        <name>Event_Contact__c</name>
+        <relationshipLabel><!-- Release Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- &quot;Preview&quot; events are not committed and do not appear in the calendar. &quot;Planned&quot; events appear as scheduled in the calendar. --></help>
+        <label><!-- Event Status --></label>
+        <name>Event_Status__c</name>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preview</masterLabel>
+            <translation><!-- Preview --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Origination --></label>
+        <name>Origination__c</name>
+        <relationshipLabel><!-- Release Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release Name --></label>
+        <name>Release_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Type --></label>
+        <name>Release_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Release to which this Release Event is associated. --></help>
+        <label><!-- Release --></label>
+        <name>Release__c</name>
+        <relationshipLabel><!-- Release Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Scheduled end time of the Release Event. --></help>
+        <label><!-- Scheduled End --></label>
+        <name>Scheduled_End__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scheduled start time of the Release Event --></help>
+        <label><!-- Scheduled Start --></label>
+        <name>Scheduled_Start__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Event End Time cannot be before Start Time. --></errorMessage>
+        <name>End_Time_cannot_be_before_Start_Time</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Event End Time must be set. --></errorMessage>
+        <name>End_Time_must_be_set</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Event Start Time must be set. --></errorMessage>
+        <name>Start_Time_must_be_set</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Delete_Release_Event --></label>
+        <name>Delete_Release_Event</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Set_Release_Event_To_Planned --></label>
+        <name>Set_Release_Event_To_Planned</name>
+    </webLinks>
+</CustomObjectTranslation>

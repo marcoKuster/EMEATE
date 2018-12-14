@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Event_Duration_must_be_nonnegative</fullName>
+    <active>true</active>
+    <errorConditionFormula>Event_Duration__c &lt; 0</errorConditionFormula>
+    <errorDisplayField>Event_Duration__c</errorDisplayField>
+    <errorMessage>Event Duration cannot be less than zero.</errorMessage>
+</ValidationRule>

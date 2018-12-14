@@ -1,0 +1,5 @@
+<aura:component access="global" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId">
+	<aura:attribute name="sprintData" type="Object"/>
+	<forceChatter:publisher context="RECORD" recordId="{!v.sprintData.sprintInfo.Id}" />
+	<forceChatter:feed subjectId="{!v.sprintData.sprintInfo.Id}" type="RECORD"/>
+</aura:component>

@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release Freeze Team Status</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Release Freeze Team Status</value>
+    </caseValues>
+    <fields>
+        <label><!-- Number of P0/P1/Blocking Bugs (0) --></label>
+        <name>Blocking_or_P0_Bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- # Bugs Fixed Week of RF --></label>
+        <name>Bugs_Fixed_Week_of_RF__c</name>
+    </fields>
+    <fields>
+        <label><!-- P0/P1/P2 Bugs/TF Found Week of RF --></label>
+        <name>Bugs_TF_Found_Week_of_RF__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bugs/TF Fixed Week of RF --></label>
+        <name>Bugs_Test_Failures_Fixed_Week_of_RF__c</name>
+    </fields>
+    <fields>
+        <label><!-- Build --></label>
+        <name>Build__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any changes to the Hub &amp; Agent? --></help>
+        <label><!-- Changes to Hub &amp; Agent --></label>
+        <name>Changes_to_Hub_Agent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any changes to the way things are logged? --></help>
+        <label><!-- Changes to Logging --></label>
+        <name>Changes_to_Logging__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any changes to ping.jsp? --></help>
+        <label><!-- Changes to ping.jsp --></label>
+        <name>Changes_to_ping_jsp__c</name>
+    </fields>
+    <fields>
+        <help><!-- Code coverage goals met. --></help>
+        <label><!-- Code Coverage Goals Met --></label>
+        <name>Code_Coverage_Goals_Met__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Code Line is Releasable – All New Features and Enhancements meet the Definition of Done and Code Line meets Additional Criteria below (Yes/No) --></help>
+        <label><!-- Code Line is Releasable --></label>
+        <name>Code_Line_is_Releasable__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Confirmed --></label>
+        <name>Confirmed__c</name>
+    </fields>
+    <fields>
+        <help><!-- DB Upgrade Scripts Complete and Verified (Yes/No/Not Applicable) --></help>
+        <label><!-- DB Upgrade Scripts Complete and Verified --></label>
+        <name>DB_Upgrade_Scripts_Complete_and_Verified__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- User documentation complete and checked in. --></help>
+        <label><!-- Documentation Complete --></label>
+        <name>Documentation_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Explain Auto Integrations --></label>
+        <name>Explain_Auto_Integrations__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain P0/P1/Blocking Bugs --></label>
+        <name>Explain_Blocking_P0_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Closed P0/P1/P2 Bugs and Closed Bugs-with-Cases that do not have automation is &gt; 0 --></help>
+        <label><!-- Explain Bugs missing Automation --></label>
+        <name>Explain_Bugs_missing_Automation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Bugs to Fix --></label>
+        <name>Explain_Bugs_to_Fix__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Code Coverage Goals Not Met --></label>
+        <name>Explain_Code_Coverage_goals_not_met__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if DB Upgrade Scripts are Incomplete or Unverified --></help>
+        <label><!-- Explain DB Upgrade Scripts Incomplete --></label>
+        <name>Explain_DB_Upgrade_Scripts_Incomplete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Extended ftest Test Failures --></label>
+        <name>Explain_Extended_ftest_Test_Failures__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Bugs to Verify --></label>
+        <name>Explain_High_Number_of_Bugs_to_Verify__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High Bug Count --></label>
+        <name>Explain_High_Number_of_bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High TF Count --></label>
+        <name>Explain_High_TF_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High TF Find Rate --></label>
+        <name>Explain_High_TF_Find_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High TF Fix Rate --></label>
+        <name>Explain_High_TF_Fix_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Open P1 Bugs --></label>
+        <name>Explain_Open_P1_Bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Open Regressions --></label>
+        <name>Explain_Open_Regressions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain any Open User Stories --></help>
+        <label><!-- Explain Open User Stories --></label>
+        <name>Explain_Open_User_Stories__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Test Failures Older Than 1 Day --></label>
+        <name>Explain_Test_Failures_older_than_1_day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Doc Incomplete --></label>
+        <name>Explain_doc_incomplete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Failure to Pass Performance --></label>
+        <name>Explain_failure_to_pass_systes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High Bug Find Rate --></label>
+        <name>Explain_find_rate_if_high__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High Fix Rate --></label>
+        <name>Explain_fix_rate_if_high__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide explanation if the Code Line is not Releasable --></help>
+        <label><!-- Explain if Code Line is not Releasable --></label>
+        <name>Explain_if_Code_Line_is_not_Releasable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if your team has TF on basic ftest, basic selenium or utest. --></help>
+        <label><!-- Explain TF on basicftest/selenium/utest --></label>
+        <name>Explain_if_TF_Exist__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Pre-Scripts Testing Incomplete --></label>
+        <name>Explain_pre_scripts_testing_not_complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Release Sprint Goals Incomplete --></label>
+        <name>Explain_release_sprint_goals_incomplete__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Call out any features that will be enabled when the retired scripts are run in the new zero downtime process. --></help>
+        <label><!-- Features Enabled by Retirement Scripts --></label>
+        <name>Features_Enabled_by_Retirement_Scripts__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any new services that need monitoring turned on? --></help>
+        <label><!-- New Services Requiring Monitoring --></label>
+        <name>New_Services_Requiring_Monitoring__c</name>
+    </fields>
+    <fields>
+        <help><!-- No BLOCKING, RELEASE BLOCKING, or FEATURE BLOCKING bugs. All resolved bugs are Verified and Closed. --></help>
+        <label><!-- No Blocking Bugs --></label>
+        <name>No_Blocking_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Closed P0/P1/P2 Bugs and Closed Bugs-with-Cases that do not have automation (0) --></help>
+        <label><!-- Number of Bugs missing Automation (0) --></label>
+        <name>Number_of_Bugs_missing_Automation_0__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Extended TF to Fix &gt;3 days (0) --></label>
+        <name>Number_of_Extended_TF_to_Fix_3_days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of Open User Stories (0) --></help>
+        <label><!-- Number of Open User Stories (0) --></label>
+        <name>Number_of_Open_User_Stories_0__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P1 &amp; P2 bugs/Test Failures that are not Verified and Closed. --></help>
+        <label><!-- Number of P1/P2 Bugs/Test Failures (0) --></label>
+        <name>Number_of_P1_P2_Bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of TF to Fix &gt;1 day old (0) --></label>
+        <name>Number_of_TF_to_Fix_1_day_old__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of open regressions.  Should be 0 at Release Freeze. --></help>
+        <label><!-- Number Open Regressions (0) --></label>
+        <name>Open_Regressions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Anything of interest that Release Engineering should be aware of? --></help>
+        <label><!-- Other Changes for RelEng --></label>
+        <name>Other_Changes_for_RelEng__c</name>
+    </fields>
+    <fields>
+        <help><!-- Anything of interest that Tech Ops should be aware of? --></help>
+        <label><!-- Other Changes for Tech Ops --></label>
+        <name>Other_Changes_for_Tech_Ops__c</name>
+    </fields>
+    <fields>
+        <label><!-- P0/P1/P2 Bugs Found Week of RF --></label>
+        <name>P0_P1_P2_Bugs_Found_Week_of_RF__c</name>
+    </fields>
+    <fields>
+        <label><!-- P1 Bugs --></label>
+        <name>P1_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Performance/scalability of new features and existing functionality acceptable for release. --></help>
+        <label><!-- Passed Performance Testing --></label>
+        <name>Passed_SysTest__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Pending Auto-Integrations (0) --></help>
+        <label><!-- Number of Pending Auto-Integrations (0) --></label>
+        <name>Pending_Auto_Integrations_0__c</name>
+    </fields>
+    <fields>
+        <label><!-- Post Release Freeze Status Updates --></label>
+        <name>Post_Release_Freeze_Status_Updates__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pre-Scripts Testing Complete? --></label>
+        <name>Pre_Scripts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Division --></label>
+        <name>Product_Division__c</name>
+    </fields>
+    <fields>
+        <help><!-- Release Sprint Goals Met/Complete. --></help>
+        <label><!-- Release Sprint Goals Complete --></label>
+        <name>Release_Sprint_Goals_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signoff Date --></label>
+        <name>Signoff_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any existing services being disabled and need monitoring turned off? --></help>
+        <label><!-- Stop Monitoring Disabled Services --></label>
+        <name>Stop_Monitoring_Disabled_Services__c</name>
+    </fields>
+    <fields>
+        <label><!-- # TF Fixed Week of RF --></label>
+        <name>TF_Fixed_Week_of_RF__c</name>
+    </fields>
+    <fields>
+        <label><!-- TF Found Week of RF --></label>
+        <name>TF_Found_Week_of_RF__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team Release --></label>
+        <name>Team_Release__c</name>
+        <relationshipLabel><!-- Release Freeze Team Status --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Team Signoff Confirmed --></label>
+        <name>Team_Signoff_Confirmed__c</name>
+    </fields>
+    <fields>
+        <help><!-- Team signs off by checking the box. --></help>
+        <label><!-- Team Signoff --></label>
+        <name>Team_Signs_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Failures Older Than 1 Day (0) --></label>
+        <name>Test_Failures_older_than_1_day__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Extended TF to Fix &gt;3 days old and Other TF to Fix &gt;1 day old (0) --></help>
+        <label><!-- Test Failures Older Than Allowable Age --></label>
+        <name>Test_Failures_older_than_allowable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of Fixed Bugs/TF to Verify --></label>
+        <name>Total_Bugs_Test_Failures_to_Verify__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Bugs to Fix (max 1/Dev) (0) --></label>
+        <name>Total_Number_of_Bugs_to_Fix__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Fixed Bugs to Verify (max1/QE) --></label>
+        <name>Total_Number_of_Fixed_Bugs_to_Verify__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of TF to Fix (max 1/Dev) --></label>
+        <name>Total_Number_of_TF_to_Fix__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of Bugs/TF to Fix --></label>
+        <name>Total_number_of_bugs_TF_to_fix__c</name>
+    </fields>
+    <fields>
+        <help><!-- 100% of manual and automated test cases passing. --></help>
+        <label><!-- 100% of Test Cases Passing --></label>
+        <name>X100_of_Test_Cases_Passing__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- New Criteria for 172: 
+Zero TF on these test suites at time of RF. --></help>
+        <label><!-- Zero TF:basicftest, basicselenium, utest --></label>
+        <name>Zero_TF_basicftest_basicselenium_utest__c</name>
+    </fields>
+    <layouts>
+        <layout>Release Freeze Status Layout</layout>
+        <sections>
+            <label><!-- Changes to Deployment Plan --></label>
+            <section>Changes to Deployment Plan</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- RF Criteria Comments --></label>
+            <section>RF Criteria Comments</section>
+        </sections>
+        <sections>
+            <label><!-- RF Criteria Status Dashboard --></label>
+            <section>RF Criteria Status Dashboard</section>
+        </sections>
+        <sections>
+            <label><!-- Remaining RF Criteria --></label>
+            <section>Remaining RF Criteria</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Team_Signoff --></label>
+        <name>Team_Signoff</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_Metrics --></label>
+        <name>Update_Metrics</name>
+    </webLinks>
+</CustomObjectTranslation>

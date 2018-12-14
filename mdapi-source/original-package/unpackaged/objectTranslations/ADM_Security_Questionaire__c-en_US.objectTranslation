@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Security Questionnaire</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Security Questionnaires</value>
+    </caseValues>
+    <fields>
+        <help><!-- Any additional information you think is relevant. --></help>
+        <label><!-- Additional Information --></label>
+        <name>Additional_Info__c</name>
+    </fields>
+    <fields>
+        <help><!-- Can the Org Admin enable/disable this feature? --></help>
+        <label><!-- Admin can enable/disable feature? --></label>
+        <name>Admin_enable__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Will the feature be GA, Pilot, or Other in the selected release? --></help>
+        <label><!-- Availability this release --></label>
+        <name>Availability_this_release__c</name>
+        <picklistValues>
+            <masterLabel>GA - General Availability</masterLabel>
+            <translation><!-- GA - General Availability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pilot</masterLabel>
+            <translation><!-- Pilot --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Can the feature be enabled/disabled through BlackTab? --></help>
+        <label><!-- BlackTab can enable/disable feature? --></label>
+        <name>BlackTab_enable__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- You can specify a bug template you would like the security team to use. --></help>
+        <label><!-- Bug Template to Use --></label>
+        <name>Bug_Template_to_Use__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Dev contact for this feature. --></help>
+        <label><!-- Dev Contact --></label>
+        <name>Dev_Contact__c</name>
+        <relationshipLabel><!-- Security Questionnaires (Dev Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- How much of the feature testing for this team is done at the end of release --></help>
+        <label><!-- Doneness % --></label>
+        <name>Doneness__c</name>
+    </fields>
+    <fields>
+        <help><!-- For which Editions will this feature be available? --></help>
+        <label><!-- Editions available in: --></label>
+        <name>Editions_available_in__c</name>
+        <picklistValues>
+            <masterLabel>Developer</masterLabel>
+            <translation><!-- Developer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enterprise</masterLabel>
+            <translation><!-- Enterprise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Personal</masterLabel>
+            <translation><!-- Personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Professional</masterLabel>
+            <translation><!-- Professional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Team</masterLabel>
+            <translation><!-- Team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unlimited</masterLabel>
+            <translation><!-- Unlimited --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is this feature enabled by default? --></help>
+        <label><!-- Feature Default On? --></label>
+        <name>Feature_Default_On__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Link to feature Functional Spec. --></help>
+        <label><!-- Func Spec --></label>
+        <name>Func_Spec__c</name>
+    </fields>
+    <fields>
+        <help><!-- Link to test environment for security testing. (Optional) --></help>
+        <label><!-- Link to test environment --></label>
+        <name>Link_to_test_env__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Management contact for usability and functionality questions. --></help>
+        <label><!-- Management Contact --></label>
+        <name>Mgmt_Contact__c</name>
+        <relationshipLabel><!-- Security Questionnaires (Management Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Perforce code path for this feature. --></help>
+        <label><!-- Code Path in Perforce --></label>
+        <name>P4_code_path__c</name>
+    </fields>
+    <fields>
+        <help><!-- Member of the Product Security Team to which this review is assigned. --></help>
+        <label><!-- Primary Reviewer --></label>
+        <name>Primary_Reviewer__c</name>
+        <relationshipLabel><!-- Security Questionnaires (Primary Reviewer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ProdSec Product Tag --></label>
+        <name>ProdSec_Product_Tag__c</name>
+        <relationshipLabel><!-- Security Questionnaires --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The QE contact for this feature. --></help>
+        <label><!-- QE Contact --></label>
+        <name>QE_Contact__c</name>
+        <relationshipLabel><!-- Security Questionnaires (QE Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Reason for Doneness &lt; 100% --></help>
+        <label><!-- Reason for Doneness &lt; 100% --></label>
+        <name>Reason__c</name>
+        <picklistValues>
+            <masterLabel>Feature unavailable for testing</masterLabel>
+            <translation><!-- Feature unavailable for testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inadequate bandwidth</masterLabel>
+            <translation><!-- Inadequate bandwidth --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low risk feature</masterLabel>
+            <translation><!-- Low risk feature --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Reviewer Notes. --></help>
+        <label><!-- Reviewer Notes --></label>
+        <name>Reviewer_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scheduled Build. --></help>
+        <label><!-- Release --></label>
+        <name>Scheduled_Build__c</name>
+        <relationshipLabel><!-- Security Questionnaires --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Scrum Team that is building this feature. --></help>
+        <label><!-- Product Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- Security Questionnaires --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Member of the Product Security Team to which this review is assigned. --></help>
+        <label><!-- Secondary Reviewer --></label>
+        <name>Secondary_Reviewer__c</name>
+        <relationshipLabel><!-- Security Questionnaires (Secondary Reviewer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The associated security user story for the team --></help>
+        <label><!-- Security User Story --></label>
+        <name>Security_User_Story__c</name>
+        <relationshipLabel><!-- Security Questionnaires --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Provide a short description of the feature or initiative. --></help>
+        <label><!-- Short description of the feature --></label>
+        <name>Short_description_of_the_feature__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status. --></help>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Review</masterLabel>
+            <translation><!-- Ready for Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Review Complete</masterLabel>
+            <translation><!-- Review Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Review In Progress</masterLabel>
+            <translation><!-- Review In Progress --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Link to feature Technical Spec. --></help>
+        <label><!-- Tech Spec --></label>
+        <name>Tech_Spec__c</name>
+    </fields>
+    <fields>
+        <help><!-- Password for test account. (Optional) --></help>
+        <label><!-- Test Password --></label>
+        <name>Test_Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- Username to be used for testing. (Optional) --></help>
+        <label><!-- Test Username --></label>
+        <name>Test_Username__c</name>
+    </fields>
+    <layouts>
+        <layout>Security Questionaire Layout</layout>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Security Review Details --></label>
+            <section>Security Review Details</section>
+        </sections>
+        <sections>
+            <label><!-- Security review --></label>
+            <section>Security review</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

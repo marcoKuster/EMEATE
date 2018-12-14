@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Member_Allocation__c</fullName>
+    <externalId>false</externalId>
+    <label>Total Member Allocation</label>
+    <summarizedField>ADM_Scrum_Team_Member__c.Allocation__c</summarizedField>
+    <summaryForeignKey>ADM_Scrum_Team_Member__c.Scrum_Team__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

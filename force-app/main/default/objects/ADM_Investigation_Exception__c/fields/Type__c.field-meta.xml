@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Check the Help For this page link for more examples</inlineHelpText>
+    <label>Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Severity level upgrade</fullName>
+                <default>true</default>
+                <label>Severity level upgrade</label>
+            </value>
+            <value>
+                <fullName>More status updates/assigned resources</fullName>
+                <default>false</default>
+                <label>More status updates/assigned resources</label>
+            </value>
+            <value>
+                <fullName>During business hours request for after hours resources/communication</fullName>
+                <default>false</default>
+                <label>During business hours request for after hours resources/communication</label>
+            </value>
+            <value>
+                <fullName>After hours triage/diagnosis of Sev 2</fullName>
+                <default>false</default>
+                <label>After hours triage/diagnosis of Sev 2</label>
+            </value>
+            <value>
+                <fullName>After hours request for after hours resources</fullName>
+                <default>false</default>
+                <label>After hours request for after hours resources</label>
+            </value>
+            <value>
+                <fullName>Acknowledgment of a Severity 4 Investigation</fullName>
+                <default>false</default>
+                <label>Acknowledgment of a Severity 4 Investigation</label>
+            </value>
+            <value>
+                <fullName>SLA violated by T&amp;P</fullName>
+                <default>false</default>
+                <label>SLA violated by T&amp;P</label>
+            </value>
+            <value>
+                <fullName>SLA violated by Support</fullName>
+                <default>false</default>
+                <label>SLA violated by Support</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

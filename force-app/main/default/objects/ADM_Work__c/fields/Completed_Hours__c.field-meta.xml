@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Completed_Hours__c</fullName>
+    <description>Total of Actual hours on all the child tasks associated to this work-item</description>
+    <externalId>false</externalId>
+    <label>Completed Hours</label>
+    <summarizedField>ADM_Task__c.Actual_Hours__c</summarizedField>
+    <summaryFilterItems>
+        <field>ADM_Task__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Completed</value>
+    </summaryFilterItems>
+    <summaryForeignKey>ADM_Task__c.Work__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

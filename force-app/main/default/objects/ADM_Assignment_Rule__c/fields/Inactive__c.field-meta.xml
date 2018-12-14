@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Inactive__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to designate if an assignment rule should be applied to work records.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to designate if an assignment rule should be applied to work records.</inlineHelpText>
+    <label>Inactive</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

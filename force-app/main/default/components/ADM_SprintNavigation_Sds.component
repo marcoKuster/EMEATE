@@ -1,0 +1,68 @@
+<apex:component controller="ADM_SprintNavigationController" layout="none">
+<apex:attribute name="currentSprint" type="ADM_Sprint__c" description="The current sprint being viewed" assignTo="{!CurrentSprint}"/>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<div class="slds-col slds-has-flexi-truncate">
+	<div class="slds-media media--rec-home">
+		<div class="slds-media__figure">
+			<svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-custom-95">
+				<use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/custom-sprite/svg/symbols.svg#custom95')}"></use>
+			</svg>
+		</div>
+		<div class="slds-media__body">
+			<p class="slds-text-heading--label">Sprint Wall</p>
+			<div class="slds-grid">
+				<h1 class="slds-text-heading--medium slds-media--rec-home__title slds-truncate">{!currentSprint.Name}</h1>
+				<div class="slds-col slds-shrink-none slds-align-bottom">
+					<button id="pageSettings" class="slds-button slds-button--icon-more slds-shrink-none" aria-haspopup="true">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#settings')}"></use>
+						</svg>
+						<span class="slds-assistive-text">Settings</span>
+						<svg aria-hidden="true" class="slds-button__icon slds-button__icon--x-small">
+							<use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="menu_page_settings" class="slds-dropdown slds-dropdown--nubbin-top slds-dropdown--small slds-dropdown--menu">
+	<!--div class="slds-dropdown__header">
+		<span class="slds-text-heading--label">List View Controls</span>
+	</div-->
+	<ul class="slds-dropdown__list" role="menu">
+		<li href="#" class="slds-dropdown__item" role="menuitem option"><a href="/{!currentSprint.Id}/e">Edit Sprint</a></li>
+		<li href="#" class="slds-dropdown__item" role="menuitem option"><a href="{!ListViewLink}">All Sprints</a></li>
+		<apex:outputPanel layout="none" rendered="{!ThePreviousSprint != null}"><li href="#" class="slds-dropdown__item" role="menuitem option"><a href="/{!ThePreviousSprint}">Previous Sprint</a></li></apex:outputPanel>
+		<apex:outputPanel layout="none" rendered="{!TheNextSprint != null}"><li href="#" class="slds-dropdown__item" role="menuitem option"><a href="/{!TheNextSprint}">Next Sprint</a></li></apex:outputPanel>
+	</ul>
+</div>
+
+<script>
+$(function() {
+    var pageSettingsDropdown = $('#menu_page_settings').hide();
+    $('#pageSettings').click(function(event) {
+        if (pageSettingsDropdown.is(':visible')) {
+	        hide_dd();
+            return false;
+        }
+		hide_dd();
+        pageSettingsDropdown.data('active-button', this);
+        pageSettingsDropdown.show();
+        pageSettingsDropdown.position({
+	        my:"center top",
+	        at:"center bottom",
+	        of:this,
+	        offset:"0px 10px",
+	        collision:"fit"
+	    });
+        $(document).click(hide_dd);
+        return false;
+    });
+});
+</script>
+</html>
+</apex:component>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Complete_By__c</fullName>
+    <externalId>false</externalId>
+    <label>Complete By</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Jan 2009 sprint</fullName>
+                <default>false</default>
+                <label>Jan 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Feb 2009 sprint</fullName>
+                <default>false</default>
+                <label>Feb 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Mar 2009 sprint</fullName>
+                <default>false</default>
+                <label>Mar 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Apr 2009 sprint</fullName>
+                <default>false</default>
+                <label>Apr 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>May 2009 sprint</fullName>
+                <default>false</default>
+                <label>May 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Jun 2009 sprint</fullName>
+                <default>false</default>
+                <label>Jun 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Jul 2009 sprint</fullName>
+                <default>false</default>
+                <label>Jul 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Aug 2009 sprint</fullName>
+                <default>false</default>
+                <label>Aug 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Sep 2009 sprint</fullName>
+                <default>false</default>
+                <label>Sep 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Oct 2009 sprint</fullName>
+                <default>false</default>
+                <label>Oct 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Nov 2009 sprint</fullName>
+                <default>false</default>
+                <label>Nov 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>Dec 2009 sprint</fullName>
+                <default>false</default>
+                <label>Dec 2009 sprint</label>
+            </value>
+            <value>
+                <fullName>--None--</fullName>
+                <default>false</default>
+                <label>--None--</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

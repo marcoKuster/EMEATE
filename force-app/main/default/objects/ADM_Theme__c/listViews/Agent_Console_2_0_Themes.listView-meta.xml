@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agent_Console_2_0_Themes</fullName>
+    <columns>NAME</columns>
+    <columns>Description__c</columns>
+    <columns>Scrum_Team__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>Agent Console 2.0</value>
+    </filters>
+    <filters>
+        <field>Scrum_Team__c</field>
+        <operation>equals</operation>
+        <value>CSS UI</value>
+    </filters>
+    <label>Agent Console 2.0 Themes</label>
+</ListView>

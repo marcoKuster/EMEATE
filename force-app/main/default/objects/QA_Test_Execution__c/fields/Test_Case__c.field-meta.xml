@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Case__c</fullName>
+    <description>Specifies the parent Test Case object.</description>
+    <externalId>false</externalId>
+    <label>Test Case</label>
+    <referenceTo>QA_Test_Case__c</referenceTo>
+    <relationshipLabel>Test Executions</relationshipLabel>
+    <relationshipName>Test_Executions</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

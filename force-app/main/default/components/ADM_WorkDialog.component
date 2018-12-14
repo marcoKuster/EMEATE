@@ -1,0 +1,1173 @@
+<apex:component id="WorkDialog" controller="ADM_WorkDialogController" extensions="ADM_AutoComplete2Controller" layout="none">
+<!-- TODO: CSS class sTabs needs to be defined in here -->
+<style>.ui-dialog-titlebar{display:none;}</style>
+<apex:attribute required="false" name="kanban" type="Boolean" description="." />
+<apex:attribute required="true" name="teamid" type="String" description="." />
+
+<apex:stylesheet value="{!$Resource.kanban_jqueryui_structure}" />
+<apex:includeScript value="{!$Resource.kanban_jquery}" />
+<apex:includeScript value="{!$Resource.kanban_jqueryui}" />
+<apex:includeScript value="{!$Resource.ADM_common_js}" />
+<apex:includeScript value="{!$Resource.ADM_autocomplete2js}" />
+
+
+<style type="text/css">
+/* work editor */
+#workDialog{overflow:visible;cursor:default;}
+#workDialog.dialogloading .workEditorLoader{display:block !important;}
+#workDialog.dialogloading .workEditorForm{visibility:hidden !important;}
+.workEditorLoader{position:absolute;top:50%;left:0;right:0;height:30px;background-position:50% 2px;background-repeat:no-repeat;background-image:url(data:image/gif;base64,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);}
+.workEditorForm{visibility:hidden;}
+#workEditor label{font-size:11px;font-weight:bold;margin-bottom:5px;white-space:nowrap;display:block;}
+#workEditor input[type=text],
+#workEditor textarea,
+#workEditor select{width:100%;color:#000;}
+#workEditor input[type=text]:focus,
+#workEditor textarea:focus,
+#workEditor select:focus,
+#workEditor div.contenteditable:focus{background-color:#FFE;border-color:#AAA;}
+.ui-dialog button[disabled],
+.ui-dialog button[disabled]:active{/*border:1px transparent solid;*/cursor:default;}
+#workDialogLink{float:left;margin-top:14px;margin-left:9px;font-size:11px;font-weight:bold;}
+#workDialogLink a{color:#666;}
+#workDialogLink a:hover{color:#000;}
+
+#workDialogHeader{position:relative;}
+#workDialogHeader #workToolbar{position:absolute;right:-9px;top:-4px;}
+#workDialogHeader #workToolbar i{font-size:16px;text-decoration:none;outline:0;color:#555;cursor:pointer;padding:7px 10px;}
+#workDialogHeader #workToolbar i:hover{color:#000;}
+
+#workEditor textarea{width:100%;resize:none;height:367px;}
+#workEditor div.contenteditable{padding:5px;background:#fff;margin-top:5px;overflow:auto;height:367px;outline:0;border-radius:5px;border:1px #ccc solid;color:#000;}
+#workEditor select{border-radius:4px;border:1px #ccc solid;}
+
+#workEditor .workEditorRow{display:table;width:100%;margin-bottom:15px;}
+#workEditor .workEditorRow > div:not(.contenteditable){/*display:table-cell;*/padding-left:6px;padding-right:6px;}
+#workEditor .workEditorRow > div:not(.contenteditable):first-child{padding-left:0px;}
+#workEditor .workEditorRow > div:not(.contenteditable):last-child{padding-right:0px;}
+#workEditor .workEditorRow:last-child{margin-bottom:5px;}
+
+#workEditor .workEditor1Column{display:block;}
+#workEditor .workEditor2Column > div{width:50%;}
+#workEditor .workEditor3Column > div{width:33%;}
+#workEditor .workEditor4Column > div{width:25%;}
+#workEditor .workEditor5Column > div{width:20%;}
+
+#workEditor div.input-prepend{display:table;width:100%;-moz-box-sizing:border-box;box-sizing:border-box;}
+#workEditor div.input-prepend div.input-prepend-col1{display:table-cell;width:30px;}
+#workEditor div.input-prepend div.input-prepend-col2{display:table-cell;width:100%;}
+#workEditor div.input-prepend div.input-prepend-col3{display:table-cell;}
+#workEditor div.input-prepend img{vertical-align:top;display:inline-block;width:27px;height:27px;border-top-left-radius:4px;border-bottom-left-radius:4px;border:1px #c0c0c0 solid;border-right:0;}
+#workEditor div.input-prepend input{vertical-align:top;display:inline-block;width:100%;/*min-height:30px;*/-moz-box-sizing:border-box;box-sizing:border-box;border-radius:0 4px 4px 0;margin:0;}
+
+#workEditor .gusFieldRequired input[type=text],
+#workEditor .gusFieldRequired select,
+#workEditor .gusFieldRequired.userInput img{border-left: 4px #c11717 solid;}
+#workEditor .gusFieldRequired.userInput input[type=text]{border-left:1px solid #ccc;}
+#workEditor div.priorityFound{color:#000;font-weight:bold;}
+
+#workEditor .alert-error{display:none;border:2px #D6C639 solid;border-radius:5px;padding:5px;margin-bottom:10px;background:#F7F4D7;font-size:11px;}
+#workEditor .alert-error ul{margin:0;padding:0;list-style-type:square;}
+
+#workEditor fieldset{border:1px #C0C0C0 solid;border-radius:5px;padding-top:10px;margin-bottom:15px;background:#DFDFDF;}
+#workEditor fieldset:last-child{margin-bottom:0;}
+#workEditor legend{text-transform:uppercase;color:#8B8B8B;font-size:10px;padding:0 5px;text-align:center;}
+
+#workChatter{display:none;}
+
+.ui-dialog-error,.ui-dialog-alert{display:none;margin-top:10px;padding:5px 10px;color:#FFF;border-radius:5px;}
+.ui-dialog-error{background:#C03300;}
+.ui-dialog-alert{background:#007EC0;}
+
+#workEditor .ui-dialog-error,
+#workEditor .ui-dialog-alert{margin-bottom:10px;}
+#tabChatterDisabled{color:#B5B5B5;text-transform:uppercase;font-weight:bold;font-size:11px;padding:7px 16px;cursor:default;}
+
+#productTagHolder{display:none;background:#DFDFDF;border:1px #C0C0C0 solid;border-radius:5px;font-weight:bold;font-size:11px;height:27px;}
+#productTagHolder > div{display:table-cell;vertical-align:middle;padding:0px 8px;}
+#productTagHolder #productTagArrow{margin-left:3px;margin-right:2px;}
+#productTagHolder #productTagRemove{color:#B2B2B2;margin-left:5px;cursor:pointer;}
+#productTagHolder #productTagRemove:hover{color:#666;}
+
+.ui-menu-item img{margin:-4px 7px -5px -4px;width:24px;vertical-align:bottom;border-radius:4px;}
+</style>
+
+<div id="workDialog" class="ui-dialog ui-front" title="Work">
+	<div id="workDialogHeader">
+		<div id="workToolbar"><i class="fa fa-times"></i></div>
+		<ul class="sTabs">
+			<li id="tabWorkDetails" class="on"><a href="#">Work Details</a></li>
+			<li id="tabChatter"><a href="#">Activity</a></li>
+			<li id="tabChatterDisabled">Activity</li>
+		</ul>
+	</div>
+	
+	<div id="workChatter" class="workDialogBox">
+		<iframe src="" frameborder="0" width="100%" height="100" seamless="true"></iframe>
+	</div>
+
+		<div id="workEditor" class="workDialogBox">
+		    <div class="workEditorLoader"></div>
+		    <div class="ui-dialog-alert"></div>
+		    <div class="ui-dialog-error"></div>
+		    <div class="workEditorForm">
+			    <form action="ADM_Kanban" method="post" onSubmit="submitWork();return false">
+		        
+				<div style="display:table;width:100%;">		        
+		        	<div id="workEditorLeft" style="width:70%;max-width:608px;vertical-align:top;display:table-cell;padding-right:5px;">
+				        
+				        <div id="workEditorLeftHeader" style="margin-bottom:15px;">
+					        <div class="workEditorRow workEditor1Column">
+					            <div style="display:block;" class="gusFieldRequired">
+					                <label for="subjectInput">Subject</label>
+					                <input id="subjectInput" type="text" value="" />
+					            </div>
+					        </div>
+					        
+					        <div class="workEditorRow workEditor1Column">
+					            <div style="display:block;" class="gusFieldRequired">
+					                <label for="productTagInput">Product Tag</label>
+					                <input id="productTagInput" type="text" value="" />
+					                <div id="productTagHolder">
+						                <div>
+							                <span id="productTagTeam"></span> <i id="productTagArrow" class="fa fa-caret-right"></i> <span id="productTagName"></span> <i id="productTagRemove" class="fa fa-remove"></i>
+							            </div>
+					                </div>
+					            </div>
+					        </div>
+				        </div>
+
+				        <div class="userStoryField workEditorRow workEditor1Column" style="margin-bottom:0;">
+				            <label for="descriptionInput">Description</label>
+				            <textarea id="descriptionInput" rows="3"></textarea>
+				        </div>
+				        
+				        <div class="bugField workEditorRow workEditor1Column" style="margin-bottom:0;">
+				            <label for="detailsAndStepsInput">Details and Steps to Reproduce</label>
+			                <div id="detailsAndStepsInput" contenteditable="true" class="contenteditable"></div>
+				        </div>
+			
+		        	</div>
+	        		<div id="workEditorRight" style="width:30%;vertical-align:top;display:table-cell;padding-left:5px;">
+
+						<fieldset>
+							<legend>Record Details</legend>
+
+					        <div class="workEditorRow workEditor1Column">
+					            <div class="gusFieldRequired">
+									<label style="display:inline;margin-right:10px;" for="recordTypeInputUserStory"><input type="radio" id="recordTypeInputUserStory" name="recordTypeInput" value="User Story" checked="checked" /> User Story</label>
+									<label style="display:inline;" for="recordTypeInputBug"><input type="radio" id="recordTypeInputBug" name="recordTypeInput" value="Bug" /> Bug</label>
+					            </div>
+					        </div>
+	
+					        <div class="workEditorRow workEditor1Column">
+								<apex:outputPanel rendered="{!kanban == true}" layout="none">
+						            <div class="gusFieldRequired">
+						                <label for="columnInput">Kanban State</label>
+						                <select id="columnInput" style="width:100%;"></select>
+						            </div>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!kanban != true}" layout="none">
+						            <div class="gusFieldRequired">
+						                <label for="statusInput">Status</label>
+						                <select id="statusInput" style="width:100%;"></select>
+						            </div>
+								</apex:outputPanel>
+					        </div>
+
+							<apex:outputPanel rendered="{!kanban != true}" layout="none">
+						        <div class="workEditorRow workEditor1Column">
+						            <div>
+						                <label for="sprintInput">Sprint</label>
+						                <input id="sprintInput" type="text" value="" tabindex="4" />
+						            </div>
+						        </div>
+							</apex:outputPanel>
+	
+	
+					        <div class="workEditorRow workEditor1Column">
+					            <div>
+					                <label for="epicInput">Epic</label>
+					                <input id="epicInput" type="text" value="" />
+					            </div>
+					        </div>
+
+							<div class="bugField" style="display:table;margin-bottom:10px;">
+								<div style="display:table-cell;width:50%;padding-right:5px;">
+									
+									
+							        <div class="bugField workEditorRow workEditor1Column">
+							            <div class="gusFieldRequired">
+							                <label for="foundInBuildInput">Found in Build</label>
+							                <input id="foundInBuildInput" type="text" value="" />
+							            </div>
+							        </div>
+			
+								</div>
+								<div style="display:table-cell;width:50%;padding-left:5px;">
+
+							        <div class="bugField workEditorRow workEditor1Column">
+							            <div>
+							                <label for="scheduledBuildInputBug">Scheduled Build</label>
+							                <input id="scheduledBuildInputBug" type="text" value="" />
+							            </div>
+							        </div>
+
+								</div>
+							</div>
+	
+					        <div class="userStoryField workEditorRow workEditor1Column">
+					            <div>
+					                <label for="scheduledBuildInputUserStory">Scheduled Build</label>
+					                <input id="scheduledBuildInputUserStory" type="text" value="" />
+					            </div>
+					        </div>
+	
+					        <!--div class="bugField workEditorRow workEditor1Column">
+					            <div class="gusFieldRequired">
+					                <label for="impactInput">Impact</label>
+					                <select id="impactInput" style="width:100%;"></select>
+					            </div>
+					        </div-->
+	
+					        <!--div class="bugField workEditorRow workEditor1Column">
+					            <div class="gusFieldRequired">
+					                <label for="frequencyInput">Frequency</label>
+					                <select id="frequencyInput" style="width:100%;"></select>
+					            </div>
+					        </div-->
+	
+					        <!--div class="bugField workEditorRow workEditor1Column">
+					            <div>
+					                <label for="priorityText">Priority</label>
+					                <div id="priorityText" style="padding-top:7px;">To Be Calculated</div>
+					                <input type="hidden" id="priorityInput" value="" />
+					            </div>
+					        </div-->
+	
+					        <div class="bugField workEditorRow workEditor1Column" style="margin-bottom:5px;">
+					            <div class="gusFieldRequired">
+					                <label for="priorityText">Priority</label>
+					                <select id="priorityInput" style="width:100%;">
+						                <option>P0</option>
+					                </select>
+					            </div>
+					        </div>
+
+					        <!--apex:outputPanel rendered="{!kanban != true}" layout="none"-->
+						        <div class="userStoryField workEditorRow workEditor1Column" style="margin-bottom:5px;">
+						            <div>
+						                <label for="storyPointsInput">Story Points</label>
+						                <select id="storyPointsInput" style="width:100%;"></select>
+						            </div>
+						        </div>
+					        <!--/apex:outputPanel-->
+
+						</fieldset>
+
+						<fieldset>
+							<legend>People</legend>
+						
+					        <div class="workEditorRow workEditor1Column">
+					            <div>
+					                <label for="assignedToInput">Assignee</label>
+					                <div class="input-prepend">
+					                    <div class="input-prepend-col1"><img id="assignedToProfileImage" src="/profilephoto/005/F" /></div>
+					                    <div class="input-prepend-col2"><input id="assignedToInput" type="text" value="" /></div>
+					                </div>
+					            </div>
+					        </div>
+	
+					        <div class="workEditorRow workEditor1Column">
+					            <div>
+					                <label for="qaEngineerInput">QA Engineer</label>
+					                <div class="input-prepend">
+					                    <div class="input-prepend-col1"><img id="qaEngineerProfileImage" src="/profilephoto/005/F" /></div>
+					                    <div class="input-prepend-col2"><input id="qaEngineerInput" type="text" value="" /></div>
+					                </div>
+					            </div>
+					        </div>
+	
+					        <div class="workEditorRow workEditor1Column">
+					            <div>
+					                <label for="productOwnerInput">Product Owner</label>
+					                <div class="input-prepend">
+					                    <div class="input-prepend-col1"><img id="productOwnerProfileImage" src="/profilephoto/005/F" /></div>
+					                    <div class="input-prepend-col2"><input id="productOwnerInput" type="text" value="" /></div>
+					                </div>
+					            </div>
+					        </div>
+						</fieldset>
+
+	        		</div>
+				</div>
+		        
+		        
+		        
+		        
+			    </form>
+		    </div>
+		</div>
+</div>
+
+<script type="text/javascript">
+(function($){
+	var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#sprintInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Sprint__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+	var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#scheduledBuildInputBug');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Build__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+	var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#scheduledBuildInputUserStory');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Build__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+	var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#foundInBuildInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Build__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#assignedToInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: 'User', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#qaEngineerInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: 'User', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#productOwnerInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: 'User', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+	var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#productTagInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Product_Tag__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#epicInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+    
+    var input = autocomplete2.initialize({queryName: 'ADM_Epic__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+    
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+</script>
+<script type="text/javascript">
+var selectedWork = '';
+
+$(document).on('click','#tabWorkDetails a', function(e) {
+	showWorkBox('#workEditor',this);
+	return false;
+});
+
+$(document).on('click','#tabChatter a', function(e) {
+	showWorkBox('#workChatter',this);
+	return false;
+});
+
+function showWorkBox(box,tab) {
+	$('#workDialogHeader > ul.sTabs > li').removeClass('on');
+	$(tab).closest('li').addClass('on');
+	$('.workDialogBox').hide();
+	$(box).appendTo('#workDialog').show();
+	$('.workDialogBox:hidden').appendTo('#workDialog');
+	$('#workChatter iframe').css('height',$('#workEditor').outerHeight() + 'px');
+	if (box === '#workEditor') {
+		$('button#workSaveButton').show();
+	} else {
+		$('button#workSaveButton').hide();
+	}
+}
+
+function validateField(field) {
+	if (($('#' + field)).is('div[contenteditable]')) {
+		return ($('#' + field + 'Hidden').html() !== $('#' + field).html());
+	} else {
+		return (($('#' + field).val() !== $('#' + field).data('originalText')) || ($('#' + field + 'Hidden').length > 0 && $('#' + field + 'Hidden').val() !== $('#' + field).data('originalText')));
+	}
+}
+
+function getField(field) {
+	if (($('#' + field)).is('div[contenteditable]')) {
+		return $('#' + field).html();
+	} else {
+		if ($('#' + field + 'Hidden').length > 0) {
+			return $('#' + field + 'Hidden').val();
+		} else {
+			return $('#' + field).val();
+		}
+	}
+}
+
+function submitWork() {
+	var workSObject = {};
+	var workType = '';
+	// Existing Work
+	if (selectedWork.length > 0) {
+		workSObject.Id = selectedWork;
+	}
+	
+	// Record Type
+	if ($('#recordTypeInputUserStory').is(':checked')) {
+		workType = 'User Story';
+	} else if ($('#recordTypeInputBug').is(':checked')) {
+		workType = 'Bug';
+	}
+	
+	// Product Tag
+	if (validateField('productTagInput')) {
+		workSObject.Product_Tag__c = getField('productTagInput');
+	}
+
+	// Subject
+	if (validateField('subjectInput')) {
+		workSObject.Subject__c = getField('subjectInput');
+	}
+
+	// Kanban State
+	if (validateField('columnInput')) {
+		workSObject.Column__c = getField('columnInput');
+		workSObject.Column_Rank__c = 0;
+	}
+
+	// GUS Status
+	if (validateField('statusInput')) {
+		workSObject.Status__c = getField('statusInput');
+	}
+
+	// Sprint
+	if (validateField('sprintInput')) {
+		workSObject.Sprint__c = getField('sprintInput');
+	}
+
+	// Epic
+	if (validateField('epicInput')) {
+		workSObject.Epic__c = getField('epicInput');
+	}
+
+	// Assignee
+	if (validateField('assignedToInput')) {
+		workSObject.Assignee__c = getField('assignedToInput');
+	}
+	
+	// QA Engineer
+	if (validateField('qaEngineerInput')) {
+		workSObject.QA_Engineer__c = getField('qaEngineerInput');
+	}
+
+	// Product Owner
+	if (validateField('productOwnerInput')) {
+		workSObject.Product_Owner__c = getField('productOwnerInput');
+	}
+
+	// Scheduled Build (Bug)
+	if ($('#recordTypeInputBug').is(':checked') && validateField('scheduledBuildInputBug')) {
+		workSObject.Scheduled_Build__c = getField('scheduledBuildInputBug');
+	}
+
+	// Scheduled Build (User Story)
+	if ($('#recordTypeInputUserStory').is(':checked') && validateField('scheduledBuildInputUserStory')) {
+		workSObject.Scheduled_Build__c = getField('scheduledBuildInputUserStory');
+	}
+
+	// Details and Steps to Reproduce
+	if ($('#recordTypeInputBug').is(':checked') && validateField('detailsAndStepsInput')) {
+		workSObject.Details_and_Steps_to_Reproduce__c = getField('detailsAndStepsInput');
+	}
+/*
+	if ($('#detailsAndStepsInputHidden').html() !== $('#detailsAndStepsInput').html()) {
+		workSObject.Details_and_Steps_to_Reproduce__c = $('#detailsAndStepsInput').html();
+	}
+*/
+
+	// Found in Build
+	if ($('#recordTypeInputBug').is(':checked') && validateField('foundInBuildInput')) {
+		workSObject.Found_in_Build__c = getField('foundInBuildInput');
+	}
+		
+	// Impact
+	//if ($('.bugField').is(':visible') && validateField('impactInput')) {
+	//	workSObject.Impact__c = getField('impactInput');
+	//}
+	
+	// Frequency
+	//if ($('.bugField').is(':visible') && validateField('frequencyInput')) {
+	//	workSObject.Frequency__c = getField('frequencyInput');
+	//}
+	
+	// Priority
+	if ($('#recordTypeInputBug').is(':checked') && validateField('priorityInput')) {
+		workSObject.Priority__c = getField('priorityInput');
+	}
+	
+	// Description
+	if ($('#recordTypeInputUserStory').is(':checked') && validateField('descriptionInput')) {
+		workSObject.Details__c = getField('descriptionInput');
+	}
+
+	// Story Points
+	if (validateField('storyPointsInput')) {
+		workSObject.Story_Points__c = getField('storyPointsInput');
+	}
+
+	console.log(workSObject);
+	workDialog.addClass('dialogloading');
+	$('button#workSaveButton').attr('disabled','disabled');
+	$('button#workSaveButton span').html('Saving...');
+	
+	if (Object.keys(workSObject).length > 0) {
+	     Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.saveWork}', workSObject, {!kanban}, workType, function(result, event) {
+	        if (event.status) {
+	            console.log('Save good!');
+	            workDialog.removeClass('dialogloading').dialog('close');
+	            $('button#workSaveButton').removeAttr('disabled');
+				$('button#workSaveButton span').text('Save');
+				workDialog.find('.hiddenIdHolder').remove();
+				if (typeof refreshBoard == 'function') { 
+					refreshBoard();
+				}
+				if (typeof loadBacklogDialog === 'function' && $('#backlogDialog').is(':visible')) {
+					loadBacklogDialog();
+				}
+	        } else if (event.type === 'exception') {
+	            console.warn('Error during save, changes not saved.');
+				$('#workEditor .ui-dialog-error').html(trimErrorMessage(event.message)).show();
+	            workDialog.removeClass('dialogloading');
+	            $('button#workSaveButton').removeAttr('disabled');
+				$('button#workSaveButton span').text('Save');
+			}
+		});
+	} else {
+        console.log('Save not needed (no changes detected)');
+        workDialog.removeClass('dialogloading').dialog('close');
+        $('button#workSaveButton').removeAttr('disabled');
+		$('button#workSaveButton span').text('Save');
+		workDialog.find('.hiddenIdHolder').remove();
+		if (typeof refreshBoard == 'function') { 
+			refreshBoard();
+		}
+	}
+}
+
+function trimErrorMessage(errorMessage) {
+	var returnMessage = errorMessage.replace(/'/g, '&#39;');
+	returnMessage = returnMessage.replace('FIELD_CUSTOM_VALIDATION_EXCEPTION, ','');
+	returnMessage = returnMessage.replace(': []','');
+	if (returnMessage.indexOf('first error:') > -1) {
+	    return returnMessage.substring(returnMessage.indexOf('first error:')+12).trim();
+	} else {
+	    return returnMessage.substring(returnMessage.indexOf(':')+1).trim();
+	}
+}
+
+function bindWorkInput(inputId,inputObject,inputObjectPhoto) {
+	inputObjectId = '';
+	inputObjectName = '';
+	inputObjectSmallPhotoUrl = '/profilephoto/005/F';
+
+	if (typeof inputObject === 'string') {
+		//console.log('Binding STRING to ' + inputId + '. Current value: ' + inputObject);
+		inputObjectName = inputObject
+	} else if (typeof inputObject === 'object') {
+		//console.log('Binding OBJECT DATA to ' + inputId + '. Current value: ' + JSON.stringify(inputObject));
+		if (inputObject.Id) { inputObjectId = inputObject.Id; }
+		if (inputObject.Name) { inputObjectName = inputObject.Name; }
+		if (inputObject.SmallPhotoUrl) { inputObjectSmallPhotoUrl = inputObject.SmallPhotoUrl; }
+	} else {
+		inputObject = '';
+		//console.log('Binding BLANK to ' + inputId + '. Current value: ' + inputObject);
+	}
+
+	if ($(inputId).is('div[contenteditable]')) {
+		$(inputId)
+		.html(inputObjectName)
+		.data('originalText',inputObjectName)
+		.parent().append('<div class="hiddenIdHolder" id="' + inputId.replace('#','') + 'Hidden" style="display:none !important;">');
+		$(inputId + 'Hidden').html(inputObjectName);
+	} else {
+		$(inputId)
+		.val(inputObjectName)
+		.data('originalText',inputObjectName)
+		.data('originalId',inputObjectId)
+		.on('change', function(e) {
+			//console.log('A field has changed');
+			$(this).parent().find('.hiddenIdHolder').remove();
+		});
+	}
+
+	$(inputObjectPhoto).attr('src',inputObjectSmallPhotoUrl);
+}
+
+function bindWorkSelect(inputId,inputValues,currentValue,allowBlank,blankValue) {
+	if (typeof currentValue === 'undefined') {
+		currentValue = '';
+	}
+
+	//console.log('Binding PICKLIST DATA to ' + inputId + '. Current value: ' + currentValue);
+
+	var ddValue = '';
+	if (allowBlank) {
+		if (blankValue) {
+			ddValue += '<option value="">' + blankValue + '</option>';
+		} else {
+			ddValue += '<option value="">-None-</option>';
+		}
+	}
+
+	if (inputValues !== undefined) {
+		inputValues.forEach(function(option, index){
+			if (option.Id) {
+				ddValue += '<option value="' + option.Id + '"';
+				if (currentValue === option.Id) { ddValue += ' selected'; }
+				ddValue += '>' + option.Name + '</option>';
+			} else if (option.Name) {
+				ddValue += '<option value="' + option.Name + '"';
+				if (currentValue === option.Name) { ddValue += ' selected'; }
+				ddValue += '>' + option.Name + '</option>';
+			} else {
+				if (typeof option === 'object') {
+					ddValue += '<option value="' + option[index] + '"';
+					if (typeof currentValue !== 'undefined') {
+						if (currentValue.toString() === option[index].toString()) { ddValue += ' selected'; }
+					}
+					ddValue += '>' + option[index] + '</option>';
+				} else {
+					ddValue += '<option value="' + option + '"';
+					if (typeof currentValue !== 'undefined') {
+						if (currentValue.toString() === option.toString()) { ddValue += ' selected'; }
+					}
+					ddValue += '>' + option + '</option>';
+				}
+			}
+		});
+	}
+
+	$(inputId)
+	.empty()
+	.append(ddValue)
+	.data('originalText',currentValue.toString())
+	.on('change', function(e) {
+		//console.log('A field has changed');
+		$(this).parent().find('.hiddenIdHolder').remove();
+	});
+}
+
+function selectedProductTag(obj) {
+	$('#workEditor .slds-notify--error,#workEditor .slds-notify--warning').html(null).hide();
+	$('#productTagInput').hide();
+	$('#productTagHolder').css('display','table');
+	$('#productTagTeam').text(obj.TeamName);
+	$('#productTagName').text(obj.Name);
+	$('textarea#descriptionInput:visible,div#detailsAndStepsInput:visible').focus();
+	if (obj.TeamId !== '{!teamId}' && {!kanban} === true) {
+	    $('#workEditor .ui-dialog-alert').html('You have selected a Product Tag belonging to another team. You will not be able to place this work on your Kanban board.').show();
+		if ($("#columnInput").get(0).length > 1) {
+			$("#columnInput").get(0).selectedIndex = 0;
+		}
+		$("#columnInput").attr('disabled','disabled');
+	}
+
+	//Find selected Record Type on the work dialog
+  var  selectedRecordType = '';
+  if($('#recordTypeInputUserStory').is(':checked')) {
+    selectedRecordType = 'user story';
+  }
+  else if($('#recordTypeInputBug').is(':checked')) {
+    selectedRecordType = 'bug';
+  }
+	else if($('#recordTypeInputInvestigation').is(':checked')) {
+		selectedRecordType = 'investigation';
+}
+
+  var severityLevel = $('#severityInput').val() || ''; //Assigning default in case severity is hidden or not visible
+	var productTagId = obj.Id;
+
+  //Initialize fields before assigning...
+	$('#assignedToInput,#qaEngineerInput,#productOwnerInput').val('');
+  $('#assignedToProfileImage,#qaEngineerProfileImage,#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.getProductTagAutoAssignees}', severityLevel, productTagId, selectedRecordType, function(result, event) {
+		 if(event.status) {
+				 console.log(result);
+         if(result.errorMessages && result.errorMessages.length > 0){
+           $('#workEditor .slds-notify--error').html(result.errorMessages[0]).show();
+         }
+         else{
+             if(result.assignments){
+                 /*
+                  Assignee information from AutoAssignment -
+                 */
+                 if(result.assignments.Assignee){
+                   $('#assignedToInput').val(result.assignments.Assignee.Name);
+                   //Make sure initialize to default in else part - if not previously assigned photo remains if SmallPHotoUrl is undefined
+                   if(result.assignments.Assignee.SmallPhotoUrl){
+                     $('#assignedToProfileImage').attr('src',result.assignments.Assignee.SmallPhotoUrl);
+                   }
+                   else{
+              	        $('#assignedToProfileImage').attr('src','/profilephoto/005/F');
+              	     }
+                }
+
+                /*
+                 QA information from AutoAssignment -
+                */
+                if(result.assignments.QA_Engineer){
+                  $('#qaEngineerInput').val(result.assignments.QA_Engineer.Name);
+                  //Make sure initialize to default in else part - if not previously assigned photo remains if SmallPHotoUrl is undefined
+                  if(result.assignments.QA_Engineer.SmallPhotoUrl){
+                    $('#qaEngineerProfileImage').attr('src',result.assignments.QA_Engineer.SmallPhotoUrl);
+                  }
+                  else{
+                     $('#qaEngineerProfileImage').attr('src','/profilephoto/005/F');
+                  }
+               }
+
+               /*
+                Product Owner information from AutoAssignment -
+               */
+               if(result.assignments.Product_Owner){
+                 $('#productOwnerInput').val(result.assignments.Product_Owner.Name);
+                 //Make sure initialize to default in else part - if not previously assigned photo remains if SmallPHotoUrl is undefined
+                 if(result.assignments.Product_Owner.SmallPhotoUrl){
+                   $('#productOwnerProfileImage').attr('src',result.assignments.Product_Owner.SmallPhotoUr);
+                 }
+                 else{
+                    $('#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+                 }
+              }
+            }
+         }
+       }
+       else if (event.type === 'exception') {
+           console.warn('Error during Auto Assignee remote call');
+           $('#workEditor .slds-notify--error').html(trimErrorMessage(event.message)).show();
+       }
+	});
+}
+
+function productTagRemove(focusField) {
+	//On removing product tag remove auto assignees and pictures & any errors on Work Dialog
+  $('#workEditor .slds-notify--error,#workEditor .slds-notify--warning').html(null).hide();
+	$('#assignedToInput,#qaEngineerInput,#productOwnerInput').val('');
+  $('#assignedToProfileImage,#qaEngineerProfileImage,#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+	$('#productTagHolder').hide();
+	$('#productTagInput').val('').show();
+	$('#workEditor .ui-dialog-alert:contains("Product Tag")').html(null).hide();
+	$("#columnInput").removeAttr('disabled');
+	$('#productTagInputHidden').remove();
+	if (focusField) {
+		$('#productTagInput').focus();
+	}
+}
+
+$(function() {
+	var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+	workDialog = $("#workDialog").dialog({
+        autoOpen: false,
+        resizable: false,
+        width:900,
+        height:618,
+        modal: true,
+        title: "Work",
+        buttons: {
+            "Save": {
+	            text: "Save",
+	            id: "workSaveButton",
+	            click: function() {
+	            	submitWork();
+				}
+            },
+            "Close": function() {
+                workDialog.dialog("close");
+            }
+        },
+        open: function(event, ui) {
+	        
+	        $('#workEditor .ui-dialog-error,#workEditor .ui-dialog-alert').html(null).hide();
+			showWorkBox('#workEditor','#tabWorkDetails a');
+			if ($('#workDialogLink').length === 0) {
+				$('#workDialog').parent().find('.ui-dialog-buttonpane').prepend('<div id="workDialogLink"></div>')
+			}
+			
+	        if (selectedWork.length > 0) {
+		        // EXISTING WORK
+				$('#tabChatter,#workDialogLink').show();
+				$('#tabChatterDisabled').hide();
+				//$('#workToolbar a').attr('href','/' + selectedWork);
+				$('#workDialogLink').html('<a target="_blank" href="/' + selectedWork + '">{!baseUrl}/' + selectedWork + '</a>').show();
+
+	            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.getWorkEditorDialogMetaData}', selectedWork, '{!JSINHTMLENCODE(teamId)}', function(result, event) {
+	                if (event.status) {
+						console.log(result);
+						
+						kanbanDD = [];
+						$.each(result.leafNodeDetailsList, function(index, list) {
+							kanbanDD.push({
+								Id:list.columnId,
+								Name:list.path
+							});
+						});
+						
+						bindWorkSelect('#columnInput',kanbanDD,result.workSObject[nameSpace + 'Column__c'],true,'-Not on board-');
+						bindWorkInput('#subjectInput',result.workSObject[nameSpace + 'Subject__c']);
+                        bindWorkSelect('#statusInput',result.userStoryStatuses,result.workSObject[nameSpace + 'Status__c']);
+						bindWorkInput('#sprintInput',result.workSObject[nameSpace + 'Sprint__r']);
+						bindWorkInput('#assignedToInput',result.workSObject[nameSpace + 'Assignee__r'],'#assignedToProfileImage');
+						bindWorkInput('#qaEngineerInput',result.workSObject[nameSpace + 'QA_Engineer__r'],'#qaEngineerProfileImage');
+						bindWorkInput('#productOwnerInput',result.workSObject[nameSpace + 'Product_Owner__r'],'#productOwnerProfileImage');
+						bindWorkInput('#scheduledBuildInputBug',result.workSObject[nameSpace + 'Scheduled_Build__r']);
+						bindWorkInput('#foundInBuildInput',result.workSObject[nameSpace + 'Found_in_Build__r']);
+						bindWorkInput('#epicInput',result.workSObject[nameSpace + 'Epic__r']);
+						//bindWorkSelect('#impactInput',result.impacts,result.workSObject[nameSpace + 'Impact__c']);
+						//bindWorkSelect('#frequencyInput',result.frequencies,result.workSObject[nameSpace + 'Frequency__c']);
+						$('#priorityText').addClass('priorityFound').text(result.workSObject[nameSpace + 'Priority__c']);
+						bindWorkInput('#descriptionInput',result.workSObject[nameSpace + 'Details__c']);
+						bindWorkInput('#detailsAndStepsInput',result.workSObject[nameSpace + 'Details_and_Steps_to_Reproduce__c']);
+						bindWorkInput('#scheduledBuildInputUserStory',result.workSObject[nameSpace + 'Scheduled_Build__r']);
+						bindWorkSelect('#storyPointsInput',result.storyPoints,result.workSObject[nameSpace + 'Story_Points__c'],true);
+						bindWorkSelect('#priorityInput',result.priorities,result.workSObject[nameSpace + 'Priority__c']);
+
+						// Priority Matrix
+						$(document).on('change','#impactInput,#frequencyInput', function(e) {
+							$('#priorityText').removeClass('priorityFound').text('To Be Calculated');
+							$('#priorityInput').val('');
+							result.priorityMappings.forEach(function(option, index){
+							 	if ($('#impactInput').val() === option[nameSpace + 'Impact__c'] && $('#frequencyInput').val() === option[nameSpace + 'Frequency__c']) {
+									$('#priorityText').addClass('priorityFound').text(option[nameSpace + 'Priority__r.Name']);
+									//$('#priorityInput').val(option.Priority__r.Name);
+								}
+							});
+						});
+
+						if (result.workSObject[nameSpace + 'Record_Type__c'] === 'Bug') {
+							$('.bugField').show();
+							$('.userStoryField').hide();
+							$('#recordTypeInputUserStory').prop('checked',false);
+							$('#recordTypeInputBug').prop('checked',true);
+							
+						} else if (result.workSObject[nameSpace + 'Record_Type__c'] === 'User Story') {
+							$('.userStoryField').show();
+							$('.bugField').hide();
+							$('#recordTypeInputUserStory').prop('checked',true);
+							$('#recordTypeInputBug').prop('checked',false);
+						}
+
+						$('#productTagHolder').css('display','table');
+			            $('#productTagTeam').text(result.workSObject[nameSpace + 'Scrum_Team_Name__c']);
+			            $('#productTagName').text(result.workSObject[nameSpace + 'Product_Tag_Name__c']);
+						$('#productTagInput').hide().val(result.workSObject[nameSpace + 'Product_Tag__c']).data('originalText',result.workSObject[nameSpace + 'Product_Tag__c']);
+
+				        $('.workEditorLoader').hide();
+						$('.workEditorForm').css('visibility','visible');
+						$('#subjectInput').focus();
+	
+						// Populate Chatter information
+						$('#workChatter iframe').attr('src','/apex/ADM_WorkDialogChatter?id=' + selectedWork);
+						$('#workDialog').css('height','auto');
+						$('#descriptionInput,#detailsAndStepsInput').height(0).height($('#workEditorLeft').height() - $('#workEditorLeftHeader').height() - 45);
+
+	                } else if (event.type === 'exception') {
+						workDialog.removeClass('dialogloading').dialog('close');
+						console.error(event.message);
+						if (event.message.toLowerCase().indexOf("request invalid for your session") > -1 || event.message.toLowerCase().indexOf("logged in?") > -1) {
+							errorDialog.html("It looks like your session has expired. Please refresh the page.").dialog({ title: "Error During Opening" }).dialog( "option", "buttons", [{text: "Refresh", click: function() { location.reload(); } }]).dialog("open");
+						} else {
+							errorDialog.html("Bad data returned from server: " + event.message).dialog({ title: "Error During Opening" }).dialog("open");
+						}
+					}
+				}, {escape:false});
+			} else {
+				// NEW WORK
+				$('#tabChatterDisabled').show();
+				$('#tabChatter').hide();
+				$('#workDialogLink').html(null).hide();
+
+	            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.getWorkEditorDialogMetaData}', null, '{!JSINHTMLENCODE(teamId)}', function(result, event) {
+	                if (event.status) {
+						console.log(result);
+						
+						kanbanDD = [];
+						$.each(result.leafNodeDetailsList, function(index, list) {
+							kanbanDD.push({
+								Id:list.columnId,
+								Name:list.path
+							});
+						});
+						
+						bindWorkSelect('#columnInput',kanbanDD,'',true,'-Not on board-');
+						if ($("#columnInput").get(0).length > 1) {
+							$("#columnInput").get(0).selectedIndex = 1; // Select second option on dropdown
+						}
+                        bindWorkSelect('#statusInput',result.userStoryStatuses,'');
+						bindWorkSelect('#storyPointsInput',result.storyPoints,'',true);
+						bindWorkSelect('#priorityInput',result.priorities,'', true);
+
+						// Priority Matrix
+						$(document).on('change','#impactInput,#frequencyInput', function(e) {
+							$('#priorityText').removeClass('priorityFound').text('To Be Calculated');
+							$('#priorityInput').val('');
+							result.priorityMappings.forEach(function(option, index){
+							 	if ($('#impactInput').val() === option[nameSpace + 'Impact__c'] && $('#frequencyInput').val() === option[nameSpace + 'Frequency__c']) {
+									$('#priorityText').addClass('priorityFound').text(option[nameSpace + 'Priority__r.Name']);
+									//$('#priorityInput').val(option.Priority__r.Name);
+								}
+							});
+						});
+
+						$('#productTagInput').show();
+						$('#productTagHolder').hide();
+
+						$('#recordTypeInputUserStory').prop('checked',true);
+						$('#recordTypeInputBug').prop('checked',false);
+						$('.userStoryField').show();
+						$('.bugField,.workEditorLoader').hide();
+						$('#assignedToProfileImage,#qaEngineerProfileImage,#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+						$('.workEditorForm').css('visibility','visible');
+						$('#subjectInput').focus();
+
+						$('#workDialog').css('height','auto');
+						$('#descriptionInput,#detailsAndStepsInput').height(0).height($('#workEditorLeft').height() - $('#workEditorLeftHeader').height() - 45);
+
+
+	                } else if (event.type === 'exception') {
+						workDialog.removeClass('dialogloading').dialog('close');
+						console.error(event.message);
+						if (event.message.toLowerCase().indexOf("request invalid for your session") > -1 || event.message.toLowerCase().indexOf("logged in?") > -1) {
+							errorDialog.html("It looks like your session has expired. Please refresh the page.").dialog({ title: "Error During Opening" }).dialog( "option", "buttons", [{text: "Refresh", click: function() { location.reload(); } }]).dialog("open");
+						} else {
+							errorDialog.html("Bad data returned from server: " + event.message).dialog({ title: "Error During Opening" }).dialog("open");
+						}
+					}
+				}, {escape:false});
+			}
+        },
+        close: function(event, ui) {
+			if (selectedWork.length > 0) {
+				//$('#' + selectedWork).addClass('highlight');
+				selectedWork = '';
+			}
+			$('#columnInput').removeAttr('disabled');
+			$('.workEditorForm form').get(0).reset();
+			$('div#detailsAndStepsInput').html(null);
+	        $('.workEditorLoader').show();
+			$('.workEditorForm').css('visibility','hidden');
+        },
+        beforeClose: function(event, ui) {
+			/*if (confirm('You are about to close settings without saving.\nClick OK to close or CANCEL to continue editing.')) {
+				$('#columnName').focus();
+			} else {
+				return false;
+			}*/
+        }
+    });
+
+    $("#buttonCreateWork").on("click", function() {
+		selectedWork = '';
+		workDialog.dialog("open");
+    });
+    
+    $('#productTagRemove').on("click", function() {
+		productTagRemove(true);
+    });
+
+	$('#recordTypeInputUserStory').on("change", function() {
+		$('#workEditor .ui-dialog-alert').html('').hide();
+		if ($(this).is(':checked')) {
+			productTagRemove(false); // Temporary: in future, we will know better if product tag needs to be removed
+			$('.userStoryField').show();
+			$('.bugField').hide();
+			if ($('div#detailsAndStepsInput').html().length > 0) {
+				if ($('textarea#descriptionInput').val() === '') {
+					$('textarea#descriptionInput').val($('div#detailsAndStepsInput').text());
+					if ($('div#detailsAndStepsInput').html() !== $('div#detailsAndStepsInput').text()) {
+						$('#workEditor .ui-dialog-alert').html("You are switching from a Bug to User Story. Bugs use rich-text (HTML) for the Details and Steps to Reproduce field, and User Stories use plain text for the Description field. We have attempted to convert your content. Please check to see that the converted content is how you like it.").show();
+					}
+				} else if ($('textarea#descriptionInput').val() !== '' && $('textarea#descriptionInput').val() !== $('div#detailsAndStepsInput').text()) {
+					$('#workEditor .ui-dialog-alert').html("You are switching from a Bug to User Story. Bugs use rich-text (HTML) for the Details and Steps to Reproduce field, and User Stories use plain text for the Description field. We could not convert your content because you already have content in the User Story description field.").show();
+				}
+			}
+		}
+	});
+
+	$('#recordTypeInputBug').on("change", function() {
+		$('#workEditor .ui-dialog-alert').html('').hide();
+		if ($(this).is(':checked')) {
+			productTagRemove(false); // Temporary: in future, we will know better if product tag needs to be removed
+			$('.userStoryField').hide();
+			$('.bugField').show();
+			if ($('textarea#descriptionInput').val().length > 0) {
+				if ($('div#detailsAndStepsInput').html() === '') {
+					$('div#detailsAndStepsInput').html($('textarea#descriptionInput').val());
+				}
+			}
+		}
+	});
+	
+	$('.input-prepend-col2').on("keyup change", function() {
+		if ($(this).find('input[type=text]').val() === '') {
+			$(this).parent().find('.input-prepend-col1 img').attr('src','/profilephoto/005/F');
+		}
+	});
+	
+	$(window).resize(function() {
+	    workDialog.dialog("option", "position", {my: "center", at: "center", of: window});
+	});
+	
+	$('#workToolbar i').on("click", function() {
+		workDialog.dialog("close");
+	});
+});
+</script>
+    
+
+</apex:component>

@@ -1,0 +1,43 @@
+<apex:component id="themeInputComponent" controller="ADM_ThemeInputController">
+<apex:attribute name="workId" type="Id" description="The ID of the Work to attach the themes to" required="true" assignTo="{!selectedWorkId}" />
+<!-- 
+This component requires jQuery 1.5+, ADM_Work_js and ADM_work_css
+ -->
+<div id="{!$Component.themeInputComponent}:themeInputWrapper" class="themeInputWrapper">
+    <div class="gusForm themeInputForm">
+        <div class="gusForm1Column">
+            <div class="gusFormField gusFormFieldLeft">
+                <input id="themeInput" class="themeInput gusStyle slds-input" type="text" maxlength="70" />
+            </div>
+            <div class="gusFormField gusFormFieldRight">
+                <input class="addThemeButton slds-button slds-button--neutral" type="button" value="Add" />
+            </div>
+        </div>
+    </div>
+    <div class="errorMsg" style="display: none;"></div>
+    <ul class="themeList"></ul>
+</div>
+<style>
+
+.slds .gusFormFieldLeft{display:table-cell;vertical-align:top;}
+.slds .themeInputWrapper .gusFormFieldLeft{width:auto;}
+.slds .gusFormFieldRight{display:table-cell;vertical-align:top;}
+.slds .themeInputWrapper .addThemeButton {margin-left:7px;margin-top:0px !important;}
+.slds .themeInputWrapper ul.themeList li.theme{background:#fff;height:auto;border:1px solid #d8dde6;border-radius:4px;}	
+.slds .themeInputWrapper ul.themeList li.theme a{font-size:13px;font-weight:normal;color:#0070D2;}
+.slds .themeInputWrapper ul.themeList li.theme a.removeTheme{margin-top:-3px;width:16px;height:16px;mask:url(/resource/SLDS_assets/icons/utility/close.svg) 0px 0px no-repeat;-webkit-mask:url(/resource/SLDS_assets/icons/utility/close.svg) 0px 0px no-repeat;-webkit-mask-size:16px 16px;mask-size:16px 16px;background-color:#54698D;background-image:none;vertical-align:middle;}
+.slds .ui-autocomplete li.themeInput-createNewThemeItem a.ui-state-focus{color:#16325C !important;}
+</style>
+<script type="text/javascript">
+var themeContainerView;
+(function() {
+    var themes = new SObjectCollection(gus.parseVfJson('{!JSINHTMLENCODE(themesAsJson)}'));
+
+    themeContainerView = new ThemeContainerView({
+        workId: '{!workId}',
+        $el: $(document.getElementById('{!$Component.themeInputComponent}:themeInputWrapper')),
+        themes: themes
+    });
+})();
+</script>
+</apex:component>

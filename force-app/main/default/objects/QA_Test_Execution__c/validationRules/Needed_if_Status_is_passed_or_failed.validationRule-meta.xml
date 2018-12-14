@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Needed_if_Status_is_passed_or_failed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISNULL(Date_of_Last_Execution__c ) ,
+OR ( ISPICKVAL( Status__c , &quot;Passed&quot;) , ISPICKVAL( Status__c , &quot;Failed&quot;) )
+)</errorConditionFormula>
+    <errorMessage>Value needed for Date when Executed, since Status is Passed / Failed</errorMessage>
+</ValidationRule>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Line__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>To be replaced with new Cloud mappings soon.</inlineHelpText>
+    <label>Product Line TO BE DELETED</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Division__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADN</fullName>
+                <default>false</default>
+                <label>ADN</label>
+            </value>
+            <value>
+                <fullName>Analytics</fullName>
+                <default>false</default>
+                <label>Analytics</label>
+            </value>
+            <value>
+                <fullName>App Lifecycle, ISV, Admin</fullName>
+                <default>false</default>
+                <label>App Lifecycle, ISV, Admin</label>
+            </value>
+            <value>
+                <fullName>Appstore</fullName>
+                <default>false</default>
+                <label>Appstore</label>
+            </value>
+            <value>
+                <fullName>Architecture</fullName>
+                <default>false</default>
+                <label>Architecture</label>
+            </value>
+            <value>
+                <fullName>Collaboration</fullName>
+                <default>false</default>
+                <label>Collaboration</label>
+            </value>
+            <value>
+                <fullName>Content</fullName>
+                <default>false</default>
+                <label>Content</label>
+            </value>
+            <value>
+                <fullName>Documentation</fullName>
+                <default>false</default>
+                <label>Documentation</label>
+            </value>
+            <value>
+                <fullName>Enterprise Scale</fullName>
+                <default>false</default>
+                <label>Enterprise Scale</label>
+            </value>
+            <value>
+                <fullName>Ideas</fullName>
+                <default>false</default>
+                <label>Ideas</label>
+            </value>
+            <value>
+                <fullName>InfoSec</fullName>
+                <default>false</default>
+                <label>InfoSec</label>
+            </value>
+            <value>
+                <fullName>IT Infrastructure</fullName>
+                <default>false</default>
+                <label>IT Infrastructure</label>
+            </value>
+            <value>
+                <fullName>Labs</fullName>
+                <default>false</default>
+                <label>Labs</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+                <label>Mobile</label>
+            </value>
+            <value>
+                <fullName>Monitoring</fullName>
+                <default>false</default>
+                <label>Monitoring</label>
+            </value>
+            <value>
+                <fullName>Process</fullName>
+                <default>false</default>
+                <label>Process</label>
+            </value>
+            <value>
+                <fullName>Release</fullName>
+                <default>false</default>
+                <label>Release</label>
+            </value>
+            <value>
+                <fullName>Sales &amp; Marketing</fullName>
+                <default>false</default>
+                <label>Sales &amp; Marketing</label>
+            </value>
+            <value>
+                <fullName>Service Department</fullName>
+                <default>false</default>
+                <label>Service Department</label>
+            </value>
+            <value>
+                <fullName>Success</fullName>
+                <default>false</default>
+                <label>Success</label>
+            </value>
+            <value>
+                <fullName>Testing</fullName>
+                <default>false</default>
+                <label>Testing</label>
+            </value>
+            <value>
+                <fullName>Tools</fullName>
+                <default>false</default>
+                <label>Tools</label>
+            </value>
+            <value>
+                <fullName>Usability &amp; App Development</fullName>
+                <default>false</default>
+                <label>Usability &amp; App Development</label>
+            </value>
+            <value>
+                <fullName>User Experience</fullName>
+                <default>false</default>
+                <label>User Experience</label>
+            </value>
+            <value>
+                <fullName>Verticals</fullName>
+                <default>false</default>
+                <label>Verticals</label>
+            </value>
+            <value>
+                <fullName>www</fullName>
+                <default>false</default>
+                <label>www</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Core</controllingFieldValue>
+            <valueName>Architecture</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Internal</controllingFieldValue>
+            <valueName>Documentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Internal</controllingFieldValue>
+            <valueName>Process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Internal</controllingFieldValue>
+            <valueName>Release</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Internal</controllingFieldValue>
+            <valueName>Testing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Internal</controllingFieldValue>
+            <valueName>Tools</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IT</controllingFieldValue>
+            <valueName>Appstore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IT</controllingFieldValue>
+            <valueName>InfoSec</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IT</controllingFieldValue>
+            <valueName>IT Infrastructure</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>Analytics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>App Lifecycle, ISV, Admin</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>Collaboration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>Enterprise Scale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>Sales &amp; Marketing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>Service Department</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>R&amp;D Products</controllingFieldValue>
+            <valueName>Usability &amp; App Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tech Ops</controllingFieldValue>
+            <valueName>Monitoring</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <valueName>ADN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <valueName>www</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

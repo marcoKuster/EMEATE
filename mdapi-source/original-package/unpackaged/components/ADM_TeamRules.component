@@ -1,0 +1,42 @@
+<apex:component controller="ADM_TeamRulesController" allowDML="true">
+<apex:attribute name="teamObject" description="Reference to the scrum team" type="ADM_Scrum_Team__c" required="required" assignTo="{!team}"/>
+<apex:form >    
+    <apex:pageBlock title="Product Tag Assignment for {!team.Name}">
+		<apex:pageBlockButtons location="top" >
+             <apex:commandButton id="redirectToNewProductTagBtn" action="{!redirectToNewProductTag}" value="New Product Tag" rendered="{!OR(canCreateProductTag, $Profile.Name == 'System Administrator',$Profile.Name == 'GUS Release Manager')}" /> &nbsp;
+                    
+		
+		</apex:pageBlockButtons>
+		<apex:outputText rendered="{!TagAssignments.size == 0}">No records to display</apex:outputText>
+
+        <apex:pageBlockTable value="{!TagAssignments}" var="tagAssignment" id="theTable" rendered="{!TagAssignments.size > 0}" >
+
+		<apex:column >
+		        <apex:facet name="header">Record Type</apex:facet>
+				<apex:outputText value="{!tagAssignment.Record_Type__c}" />
+		</apex:column>
+
+		<apex:column >
+				<apex:facet name="header">Product Tag</apex:facet>
+				<apex:outputLink value="/{!tagAssignment.Product_Tag__c}" id="tagLink"><apex:outputText value="{!tagAssignment.Product_Tag__r.Name}" /></apex:outputLink>
+		</apex:column>
+
+		<apex:column >
+				<apex:facet name="header">Assigned To</apex:facet>
+				<a href="/{!tagAssignment.Assignment_Rule__r.Assignee_Assignment__c}"><apex:outputText value="{!tagAssignment.Assignment_Rule__r.Assignee_Assignment__r.Name}" /></a>
+		</apex:column>
+
+		<apex:column >
+				<apex:facet name="header">QA Engineer</apex:facet>
+				<a href="/{!tagAssignment.Assignment_Rule__r.QA_Assignment__c}"><apex:outputText value="{!tagAssignment.Assignment_Rule__r.QA_Assignment__r.Name}" /></a>
+		</apex:column>
+
+		<apex:column >
+				<apex:facet name="header">Product Owner</apex:facet>
+				<a href="/{!tagAssignment.Assignment_Rule__r.Product_Owner__c}"><apex:outputText value="{!tagAssignment.Assignment_Rule__r.Product_Owner__r.Name}" /></a>
+		</apex:column>
+		
+	</apex:pageBlockTable>
+</apex:pageBlock>	
+</apex:form> 
+</apex:component>

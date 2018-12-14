@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>What_To_Do_Better_Next_Time_manager__c</fullName>
+    <description>What To Do Better Next Time as seen by the manager</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Please specify what this employee can do better next time</inlineHelpText>
+    <label>What To Do Better Next Time (manager)</label>
+    <length>32000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

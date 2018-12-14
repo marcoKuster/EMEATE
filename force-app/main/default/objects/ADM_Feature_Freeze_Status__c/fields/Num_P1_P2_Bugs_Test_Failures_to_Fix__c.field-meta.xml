@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Num_P1_P2_Bugs_Test_Failures_to_Fix__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of P1/P2 Bugs and Test Failures to Fix.</inlineHelpText>
+    <label>Num P1/P2 Bugs/Test Failures to Fix</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

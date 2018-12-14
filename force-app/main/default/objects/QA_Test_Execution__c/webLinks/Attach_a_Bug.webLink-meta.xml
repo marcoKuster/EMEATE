@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attach_a_Bug</fullName>
+    <availability>online</availability>
+    <description>Attach a Bug to the current Test Execution.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Attach a Bug</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>window.location = &quot;/apex/AddBug?id={!QA_Test_Execution__c.Id}&amp;typ=Execution&quot;;</url>
+</WebLink>

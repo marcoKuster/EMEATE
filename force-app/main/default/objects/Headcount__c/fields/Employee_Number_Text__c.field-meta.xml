@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employee_Number_Text__c</fullName>
+    <description>A text copy of the Employee Number field is necessary because lookup fields and formula fields based on lookups are not indexed and not searchable. Only text, email and phone field types are searched.</description>
+    <externalId>false</externalId>
+    <label>Employee Number (Text)</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

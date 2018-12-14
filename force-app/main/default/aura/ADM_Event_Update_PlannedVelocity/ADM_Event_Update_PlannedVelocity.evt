@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Update the planned Velocity">
+    <aura:attribute name="velocity" type="Integer"/>
+</aura:event>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Post_Feature_Freeze_Updates__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Use this for updates on status after Feature Freeze.</inlineHelpText>
+    <label>Post Feature Freeze Updates</label>
+    <length>32000</length>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

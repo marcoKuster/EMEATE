@@ -1,0 +1,1581 @@
+<apex:component id="WorkDialogSds" controller="ADM_WorkDialogController" extensions="ADM_AutoComplete2Controller" layout="none">
+<apex:attribute required="false" name="kanban" type="Boolean" description="." />
+<apex:attribute required="true" name="teamid" type="String" description="." />
+<apex:attribute required="false" name="sprintName" type="String" description="." />
+
+<apex:includeScript value="{!$Resource.ADM_common_js}" />
+<apex:includeScript value="{!$Resource.ADM_autocomplete2js}" />
+<apex:includeScript value="{!$Resource.ADM_Work_js}" />
+<apex:styleSheet value="{!$Resource.extended}" />
+
+<apex:stylesheet value="{!URLFOR($Resource.SLDS091, '/assets/styles/salesforce-lightning-design-system-vf.css')}" />
+<style type="text/css">
+.slds .slds-form-element__label{font-size:.75rem;color:#54698D;font-weight:600;}
+.slds .slds-form-element__static,.sfdc_richtext{font-family:"Salesforce Sans", Arial, sans-serif;font-size:.875rem;color:#16325C;line-height:normal;font-weight:400;}
+.slds .gusRichAutoCompleteProfileImage{position:absolute;left:5px;bottom:6px;width:24px;height:24px;border-radius:5px;}
+.slds .gusRichAutoCompleteInput{padding-left:35px;}
+
+.slds abbr.ADM_slds-required{color:red;text-decoration:none;cursor:default;}
+    
+.workEditorLoader{position:absolute;top:50%;left:0;right:0;height:58px;margin-top:-28px;background-position:50% 2px;background-repeat:no-repeat;background-size:56px 56px;background-image:url({!URLFOR($Resource.SLDS042, 'assets/images/spinners/slds_spinner_brand.gif')});}
+.workEditorForm{visibility:hidden;}
+#workEditor .slds-notify{margin-bottom:15px;}
+#workEditor textarea{width:100%;height:134px;line-height:19px;}
+#workEditor div.contenteditable, #priorityModal div.contenteditable {resize:vertical;font-size:14px;line-height:19px;padding:8px 12px;background:#fff;overflow:auto;height:134px;color:#16325C;border:1px solid #D8DDE6;border-radius:4px;-webkit-transition: border 0.1s linear, background-color 0.1s linear;transition: border 0.1s linear, background-color 0.1s linear;}
+#workEditor div.contenteditable:focus, #priorityModal  div.contenteditable:focus {outline:0;border-color:#1589EE;background-color:#FFF;box-shadow:0 0 3px #0070D2;}
+#workEditor .workEditorRow{display:table;width:100%;margin-bottom:15px;}
+#workEditor .workEditorRow > div:not(.contenteditable), #priorityModal .workEditorRow > div:not(.contenteditable){/*display:table-cell;*/padding-left:6px;padding-right:6px;}
+#workEditor .workEditorRow > div:not(.contenteditable):first-child, #priorityModal .workEditorRow > div:not(.contenteditable):first-child{padding-left:0px;}
+#workEditor .workEditorRow > div:not(.contenteditable):last-child, #priorityModal .workEditorRow > div:not(.contenteditable):last-child{padding-right:0px;}
+#workEditor .workEditorRow:last-child{margin-bottom:5px;}
+
+#workEditor .workEditor1Column{display:block;}
+#workEditor .workEditor2Column > div{width:50%;}
+#workEditor .workEditor3Column > div{width:33%;}
+#workEditor .workEditor4Column > div{width:25%;}
+#workEditor .workEditor5Column > div{width:20%;}
+
+#workEditor div.input-prepend{display:table;width:100%;-moz-box-sizing:border-box;box-sizing:border-box;}
+#workEditor div.input-prepend div.input-prepend-col1{display:table-cell;width:30px;}
+#workEditor div.input-prepend div.input-prepend-col2{display:table-cell;width:100%;}
+#workEditor div.input-prepend div.input-prepend-col3{display:table-cell;}
+#workEditor div.input-prepend img{vertical-align:top;display:inline-block;width:27px;height:27px;border-top-left-radius:4px;border-bottom-left-radius:4px;border:1px #c0c0c0 solid;border-right:0;}
+#workEditor div.input-prepend input{vertical-align:top;display:inline-block;width:100%;/*min-height:30px;*/-moz-box-sizing:border-box;box-sizing:border-box;border-radius:0 4px 4px 0;margin:0;}
+
+#workEditor .gusFieldRequired input[type=text],
+#workEditor .gusFieldRequired select,
+#workEditor .gusFieldRequired.userInput img{border-left: 4px #c11717 solid;}
+#workEditor .gusFieldRequired.userInput input[type=text]{border-left:1px solid #ccc;}
+#workEditor div.priorityFound{color:#000;font-weight:bold;}
+
+#workEditor .alert-error{display:none;border:2px #D6C639 solid;border-radius:5px;padding:5px;margin-bottom:10px;background:#F7F4D7;font-size:11px;}
+#workEditor .alert-error ul{margin:0;padding:0;list-style-type:square;}
+
+#workEditor fieldset{padding:10px;margin-bottom:15px;}
+#workEditor fieldset:last-child{margin-bottom:0;}
+#workEditor legend{text-transform:uppercase;color:#8B8B8B;font-size:10px;padding:0 5px;text-align:center;}
+
+#priorityModal .slds-modal, #confirmCloseModal .slds-modal {z-index:9003;}
+#priorityModal .slds-modal-backdrop, #confirmCloseModal .slds-modal-backdrop {z-index:9002;}
+a#priorityOverrideLink {cursor:pointer}
+
+#priorityText.overridden {padding:0 3px; margin:0 3px 0 0; color: white; background-color: orange; font-weight: bold;}
+#priorityOverridden {font-style: italic;}
+
+.workDialogBox .slds-theme--error {left: 50%;position: fixed;top: 5em;transform: translateX(-50%);width: 90%;z-index: 100;}
+.workDialogBox .ncff {display:none !important;}
+
+#workChatter{display:none;}
+#workTasks{display:none;}
+</style>
+<div class="slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<div id="workModal">
+      <form action="ADM_Kanban" method="post" onSubmit="workModalSave();return false">
+  <div aria-hidden="false" role="dialog" class="slds-modal slds-modal--large">
+    <div class="slds-modal__container">
+      <div class="slds-modal__header" style="padding:24px 16px 0px 16px">
+          <h2 class="slds-text-heading--medium">Edit Work</h2>
+        <button type="button" class="slds-button slds-modal__close" onClick="workModalClose()">
+          <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse">
+            <use xlink:href="{!URLFOR($Resource.SLDS042, 'assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+          </svg>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+
+        <div class="slds-tabs slds-tabs--default" role="tablist">
+          <ul class="slds-tabs--default__nav" role="presentation" style="border-bottom:0;">
+            <li id="tabWorkDetails" class="slds-tabs__item slds-text-heading--label slds-active" title="Details"><a href="#" role="tab" aria-selected="true">Details</a></li>
+            <li id="tabChatter" class="slds-tabs__item slds-text-heading--label" title="Collaborate"><a href="#" role="tab" aria-selected="false">Collaborate</a></li>
+            <li id="tabTasks" class="slds-tabs__item slds-text-heading--label" title="Tasks"><a href="#" role="tab" aria-selected="false">Tasks</a></li>
+          </ul>
+        </div>
+      </div>
+        <div class="slds-modal__content">
+          <div>
+<!--start-->
+          <div id="workChatter" class="workDialogBox">
+            <iframe src="" frameborder="0" width="100%" height="100" seamless="true"></iframe>
+          </div>
+          <div id="workTasks" class="workDialogBox">
+            <iframe src="" frameborder="0" width="100%" height="100" seamless="true"></iframe>
+          </div>
+          <div id="workEditor" class="workDialogBox">
+                <div class="workEditorLoader"></div>
+                <div class="slds-notify slds-notify--alert slds-notify--warning slds-theme--alert-texture"></div>
+                <div class="slds-notify slds-notify--alert slds-notify--error slds-theme--error"></div>
+                <div class="workEditorForm">
+
+                  <div class="slds-grid slds-wrap slds-p-bottom--medium">
+                    <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--10-of-12">
+                      <div class="slds-form-element">
+                      <label class="slds-form-element__label" for="subjectInput">
+                        <abbr class="ADM_slds-required" title="required">*</abbr> Subject</label>
+                         <div class="slds-form-element__control">
+                          <input class="slds-input" id="subjectInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--2-of-12">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="">Record Type</label>
+                        <div class="slds-form-element__control">
+                          <label class="slds-radio" for="recordTypeInputUserStory" style="display:inline-block;">
+                            <input id="recordTypeInputUserStory" type="radio" name="recordTypeInput" value="User Story" checked="checked" />
+                            <span class="slds-radio--faux"></span>
+                            <span class="slds-form-element__label">User Story</span>
+                          </label>
+                          <label class="slds-radio" for="recordTypeInputBug" style="display:inline-block;">
+                            <input id="recordTypeInputBug" type="radio" name="recordTypeInput" value="Bug" />
+                            <span class="slds-radio--faux"></span>
+                            <span class="slds-form-element__label">Bug</span>
+                          </label>
+                                                    <label class="slds-radio" for="recordTypeInputInvestigation" style="display:inline-block;">
+                                                        <input id="recordTypeInputInvestigation" type="radio" name="recordTypeInput" value="Investigation" />
+                                                        <span class="slds-radio--faux"></span>
+                                                        <span class="slds-form-element__label">Investigation</span>
+                                                    </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-col--padded slds-size--1-of-1 slds-small-order--1 slds-medium-order--1">
+                      <div class="slds-form-element userStoryField">
+                        <label class="slds-form-element__label" for="descriptionInput">Description</label>
+                        <div class="slds-form-element__control" style="line-height:0;">
+                          <textarea class="slds-textarea" id="descriptionInput" rows="3"></textarea>
+                        </div>
+                      </div>
+                      <div class="slds-form-element bugField">
+                        <label class="slds-form-element__label" for="detailsAndStepsInput">Details and Steps to Reproduce</label>
+                        <div class="slds-form-element__control">
+                          <div id="detailsAndStepsInput" contenteditable="true" class="contenteditable"></div>
+                        </div>
+                      </div>
+                      <div class="slds-form-element investigationField">
+                          <label class="slds-form-element__label" for="detailsAndStepsInputInvestigation">Details and Steps to Reproduce</label>
+                          <div class="slds-form-element__control">
+                                <div id="detailsAndStepsInputInvestigation" contenteditable="true" class="contenteditable"></div>
+                                </div>
+                          </div>
+                          </div>
+                    </div>
+                  <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        
+			<label class="slds-form-element__label" for="productTagInput">
+                        <abbr class="slds-form-element__label ADM_slds-required" title="required">*</abbr> TE Activity</label>
+                        <div class="slds-form-element__control">
+                          <input class="slds-input" id="productTagInput" type="text" value="" />
+			  <div id="productTagContainer">
+                            <span class="slds-pill productTagItem" style="display:block;background:#fff !important;">
+                              <span class="slds-pill__label">
+                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-account slds-icon--small">
+                                  <use xlink:href="{!URLFOR($Resource.SLDS042, 'assets/icons/standard-sprite/svg/symbols.svg#quotes')}"></use>
+                                </svg>
+                                <span id="productTagTeam" class="productTagItemTeam"></span> &gt; <span id="productTagName" class="productTagItemName"></span>
+                              </span>
+                              <button id="productTagRemove" type="button" class="slds-button slds-button--icon-bare productTagItemRemove" style="position:absolute;bottom:9px;right:7px;">
+                                <svg aria-hidden="true" class="slds-button__icon">
+                                  <use xlink:href="{!URLFOR($Resource.SLDS042, 'assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Remove Product Tag</span>
+                              </button>
+                            </span>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <apex:outputPanel rendered="{!kanban == true}" layout="none">
+                      <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label" for="columnInput">Kanban State</label>
+                          <div class="slds-form-element__control">
+                                    <select class="slds-select" id="columnInput"></select>
+                          </div>
+                        </div>
+                      </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!kanban != true}" layout="none">
+                      <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label" for="statusInputBug">Status</label>
+                          <div class="slds-form-element__control">
+                                    <select class="slds-select" id="statusInputBug"></select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="userStoryField  slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label" for="statusInputUserStory">Status</label>
+                          <div class="slds-form-element__control">
+                                    <select class="slds-select" id="statusInputUserStory"></select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="investigationField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label" for="statusInputInvestigation">Status</label>
+                          <div class="slds-form-element__control">
+                                    <select class="slds-select" id="statusInputInvestigation"></select>
+                          </div>
+                        </div>
+                      </div>
+
+                    </apex:outputPanel>
+                      <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="backlogRankInput">Backlog Rank</label>
+                        <div class="slds-form-element__control">
+                          <input class="slds-input" id="backlogRankInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--
+					<div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="sprintInput">Sprint</label>
+                        <div class="slds-form-element__control">
+                                  <input class="slds-input" id="sprintInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+					-->
+                      
+                    <div class="userStoryField bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="sprintInput">Sprint</label>
+                        <div class="slds-form-element__control">
+                                  <input class="slds-input" id="sprintInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>  
+                      
+                    <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                               <label class="slds-form-element__label found_in_build_required bugField" for="foundInBuildInput">
+				<abbr class="ADM_slds-required" title="required">*</abbr> Found In Build</label>
+                          	<div class="slds-form-element__control">
+                                  <input class="slds-input" id="foundInBuildInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="scheduledBuildInputBug">Scheduled Build</label>
+                        <div class="slds-form-element__control">
+                                  <input class="slds-input" id="scheduledBuildInputBug" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="userStoryField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="scheduledBuildInputUserStory">Scheduled Build</label>
+                        <div class="slds-form-element__control">
+                                  <input class="slds-input" id="scheduledBuildInputUserStory" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                            <label class="slds-form-element__label impact_required bugField" for="impactInput">
+			<abbr class="ADM_slds-required" title="required">*</abbr> Impact</label>                          
+                        <div class="slds-form-element__control">
+                                  <select class="slds-select" id="impactInput"></select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                            <label class="slds-form-element__label frequency_required bugField" for="impactInput">
+						<abbr class="ADM_slds-required" title="required">*</abbr> Frequency</label> 
+                        <div class="slds-form-element__control">
+                                  <select class="slds-select" id="frequencyInput" disabled="disabled"></select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                            <label class="slds-form-element__label bugField" for="priorityInput">Priority</label>
+                        <div>
+                          <span id="priorityText">To Be Calculated</span>
+                          <span id="priorityOverridden" class="slds-hide">
+                            Overridden (Default <span class="defaultPriorityText"></span>)
+                          </span>
+                          <button id="priorityOverrideLink" type="button" class="slds-button slds-hide">Override</button>
+                        </div>
+                        <div class="slds-form-element__control slds-hide">
+                          <select class="slds-select priorityInput" id="priorityInput"></select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="userStoryField bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="storyPointsInput">Story Points</label>
+                        <div class="slds-form-element__control">
+                                  <!--select class="slds-select" id="storyPointsInput" style="width:100%;"></select-->
+                                  <input class="slds-input" id="storyPointsInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="userStoryField bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="accountInput">
+                            <abbr class="slds-form-element__label ADM_slds-required" title="required">*</abbr> Account</label>
+                        <div class="slds-form-element__control">
+                                  <input class="slds-input" id="accountInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="bugField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="ftestInput">Test</label>
+                        <div class="slds-form-element__control">
+                                  <input class="slds-input" id="ftestInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label" for="columnInput">Help Statuses</label>
+                          <div class="slds-form-element__control">
+                                    <select class="slds-select" id="helpStatusList"></select>
+                          </div>
+                        </div>
+                      </div>
+
+                    <div class="investigationField slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="severityInput">Severity Level</label>
+                        <div class="slds-form-element__control">
+                                <select class="slds-select" id="severityInput" style="width:100%;">
+                                </select>
+                        </div>
+                      </div>
+                    </div>
+                    <!--div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="">Root Cause Analysis</label>
+                        <div class="slds-form-element__control">
+
+                        </div>
+                      </div>
+                    </div-->
+                    <!--div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="">Source Control Access</label>
+                        <div class="slds-form-element__control">
+
+                        </div>
+                      </div>
+                    </div-->
+                  </div>
+                  <h4 class="forcePageBlockSectionViewTitle">Assignments</h4>
+                  <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-col--padded size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="assignedToInput">Assigned To</label>
+                        <div class="slds-form-element__control">
+                          <img id="assignedToProfileImage" class="gusRichAutoCompleteProfileImage" src="/profilephoto/005/F" />
+                          <input class="slds-input gusRichAutoCompleteInput" id="assignedToInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-col--padded slds-p-bottom--medium size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="qaEngineerInput">QA Engineer</label>
+                        <div class="slds-form-element__control">
+                          <img id="qaEngineerProfileImage" class="gusRichAutoCompleteProfileImage" src="/profilephoto/005/F" />
+                          <input class="slds-input gusRichAutoCompleteInput" id="qaEngineerInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-col--padded slds-p-bottom--medium size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="productOwnerInput">Product Owner</label>
+                        <div class="slds-form-element__control">
+                          <img id="productOwnerProfileImage" class="gusRichAutoCompleteProfileImage" src="/profilephoto/005/F" />
+                          <input class="slds-input gusRichAutoCompleteInput" id="productOwnerInput" type="text" value="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+<!--end-->
+          </div>
+        </div>
+        <div class="slds-modal__footer">
+        <button id="workCloseButton" type="button" class="slds-button slds-button--neutral" onClick="workModalClose()">Close</button>
+        <button id="workCancelButton" type="button" class="slds-button slds-button--neutral" onClick="workModalClose()">Cancel</button>
+            <button id="workSaveButton" type="submit" class="slds-button slds-button--neutral slds-button--brand">Save</button>
+        </div>
+    </div>
+  </div>
+  </form>
+  <div class="slds-modal-backdrop"></div>
+</div>
+
+<div id="priorityModal" class="slds-hide">
+  <div aria-hidden="false" role="dialog" class="slds-modal">
+    <div class="slds-modal__container">
+      <div class="slds-modal__header">
+        <h2 class="slds-text-heading--medium">Override Priority</h2>
+        <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close">
+          <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+            <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+          </svg>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+      </div>
+      <div class="slds-modal__content">
+        <div>
+          <p>Select the new priority for this bug and explain why the default priority should be overridden.</p>
+
+          <div class="slds-m-top--small">
+            <label class="slds-form-element__label" for="priorityInputOverride">Default Priority</label>
+            <div class="defaultPriorityText"></div>
+          </div>
+
+          <div class="slds-m-top--small">
+            <label class="slds-form-element__label" for="priorityInputOverride">New Priority</label> (<a href="#" onclick="window.open('/apex/ADM_PriorityMatrix','popup','width=900,height=800,scrollbars=yes,resizable=no,toolbar=no,directories=no,location=no,menubar=no,status=no,left=0,top=0'); return false">Help me decide</a>)
+            <select class="slds-select priorityInputOverride" id="priorityInputOverride"></select>
+          </div>
+
+          <div class="slds-m-top--small">
+            <label class="slds-form-element__label" for="priorityInputReasonForOverride">Reason for Override</label>
+            <div class="slds-form-element__control">
+              <div id="priorityInputReasonForOverride" contenteditable="true" class="contenteditable"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-modal__footer">
+        <div class="slds-x-small-buttons--horizontal">
+          <button type="button" class="slds-button slds-button--neutral" onClick="WorkPriority.closePriorityOverride()">Cancel</button>
+          <button class="slds-button slds-button--neutral slds-button--brand" onClick="WorkPriority.overridePriority(); WorkPriority.closePriorityOverride()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slds-modal-backdrop"></div>
+</div>
+
+    <div id="confirmCloseModal" class="slds-hide">
+      <div aria-hidden="false" role="dialog" class="slds-modal">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">Are you sure?</h2>
+            <!-- <button type="button" class="slds-button slds-button--icon-inverse slds-modal__close">
+              <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+              </svg>
+              <span class="slds-assistive-text">Close</span>
+            </button> -->
+          </div>
+          <div class="slds-modal__content">
+            <div>
+              <p tabindex="0" onkeydown="ConfirmCloseModal.handleConfirmCloseTextKeydown(event)">Are you sure you want to close? All unsaved work will be lost.</p>
+            </div>
+          </div>
+          <div class="slds-modal__footer">
+            <div class="slds-x-small-buttons--horizontal">
+                <button type="button" class="slds-button slds-button--neutral" onClick="ConfirmCloseModal.cancel()">No. Take me back.</button>
+                <button class="slds-button slds-button--neutral slds-button--brand" onkeydown="ConfirmCloseModal.handleConfirmCloseButtonKeydown(event);" onClick="ConfirmCloseModal.confirm(workModalClose);">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-modal-backdrop"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+(function($){
+  var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#sprintInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Sprint__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+  var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#scheduledBuildInputBug');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Build__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+  var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#scheduledBuildInputUserStory');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Build__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+  var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#foundInBuildInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Build__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#assignedToInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: 'User', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#qaEngineerInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: 'User', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#productOwnerInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: 'User', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+  var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+    var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+    var $input = $('#productTagInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: nameSpace + 'ADM_Product_Tag__c', scrumteamId: '{!JSINHTMLENCODE(teamId)}', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+(function($){
+    var $input = $('#accountInput');
+
+    var selected = null,
+        isLookup = gus.sfdc.isLookup($input);
+    if(isLookup) {
+        selected = gus.sfdc.getSobjectFromLookup($input);
+    }
+
+    var input = autocomplete2.initialize({queryName: 'Account', $input: $input, selected: selected});
+    input.render();
+
+    if(isLookup) {
+        input.on('select', function() {
+            var selected = input.getSelected();
+            gus.sfdc.setLookup($input, selected);
+        });
+    }
+})(window.jQueryPage || window.$);
+
+</script>
+<script type="text/javascript">
+var selectedWork = '';
+var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+
+$(document).on('click','#tabWorkDetails a', function(e) {
+  showWorkBox('#workEditor',this);
+  return false;
+});
+
+$(document).on('click','#tabChatter a', function(e) {
+  showWorkBox('#workChatter',this);
+  return false;
+});
+
+$(document).on('click','#tabTasks a', function(e) {
+  showWorkBox('#workTasks',this);
+  return false;
+});
+
+function showWorkBox(box,tab) {
+  $('#workModal .slds-tabs__item').removeClass('slds-active');
+  $('#workModal .slds-tabs__item a').attr('aria-selected','false');
+  $(tab).closest('li').addClass('slds-active');
+  $(tab).find('a').attr('aria-selected','true');
+
+  $('.workDialogBox').hide();
+  $(box).show(); //$(box).appendTo('#workDialog').show();
+  //$('.workDialogBox:hidden').appendTo('#workDialog');
+  $('#workChatter iframe').css('height',$('#workEditor').outerHeight() + 'px');
+  $('#workTasks iframe').css('height',$('#workEditor').outerHeight() + 'px');
+  if (box === '#workEditor') {
+    $('button#workSaveButton,button#workCancelButton').show();
+    $('button#workCloseButton').hide();
+  } else {
+    $('button#workSaveButton,button#workCancelButton').hide();
+    $('button#workCloseButton').show();
+  }
+}
+
+function validateField(field) {
+    //if($('#' +field).is(":visible")){
+    var isContentEditable = function(field) {
+        return ($('#' + field)).is('div[contenteditable]');
+    }
+    var isCheckbox = function(field) {
+        return $('#' + field).is(':checkbox')
+    }
+    var fieldHasChanged = function(field) {
+        return ($('#' + field).val() !== $('#' + field).data('originalText'))
+    }
+    var hasHiddenField = function(field) {
+        return $('#' + field + 'Hidden').length > 0
+    }
+    var hiddenFieldNotEqualToField = function(field) {
+        return ($('#' + field + 'Hidden').html() !== $('#' + field).html());
+    }
+    var checkboxNotOriginalValue = function(field) {
+        return ($('#' + field).is(':checked') !== $('#' + field).data('originalText'));
+    }
+    var hiddenFieldNotOriginalText = function(field) {
+        return $('#' + field + 'Hidden').val() !== $('#' + field).data('originalText');
+    }
+
+    if (isContentEditable(field)) {
+        return hiddenFieldNotEqualToField(field);
+    } else if (isCheckbox(field)) {
+         return checkboxNotOriginalValue(field)
+    } else {
+        return (fieldHasChanged(field) || (hasHiddenField(field) && hiddenFieldNotOriginalText(field)));
+    }
+    // }
+
+}
+
+function getField(field) {
+  if (($('#' + field)).is('div[contenteditable]')) {
+    return $('#' + field).html();
+  } else {
+    if ($('#' + field + 'Hidden').length > 0) {
+      return $('#' + field + 'Hidden').val();
+    } else {
+      return $('#' + field).val();
+    }
+  }
+}
+
+function workModalSave() {
+  var workSObject = {};
+  var workType = '';
+  // Existing Work
+  if (selectedWork.length > 0) {
+    workSObject.Id = selectedWork;
+  }
+
+  // Record Type
+  if ($('#recordTypeInputUserStory').is(':checked')) {
+    workType = 'User Story';
+  } else if ($('#recordTypeInputBug').is(':checked')) {
+    workType = 'Bug';
+  } else if ($('#recordTypeInputInvestigation').is(':checked')) {
+    workType = 'Investigation';
+  }
+
+  // Product Tag
+  if (validateField('productTagInput')) {
+    workSObject.Product_Tag__c = getField('productTagInput');
+  }
+
+  // Subject
+  if (validateField('subjectInput')) {
+    workSObject.Subject__c = getField('subjectInput');
+  }
+
+  // Kanban State
+  if (validateField('columnInput')) {
+    workSObject.Column__c = getField('columnInput');
+    workSObject.Column_Rank__c = 0;
+  }
+
+  // GUS Statuses
+     //this is to make sure that we dont get investigation statuses along with bug statuses in the edit window and updates go to that statasus.
+  if ($('#recordTypeInputBug').is(':checked') && validateField('statusInputBug')) {
+    workSObject.Status__c = getField('statusInputBug');
+  } else if ($('#recordTypeInputUserStory').is(':checked') && validateField('statusInputUserStory')) {
+    workSObject.Status__c = getField('statusInputUserStory');
+  } else if ($('#recordTypeInputInvestigation').is(':checked') && validateField('statusInputInvestigation')){
+    workSObject.Status__c = getField('statusInputInvestigation');
+  }
+
+  // Sprint
+  if (validateField('sprintInput')) {
+    workSObject.Sprint__c = getField('sprintInput');
+  }
+
+  // Backlog Rank
+  if (validateField('backlogRankInput')) {
+    workSObject.Priority_Rank__c = getField('backlogRankInput');
+  }
+
+  // Account
+  if (validateField('accountInput')) {
+    workSObject.Account__c = getField('accountInput');
+  }
+
+  if (validateField('ftestInput')) {
+    workSObject.ftest__c = getField('ftestInput');
+  }
+
+  // Assignee
+  if (validateField('assignedToInput')) {
+    workSObject.Assignee__c = getField('assignedToInput');
+      
+  }
+
+  // QA Engineer
+  if (validateField('qaEngineerInput')) {
+    workSObject.QA_Engineer__c = getField('qaEngineerInput');
+  }
+
+  // Product Owner
+  if (validateField('productOwnerInput')) {
+    workSObject.Product_Owner__c = getField('productOwnerInput');
+  }
+
+  // Scheduled Build (Bug)
+  if ($('#recordTypeInputBug').is(':checked') && validateField('scheduledBuildInputBug')) {
+    workSObject.Scheduled_Build__c = getField('scheduledBuildInputBug');
+  }
+
+  // Scheduled Build (User Story)
+  if ($('#recordTypeInputUserStory').is(':checked') && validateField('scheduledBuildInputUserStory')) {
+    workSObject.Scheduled_Build__c = getField('scheduledBuildInputUserStory');
+  }
+
+  // Details and Steps to Reproduce
+  if ($('#recordTypeInputBug').is(':checked') && validateField('detailsAndStepsInput')) {
+    workSObject.Details_and_Steps_to_Reproduce__c = getField('detailsAndStepsInput');
+  }
+    if ($('#recordTypeInputInvestigation').is(':checked') && validateField('detailsAndStepsInputInvestigation')) {
+    workSObject.Details_and_Steps_to_Reproduce__c = getField('detailsAndStepsInputInvestigation');
+  }
+
+/*
+  if ($('#detailsAndStepsInputHidden').html() !== $('#detailsAndStepsInput').html()) {
+    workSObject.Details_and_Steps_to_Reproduce__c = $('#detailsAndStepsInput').html();
+  }
+*/
+
+  // Found in Build
+  if ($('#recordTypeInputBug').is(':checked') && validateField('foundInBuildInput')) {
+    workSObject.Found_in_Build__c = getField('foundInBuildInput');
+  }
+
+  // Impact
+  if ($('.bugField').is(':visible') && validateField('impactInput')) {
+    workSObject.Impact__c = getField('impactInput');
+  }
+
+  // Frequency
+  if ($('.bugField').is(':visible') && validateField('frequencyInput')) {
+    workSObject.Frequency__c = getField('frequencyInput');
+  }
+
+  // Priority
+  if ($('#recordTypeInputBug').is(':checked') && validateField('priorityInput')) {
+    workSObject.Priority__c = getField('priorityInput');
+  }
+
+  //Priority Override Explanation
+  if ($('#recordTypeInputBug').is(':checked') && validateField('priorityInputReasonForOverride')) {
+    workSObject.Priority_Override_Explanation__c = getField('priorityInputReasonForOverride');
+  }
+
+  // Description
+  if ($('#recordTypeInputUserStory').is(':checked') && validateField('descriptionInput')) {
+    workSObject.Details__c = getField('descriptionInput');
+  }
+
+  // Story Points
+  if (validateField('storyPointsInput')) {
+    workSObject.Story_Points__c = getField('storyPointsInput');
+  }
+  // Help Statuses
+    if (validateField('helpStatusList')) {
+        var helpStatusValue = getField('helpStatusList');
+        if(helpStatusValue && helpStatusValue.toLowerCase() == '-none-'){
+            workSObject.Help_Status__c = '';
+        }
+        else{
+            workSObject.Help_Status__c = helpStatusValue;
+        }
+    }
+
+    // Severity Level
+    if ($('#recordTypeInputInvestigation').is(':checked') && validateField('severityInput')) {
+      workSObject.Severity_Level__c = getField('severityInput');
+    }
+
+  console.log(workSObject);
+  //workDialog.addClass('dialogloading');
+  $('button#workSaveButton').attr('disabled','disabled').text('Saving...');
+
+  if (Object.keys(workSObject).length > 0) {
+       Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.saveWork}', workSObject, {!kanban}, workType, function(result, event) {
+          if (event.status) {
+              console.log('Save good!');
+              //workDialog.removeClass('dialogloading').dialog('close');
+              workModalClose();
+              $('button#workSaveButton').removeAttr('disabled').text('Save');
+        $('.hiddenIdHolder').remove();
+        if (typeof refreshBoard == 'function') {
+          refreshBoard(workSObject);
+        }
+        if (typeof loadBacklogDialog === 'function' && $('#backlogDialog').is(':visible')) {
+          loadBacklogDialog();
+        }
+        if (typeof globalWorkModalSaveCB === 'function') {
+            globalWorkModalSaveCB(null, result);
+        }
+          } else if (event.type === 'exception') {
+              console.warn('Error during save, changes not saved.');
+        $('#workEditor .slds-notify--error').html(trimErrorMessage(event.message)+buildCloseButton()).show();
+              //workDialog.removeClass('dialogloading');
+              $('button#workSaveButton').removeAttr('disabled').text('Save');
+              if (typeof globalWorkModalSaveCB === 'function') {
+                  globalWorkModalSaveCB(event.message, null);
+              }
+      }
+    });
+  } else {
+        console.log('Save not needed (no changes detected)');
+        //workDialog.removeClass('dialogloading').dialog('close');
+        workModalClose();
+        $('button#workSaveButton').removeAttr('disabled').text('Save');
+    $('.hiddenIdHolder').remove();
+    if (typeof refreshBoard == 'function') {
+      refreshBoard();
+    }
+  }
+}
+
+function trimErrorMessage(errorMessage) {
+  var returnMessage = errorMessage.replace(/'/g, '&#39;');
+  returnMessage = returnMessage.replace('FIELD_CUSTOM_VALIDATION_EXCEPTION, ','');
+  returnMessage = returnMessage.replace(': []','');
+  if (returnMessage.indexOf('first error:') > -1) {
+      return returnMessage.substring(returnMessage.indexOf('first error:')+12).trim();
+  } else {
+      return returnMessage.substring(returnMessage.indexOf(':')+1).trim();
+  }
+}
+
+function bindWorkCheckBox(inputId,inputValue) {
+    $(inputId)
+       .prop('checked',inputValue)
+       .data('originalText',inputValue)
+  }
+
+function bindWorkInput(inputId,inputObject,inputObjectPhoto) {
+  inputObjectId = '';
+  inputObjectName = '';
+  inputObjectSmallPhotoUrl = '/profilephoto/005/F';
+
+  if (typeof inputObject === 'string' || typeof inputObject === 'number') {
+    //console.log('Binding STRING to ' + inputId + '. Current value: ' + inputObject);
+    inputObjectName = inputObject.toString();
+  } else if (typeof inputObject === 'object') {
+    //console.log('Binding OBJECT DATA to ' + inputId + '. Current value: ' + JSON.stringify(inputObject));
+    if (inputObject.Id) { inputObjectId = inputObject.Id; }
+    if (inputObject.Name) { inputObjectName = inputObject.Name; }
+    if (inputObject.SmallPhotoUrl) { inputObjectSmallPhotoUrl = inputObject.SmallPhotoUrl; }
+  } else {
+    inputObject = '';
+    //console.log('Binding BLANK to ' + inputId + '. Current value: ' + inputObject);
+  }
+
+  if ($(inputId).is('div[contenteditable]')) {
+    $(inputId)
+    .html(inputObjectName)
+    .data('originalText',inputObjectName)
+    .parent().append('<div class="hiddenIdHolder" id="' + inputId.replace('#','') + 'Hidden" style="display:none !important;">');
+    $(inputId + 'Hidden').html(inputObjectName);
+  } else {
+    $(inputId)
+    .val(inputObjectName)
+    .data('originalText',inputObjectName)
+    .data('originalId',inputObjectId)
+    .on('change', function(e) {
+      //console.log('A field has changed');
+      $(this).parent().find('.hiddenIdHolder').remove();
+    });
+  }
+
+  $(inputObjectPhoto).attr('src',inputObjectSmallPhotoUrl);
+}
+
+function bindWorkSelect(inputId,inputValues,currentValue,allowBlank,blankValue) {
+  if (typeof currentValue === 'undefined') {
+    currentValue = '';
+  }
+
+  //console.log('Binding PICKLIST DATA to ' + inputId + '. Current value: ' + currentValue);
+
+  var ddValue = '';
+  if (allowBlank) {
+    if (blankValue) {
+      ddValue += '<option value="">' + blankValue + '</option>';
+    } else {
+      ddValue += '<option value="">-None-</option>';
+    }
+  }
+
+  if (inputValues !== undefined) {
+    inputValues.forEach(function(option, index){
+      if (option.Id) {
+        ddValue += '<option value="' + option.Id + '"';
+        if (currentValue === option.Id) { ddValue += ' selected'; }
+        ddValue += '>' + option.Name + '</option>';
+      } else if (option.Name) {
+        ddValue += '<option value="' + option.Name + '"';
+        if (currentValue === option.Name) { ddValue += ' selected'; }
+        ddValue += '>' + option.Name + '</option>';
+      } else {
+        if (typeof option === 'object') {
+          ddValue += '<option value="' + option[index] + '"';
+          if (typeof currentValue !== 'undefined') {
+            if (currentValue.toString() === option[index].toString()) { ddValue += ' selected'; }
+          }
+          ddValue += '>' + option[index] + '</option>';
+        } else {
+          ddValue += '<option value="' + option + '"';
+          if (typeof currentValue !== 'undefined') {
+            if (currentValue.toString() === option.toString()) { ddValue += ' selected'; }
+          }
+          ddValue += '>' + option + '</option>';
+        }
+      }
+    });
+  }
+
+  $(inputId)
+  .empty()
+  .append(ddValue)
+  .data('originalText',currentValue.toString())
+  .on('change', function(e) {
+    //console.log('A field has changed');
+    $(this).parent().find('.hiddenIdHolder').remove();
+  });
+}
+
+function selectedProductTag(obj) {
+    $('#workEditor .slds-notify--error,#workEditor .slds-notify--warning').html(null).hide();
+    $('#productTagInput').hide();
+    $('#productTagContainer').show();
+    $('#productTagTeam').text(obj.TeamName);
+    $('#productTagName').text(obj.Name);
+    $('textarea#descriptionInput:visible,div#detailsAndStepsInput:visible').focus();
+
+    if (obj.TeamId !== '{!teamId}' && {!kanban} === true) {
+        $('#workEditor .slds-notify--warning').html('You have selected a Product Tag belonging to another team. You will not be able to place this work on your Kanban board.').show();
+    
+        if ($("#columnInput").length > 0 && $("#columnInput").get(0).length > 1) {
+          $("#columnInput").get(0).selectedIndex = 0;
+        }
+    
+        $("#columnInput").attr('disabled','disabled');
+    }
+
+    //Find selected Record Type on the work dialog
+    var  selectedRecordType = '';
+    if($('#recordTypeInputUserStory').is(':checked')) {
+        selectedRecordType = 'user story';
+    } else if($('#recordTypeInputBug').is(':checked')) {
+        selectedRecordType = 'bug';
+    } else if($('#recordTypeInputInvestigation').is(':checked')) {
+        selectedRecordType = 'investigation';
+    }
+
+    var severityLevel = $('#severityInput').val() || ''; //Assigning default in case severity is hidden or not visible
+    var productTagId = obj.Id;
+
+    //Initialize fields before assigning...
+    $('#assignedToInput,#qaEngineerInput,#productOwnerInput').val('');
+    $('#assignedToProfileImage,#qaEngineerProfileImage,#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+
+
+    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.getProductTagAutoAssignees}', severityLevel, productTagId, selectedRecordType, function(result, event) {
+        if(event.status) {
+            console.log(result);
+         
+            if(result.errorMessages && result.errorMessages.length > 0){
+                $('#workEditor .slds-notify--error').html(result.errorMessages[0]+buildCloseButton()).show();
+            } else {
+                if(result.assignments){
+                    /*
+                    Assignee information from AutoAssignment -
+                    */
+                    if(result.assignments.Assignee){
+                        $('#assignedToInput').val(unEscapeHtml(result.assignments.Assignee.Name));
+                        //Make sure initialize to default in else part - if not previously assigned photo remains if SmallPHotoUrl is undefined
+                        if(result.assignments.Assignee.SmallPhotoUrl){
+                            $('#assignedToProfileImage').attr('src',result.assignments.Assignee.SmallPhotoUrl);
+                        } else {
+                            $('#assignedToProfileImage').attr('src','/profilephoto/005/F');
+                        }
+                    }
+
+                    /*
+                    QA information from AutoAssignment -
+                    */
+                    if(result.assignments.QA_Engineer){
+                        $('#qaEngineerInput').val(unEscapeHtml(result.assignments.QA_Engineer.Name));
+                        //Make sure initialize to default in else part - if not previously assigned photo remains if SmallPHotoUrl is undefined
+                        if(result.assignments.QA_Engineer.SmallPhotoUrl){
+                            $('#qaEngineerProfileImage').attr('src',result.assignments.QA_Engineer.SmallPhotoUrl);
+                        } else {
+                            $('#qaEngineerProfileImage').attr('src','/profilephoto/005/F');
+                        }
+                    }
+
+                    /*
+                    Product Owner information from AutoAssignment -
+                    */
+                    /*
+                    if(result.assignments.Product_Owner){
+                        $('#productOwnerInput').val(unEscapeHtml(result.assignments.Product_Owner.Name));
+                        //Make sure initialize to default in else part - if not previously assigned photo remains if SmallPHotoUrl is undefined
+                        if(result.assignments.Product_Owner.SmallPhotoUrl){
+                            $('#productOwnerProfileImage').attr('src',result.assignments.Product_Owner.SmallPhotoUr);
+                        } else {
+                            $('#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+                        }
+                    }
+                    */
+                    // auto-assign current user for Assignee and Product Owner
+                    $('#productOwnerInput').val(unEscapeHtml('{!$User.FirstName} {!$User.LastName}'));
+                    $('#assignedToInput').val(unEscapeHtml('{!$User.FirstName} {!$User.LastName}'));
+                   
+                }
+
+                var userStoryOrBug = function(type) {
+                    return type==='user story' || type==='bug' ;
+                }
+            }
+        } else if (event.type === 'exception') {
+           console.warn('Error during Auto Assignee remote call');
+           $('#workEditor .slds-notify--error').html(trimErrorMessage(event.message)+buildCloseButton()).show();
+        }
+    });
+}
+
+
+function unEscapeHtml(escapedText){
+   return $("<span />", { html: escapedText }).text();
+}
+
+function productTagRemove(focusField) {
+  //On removing product tag remove auto assignees and pictures & any errors on Work Dialog
+  $('#workEditor .slds-notify--error,#workEditor .slds-notify--warning').html(null).hide();
+  $('#assignedToInput,#qaEngineerInput,#productOwnerInput').val('');
+  $('#assignedToProfileImage,#qaEngineerProfileImage,#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+  $('#productTagContainer').hide();
+  $('#productTagInput').val('').show();
+  $('#workEditor .slds-notify--warning:contains("Product Tag")').html(null).hide();
+  $("#columnInput").removeAttr('disabled');
+  $('#productTagInputHidden').remove();
+  if (focusField) {
+    $('#productTagInput').focus();
+  }
+}
+
+function workModalEscHandler(e) {
+    var autocompleteIsOpen = function(e) { return e && e.target && e.target.getAttribute('aria-expanded') === 'true'; } // this is a string not a boolean.
+    if (!autocompleteIsOpen(e)) {
+        ConfirmCloseModal.open();
+    }
+}
+
+
+function workModalClose(){
+
+  var setData = function(id, dataField, newVal) {
+    var $field = $('#' + id);
+    if ($field && $field.data(dataField) != newVal) {
+      $field.data(dataField, newVal);
+    }
+  }
+
+  $('#workModal .slds-modal__header h2').text('Edit Work');
+  $('#workModal .slds-modal').removeClass('slds-fade-in-open');
+  $('#workModal .slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+
+  if (selectedWork.length > 0) {
+    selectedWork = '';
+  }
+  $('#columnInput').removeAttr('disabled');
+  $('#workModal form').get(0).reset();
+
+  // form is reset, but still need to remove the .data()
+    setData('subjectInput', 'originalText', '');
+    setData('sprintInput', 'originalText', '');
+    setData('assignedToInput', 'originalText', '');
+    setData('qaEngineerInput', 'originalText', '');
+    setData('productOwnerInput', 'originalText', '');
+    setData('scheduledBuildInputBug', 'originalText', '');
+    setData('scheduledBuildInputUserStory', 'originalText', '');
+    setData('foundInBuildInput', 'originalText', '');
+    setData('accountInput', 'originalText', '');
+    setData('ftestInput', 'originalText', '');
+    setData('backlogRankInput', 'originalText', '');
+    setData('descriptionInput', 'originalText', '');
+    setData('detailsAndStepsInput', 'originalText', '');
+    setData('detailsAndStepsInputInvestigation', 'originalText', '');
+    setData('storyPointsInput', 'originalText', '');
+    setData('priorityInputReasonForOverride', 'originalText', '');
+    setData('regressed', 'originalText', '');
+
+  $('div#detailsAndStepsInput').html(null);
+    $('div#detailsAndStepsInputInvestigation').html(null);
+    $('.workEditorLoader').show();
+  $('.workEditorForm').css('visibility','hidden');
+
+  $('#priorityText').removeClass('priorityFound').removeClass('overridden').text('To Be Calculated');
+  $('#priorityOverridden').addClass('slds-hide');
+  $('#priorityOverrideLink').addClass('slds-hide');
+}
+
+function hideErrorToast(){
+  console.warn('Clearing modal...');
+  $('#workEditor .slds-notify--error,#workEditor .slds-notify--warning').html(null).hide();
+}    
+
+function buildCloseButton(){
+  return '<button type="button" class="slds-button slds-float--right" onclick="hideErrorToast()"><svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse"><use xlink:href="{!URLFOR($Resource.SLDS042, "assets/icons/action-sprite/svg/symbols.svg#close")}"></svg><span class="slds-assistive-text">Close</span></button>';
+}
+    
+function workModalOpen(){
+  $('#workModal .slds-modal').addClass('slds-fade-in-open');
+  $('#workModal .slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+  //selectedWork = workId;
+
+  $('#workEditor .slds-notify--error,#workEditor .slds-notify--warning').html(null).hide();
+  $('button#workSaveButton,button#workCancelButton').show();
+  $('button#workCloseButton').hide();
+  showWorkBox('#workEditor','#tabWorkDetails a');
+
+    if (selectedWork.length > 0) {
+        // EXISTING WORK
+        makeModalAccessible('#workModal', 'div.slds-tabs li:first a', 'button:last', workModalEscHandler);
+
+    $('#workModal .slds-modal__header h2').text('Loading');
+    $('#tabChatter,#workDialogLink').show();
+    $('#workModal .slds-modal__header').css('padding','24px 16px 0px 16px');
+    $('#workModal .slds-tabs').show();
+    $('#workDialogLink').html('<a href="/' + selectedWork + '">{!baseUrl}/' + selectedWork + '</a>').show();
+
+        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.getWorkEditorDialogMetaData}', selectedWork, '{!JSINHTMLENCODE(teamId)}', function(result, event) {
+            if (event.status) {
+        console.log(result);
+
+        kanbanDD = [];
+        $.each(result.leafNodeDetailsList, function(index, list) {
+          kanbanDD.push({
+            Id:list.columnId,
+            Name:list.path
+          });
+        });
+
+        $('#workModal .slds-modal__header h2').html('Edit Work: <a href="/' + result.workSObject['Id'] + '">' + result.workSObject['Name'] + '</a>');
+        bindWorkSelect('#columnInput',kanbanDD,result.workSObject[nameSpace + 'Column__c'],true,'-Not on board-');
+        bindWorkInput('#subjectInput',result.workSObject[nameSpace + 'Subject__c']);
+        bindWorkInput('#sprintInput',result.workSObject[nameSpace + 'Sprint__r']);
+        bindWorkInput('#assignedToInput',result.workSObject[nameSpace + 'Assignee__r'],'#assignedToProfileImage');
+        bindWorkInput('#qaEngineerInput',result.workSObject[nameSpace + 'QA_Engineer__r'],'#qaEngineerProfileImage');
+        bindWorkInput('#productOwnerInput',result.workSObject[nameSpace + 'Product_Owner__r'],'#productOwnerProfileImage');
+        bindWorkInput('#scheduledBuildInputBug',result.workSObject[nameSpace + 'Scheduled_Build__r']);
+        bindWorkInput('#foundInBuildInput',result.workSObject[nameSpace + 'Found_in_Build__r']);
+        bindWorkInput('#accountInput',result.workSObject[nameSpace + 'Account__r']['Name']);
+        bindWorkInput('#ftestInput',result.workSObject[nameSpace + 'ftest__c']);
+        bindWorkInput('#backlogRankInput',result.workSObject[nameSpace + 'Priority_Rank__c']);
+        //bindWorkSelect('#impactInput',result.impacts,result.workSObject[nameSpace + 'Impact__c']);
+        //bindWorkSelect('#frequencyInput',result.frequencies,result.workSObject[nameSpace + 'Frequency__c']);
+        $('#priorityText').addClass('priorityFound').text(result.workSObject[nameSpace + 'Priority__c']);
+        bindWorkInput('#descriptionInput',result.workSObject[nameSpace + 'Details__c']);
+        bindWorkInput('#detailsAndStepsInput',result.workSObject[nameSpace + 'Details_and_Steps_to_Reproduce__c']);
+        bindWorkInput('#detailsAndStepsInputInvestigation',result.workSObject[nameSpace + 'Details_and_Steps_to_Reproduce__c']);
+        bindWorkInput('#scheduledBuildInputUserStory',result.workSObject[nameSpace + 'Scheduled_Build__r']);
+        bindWorkInput('#storyPointsInput',result.workSObject[nameSpace + 'Story_Points__c']);
+        bindWorkSelect('#helpStatusList',result.helpStatuses, result.workSObject[nameSpace + 'Help_Status__c']);
+        bindWorkSelect('#impactInput',result.impacts,result.workSObject[nameSpace + 'Impact__c']);
+        bindWorkSelect('#frequencyInput',result.frequencies,result.workSObject[nameSpace + 'Frequency__c']);
+        bindWorkSelect('#priorityInput',result.priorities,result.workSObject[nameSpace + 'Priority__c']);
+        bindWorkSelect('#priorityInputOverride',result.priorities,result.workSObject[nameSpace + 'Priority__c']);
+        bindWorkInput('#priorityInputReasonForOverride',result.workSObject[nameSpace + 'Priority_Override_Explanation__c']);
+        bindWorkSelect('#statusInputBug',result.bugStatuses,result.workSObject[nameSpace + 'Status__c']);
+        bindWorkSelect('#statusInputUserStory',result.userStoryStatuses,result.workSObject[nameSpace + 'Status__c']);
+        bindWorkSelect('#statusInputInvestigation',result.investigationStatuses,result.workSObject[nameSpace + 'Status__c']);
+
+        WorkPriority.priorityMap = result.priorityMappings;
+
+        var defaultPriority = WorkPriority.calculateDefaultPriority();
+
+        $('.defaultPriorityText').each(function(index, obj) {
+          $(this).text(defaultPriority);
+        });
+
+        if (result.workSObject[nameSpace + 'Priority__c'] != defaultPriority) {
+          $('#priorityText').addClass('overridden');
+          $('#priorityOverridden').removeClass('slds-hide');
+        }
+
+        // Priority Matrix
+        $(document).on('change','#impactInput,#frequencyInput', function(e) {
+          WorkPriority.calculatePriority();
+        });
+
+        if (result.workSObject[nameSpace + 'Record_Type__c'] === 'Bug') {
+          $('#tabTasks').show();
+          $('.userStoryField,.investigationField').hide();
+		    $('.found_in_build_required').show();
+		    $('.impact_required').show();
+		    $('.frequency_required').show();
+		    $('.bugField').show();
+                    $('#recordTypeInputUserStory').prop('disabled',false);
+                    $('#recordTypeInputInvestigation').prop('disabled',true);
+          $('#recordTypeInputBug').prop('disabled',false).prop('checked',true);
+
+        } else if (result.workSObject[nameSpace + 'Record_Type__c'] === 'User Story') {
+            $('#tabTasks').show();
+            $('.bugField,.investigationField').hide();
+            $('.found_in_build_required').hide();  
+            $('.impact_required').hide();  
+            $('.frequency_required').hide();          
+            $('.userStoryField').show();
+                    $('#recordTypeInputBug').prop('disabled',false);
+                    $('#recordTypeInputInvestigation').prop('disabled',true);
+          $('#recordTypeInputUserStory').prop('disabled',false).prop('checked',true);
+
+        } else if (result.workSObject[nameSpace + 'Record_Type__c'] === 'Investigation') {
+                    if ({!JSENCODE($CurrentPage.parameters.isdtp) == 'p1'}) {
+                      $('#tabTasks').hide();
+                    } else {
+                      $('#tabTasks').show();
+                    }
+                    bindWorkSelect('#severityInput',result.severities,result.workSObject[nameSpace + 'Severity_Level__c']);
+                    $('.userStoryField,.bugField').hide();
+                    $('.investigationField').show();
+                    $('.found_in_build_required').hide();  
+                    $('.impact_required').hide();  
+                    $('.frequency_required').hide();  
+                    //$('#recordTypeInputBug').prop('checked',false);
+                    //$('#recordTypeInputUserStory').prop('checked',false);
+                    $('#recordTypeInputUserStory,#recordTypeInputBug').prop('disabled',true);
+                    $('#recordTypeInputInvestigation').prop('checked',true);
+        } else if (result.workSObject[nameSpace + 'Record_Type__c'] === 'ToDo') {
+            $('#tabTasks').hide();
+        }
+
+        $('#productTagContainer').show();
+              $('#productTagTeam').text(result.workSObject[nameSpace + 'Scrum_Team_Name__c']);
+              $('#productTagName').text(result.workSObject[nameSpace + 'Product_Tag_Name__c']);
+        $('#productTagInput').hide().val(result.workSObject[nameSpace + 'Product_Tag__c']).data('originalText',result.workSObject[nameSpace + 'Product_Tag__c']);
+
+            $('.workEditorLoader').hide();
+        $('.workEditorForm').css('visibility','visible');
+        $('#subjectInput').focus();
+
+        // Populate Chatter information
+        $('#workChatter iframe').attr('src','/apex/ADM_WorkDialogChatter?isdtp=p1&id=' + selectedWork);
+        // Populate Tasks information
+        $('#workTasks iframe').attr('src','/apex/ADM_WorkTasks?isdtp=p1&id=' + selectedWork);
+        //$('#workDialog').css('height','auto');
+        //$('#descriptionInput,#detailsAndStepsInput').height(0).height($('#workEditorLeft').height() - $('#workEditorLeftHeader').height() - 45);
+
+            } else if (event.type === 'exception') {
+        workDialog.removeClass('dialogloading').dialog('close');
+        console.error(event.message);
+        if (event.message.toLowerCase().indexOf("request invalid for your session") > -1 || event.message.toLowerCase().indexOf("logged in?") > -1) {
+          errorDialog.html("It looks like your session has expired. Please refresh the page.").dialog({ title: "Error During Opening" }).dialog( "option", "buttons", [{text: "Refresh", click: function() { location.reload(); } }]).dialog("open");
+        } else {
+          errorDialog.html("Bad data returned from server: " + event.message).dialog({ title: "Error During Opening" }).dialog("open");
+        }
+      }
+    }, {escape:false});
+  } else {
+
+    // NEW WORK
+    makeModalAccessible('#workModal', 'input#subjectInput', 'button:last', workModalEscHandler);
+
+    $('#workModal .slds-modal__header h2').text('Create Work');
+    $('#workModal .slds-modal__header').css('padding','24px 16px');
+    $('#workModal .slds-tabs').hide();
+    $('#workDialogLink').html(null).hide();
+         $('#recordTypeInputInvestigation,#recordTypeInputBug,#recordTypeInputUserStory').prop('disabled',false);
+
+        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_WorkDialogController.getWorkEditorDialogMetaData}', null, '{!JSINHTMLENCODE(teamId)}', function(result, event) {
+            if (event.status) {
+        console.log(result);
+
+        kanbanDD = [];
+        $.each(result.leafNodeDetailsList, function(index, list) {
+          kanbanDD.push({
+            Id:list.columnId,
+            Name:list.path
+          });
+        });
+        var sprintName = '{!sprintName}';
+        $('#sprintInput').val(sprintName);
+        bindWorkSelect('#columnInput',kanbanDD,'',true,'-Not on board-');
+        if ($("#columnInput").length > 0 && $("#columnInput").get(0).length > 1) {
+          $("#columnInput").get(0).selectedIndex = 1; // Select second option on dropdown
+        }
+
+                 bindWorkSelect('#statusInputUserStory',result.userStoryStatuses,'true');
+                bindWorkSelect('#statusInputBug',result.bugStatuses,'true');
+
+                bindWorkSelect('#impactInput',result.impacts,true,'--None--');
+                bindWorkSelect('#frequencyInput',result.frequencies,true,'--None--');
+                bindWorkSelect('#priorityInput',result.priorities,true);
+                bindWorkSelect('#priorityInputOverride',result.priorities,true);
+
+                bindWorkSelect('#statusInputInvestigation',result.investigationStatuses,'true');
+                //bindWorkSelect('#storyPointsInput',result.storyPoints,'',true);
+                bindWorkSelect('#priorityInput',result.priorities,'', true);
+                bindWorkSelect('#severityInput',result.severities,'true');
+                bindWorkSelect('#helpStatusList',result.helpStatuses,true);
+
+        WorkPriority.priorityMap = result.priorityMappings;
+
+        // Priority Matrix
+        $(document).on('change','#impactInput,#frequencyInput', function(e) {
+          WorkPriority.calculatePriority();
+        });
+
+        $('#productTagInput').show();
+        $('#productTagContainer').hide();
+
+        $('#recordTypeInputUserStory').prop('checked',true);
+        $('#recordTypeInputBug,#recordTypeInputInvestigation').prop('checked',false);
+        $('.bugField,.investigationField,.workEditorLoader').hide();
+        $('.userStoryField').show();
+        $('#assignedToProfileImage,#qaEngineerProfileImage,#productOwnerProfileImage').attr('src','/profilephoto/005/F');
+        $('.workEditorForm').css('visibility','visible');
+        $('#subjectInput').focus();
+
+        //$('#workDialog').css('height','auto');
+        //$('#descriptionInput,#detailsAndStepsInput').height(0).height($('#workEditorLeft').height() - $('#workEditorLeftHeader').height() - 45);
+
+
+            } else if (event.type === 'exception') {
+        workDialog.removeClass('dialogloading').dialog('close');
+        console.error(event.message);
+        if (event.message.toLowerCase().indexOf("request invalid for your session") > -1 || event.message.toLowerCase().indexOf("logged in?") > -1) {
+          errorDialog.html("It looks like your session has expired. Please refresh the page.").dialog({ title: "Error During Opening" }).dialog( "option", "buttons", [{text: "Refresh", click: function() { location.reload(); } }]).dialog("open");
+        } else {
+          errorDialog.html("Bad data returned from server: " + event.message).dialog({ title: "Error During Opening" }).dialog("open");
+        }
+      }
+    }, {escape:false});
+  }
+}
+
+
+$(function() {
+
+    $("#buttonCreateWork").on("click", function() {
+    selectedWork = '';
+    workModalOpen();
+    });
+
+    $('#productTagRemove').on("click", function(e) {
+      e.preventDefault();
+    productTagRemove(true);
+    });
+
+    $('#priorityOverrideLink').on("click", function(e) {
+      e.preventDefault();
+      WorkPriority.openPriorityOverride();
+      makeModalAccessible('#priorityModal', 'select:first', 'button:last', function() {
+          $('#priorityModal .slds-modal').removeClass('slds-fade-in-open');
+          $('#priorityModal .slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+        $('button#priorityOverrideLink').focus();
+      });
+    });
+
+  $('#recordTypeInputUserStory').on("change", function() {
+    $('#workEditor .slds-notify--warning').html('').hide();
+    if ($(this).is(':checked')) {
+      productTagRemove(false); // Temporary: in future, we will know better if product tag needs to be removed
+      $('.bugField').hide();
+             $('.investigationField').hide()
+            $('.userStoryField').show();
+      if ($('div#detailsAndStepsInput').html().length > 0) {
+        if ($('textarea#descriptionInput').val() === '') {
+          $('textarea#descriptionInput').val($('div#detailsAndStepsInput').text());
+          if ($('div#detailsAndStepsInput').html() !== $('div#detailsAndStepsInput').text()) {
+            $('#workEditor .slds-notify--warning').html("You are switching from a Bug to User Story. Bugs use rich-text (HTML) for the Details and Steps to Reproduce field, and User Stories use plain text for the Description field. We have attempted to convert your content. Please check to see that the converted content is how you like it.").show();
+          }
+        } else if ($('textarea#descriptionInput').val() !== '' && $('textarea#descriptionInput').val() !== $('div#detailsAndStepsInput').text()) {
+          $('#workEditor .slds-notify--warning').html("You are switching from a Bug to User Story. Bugs use rich-text (HTML) for the Details and Steps to Reproduce field, and User Stories use plain text for the Description field. We could not convert your content because you already have content in the User Story description field.").show();
+        }
+      }
+    }
+  });
+
+  $('#recordTypeInputBug').on("change", function() {
+    $('#workEditor .slds-notify--warning').html('').hide();
+    if ($(this).is(':checked')) {
+      productTagRemove(false); // Temporary: in future, we will know better if product tag needs to be removed
+      $('.userStoryField').hide();
+             $('.investigationField').hide()
+      $('.bugField').show();
+
+      var description_value = $('<div/>').text($('textarea#descriptionInput').val()).html();
+
+      if (description_value.length > 0) {
+        if ($('div#detailsAndStepsInput').html() === '') {
+          $('div#detailsAndStepsInput').html(description_value);
+        }
+      }
+    }
+  });
+
+      $('#recordTypeInputInvestigation').on("change", function() {
+    $('#workEditor .slds-notify--warning').html('').hide();
+    if ($(this).is(':checked')) {
+      productTagRemove(false); // Temporary: in future, we will know better if product tag needs to be removed
+      $('.userStoryField').hide();
+      $('.bugField').hide();
+            $('.investigationField').show()
+    }
+  });
+
+  $('.gusRichAutoCompleteInput').on("keyup change", function() {
+    if ($(this).val() === '') {
+      $(this).siblings('img.gusRichAutoCompleteProfileImage').attr('src','/profilephoto/005/F');
+    }
+  });
+
+});
+</script>
+
+
+</apex:component>

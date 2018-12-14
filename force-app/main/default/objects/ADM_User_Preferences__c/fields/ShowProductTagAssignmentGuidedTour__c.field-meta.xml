@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ShowProductTagAssignmentGuidedTour__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Shows the guided tour on the Product Tag Assignment Matrix.</description>
+    <externalId>false</externalId>
+    <label>Show Product Tag Assignment Guided Tour</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

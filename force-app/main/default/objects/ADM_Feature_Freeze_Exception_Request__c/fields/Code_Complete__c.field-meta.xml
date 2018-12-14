@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Code_Complete__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Code checked in and follows department standards.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Code checked in and follows department standards.</inlineHelpText>
+    <label>Code Complete</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Theme_Work_Key__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Used to enforce uniqueness of the theme assignment. This is automatically populated in the trigger.</description>
+    <externalId>false</externalId>
+    <label>Theme Work Key</label>
+    <length>100</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

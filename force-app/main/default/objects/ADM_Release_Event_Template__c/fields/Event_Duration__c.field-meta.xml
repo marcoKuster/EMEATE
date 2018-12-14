@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Event_Duration__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the duration in minutes of this Release Event. Setting this value to zero when Day Offset, Hour Offset and Minute Offset are all zero creates Release Events with a Duration equal to the Release&#39;s Planned Duration.</inlineHelpText>
+    <label>Event Duration</label>
+    <precision>4</precision>
+    <required>true</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

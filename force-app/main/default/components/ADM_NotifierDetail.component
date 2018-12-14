@@ -1,0 +1,30 @@
+<apex:component controller="ADM_NotifierController" allowDML="true">
+<apex:attribute name="workObject" description="Reference to the work object" type="SObject" required="required" assignTo="{!sObjectWork}"/>
+ 
+<div  style="display: inline; position: relative; left: -8px; ">
+	<apex:pageBlock id="pageBlockEdit" mode="maindetail" >
+		<apex:pageBlockSection id="pageBlockSectionNotifications"  columns="1" showHeader="false">                    
+                
+			<!--  Product Area Select List -->
+			<apex:pageBlockSectionItem id="pageBlockSectionItemEmailAssignees">
+				<apex:outputPanel >
+					<c:helpHover label="Assignees" id="helpHoverAssignees" body="Assignees of this work record receive email on save." type="help"/>
+				</apex:outputPanel>
+				<apex:outputPanel layout="block"> 
+					{!StandardRecipients}                                        
+				</apex:outputPanel>
+			</apex:pageBlockSectionItem>
+			<apex:pageBlockSectionItem id="pageBlockSectionItemAlsoEmail">
+				<apex:outputPanel >
+					<c:helpHover label="Other Recipients" id="helpHoverOtherRecipients" body="The name of a GUS user or any salesforce.com email address" type="help"/>
+				</apex:outputPanel>
+				<apex:outputPanel >
+					&nbsp;<apex:repeat value="{!Subscribers}" var="subscriber">
+						{!subscriber.UserId__r.Name} {!subscriber.Distribution_List__c}&nbsp;&nbsp;&nbsp;
+					</apex:repeat>
+				</apex:outputPanel>
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection> 
+	</apex:pageBlock> 
+</div>     
+</apex:component>

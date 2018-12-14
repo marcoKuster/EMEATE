@@ -1,0 +1,34 @@
+<apex:component id="workCaseRelatedListComponent" controller="ADM_CaseRelatedListController" allowDML="true">
+	<apex:attribute name="AWorkID" description="Reference to the ID of the object" type="Id" required="required" assignTo="{!workid}"/>
+    <apex:attribute name="AWorkName" description="Reference to the Name (the W-12345) of the object" type="String" required="required" assignTo="{!workname}"/>
+    
+ <apex:form >   
+     <apex:pageBlock title="Cases" mode="detail" rendered="{!CasesRelatedToWork.size > 0}">
+     		<apex:pageBlockTable value="{!CasesRelatedToWork}" var="item">
+                <apex:column >
+                    <apex:facet name="header">Case Number</apex:facet>
+                    <apex:outputLink value="/{!item.id}">{!item.casenumber}</apex:outputLink>
+                </apex:column>
+                <apex:column value="{!item.subject}"/> 
+                <apex:column value="{!item.status}"/> 
+                <apex:column value="{!item.createddate}"/>
+                <apex:column >
+                    <apex:facet name="header">Case Owner</apex:facet>
+                    <apex:outputText >{!item.owner.name}</apex:outputText>
+                </apex:column>    
+                <apex:column value="{!item.lastmodifieddate}"/> 
+        	</apex:pageBlockTable>                   
+     </apex:pageBlock> 
+ 	 <apex:pageBlock rendered="{!CasesRelatedToWork.size = 0}">
+     	<apex:pageBlockButtons >&nbsp;<!--When we receive the inevitable request for a New Case button it will go here--></apex:pageBlockButtons>
+        <apex:pageBlockSection >
+             <apex:pageBlockSectionItem >
+                    <apex:outputText >No records to display</apex:outputText>
+             </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock> 
+     
+    
+     
+    </apex:form> 
+</apex:component>

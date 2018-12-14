@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Approval_Needed_By__c</fullName>
+    <defaultValue>Today() + 28</defaultValue>
+    <description>Date equivalent to your teams feature freeze date. Please account for 3PP SLA time frames referenced on site</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Date equivalent to your teams feature freeze date. Please account for 3PP SLA time frames referenced on site</inlineHelpText>
+    <label>Date Approval Needed By</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

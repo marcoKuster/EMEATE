@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_required_when_ERR_is_Released</fullName>
+    <active>true</active>
+    <errorConditionFormula>( Released_In__c = NULL)   &amp;&amp;  ISPICKVAL(eRelease_Status__c, &quot;Released&quot;)</errorConditionFormula>
+    <errorDisplayField>Released_In__c</errorDisplayField>
+    <errorMessage>Release must be specified when eRelease Status is &quot;Released&quot;</errorMessage>
+</ValidationRule>

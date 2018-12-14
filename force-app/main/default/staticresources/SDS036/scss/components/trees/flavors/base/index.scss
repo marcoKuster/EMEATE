@@ -1,0 +1,63 @@
+/* Salesforce Design System v0.3.6 */
+.#{$css-prefix}tree-container {
+  min-width: rem(120px);
+  max-width: rem(400px);
+
+  > .#{$css-prefix}text-heading--label {
+    margin-bottom: $spacing-x-small;
+  }
+}
+
+.#{$css-prefix}tree {
+
+  &__item {
+    display: flex;
+    line-height: $line-height-button;
+    padding-left: $spacing-medium;
+
+    a {
+      color: $color-text-default;
+    }
+
+    a:hover,
+    a:focus {
+      outline: 0;
+      text-decoration: none;
+    }
+  }
+  // Depth 1
+  &__group > &__item > a {
+    display: inline-block;
+    padding-left: ($spacing-medium + $spacing-x-small); // width of button + gutter
+  }
+  // Depth 2
+  .#{$css-prefix}nested &__branch > &__item {
+    padding-left: (($spacing-medium * 2) + $spacing-x-small);
+  }
+  // Depth 3
+  .#{$css-prefix}nested .#{$css-prefix}nested &__item > a {
+    padding-left: (($spacing-medium * 3) + ($spacing-x-small * 2));
+  }
+
+  .#{$css-prefix}is-selected {
+    @include tree-item-selected;
+  }
+
+  .#{$css-prefix}is-hovered,
+  .#{$css-prefix}is-focused {
+    @include tree-item-hover;
+  }
+
+  .#{$css-prefix}is-open .#{$css-prefix}button__icon {
+    transform: rotate(90deg);
+  }
+
+  .#{$css-prefix}button {
+    align-self: center;
+  }
+
+  .#{$css-prefix}pill {
+    margin-left: $spacing-small;
+  }
+}
+

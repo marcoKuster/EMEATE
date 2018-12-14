@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCM_Required__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Designates whether or not messaging is required for a given incident.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check this box if a customer has requested formal root cause messaging.</inlineHelpText>
+    <label>RCM Required</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

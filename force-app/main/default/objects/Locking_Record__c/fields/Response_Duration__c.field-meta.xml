@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Response_Duration__c</fullName>
+    <description>Response duration (in Hours) is the difference between when the record was resolved and when the record was created if the record has been resolved; otherwise, Response duration is removed.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISNULL(End_Time__c), null, (End_Time__c - CreatedDate)) * 24</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Response duration (in Hours) is the difference between when the record was resolved and when the record was created if the record has been resolved; otherwise, Response duration is removed.</inlineHelpText>
+    <label>Response Duration</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

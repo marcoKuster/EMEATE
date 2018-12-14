@@ -1,0 +1,162 @@
+<apex:component controller="ADM_WorkSearchLayoutController">
+    <apex:attribute name="soslHolder" type="ADM_StringHolder" description="The thing that will hold the sosl query string." assignTo="{!queryHolder}" required="true"/>
+    <apex:attribute name="reRender" type="String" description="The tags to rerender on complete of search" default=""/>
+    <apex:attribute name="oncomplete" type="String" description="JavaScript to run oncomplete of search." default=""/>
+    <apex:attribute name="fields" type="String" description="A comma seperated of fields for the query to return" assignTo="{!queryFields}" />
+    <apex:attribute name="legend" type="String" description="A string to display in the areas header" default="Theme Aggregator" />
+                    
+  <apex:componentBody >
+  <script type="text/javascript" language="javascript">
+    $(function() {
+        $('[id$=lastModifiedDateInput]').datepicker();
+    });
+      
+    function onEnter(event) {
+    	var code = (window.event && window.event.keyCode) || event.which || event.keyCode;
+        if (code === 13) {//ENTER
+        	searchForRecords();
+            return false;
+        }
+        return true;
+    }
+</script>
+    
+<apex:form id="themeAggregatorForm" onkeypress="return onEnter(event);">
+    <apex:actionFunction name="searchForRecords" action="{!search}" reRender="{!reRender}" oncomplete="{!oncomplete}" status="status"/>
+    <div class="gusFieldset">
+        <div class="gusLegend">{!legend}</div>
+    
+        <div class="gusFormToolbar gusFormToolbarTop">       
+            <apex:commandButton action="{!cancelBack}" value="Back To Theme" /> 
+        </div>
+        
+        <div class="gusForm" id="productTagRow">
+            <div class="gusForm1Column">
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft">
+                        <!--TODO: Any label files? -->
+                        <label>Search</label>
+                    </div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <apex:inputText value="{!freeSearch}" styleClass="subjectInput gusStyle" id="freeSearchInput" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <apex:actionstatus id="status">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv waitingSearchDivStart" id="el_loading"> 
+                    <div class="waitingHolder waitingHolderStart">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Searching...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+
+        <div class="gusForm" id="bugDetails">
+            <div id="workSearchOneRow" class="gusForm3Column">
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "><label>{!$ObjectType.ADM_Work__c.fields.Product_Tag__c.Label}</label></div>
+                    <div class="gusFormField gusFormFieldRight ">
+                        <c:ADM_ProductTagInput id="productTagInput" work="{!workPlaceholder}" recordType="{!recordType}" />
+                    </div>
+                </div>
+                
+                <c:ADM_FormRow id="subjectInput" object="{!workPlaceholder}" type="ADM_Work__c" required="false" field="Subject__c" value="" cssClass="subjectInput" />
+                
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "><label for="{!$Component.statusInput}">{!$ObjectType.ADM_Work__c.fields.Status__c.Label}</label></div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <apex:selectList id="statusInput" value="{!selectedStatus}" size="1" styleClass="statusInput">
+                            <apex:selectOptions value="{!statusOptions}"/>
+                        </apex:selectList>
+                    </div>
+                </div>
+
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft">
+                        <label for="{!$Component.scrumTeamInput.autoCompleteComp.autoComp}">
+                            {!$ObjectType.ADM_Work__c.fields.Scrum_Team__c.Label}
+                        </label>
+                    </div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <c:ADM_AutoComplete2 id="scrumTeamInput" ObjectName="ADM_Scrum_Team__c" obj="{!workPlaceholder}" inputFieldName="Scrum_Team__c" inputStyleClass="scrumTeamInput" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="workSearchColumn2" class="gusForm3Column">
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "></div>
+                    <div class="gusFormField gusFormFieldLeft">
+                    </div>
+                </div>
+
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "><label for="{!$Component.statusInput}">{!$ObjectType.ADM_Work__c.fields.Type__c.Label}</label></div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <apex:selectList id="typeInput" value="{!selectedType}" size="1" styleClass="typeInput">
+                            <apex:selectOptions value="{!typeOptions}"/>
+                        </apex:selectList>
+                    </div>
+                </div>
+                
+                <c:ADM_FormRowUserInput id="assigneeInput" object="{!workPlaceholder}" field="Assignee__c" type="ADM_Work__c" required="false" value="{!workPlaceholder.Assignee__c}" cssClass="assigneeInput" />
+
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft">
+                        <label for="{!$Component.scheduledBuildInput.autoCompleteComp.autoComp}">
+                            {!$ObjectType.ADM_Work__c.fields.Scheduled_Build__c.Label}
+                        </label>
+                    </div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <c:ADM_AutoComplete2 id="scheduledBuildInput" ObjectName="ADM_Build__c" obj="{!workPlaceholder}" inputFieldName="Scheduled_Build__c" inputStyleClass="scheduledBuildInput" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="workSearchColumn3" class="gusForm3Column">
+                
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "></div>
+                    <div class="gusFormField gusFormFieldLeft">
+                    </div>
+                </div>
+
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "><label for="{!$Component.statusInput}">{!$ObjectType.ADM_Work__c.fields.Priority__c.Label}</label></div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <apex:selectList id="priorityInput" value="{!selectedPriority}" size="1" styleClass="priorityInput">
+                            <apex:selectOptions value="{!priorityOptions}"/>
+                        </apex:selectList>
+                    </div>
+                </div>
+                
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "><label>{!$ObjectType.ADM_Work__c.fields.LastModifiedDate.Label}</label></div>
+                    <div class="gusFormField gusFormFieldRight">
+                        <!-- TODO: Use a more robust date picker that will also allow SOSL terms, e.g., TODAY, YESTERDAY, etc -->
+                        <apex:inputText value="{!lastModified}" id="lastModifiedDateInput" />                          
+                    </div>
+                </div>
+                
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "><label>{!$ObjectType.ADM_Work__c.fields.Customer__c.Label}</label></div>
+                    <div class="gusFormField gusFormFieldLeft">
+                        <apex:inputText value="{!customerSearch}" styleClass="subjectInput gusStyle" id="customerSearchInput" />
+                    </div>
+                </div>
+                <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft "></div>
+                    <div class="gusFormField gusFormFieldLeft">
+			            <apex:commandButton reRender="themeAggregatorForm" onclick="searchForRecords();" value="Search For Work" />
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div> 
+</apex:form>
+  </apex:componentBody>
+</apex:component>

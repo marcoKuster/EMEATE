@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Set_ERR_Status_To_Released</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Set ERR Status To Released</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>{!REQUIRESCRIPT (&quot;/soap/ajax/13.0/connection.js&quot;)} 
+var records = {!GETRECORDIDS($ObjectType.eRelease_Request__c)};
+var newRecords = []; 
+if (records[0] == null) { 
+	alert(&quot;Please select at least one row.&quot;) 
+} else {
+	for (var n=0; n&lt;records.length; n++) {
+		var c = new sforce.SObject(&quot;eRelease_Request__c&quot;); 
+		c.id = records[n]; 
+		c.eRelease_Status__c = &quot;Released&quot;;
+		newRecords.push(c); 
+	} 
+	result = sforce.connection.update(newRecords); 
+	window.location.reload(); 
+}</url>
+</WebLink>

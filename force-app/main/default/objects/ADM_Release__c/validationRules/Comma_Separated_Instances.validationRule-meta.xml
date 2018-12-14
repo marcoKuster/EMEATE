@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comma_Separated_Instances</fullName>
+    <active>false</active>
+    <description>Format is: blank, NA1 (one or two digits)  NA1,NA2 or NA1,NA2,...,NA99</description>
+    <errorConditionFormula>NOT(REGEX( Deployment_Instances__c , &quot;|^(?:NA|CS|AP|EU|GS|SR)[0-9][0-9]?$|^(?:NA|CS|AP|EU|GS|SR)[0-9][0-9]?((?:,(?:NA|CS|AP|EU|GS|SR)[0-9][0-9]?)+)*,(?:NA|CS|AP|EU|GS|SR)[0-9][0-9]?&quot;))</errorConditionFormula>
+    <errorDisplayField>Deployment_Instances__c</errorDisplayField>
+    <errorMessage>Instance list must be of the form: NA1,NA2,CS2,...
+Use capital letters and no whitespace.
+Allowed prefixes are NA, CS, EU, AP, GS or SR only.</errorMessage>
+</ValidationRule>

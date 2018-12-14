@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Coverage_Needed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Whether team needs to participate in release coverage</description>
+    <externalId>false</externalId>
+    <label>Release Coverage Needed</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

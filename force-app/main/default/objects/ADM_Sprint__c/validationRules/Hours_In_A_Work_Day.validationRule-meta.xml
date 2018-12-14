@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hours_In_A_Work_Day</fullName>
+    <active>true</active>
+    <description>Limit hours in a work day to a maximum of 24</description>
+    <errorConditionFormula>Hours_in_a_work_day__c &gt; 24</errorConditionFormula>
+    <errorDisplayField>Hours_in_a_work_day__c</errorDisplayField>
+    <errorMessage>Hours in a work day cannot exceed 24</errorMessage>
+</ValidationRule>

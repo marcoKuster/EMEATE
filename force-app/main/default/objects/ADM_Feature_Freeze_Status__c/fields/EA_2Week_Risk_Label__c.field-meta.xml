@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EA_2Week_Risk_Label__c</fullName>
+    <externalId>false</externalId>
+    <formula>&quot;Excluding hammer tests, we probably won&#39;t be done at Feature Freeze but we can release if we can come up with an alternative solution.&quot; +  BR() +
+&quot;(Explain your proposed alternative solution and any assistance you need.)&quot;</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>B</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ADM_Bugs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bugs</shortDescription>
+        <value>Bugs</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Cancel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Commitment_Exists_On_Sprint</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Work has already been committed to this sprint</shortDescription>
+        <value>Work has already been committed to this sprint</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Definition_of_Ready_Met</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Definition of Ready Met</shortDescription>
+        <value>Definition of Ready Met</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Investigations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Investigations</shortDescription>
+        <value>Investigations</value>
+    </labels>
+    <labels>
+        <fullName>ADM_OK</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OK</shortDescription>
+        <value>OK</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Sprint_Commitment_Proceed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Would you like to proceed message on Sprint Commitment modal</shortDescription>
+        <value>You are commiting to the following in this sprint. This cannot be undone. Would you like to proceed?</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Sprint_Commitment_Sprint_Contains_NonVelocity_Items_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Your sprint contains work items with the following statuses:</shortDescription>
+        <value>Your sprint contains work items with the following statuses:</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Sprint_Commitment_Sprint_Contains_NonVelocity_Items_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message shown on commitment modal if sprint contains non-velocity statuses</shortDescription>
+        <value>These work items do not add to velocity and aren&#39;t included in commitment completion percentages. We recommend removing these items before committing.</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Sprint_Commitment_Total_Work_Count</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Work Count</shortDescription>
+        <value>Total Work Count</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Sprint_VirtualWall_Header_Days_Left</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Days Left</shortDescription>
+        <value>Days Left</value>
+    </labels>
+    <labels>
+        <fullName>ADM_Story_Points</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Story Points</shortDescription>
+        <value>Story Points</value>
+    </labels>
+    <labels>
+        <fullName>ADM_To_Do</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>To Do</shortDescription>
+        <value>To Do</value>
+    </labels>
+    <labels>
+        <fullName>ADM_User_Stories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>User Stories</shortDescription>
+        <value>User Stories</value>
+    </labels>
+</CustomLabels>

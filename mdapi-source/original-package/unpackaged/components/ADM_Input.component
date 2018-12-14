@@ -1,0 +1,110 @@
+<apex:component id="inputComponent" controller="ADM_AutoComplete2Controller" layout="none">
+    <!-- FOR AUTO-COMPLETE: You will need the following resources: ADM_autocomplete2js, jQuery, jQuery UI, jQuery UI Stylesheet, ADM_Common_JS (for the byId function) -->
+    <!-- NOTE: The following two fields are required if you want to bind to an object and it's field. If left blank, you can have an empty text input box. -->
+    <apex:attribute required="false" name="object" type="SObject" description="The name of the object wrapped in Visualforce ex: {!ADM_Work__c}" />
+    <apex:attribute required="false" name="inputFieldName" type="String" description="This name of the field in the Object. ex: Subject__c" />
+    <!-- OPTIONAL FIELDS BELOW: -->
+    <apex:attribute required="false" name="inputObjectName" type="String" description="The name of the object ex: ADM_Work__c" />
+    <apex:attribute required="false" name="lookupObject" type="String" description="ex: ADM_Sprint__c" />
+    <apex:attribute required="false" name="scrumTeamId" type="String" description="Used to limit the results based upon the scrum team" />
+    <apex:attribute required="false" name="renderRow" type="Boolean" description="If false, component only renders input field. If true, component renders surrounding divs" default="false" />
+    <apex:attribute required="false" name="info" type="String" description="Additional information field" />
+    <apex:attribute required="false" name="required" type="Boolean" description="Is this field required?" />
+    <apex:attribute required="false" name="readonly" type="Boolean" description="Should we show edit or read only version?" />
+    <apex:attribute required="false" name="inlineEdit" type="Boolean" description="If read only, allow inline editing?" />
+    <apex:attribute required="false" name="inputStyleClass" type="String" description="CSS class that will be applied to the input field" />
+    <apex:attribute required="false" name="inputStyle" type="String" description="Inline CSS for the field" />
+    <apex:attribute required="false" name="debug" type="Boolean" description="Show debugging information" />
+
+    <apex:outputPanel layout="block" rendered="{!debug}" style="background:#ccc;padding:5px;">
+        <b>{!inputFieldName}:</b><br/>
+        readonly={!readonly}<br/>
+        renderRow={!renderRow}{!IF(ISBLANK(inputObjectName),'***You must supply inputObjectName to get label','')}<br/>
+        inlineEdit={!inlineEdit}<br/>
+        {!IF(ISBLANK(lookupObject),'lookupObject=No','lookupObject=Yes: ' + lookupObject)}<br/>
+        value={!object[inputFieldName]}
+    </apex:outputPanel>
+<!-- EDIT:input -->
+<apex:outputPanel layout="none" rendered="{!NOT(renderRow)}">
+    <apex:outputPanel rendered="{!IF(readonly,true,false)}" layout="none">
+        <!-- read only + inline edit -->
+        <apex:outputField id="outputStandalone" value="{!object[inputFieldName]}">
+            <apex:inlineEditSupport id="outputStandaloneInlineEdit" rendered="{!inlineEdit}" showOnEdit="inlineEditSaveButtonTop,inlineEditCancelButtonTop" hideOnEdit="editButtonTop,cloneButtonTop,deepCloneButtonTop" resetFunction="resetInlineEdit" />
+        </apex:outputField>
+        <c:ADM_Input_JavaScript componentId="{!$Component.outputStandalone}" readonly="true" rendered="{!IF(ISBLANK(lookupObject),false,true)}" lookupObject="{!lookupObject}" scrumTeamId="{!scrumTeamId}" />
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!IF(readonly,false,true)}" layout="none">
+        <!-- NOT read only -->
+        <div class="gusRichAutoComplete">
+            <apex:outputPanel rendered="{!object != NULL && inputFieldName != NULL}">
+                <apex:inputField id="inputStandaloneField" value="{!object[inputFieldName]}" style="{!inputStyle}" styleClass="{!inputStyleClass}" />
+                <apex:outputPanel layout="none" rendered="{!IF(ISBLANK(lookupObject),false,true)}">
+                    <c:ADM_Input_JavaScript componentId="{!$Component.inputStandaloneField}" readonly="false" rendered="{!IF(ISBLANK(lookupObject),false,true)}" lookupObject="{!lookupObject}" scrumTeamId="{!scrumTeamId}" />
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!object == NULL && inputFieldName == NULL}">
+                <apex:inputText id="inputStandaloneText" style="{!inputStyle}" styleClass="{!inputStyleClass}" />
+                <apex:outputPanel layout="none" rendered="{!IF(ISBLANK(lookupObject),false,true)}">
+                    <c:ADM_Input_JavaScript componentId="{!$Component.inputStandaloneText}" readonly="false" rendered="{!IF(ISBLANK(lookupObject),false,true)}" lookupObject="{!lookupObject}" scrumTeamId="{!scrumTeamId}" />
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </apex:outputPanel>
+</apex:outputPanel>
+<!-- /EDIT:input -->
+
+<!-- EDIT:input+divs-->
+    <apex:outputPanel layout="none" rendered="{!renderRow}">
+        <div class="gusFormRow gusRow_{!inputObjectName}_{!inputFieldName}">
+            <div class="gusFormField gusFormFieldLeft {!IF(required && !readonly,'gusFieldRequired','')}">
+                <label for="{!$Component.inputFieldWithContainer}">
+                    <apex:outputText value="{!$ObjectType[inputObjectName].fields[inputFieldName].Label}" />
+                    <apex:outputPanel layout="none" rendered="{!required == true}">
+                        <apex:outputText value="*" styleClass="assistiveText"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!IF(readonly,false,true)}">
+                        <apex:outputPanel styleClass="gusFormHelpText gusFormHelpTextLeft" rendered="{!NOT(ISBLANK($ObjectType[inputObjectName].fields[inputFieldName].inlineHelpText))}" title="{!$ObjectType[inputObjectName].fields[inputFieldName].inlineHelpText}"></apex:outputPanel>
+                    </apex:outputPanel>
+                </label>
+            </div>
+            <div class="gusFormField gusFormFieldRight {!IF(required,'gusFieldRequired','')}">
+                <!--###input only###-->
+                <apex:outputPanel rendered="{!IF(readonly,true,false)}" layout="none">
+                    <!-- read only + inline edit -->
+                    <apex:outputField id="outputWithContainer" value="{!object[inputFieldName]}">
+                        <apex:inlineEditSupport rendered="{!inlineEdit}" showOnEdit="inlineEditSaveButtonTop,inlineEditCancelButtonTop" hideOnEdit="editButtonTop,cloneButtonTop,deepCloneButtonTop" resetFunction="resetInlineEdit" />
+                    </apex:outputField>
+                        <apex:outputPanel layout="none" rendered="{!IF(ISBLANK(lookupObject),false,true)}">
+                        <c:ADM_Input_JavaScript componentId="{!$Component.outputWithContainer}" readonly="true" rendered="{!IF(ISBLANK(lookupObject),false,true)}" lookupObject="{!lookupObject}" scrumTeamId="{!scrumTeamId}" />
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(readonly,false,true)}" layout="none">
+                    <!-- NOT read only -->
+                    <div class="gusRichAutoComplete">
+                        <apex:outputPanel rendered="{!object != NULL && inputFieldName != NULL}">
+                            <apex:inputField id="inputFieldWithContainer" value="{!object[inputFieldName]}" style="{!inputStyle}" styleClass="{!inputStyleClass}" />
+                            <apex:outputPanel layout="none" rendered="{!IF(ISBLANK(lookupObject),false,true)}">
+                                <c:ADM_Input_JavaScript componentId="{!$Component.inputFieldWithContainer}" readonly="false" rendered="{!IF(ISBLANK(lookupObject),false,true)}" lookupObject="{!lookupObject}" scrumTeamId="{!scrumTeamId}" />
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!object == NULL && inputFieldName == NULL}">
+                            <apex:inputField id="inputTextWithContainer" value="{!object[inputFieldName]}" style="{!inputStyle}" styleClass="{!inputStyleClass}" />
+                            <apex:outputPanel layout="none" rendered="{!IF(ISBLANK(lookupObject),false,true)}">
+                                <c:ADM_Input_JavaScript componentId="{!$Component.inputTextWithContainer}" readonly="false" rendered="{!IF(ISBLANK(lookupObject),false,true)}" lookupObject="{!lookupObject}" scrumTeamId="{!scrumTeamId}" />
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+
+                    </div>
+                </apex:outputPanel>
+                <!--/###input only###-->
+                <apex:outputPanel layout="none" rendered="{!IF(readonly,false,true)}">
+                    <apex:outputPanel styleClass="gusFormHelpText gusFormHelpTextRight" rendered="{!NOT(ISBLANK(info))}" title="{!info}"></apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+        </div>
+    
+        
+    </apex:outputPanel>
+<!-- /EDIT:input+divs -->
+    
+</apex:component>

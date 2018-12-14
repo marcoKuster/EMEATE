@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Leader__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Leader</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Chuck Dietrich</fullName>
+                <default>false</default>
+                <label>Chuck Dietrich</label>
+            </value>
+            <value>
+                <fullName>Clara Shih</fullName>
+                <default>false</default>
+                <label>Clara Shih</label>
+            </value>
+            <value>
+                <fullName>David Brooks</fullName>
+                <default>false</default>
+                <label>David Brooks</label>
+            </value>
+            <value>
+                <fullName>Elay Cohen</fullName>
+                <default>false</default>
+                <label>Elay Cohen</label>
+            </value>
+            <value>
+                <fullName>Eric Bezar</fullName>
+                <default>false</default>
+                <label>Eric Bezar</label>
+            </value>
+            <value>
+                <fullName>Jamie Grenney</fullName>
+                <default>false</default>
+                <label>Jamie Grenney</label>
+            </value>
+            <value>
+                <fullName>Jim Rivera</fullName>
+                <default>false</default>
+                <label>Jim Rivera</label>
+            </value>
+            <value>
+                <fullName>John Ball</fullName>
+                <default>false</default>
+                <label>John Ball</label>
+            </value>
+            <value>
+                <fullName>Kraig Swensrud</fullName>
+                <default>false</default>
+                <label>Kraig Swensrud</label>
+            </value>
+            <value>
+                <fullName>Mark Abramowitz</fullName>
+                <default>false</default>
+                <label>Mark Abramowitz</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

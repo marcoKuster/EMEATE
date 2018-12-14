@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Week2_Risk_Comments_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(EA_2Week_Risk_Comment__c) &amp;&amp; EA_2Week_Risk_Response__c</errorConditionFormula>
+    <errorDisplayField>EA_2Week_Risk_Comment__c</errorDisplayField>
+    <errorMessage>Enter comments or assistance that is required.</errorMessage>
+</ValidationRule>

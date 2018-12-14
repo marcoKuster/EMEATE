@@ -1,0 +1,26 @@
+<aura:component >
+    <!-- This component is currently limited to x-small icons and nubbins in the nubbinClass description -->
+
+    <aura:attribute name="tooltipText" type="String" default="" />
+    <aura:attribute name="iconName" type="String" default="utility:info" description="iconName that gets passed into the lightning:icon component"/>
+	<aura:attribute name="iconAlternativeText" type="String" default="Info" description="alternativeText that gets passed into the lightning:icon component"/>
+    <aura:attribute name="nubbinClass" type="String" default="slds-nubbin--bottom-left" description="Class for the nubbin. Currently only supports slds-nubbin--bottom-left and slds-nubbin--bottom-right"/>
+
+  	<aura:attribute name="ariaHidden" type="String" default="true" description="aria-hidden true or false for the tooltip. Handled by controller." />
+    <aura:attribute name="tooltipStyle" type="String" />
+    <aura:attribute name="hovered" type="Boolean" default="false" />
+
+    <span class="slds-is-relative">
+
+        <span class="slds-form-element__icon slds-grid--vertical-align-center icon-wrapper" onmouseenter="{!c.onMouseover}" onfocus="{!c.onMouseover}" onmouseleave="{!c.onMouseout}" onblur="{!c.onMouseout}" aura:id="icon" tabindex="0" aria-describedby="{!'tooltip_' + globalId}">
+            <lightning:icon iconName="{!v.iconName}" alternativeText="{!v.iconAlternativeText}" size="x-small" />
+        </span>
+
+        <aura:if isTrue="{! and(v.tooltipText != null, v.hovered == true)}">
+            <span class="{!'slds-popover slds-popover--tooltip ' + v.nubbinClass }" style="{! v.tooltipStyle }" aura:id="tooltip">
+                <p role="tooltip" aria-hidden="{!v.ariaHidden}" id="{!'tooltip_' + globalId}" class="slds-popover__body slds-text-align--left" tabindex="0" aura:id="tooltipText">{!v.tooltipText}</p>
+            </span>
+        </aura:if>
+
+    </span>
+</aura:component>

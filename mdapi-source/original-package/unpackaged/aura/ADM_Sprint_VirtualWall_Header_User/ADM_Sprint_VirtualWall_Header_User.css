@@ -1,0 +1,5 @@
+/* needed so that when border is applied, the layout doesn't get messed up. */
+.THIS .user-button {
+    width: 38px;
+    height: 38px;
+}

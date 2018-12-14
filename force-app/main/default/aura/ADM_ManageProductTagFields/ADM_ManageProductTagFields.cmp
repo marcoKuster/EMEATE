@@ -1,0 +1,87 @@
+<aura:component controller="ADM_ManageProductTagFieldsController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+<aura:attribute name="productTagFields" type="List"  default="[]" />
+
+<aura:attribute name="choices" type="String[]" default="Hidden,Visible,Required"/>
+
+
+
+
+<p>
+Please select which additional fields you would like to use when users pick this product tag
+</p>
+<br/>
+
+<lightning:spinner aura:id="mySpinner" />
+
+<table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--striped">
+  <thead>
+    <tr class="slds-text-title--caps">
+      <th scope="col">
+        <div class="slds-truncate" title="Field Name">Field Name</div>
+      </th>
+
+      <th scope="col" >
+        <div class="slds-truncate" title="Bug Setting">Bugs</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="User Story Setting">User Stories</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Investigation Settings">Investigations</div>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+      <aura:iteration items="{!v.productTagFields}" var="productTagField" >
+            <tr>
+              <td scope="row" data-label="Field Name" style="min-width:200px;">
+                <div class="slds-truncate_container--100" title="{!productTagField.Name}"><div class="slds-truncate">{!productTagField.Name}</div></div>
+              </td>
+
+              <td scope="row" data-label="Bug Setting" style="min-width:100px;">
+                <div>
+                    <ui:inputSelect aura:id="{!'bugSettingFor' + productTagField.Field_API_Name__c}" value="{!productTagField.Bug_Setting__c}">
+                        <aura:iteration items="{!v.choices}" var="choice">
+                             <ui:inputSelectOption text="{!choice}" label="{!choice}"/>
+                        </aura:iteration>
+                    </ui:inputSelect>
+
+                 </div>
+              </td>
+              <td scope="row" data-label="User Story Setting">
+                <div class="slds-truncate">
+                    <ui:inputSelect aura:id="{!'userStorySettingFor' + productTagField.Field_API_Name__c}" value="{!productTagField.User_Story_Setting__c}">
+                        <aura:iteration items="{!v.choices}" var="choice">
+                             <ui:inputSelectOption text="{!choice}" label="{!choice}"/>
+                        </aura:iteration>
+                    </ui:inputSelect>
+                  </div>
+              </td>
+              <td scope="row" data-label="Investigation Setting">
+                <div class="slds-truncate">
+                    <ui:inputSelect aura:id="{!'investigationSettingFor' + productTagField.Field_API_Name__c}" value="{!productTagField.Investigation_Setting__c}">
+                        <aura:iteration items="{!v.choices}" var="choice">
+                             <ui:inputSelectOption text="{!choice}" label="{!choice}"/>
+                        </aura:iteration>
+                    </ui:inputSelect>
+                </div>
+              </td>
+            </tr>
+    </aura:iteration>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      	<td align="right">
+        	<lightning:button variant="brand" label="Save Changes" onclick="{!c.handleClick}" />
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+</aura:component>

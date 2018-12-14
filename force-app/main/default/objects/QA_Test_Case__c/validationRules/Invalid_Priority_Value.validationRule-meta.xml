@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invalid_Priority_Value</fullName>
+    <active>false</active>
+    <description>Users should use a valid picklist value</description>
+    <errorConditionFormula>CASE(  Priority__c  ,
+
+&quot;High&quot;, 1,
+
+&quot;Medium&quot;, 1,
+
+&quot;Low&quot;, 1,
+
+&quot;&quot;,1,
+
+0) = 0</errorConditionFormula>
+    <errorDisplayField>Priority__c</errorDisplayField>
+    <errorMessage>Incorrect Priority Value. Must be: High, Medium, or Low</errorMessage>
+</ValidationRule>

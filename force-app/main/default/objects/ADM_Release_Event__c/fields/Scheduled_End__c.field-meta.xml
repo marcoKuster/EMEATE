@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduled_End__c</fullName>
+    <description>Scheduled End for the Release Event</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Scheduled end time of the Release Event.</inlineHelpText>
+    <label>Scheduled End</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

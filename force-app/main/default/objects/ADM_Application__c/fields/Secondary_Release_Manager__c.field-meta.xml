@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Secondary_Release_Manager__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Secondary or backup Release Manager for this Application.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the secondary or backup Release Manager for this Application.</inlineHelpText>
+    <label>Secondary Release Manager</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>ADM_Application_RM2</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

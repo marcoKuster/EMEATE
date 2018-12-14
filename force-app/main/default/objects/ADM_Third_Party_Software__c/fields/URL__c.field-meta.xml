@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>URL__c</fullName>
+    <description>Link to product information page.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Please provide the URL containing information about the Third Party Property.</inlineHelpText>
+    <label>Third Party Property product info URL</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

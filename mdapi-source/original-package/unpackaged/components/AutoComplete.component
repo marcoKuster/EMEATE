@@ -1,0 +1,62 @@
+<apex:component controller="ADM_AutoCompleteController" id="autoCompleteComp">
+	<apex:attribute name="InputId" description="Id of the InputField to which the AutoComplete Componente will belong, use {!$Componente.THEID}" type="String" required="false"/>
+	<apex:attribute name="AutoCompleteId" description="Unique Id for this AutoComplete Component" type="String" required="true" />
+	<apex:attribute name="ObjectName" description="This is the lookup Object." type="String" required="true"/>
+	<apex:attribute name="ClassName" description="This is the name of the CSS Class used to style the AutoComplete Menu." type="String" required="false" default="autocomplete"/>
+	<apex:attribute name="Width" description="AutoComplete Width, In case you need to adjust it for certain inputs" type="Integer" required="true"/>
+	<apex:attribute name="ScrumTeamId" description="Used to limit the results based upon the scrum team" type="String" required="false"/>
+	<apex:attribute name="obj" type="sObject" description="todo" required="true" />
+	<apex:attribute name="inputOnchange" type="String" description="todo" required="false" />
+	<apex:attribute name="inputOnclick" type="String" description="todo" required="false" />
+	<apex:attribute name="inputStyleClass" type="String" description="todo" required="false" />
+	<apex:attribute name="inputStyle" type="String" description="todo" required="false" />
+	<apex:attribute name="inputFieldName" type="String" description="todo" required="false" />  
+	
+	<apex:inputField value="{!obj[inputFieldName]}" onchange="{!inputOnchange}" onclick="{!inputOnclick}" styleClass="{!inputStyleClass}" id="autoComp" style="{!inputStyle}">	
+		<apex:actionFunction name="search{!AutoCompleteId}" action="{!searchSuggestions}" rerender="OP_" immediate="true" >
+			<apex:param name="aname" value="" />
+			<apex:param name="objectname" value="" />
+			<apex:param name="scrumteamid" value="" />
+		</apex:actionFunction>
+		
+		<apex:actionFunction name="clear{!AutoCompleteId}" action="{!clearValues}" rerender="OP_" immediate="true"/>
+		<div id="suggestions"><div id="{!AutoCompleteId}" class="{!ClassName}" style="position:absolute;display:none;width:{!Width}px !important;"></div></div>
+		<script type="text/javascript" language="javascript">
+			new AutoComplete(document.getElementById('{!$Component.autoComp}'),document.getElementById('{!AutoCompleteId}'),'search{!AutoCompleteId}','clear{!AutoCompleteId}','{!ObjectName}');
+		</script>                                           
+		<apex:outputPanel id="OP_" layout="block">
+			<script type="text/javascript" language="javascript">
+				var container = document.getElementById('{!AutoCompleteId}');
+				var myElement;
+				var textNode;
+				var aIds;
+				container.innerHTML = '';
+				
+				
+			</script>
+			
+			<apex:actionStatus ><apex:facet name="stop">
+				<apex:repeat value="{!resultsname}" var="a" rendered="{!hasparams}">
+					<script type="text/javascript" language="javascript">
+						myElement = document.createElement('div');
+						if({!hasnoresults}){
+							myElement.id = '{!AutoCompleteId}N_R';
+							myElement.style.background = "#CCF";
+							textNode = document.createTextNode('{!a}');
+						} else {
+							textNode = document.createTextNode('{!a}');
+						}
+						myElement.appendChild(textNode);
+						container.appendChild(myElement);
+					</script>
+				</apex:repeat>
+			</apex:facet></apex:actionStatus>
+			<script type="text/javascript" language="javascript">
+				if(document.getElementById('{!$Component.autoComp}').type == 'hidden'){
+					var cont = document.getElementById('{!AutoCompleteId}');
+					cont.innerHTML='';cont.style.display='none';
+				} 
+			</script>
+		</apex:outputPanel>
+	</apex:inputField>
+</apex:component>

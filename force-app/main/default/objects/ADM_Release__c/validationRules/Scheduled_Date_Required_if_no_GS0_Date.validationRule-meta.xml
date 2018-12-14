@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduled_Date_Required_if_no_GS0_Date</fullName>
+    <active>true</active>
+    <description>Scheduled date is a required field unless a GS0 date has been specified.</description>
+    <errorConditionFormula>CONTAINS($Profile.Name,&quot;GUS Release&quot;) &amp;&amp; 
+ISNULL( Release_Date__c) &amp;&amp; 
+ISNULL( Planned_GUS_Release_Date__c ) &amp;&amp;   
+NOT( ISCHANGED( Number_of_Stamps__c ))</errorConditionFormula>
+    <errorDisplayField>Release_Date__c</errorDisplayField>
+    <errorMessage>Scheduled Release Date must be specified.</errorMessage>
+</ValidationRule>

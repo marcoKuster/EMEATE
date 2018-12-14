@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Open_P0_Bugs_at_FF__c</fullName>
+    <description>IT Feature Freeze Criteria.  No Open P0 Bugs allowed at Feature Freeze.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>P1/P2&#39;s must be noted as exceptions and explained at WRoR.</inlineHelpText>
+    <label>No Open P0 Bugs at FF</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

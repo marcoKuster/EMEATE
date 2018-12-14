@@ -1,0 +1,216 @@
+<apex:page standardController="Quarterly_Plan__c" extensions="PartnerPlanRelatedToQPExtension" lightningStylesheets="False"  >
+	
+    <apex:form >
+        <apex:outputPanel id="QPUPanel" >
+            <apex:pageBlock title="Quarterly Plan Usage" >
+                <apex:pageBlockButtons location="Top">
+                    <apex:selectList value="{!SelectedPAM}" multiselect="false" size="1" title="Filter by PAM">
+                        <apex:actionSupport event="onchange" action="{!FilterPAM}" reRender="TargetPanel,MarketPanel,QPUPanel" />
+               			<apex:selectOptions value="{!PAMs}" />
+            		</apex:selectList>
+                    <apex:commandButton value="Reload Data" action="{!allPP_IDs}"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!QP}" var="qpu">     
+                    <apex:column >
+                        <apex:facet name="header">#Partners</apex:facet>
+                        <apex:OutputText value="{!allPartners}" />
+                    </apex:column>
+                    <apex:column >
+                            <apex:facet name="header">Total TR Done</apex:facet>
+                        <apex:outputtext value="{!qpu.Total_TR_Done__c} / {!qpu.Total_TR_Planned__c}"  />
+                    </apex:column>
+                    <apex:column >
+                            <apex:facet name="header">Total DR Done</apex:facet>
+                        <apex:outputtext value="{!qpu.Total_DP_done__c} / {!qpu.Total_DP_Planned__c}"  />
+                    </apex:column>
+                    <apex:column >
+                            <apex:facet name="header">Total SR Done</apex:facet>
+                        <apex:outputtext value="{!qpu.Total_SR_Done__c} / {!qpu.Total_SR_Planned__c}"  />
+                    </apex:column>
+                    <apex:column >
+                            <apex:facet name="header">Partner Time Done </apex:facet>
+                        <apex:outputtext value="{!EffectivePartnerTimeI}%"  />
+                    </apex:column><apex:column >
+                            <apex:facet name="header">Partner Time Forecasted</apex:facet>
+                        <apex:outputtext value="{!qpu.Partner_Time__c}%"  />
+                    </apex:column>                   
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+
+    <apex:form >    
+    	<apex:outputPanel id="Form" >
+            <apex:pageBlock title="Partners Plans" >
+                <apex:pageBlockButtons location="Both">
+                    <apex:commandButton value="Save" action="{!updatePPT}" >
+                        <apex:actionSupport event="onclick" reRender="TargetPanel,QPUPanel" />
+                        <apex:param assignto="{!page}" name="page" value="Progress"/>
+                    </apex:commandButton>
+                </apex:pageBlockButtons>  
+                
+                <apex:pageBlockSection title="Prospect Partners{!Targetsize}" rendered="{!hasTarget}" id="TargetPanel" >
+                	<apex:pageBlockTable value="{!Target}" var="t" id="TargetTable">                        
+                        <apex:column headerClass="headerClass" style="width:100px;" >
+                            <apex:facet name="header">Partner Name</apex:facet>
+                            <apex:outputField value="{!t.Account__r.name}"  />
+                       </apex:column>
+                        <apex:column headerClass="headerClass" style="width:100px;">
+                            <apex:facet name="header">PAM</apex:facet>
+                            <apex:outputField value="{!t.Account__r.PAM__c}"  /> 
+                        </apex:column>
+                        <apex:column headerClass="headerClass" style="width:100px;">
+                            <apex:facet name="header">Priority</apex:facet>
+                            <apex:outputField value="{!t.Priority__c}"  />
+                        </apex:column> 
+                        <apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!t.Ad_Hoc__c}" style="width:50px;" />
+                        </apex:column>                        
+                        <apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">Selling the Platform</apex:facet>
+                            <apex:inputField value="{!t.Selling_the_Platform_Done__c}" style="width:50px" rendered="{!t.Needs_Selling_the_Platform__c}"  />
+                        	<apex:outputText value="" rendered="{!Not(t.Needs_Selling_the_Platform__c) }"  />
+                       	</apex:column>                       	                      
+                      	<apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">TR</apex:facet>
+                            <apex:inputField value="{!t.TR_Done__c}" style="width:50px" rendered="{!t.Needs_TR__c}" />
+                            <apex:outputText value="" rendered="{!Not(t.Needs_TR__c) }"/>
+                       	</apex:column>
+                       	<apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">DP &amp; Contract</apex:facet>
+                            <apex:inputField value="{!t.DP_Contract_Done__c}" style="width:50px" rendered="{!t.Needs_DP_Contract__c}" />
+                            <apex:outputText value="" rendered="{!Not(t.Needs_DP_Contract__c) }"/>
+                       	</apex:column>
+                       	<apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!t.Workshop_Done__c}" style="width:50px" rendered="{!t.Needs_Workshop__c}" />
+                            <apex:outputText value="" rendered="{!Not(t.Needs_Workshop__c) }"/>
+                       	</apex:column>	
+                       	<apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">Security Review</apex:facet>
+                            <apex:inputField value="{!t.SR_Done__c}" style="width:50px" rendered="{!t.Needs_SR__c}" />
+                            <apex:outputText value="" rendered="{!Not(t.Needs_SR__c) }"/>
+                       	</apex:column>
+                       	<apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">Design Sprint</apex:facet>
+                            <apex:inputField value="{!t.Design_Sprint_Done__c}" style="width:50px" rendered="{!t.Needs_Design_Sprint__c}"/>
+                            <apex:outputText value="" rendered="{!Not(t.Needs_Design_Sprint__c) }"  />
+                       	</apex:column> 
+						<apex:column headerClass="headerClass" style="width:100px;text-align:center;">
+                            <apex:facet name="header">Comments</apex:facet>
+                            <apex:inputField value="{!t.Comments__c}" style="width:200px" />
+                        </apex:column>
+                        <apex:column value="{!t.Account__r.Cadence_Call_doc__c}" headerClass="hc2">
+                            <apex:facet name="header">Cadence Call doc</apex:facet>
+                        </apex:column>
+                    </apex:pageBlockTable>                   
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="In-Market Partners{!InMarketsize}" rendered="{!hasInMarket}" id="MarketPanel" >
+					<apex:pageBlockTable value="{!InMarket}" var="i" id="InMarketTable">                       
+                        <apex:column value="{!i.Account__r.name}" headerClass="hc2"/>
+                        <apex:column value="{!i.Account__r.PAM__c}" headerClass="hc2"/>
+                        <apex:column >
+                            <apex:facet name="header">Priority</apex:facet>
+                            <apex:outputField value="{!i.Priority__c}"  />
+                        </apex:column>
+                        <apex:column style="text-align:center">
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!i.Ad_Hoc__c}" style="width:50px" />
+                        </apex:column>                       
+                        <apex:column style="text-align:center" >
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!i.Workshop_Done__c}" style="width:50px" rendered="{!i.Needs_Workshop__c}" />
+                            <apex:outputText value="" style="width:50px" rendered="{!Not(i.Needs_Workshop__c) }" />
+                        </apex:column>
+                       	<apex:column style="text-align:center" >
+                            <apex:facet name="header">Product Review</apex:facet>
+                            <apex:inputField value="{!i.Product_review_Done__c	 }" style="width:50px" rendered="{!i.Needs_Product_review__c}" />
+                            <apex:outputText value="" rendered="{!Not(i.Needs_Product_review__c) }"/>
+                        </apex:column>
+                       	<apex:column style="text-align:center" >
+                            <apex:facet name="header">Selling the Platform</apex:facet>
+                            <apex:inputField value="{!i.Selling_the_Platform_Done__c}" style="width:50px" rendered="{!i.Needs_Selling_the_Platform__c}" />
+                            <apex:outputText value="" rendered="{!Not(i.Needs_Selling_the_Platform__c) }"/>
+                        </apex:column>
+                       	<apex:column style="text-align:center" >
+                            <apex:facet name="header">TR</apex:facet>
+                            <apex:inputField value="{!i.TR_Done__c}" style="width:50px" rendered="{!i.Needs_TR__c}" />
+                            <apex:outputText value="" rendered="{!Not(i.Needs_TR__c) }"/>
+                        </apex:column>
+                       	<apex:column style="text-align:center" >
+                            <apex:facet name="header">DP &amp; Contract</apex:facet>
+                            <apex:inputField value="{!i.DP_Contract_Done__c}" style="width:50px" rendered="{!i.Needs_DP_Contract__c}" />
+                            <apex:outputText value="" rendered="{!Not(i.Needs_DP_Contract__c) }"/>
+                        </apex:column>
+                       	<apex:column style="text-align:center" >
+                            <apex:facet name="header">Security Review</apex:facet>
+                            <apex:inputField value="{!i.SR_Done__c}" style="width:50px" rendered="{!i.Needs_SR__c}" />
+                            <apex:outputText value="" rendered="{!Not(i.Needs_SR__c) }"/>
+                        </apex:column>
+                       	<apex:column style="text-align:center" >
+                            <apex:facet name="header">Design Sprint</apex:facet>
+                            <apex:inputField value="{!i.Design_Sprint_Done__c}" style="width:50px" rendered="{!i.Needs_Design_Sprint__c}" />
+                            <apex:outputText value="" rendered="{!Not(i.Needs_Design_Sprint__c) }"/>
+                        </apex:column>                       	
+                        <apex:column style="text-align:center">
+                            <apex:facet name="header">Comments</apex:facet>
+                            <apex:inputField value="{!i.Comments__c}" style="width:200px" />
+                        </apex:column>
+                        <apex:column value="{!i.Account__r.Tech_Account_Plan_doc__c}" headerClass="hc2">
+                            <apex:facet name="header">Tech. Account Plan doc</apex:facet>
+                        </apex:column>
+                        <apex:column value="{!i.Account__r.Cadence_Call_doc__c}" headerClass="hc2">
+                            <apex:facet name="header">Cadence Call doc</apex:facet>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="PDO Partners{!PDOsize}" rendered="{!hasPDO}" id="PDOPanel" >
+					<apex:pageBlockTable value="{!PDO}" var="p">
+                        <apex:column value="{!p.Account__r.name}"/>
+                        <apex:column >
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!p.Ad_Hoc__c}" style="width:50px" />
+                        </apex:column>
+                        <apex:column style="text-align:center" >
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!p.Workshop_Done__c}" style="width:50px" rendered="{!p.Needs_Workshop__c}" />
+                            <apex:outputText value="" style="width:50px" rendered="{!Not(p.Needs_Workshop__c) }" />
+                        </apex:column>
+						<apex:column >
+                            <apex:facet name="header">Comments</apex:facet>
+                            <apex:inputField value="{!p.Comments__c}" style="width:200px" />
+                        </apex:column>
+                        <apex:column value="{!p.Account__r.Tech_Account_Plan_doc__c}" headerClass="hc2">
+                            <apex:facet name="header">Tech. Account Plan doc</apex:facet>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Others{!othersSize}" rendered="{!hasOthers}" id="OthersPanel" >
+					<apex:pageBlockTable value="{!Others}" var="o">
+                        <apex:column value="{!o.Account__r.name}"/>
+                        <apex:column >
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!o.Ad_Hoc__c}" style="width:50px" />
+                        </apex:column>
+                        <apex:column style="text-align:center" >
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!o.Workshop_Done__c}" style="width:50px" rendered="{!o.Needs_Workshop__c}" />
+                            <apex:outputText value="" style="width:50px" rendered="{!Not(o.Needs_Workshop__c) }" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Comments</apex:facet>
+                            <apex:inputField value="{!o.Comments__c}" />
+                        </apex:column>
+                        <apex:column value="{!o.Account__r.Tech_Account_Plan_doc__c}" headerClass="hc2">
+                            <apex:facet name="header">Tech. Account Plan doc</apex:facet>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

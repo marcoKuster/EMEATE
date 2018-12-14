@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Planned_GS0_Duration__c</fullName>
+    <description>Planned duration of GS0 deployment in minutes.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Planned duration of GS0 deployment in minutes. If &quot;Planned GS0 End Date&quot; is specified, this value will be calculated on Save.</inlineHelpText>
+    <label>Planned Release Duration To Pilot Org</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

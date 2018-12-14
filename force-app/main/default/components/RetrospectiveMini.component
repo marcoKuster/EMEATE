@@ -1,0 +1,56 @@
+<apex:component controller="RetrospectiveMiniController">
+    <style type="text/css">
+    .retroList  {list-style-type: none} 
+    .retroWidget {
+        /*background-color:#EFF7FA;*/
+        background-color:#1797C0;
+        color:#FFFFFF;
+        padding:8px;
+        margin-right:2px;
+        margin-bottom:6px;
+        border-radius: 10px;
+       -moz-border-radius: 10px;
+       -webkit-border-radius: 10px; 
+    }
+    
+    .retroWidget h3{
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    .retroNewBtn {
+        border:2px solid #DCB !important;
+        color:#FFF !important;
+        -webkit-box-shadow: 1px 2px 5px #cccccc;
+        -moz-box-shadow: 1px 2px 5px #cccccc;
+        box-shadow: 1px 2px 5px #cccccc;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    
+    .newLink {
+        float: right;
+    }
+    .newLink a {
+        float: right;
+        text-decoration: none;
+    }
+    </style>
+    <apex:attribute name="userID" description="Whose retrospective do you want" type="Id" required="required" assignTo="{!userID}"/>
+    <apex:outputPanel id="RetrospectivePanel" layout="block" styleClass="retroWidget" rendered="{!$User.Id == userID}">
+        <h3>My retrospectives</h3>
+        <apex:dataTable value="{!retros}" var="retro" id="retrosTable">
+            <apex:column width="50px"> <apex:image url="{!URLFOR($Resource.retrospective_ratings, retro.userRatingImageName)}" rendered="{!!ISNULL(retro.userRatingImageName)}" width="42" height="30"/> </apex:column>
+            <apex:column width="50px"> <apex:image url="{!URLFOR($Resource.retrospective_ratings, retro.mgrRatingImageName)}" rendered="{!!ISNULL(retro.mgrRatingImageName)}" width="42" height="30"/> </apex:column>
+            <apex:column >
+            <apex:outputLink value="/{!retro.retroId}">
+                <apex:outputText value="{!retro.ratingPeriod}" />
+            </apex:outputLink>
+            </apex:column>
+        </apex:dataTable>
+        <div><apex:outputLink value="RetrospectiveViewAll">All my retrospectives</apex:outputLink></div>
+        <div style="height:10px"></div>
+        <div><div class="newLink" ><apex:outputLink styleClass="retroNewBtn" value="RetrospectiveNew">New</apex:outputLink></div></div>
+        <div style="height:20px"></div>
+    </apex:outputPanel>
+</apex:component>

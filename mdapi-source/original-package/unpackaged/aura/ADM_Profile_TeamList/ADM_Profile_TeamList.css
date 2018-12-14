@@ -1,0 +1,9 @@
+.THIS .slds-tile__detail > span:after {
+    content: "\2022";
+    margin: 0 5px;
+}
+
+.THIS .slds-tile__detail > span:last-child:after {
+    content: "";
+    margin: 0;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LINK_to_S1_Chatter_Group__c</fullName>
+    <description>Point people to the main Chatter Group where they can ask questions or find links to important information (e.g. the current S1 Support Matrix).</description>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&#39;https://gus.my.salesforce.com/0F9B0000000068B&#39;,&#39;Click to find Current S1 Support Matrix&#39;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Links you to the best place to ask questions or find important information, like the S1 Support Matrix for the current release.</inlineHelpText>
+    <label>LINK to S1 Chatter Group</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

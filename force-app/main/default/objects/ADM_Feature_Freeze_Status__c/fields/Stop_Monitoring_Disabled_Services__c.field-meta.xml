@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stop_Monitoring_Disabled_Services__c</fullName>
+    <description>Any existing services being disabled and need monitoring turned off?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Any existing services being disabled and need monitoring turned off?</inlineHelpText>
+    <label>Stop Monitoring Disabled Services</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

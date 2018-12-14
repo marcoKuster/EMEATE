@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Localization_Complete__c</fullName>
+    <description>All UI labels ready for localization vendors.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>All UI labels ready for localization vendors.</inlineHelpText>
+    <label>UI Labels Ready for Localization</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>False</fullName>
+                <default>true</default>
+                <label>False</label>
+            </value>
+            <value>
+                <fullName>True</fullName>
+                <default>false</default>
+                <label>True</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

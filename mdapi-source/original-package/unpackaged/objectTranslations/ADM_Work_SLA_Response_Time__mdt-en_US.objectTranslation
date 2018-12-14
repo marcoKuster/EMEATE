@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work SLA Response Time</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work SLA Response Times</value>
+    </caseValues>
+    <fields>
+        <label><!-- Event Type --></label>
+        <name>Event_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Respects Business Hours --></label>
+        <name>Respects_Business_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Time (Minutes) --></label>
+        <name>Response_Time_In_Minutes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Severity Level/Priority --></label>
+        <name>Severity_Level_or_Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Type --></label>
+        <name>Work_Type__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

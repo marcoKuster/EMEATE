@@ -1,0 +1,15 @@
+<aura:component controller="ADM_Investigation_Ack_Controller"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">  
+
+    <aura:handler name="init" action="{!c.preparePage}" value="{!this}" />
+    <aura:attribute name="thisDataMap" type="Map" />
+    
+    <aura:if isTrue="{!v.thisDataMap.ISINVESTIGATION=='true'}">
+        <div class="slds-box">
+            <p class="{!(v.thisDataMap.STATUSCOLOR)}">{!v.thisDataMap.STATUSTEXT}</p>
+            <p class="{!(v.thisDataMap.STATUSCOLOR)}">{!v.thisDataMap.COUNTDOWNTEXT}</p>            
+            <span class="slds-text-body--small slds-text-color--weak"><lightning:formattedDateTime value="{!v.thisDataMap.DUEDATE}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" /></span>
+        </div>
+    </aura:if>
+    
+</aura:component>

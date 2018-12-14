@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Projected_Velocity_Neg</fullName>
+    <active>true</active>
+    <description>Limit projected velocity to positive numbers</description>
+    <errorConditionFormula>Projected_Velocity__c &lt; 0</errorConditionFormula>
+    <errorDisplayField>Projected_Velocity__c</errorDisplayField>
+    <errorMessage>Projected velocity cannot be a negative number</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Date_before_End_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>Start_Date__c &gt; End_Date__c</errorConditionFormula>
+    <errorDisplayField>Start_Date__c</errorDisplayField>
+    <errorMessage>The start date should always be before or same day as the End date</errorMessage>
+</ValidationRule>

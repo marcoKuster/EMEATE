@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Type --></label>
+    <name>Type__c</name>
+    <picklistValues>
+        <masterLabel>.Net</masterLabel>
+        <translation><!-- .Net --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CTI - script</masterLabel>
+        <translation><!-- CTI - script --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Client Automation</masterLabel>
+        <translation><!-- Client Automation --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Ftest</masterLabel>
+        <translation><!-- Ftest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Manual</masterLabel>
+        <translation><!-- Manual --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>ProdTest - API</masterLabel>
+        <translation><!-- ProdTest - API --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>ProdTest - Extended</masterLabel>
+        <translation><!-- ProdTest - Extended --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>ProdTest - Selenium</masterLabel>
+        <translation><!-- ProdTest - Selenium --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Selenium</masterLabel>
+        <translation><!-- Selenium --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Silktest</masterLabel>
+        <translation><!-- Silktest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Systest</masterLabel>
+        <translation><!-- Systest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Utest</masterLabel>
+        <translation><!-- Utest --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

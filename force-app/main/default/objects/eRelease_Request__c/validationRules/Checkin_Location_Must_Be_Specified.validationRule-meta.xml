@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Checkin_Location_Must_Be_Specified</fullName>
+    <active>true</active>
+    <description>When the eRelease Status is set to Approved, the default message must be replaces with checkin location and scheduled build.</description>
+    <errorConditionFormula>AND( ISPICKVAL( eRelease_Status__c , &quot;Approved&quot;), OR( ISBLANK(Checkin_Location__c), 
+BEGINS( Checkin_Location__c , &quot;The Release Manager will specify the checkin location for the fix and Scheduled Build to use for the checkin.&quot;)))</errorConditionFormula>
+    <errorDisplayField>Checkin_Location__c</errorDisplayField>
+    <errorMessage>You must remove the default text in the Checkin Details field and specify the checkin location and scheduled build.</errorMessage>
+</ValidationRule>

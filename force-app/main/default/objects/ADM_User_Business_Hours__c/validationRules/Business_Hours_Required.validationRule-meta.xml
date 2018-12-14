@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Hours_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISNULL(Business_Hours__c)</errorConditionFormula>
+    <errorDisplayField>Business_Hours__c</errorDisplayField>
+    <errorMessage>Business Hours is a required field</errorMessage>
+</ValidationRule>

@@ -1,0 +1,63 @@
+<apex:component id="richAutoComplete" controller="ADM_RichAutoCompleteController" layout="none">
+    <apex:attribute name="object" description="The object" type="sObject" required="true" assignTo="{!currentSObject}" />
+    <apex:attribute name="field" description="This name of the field in the Object." type="String" required="true" assignTo="{!currentField}" />
+    <apex:attribute name="placeholder" type="String" description="The text that appears before you click in the box" required="false" />
+    <apex:attribute name="styleClass" type="String" description="The CSS class applied to the input" required="false" />
+    
+<!-- 
+    Component renders a rich autocomplete with user profile images.  
+    
+    Depends on these resources being present:
+        <apex:styleSheet value="{!URLFOR($Resource.jquery_ui_1813_redmond, 'css/redmond/jquery-ui-1.8.13.custom.css')}" />
+        <apex:styleSheet value="{!$Resource.ADM_common_css}" />
+        <apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+        <apex:includeScript value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'js/jquery-ui-1.9.2.custom.min.js')}" />
+        <apex:includeScript value="{!$Resource.ADM_common_js}" />
+    
+    Sample Usuage: <c:ADM_RichAutoComplete autoCompletePrefix="memberNameTextBox{!uniqueID}" />
+-->
+<div id="{!$Component.richAutoComplete}_container" class="gusRichAutoComplete">
+	<apex:inputText id="input" value="{!name}" styleClass="gusRichAutoCompleteInput gusStyle {!styleClass}" />
+	<img src="{!$Resource.ajaxloadersmall}" class="gusRichAutoCompleteStatusIndicator status-indicator" />
+	<img src="/profilephoto/005/F" class="gusRichAutoCompleteProfileImage userInputProfileImage" />
+	<apex:inputHidden id="idInput" value="{!object[field]}" />
+	<apex:inputHidden id="profileImageInput" value="{!profileImageUrl}" />
+</div>
+<script type="text/javascript">
+(function() {
+    var $container = $(document.getElementById('{!$Component.richAutoComplete}_container'));
+    
+    //visualforce apex:inputHidden doesn't support styleClass so we have to add it at runtime
+    $(document.getElementById('{!$Component.idInput}')).addClass('gusRichAutoCompleteUserID');
+    $(document.getElementById('{!$Component.profileImageInput}')).addClass('gusRichAutoCompleteProfileImageUrlInput');
+    
+    var component = new gus.RichUserLookupComponent({
+        $container: $container,
+        placeholder: '{!JSINHTMLENCODE(placeholder)}',
+        controller: {
+            getUsersWithNameLike: function(options) {
+                var term = options.term;
+                if(!term) {
+                    throw new Error('Term is required for search');
+                }
+                
+                {!$RemoteAction.ADM_RichAutoCompleteController.getUsersWithNameLike}(term, function(data, event) { 
+                    if(event.status) {
+                        if(options.success) {
+                            options.success(data);
+                        }
+                    } else {
+                        if(options.fail) {
+                            options.fail([{message: event.message}]);
+                        }
+                    }
+                }, {escape:false})
+            }
+        }
+    });
+    component.render();
+    return component;    
+})();
+</script>
+
+</apex:component>

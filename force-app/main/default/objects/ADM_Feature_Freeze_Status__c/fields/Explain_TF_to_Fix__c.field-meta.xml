@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_TF_to_Fix__c</fullName>
+    <description>Explain the number of Test Failures to Fix.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Explain the number of Test Failures to Fix.</inlineHelpText>
+    <label>Explain Test Failures to Fix</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

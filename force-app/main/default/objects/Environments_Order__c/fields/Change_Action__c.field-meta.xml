@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Change_Action__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>What type of action are we asking the DBAs to take?</inlineHelpText>
+    <label>Change Action</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>clone</fullName>
+                <default>false</default>
+                <label>clone</label>
+            </value>
+            <value>
+                <fullName>rename</fullName>
+                <default>false</default>
+                <label>rename</label>
+            </value>
+            <value>
+                <fullName>new</fullName>
+                <default>false</default>
+                <label>new</label>
+            </value>
+            <value>
+                <fullName>refresh</fullName>
+                <default>false</default>
+                <label>refresh</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

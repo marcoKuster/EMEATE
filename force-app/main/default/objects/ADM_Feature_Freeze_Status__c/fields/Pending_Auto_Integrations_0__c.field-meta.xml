@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Auto_Integrations_0__c</fullName>
+    <description>Total Number of Pending Auto-Integrations (0)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Total Number of Pending Auto-Integrations from 164 -&gt; /main.  Feature Freeze Requirement is 0.</inlineHelpText>
+    <label>Total # of Pending Auto-Integrations (0)</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

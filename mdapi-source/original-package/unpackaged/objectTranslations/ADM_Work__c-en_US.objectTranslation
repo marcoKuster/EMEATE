@@ -1,0 +1,2224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work</value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- Additional Fields --></label>
+        <name>Additional_Fields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Custom Fields --></label>
+        <name>Custom_Fields</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Details --></label>
+        <name>Additional_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Difference between closed date and the last time the scrum team field was modified unless the scrum team field was modified after the bug was closed. This calculation excludes weekends. --></help>
+        <label><!-- Age With Scrum Team When Closed --></label>
+        <name>Age_With_Scrum_Team_When_Closed__c</name>
+    </fields>
+    <fields>
+        <help><!-- Age with Scrum Team is the difference between now and the last time the Scrum Team field was modified. This calculation excludes weekends. --></help>
+        <label><!-- Age With Scrum Team --></label>
+        <name>Age_With_Scrum_Team__c</name>
+    </fields>
+    <fields>
+        <help><!-- Age is the difference between now and when the record was created if the record has not been resolved; otherwise, age is the difference between now and when the record was resolved. The age is removed once the record is closed. --></help>
+        <label><!-- Age --></label>
+        <name>Age__c</name>
+    </fields>
+    <fields>
+        <label><!-- Apex Hammer Compile Failure --></label>
+        <name>Apex_Hammer_Compile_Failure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assigned On --></label>
+        <name>Assigned_On__c</name>
+    </fields>
+    <fields>
+        <help><!-- If you leave this field empty on save you will be the Assignee. --></help>
+        <label><!-- Assigned To --></label>
+        <name>Assignee__c</name>
+        <relationshipLabel><!-- Work (Assigned To) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Assignees of this work record receive email on save. --></help>
+        <label><!-- transfer Assignees --></label>
+        <name>Assignees__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attributes --></label>
+        <name>Attributes__c</name>
+        <picklistValues>
+            <masterLabel>Automated</masterLabel>
+            <translation><!-- Automated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flapper</masterLabel>
+            <translation><!-- Flapper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance</masterLabel>
+            <translation><!-- Performance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regressed</masterLabel>
+            <translation><!-- Regressed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Requires Testing</masterLabel>
+            <translation><!-- Requires Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Debt</masterLabel>
+            <translation><!-- Technical Debt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust</masterLabel>
+            <translation><!-- Trust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Auto Build --></label>
+        <name>Auto_Build__c</name>
+    </fields>
+    <fields>
+        <label><!-- Backburner Rank --></label>
+        <name>Backburner_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Branch --></label>
+        <name>Branch__c</name>
+    </fields>
+    <fields>
+        <help><!-- ID used to identify a budget line item for a story (used by TechOps). --></help>
+        <label><!-- Budget ID --></label>
+        <name>Budget_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bugforce # --></label>
+        <name>Bug_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field defaults to the Investigation creator if the creator is in support (otherwise it defaults to blank). It can also be populated/overridden manually. --></help>
+        <label><!-- Support Contact --></label>
+        <name>CS_Contact__c</name>
+        <relationshipLabel><!-- Work (Support Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- New Customer Facing Feature --></label>
+        <name>Capex_Enabled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Catch-up Factor --></label>
+        <name>Catchup_Factor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child_ID --></label>
+        <name>Child_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed By --></label>
+        <name>Closed_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed On --></label>
+        <name>Closed_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed --></label>
+        <name>Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cloud --></label>
+        <name>Cloud__c</name>
+    </fields>
+    <fields>
+        <label><!-- Color --></label>
+        <name>Color__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Column Rank --></label>
+        <name>Column_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Column --></label>
+        <name>Column__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comment Copy --></label>
+        <name>Comment_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complete By --></label>
+        <name>Complete_By__c</name>
+        <picklistValues>
+            <masterLabel>--None--</masterLabel>
+            <translation><!-- - - None- -  --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apr 2009 sprint</masterLabel>
+            <translation><!-- Apr 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aug 2009 sprint</masterLabel>
+            <translation><!-- Aug 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dec 2009 sprint</masterLabel>
+            <translation><!-- Dec 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Feb 2009 sprint</masterLabel>
+            <translation><!-- Feb 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jan 2009 sprint</masterLabel>
+            <translation><!-- Jan 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jul 2009 sprint</masterLabel>
+            <translation><!-- Jul 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jun 2009 sprint</masterLabel>
+            <translation><!-- Jun 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mar 2009 sprint</masterLabel>
+            <translation><!-- Mar 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>May 2009 sprint</masterLabel>
+            <translation><!-- May 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nov 2009 sprint</masterLabel>
+            <translation><!-- Nov 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oct 2009 sprint</masterLabel>
+            <translation><!-- Oct 2009 sprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sep 2009 sprint</masterLabel>
+            <translation><!-- Sep 2009 sprint --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Completed Hours --></label>
+        <name>Completed_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By (import) --></label>
+        <name>Created_By_import__c</name>
+        <relationshipLabel><!-- Work (Created By (import)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created On Date --></label>
+        <name>Created_On_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created On (import) --></label>
+        <name>Created_On_import__c</name>
+    </fields>
+    <fields>
+        <label><!-- Critical CRM Feature or Org Inaccessible --></label>
+        <name>Critical_CRM_Feature__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Impact --></label>
+        <name>Customer_Impact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer --></label>
+        <name>Customer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Silo Test Affected --></label>
+        <name>Data_Silo_Test_Affected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deal at Risk --></label>
+        <name>Deal_at_Risk__c</name>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New &amp; Renewal</masterLabel>
+            <translation><!-- New &amp; Renewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal</masterLabel>
+            <translation><!-- Renewal --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Dependencies --></label>
+        <name>Dependencies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dependents --></label>
+        <name>Dependents__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comments will be added to the Work record and included in an email to the names listed in the Email Notifications section after saving. Formatting will also be preserved when saving via in line edit. --></help>
+        <label><!-- Comment --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select this checkbox for epic stories that have been divided into detailed stories and therefore the epic no longer needs to appear on the backlog. --></help>
+        <label><!-- Exclude from Prioritize View --></label>
+        <name>Detailed__c</name>
+    </fields>
+    <fields>
+        <help><!-- User type (As a...) Goal (I want to...) Reason (so that...) Additional Details --></help>
+        <label><!-- Description --></label>
+        <name>Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Text contents of this field will be sent in initial record creation only --></help>
+        <label><!-- Details and Steps to Reproduce --></label>
+        <name>Details_and_Steps_to_Reproduce__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email2GUS Addresses --></label>
+        <name>Email2GUS_Addresses__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email On Save Copy --></label>
+        <name>Email_On_Save_Copy__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box to send an email to the users in the To: field when you save this record. --></help>
+        <label><!-- Email On Save --></label>
+        <name>Email_On_Save__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter email aliases separated by spaces. These users are sent one email if the &quot;Email on Save&quot; check box is selected when you click &quot;Save.&quot; They do not automatically receive future updates. --></help>
+        <label><!-- To --></label>
+        <name>Email_Subscription_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Subscription Queue --></label>
+        <name>Email_Subscription_Queue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Encoded Recipients --></label>
+        <name>Encoded_Recipients_Txt_Area__c</name>
+    </fields>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>Environment__c</name>
+        <picklistValues>
+            <masterLabel>Blitz Localhost</masterLabel>
+            <translation><!-- Blitz Localhost --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile1</masterLabel>
+            <translation><!-- Mobile1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile2</masterLabel>
+            <translation><!-- Mobile2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Production</masterLabel>
+            <translation><!-- Production --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sandbox</masterLabel>
+            <translation><!-- Sandbox --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Epic Name --></label>
+        <name>Epic_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Epic Rank --></label>
+        <name>Epic_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Epic --></label>
+        <name>Epic__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Escalation Point --></label>
+        <name>Escalation_Point__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Financial Impact --></label>
+        <name>Estimated_Financial_Impact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Executive Involved --></label>
+        <name>Executive_Involved__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feature Rank --></label>
+        <name>Feature_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feedback --></label>
+        <name>Feedback__c</name>
+    </fields>
+    <fields>
+        <label><!-- Found In Build Copy --></label>
+        <name>Found_In_Build_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Found In Build Name --></label>
+        <name>Found_In_Build_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Found In Build field is a lookup to the Build object.  Enter the build where the bug was introduced. --></help>
+        <label><!-- Found in Build --></label>
+        <name>Found_in_Build__c</name>
+        <relationshipLabel><!-- Work (Found in Build) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Frequency Name --></label>
+        <name>Frequency_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Frequency reflects how often the target user will encounter the issue. --></help>
+        <label><!-- Frequency --></label>
+        <name>Frequency__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Goal (I want to...) --></label>
+        <name>Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Story Points? --></label>
+        <name>Has_Story_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Help Status --></label>
+        <name>Help_Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deferred</masterLabel>
+            <translation><!-- Deferred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fixed</masterLabel>
+            <translation><!-- Fixed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Info Only</masterLabel>
+            <translation><!-- Info Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Needed</masterLabel>
+            <translation><!-- Not Needed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pilot</masterLabel>
+            <translation><!-- Pilot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Review</masterLabel>
+            <translation><!-- Ready for Review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Highlight --></label>
+        <name>Highlight__c</name>
+    </fields>
+    <fields>
+        <label><!-- Impact Name --></label>
+        <name>Impact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Impact --></label>
+        <name>Impact__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is Ignorable --></label>
+        <name>Is_Ignorable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Planned --></label>
+        <name>Is_Planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Template --></label>
+        <name>Is_Template__c</name>
+    </fields>
+    <fields>
+        <label><!-- Known Issue ID --></label>
+        <name>Known_Issue_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Known Issue Link --></label>
+        <name>Known_Issue_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- KI Reporting Customers --></label>
+        <name>Known_Issue_Num_Reporting_Customers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By Copy --></label>
+        <name>Last_Modified_By_Copy__c</name>
+        <relationshipLabel><!-- Work (Last Modified By Copy) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By --></label>
+        <name>Last_Modified_By__c</name>
+        <relationshipLabel><!-- Work (Last Modified By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last Updated By --></label>
+        <name>Last_Updated_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Log Bug From Template --></label>
+        <name>Log_Bug_From_Template__c</name>
+    </fields>
+    <fields>
+        <label><!-- Major Func Area --></label>
+        <name>Major_Func_Area__c</name>
+        <picklistValues>
+            <masterLabel>.NET</masterLabel>
+            <translation><!-- .NET --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Major Release --></label>
+        <name>Major_Release__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minor Func Area --></label>
+        <name>Minor_Func_Area__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Device OS --></label>
+        <name>Mobile_Device_OS__c</name>
+        <picklistValues>
+            <masterLabel>Android 4.2.x</masterLabel>
+            <translation><!-- Android 4.2.x --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Android 4.3</masterLabel>
+            <translation><!-- Android 4.3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Android 4.4.x</masterLabel>
+            <translation><!-- Android 4.4.x --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Android 5.x</masterLabel>
+            <translation><!-- Android 5.x --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows 10 Pro</masterLabel>
+            <translation><!-- Windows 10 Pro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows 10.0</masterLabel>
+            <translation><!-- Windows 10.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows 8.0</masterLabel>
+            <translation><!-- Windows 8.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows 8.0 Pro</masterLabel>
+            <translation><!-- Windows 8.0 Pro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows 8.1</masterLabel>
+            <translation><!-- Windows 8.1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows 8.1 Pro</masterLabel>
+            <translation><!-- Windows 8.1 Pro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows Phone 10.0</masterLabel>
+            <translation><!-- Windows Phone 10.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows Phone 8.0</masterLabel>
+            <translation><!-- Windows Phone 8.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows Phone 8.1</masterLabel>
+            <translation><!-- Windows Phone 8.1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS 8</masterLabel>
+            <translation><!-- iOS 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS 9.0</masterLabel>
+            <translation><!-- iOS 9.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS 9.0.1</masterLabel>
+            <translation><!-- iOS 9.0.1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS 9.0.2</masterLabel>
+            <translation><!-- iOS 9.0.2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS 9.1</masterLabel>
+            <translation><!-- iOS 9.1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS 9.2</masterLabel>
+            <translation><!-- iOS 9.2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mobile Device --></label>
+        <name>Mobile_Device__c</name>
+        <picklistValues>
+            <masterLabel>Android Other</masterLabel>
+            <translation><!-- Android Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dell Windows Tablet</masterLabel>
+            <translation><!-- Dell Windows Tablet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Galaxy 4</masterLabel>
+            <translation><!-- Galaxy 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Galaxy 5</masterLabel>
+            <translation><!-- Galaxy 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Galaxy Note 2</masterLabel>
+            <translation><!-- Galaxy Note 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Galaxy Note3</masterLabel>
+            <translation><!-- Galaxy Note3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Galaxy S3</masterLabel>
+            <translation><!-- Galaxy S3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HTC Windows Phone 8x</masterLabel>
+            <translation><!-- HTC Windows Phone 8x --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nexus 10</masterLabel>
+            <translation><!-- Nexus 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nexus 4</masterLabel>
+            <translation><!-- Nexus 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nexus 5</masterLabel>
+            <translation><!-- Nexus 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nexus 7</masterLabel>
+            <translation><!-- Nexus 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia 1020</masterLabel>
+            <translation><!-- Nokia 1020 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia Lumia 1020</masterLabel>
+            <translation><!-- Nokia Lumia 1020 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia Lumia 1520</masterLabel>
+            <translation><!-- Nokia Lumia 1520 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia Lumia 635</masterLabel>
+            <translation><!-- Nokia Lumia 635 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia Lumia 900</masterLabel>
+            <translation><!-- Nokia Lumia 900 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia Lumia 920</masterLabel>
+            <translation><!-- Nokia Lumia 920 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nokia Lumia 928</masterLabel>
+            <translation><!-- Nokia Lumia 928 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Surface Pro 3</masterLabel>
+            <translation><!-- Surface Pro 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SurfaceSurface Pro 2</masterLabel>
+            <translation><!-- SurfaceSurface Pro 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Windows Other</masterLabel>
+            <translation><!-- Windows Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iOS Other</masterLabel>
+            <translation><!-- iOS Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPad 4</masterLabel>
+            <translation><!-- iPad 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPad Air</masterLabel>
+            <translation><!-- iPad Air --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPad Air 2</masterLabel>
+            <translation><!-- iPad Air 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPad Mini 4</masterLabel>
+            <translation><!-- iPad Mini 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPad Pro</masterLabel>
+            <translation><!-- iPad Pro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPhone 5</masterLabel>
+            <translation><!-- iPhone 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPhone 5S</masterLabel>
+            <translation><!-- iPhone 5S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPhone 6</masterLabel>
+            <translation><!-- iPhone 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPhone 6 Plus</masterLabel>
+            <translation><!-- iPhone 6 Plus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPhone 6S</masterLabel>
+            <translation><!-- iPhone 6S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPhone 6S Plus</masterLabel>
+            <translation><!-- iPhone 6S Plus --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mobile Network --></label>
+        <name>Mobile_Network__c</name>
+        <picklistValues>
+            <masterLabel>3G</masterLabel>
+            <translation><!-- 3G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Edge</masterLabel>
+            <translation><!-- Edge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Offline/Airplane mode</masterLabel>
+            <translation><!-- Offline/Airplane mode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WiFi 4G/LTE</masterLabel>
+            <translation><!-- WiFi 4G/LTE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Module(s) --></label>
+        <name>Modules__c</name>
+        <picklistValues>
+            <masterLabel>APIAuthCheck</masterLabel>
+            <translation><!-- APIAuthCheck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountAdmin</masterLabel>
+            <translation><!-- AccountAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountApplication</masterLabel>
+            <translation><!-- AccountApplication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountCopy</masterLabel>
+            <translation><!-- AccountCopy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountNotificationLookup</masterLabel>
+            <translation><!-- AccountNotificationLookup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountRenewal</masterLabel>
+            <translation><!-- AccountRenewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountTypeConversionUtility</masterLabel>
+            <translation><!-- AccountTypeConversionUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountUserAdmin</masterLabel>
+            <translation><!-- AccountUserAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AccountUserPermissionAssignment</masterLabel>
+            <translation><!-- AccountUserPermissionAssignment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AkamaiUtility</masterLabel>
+            <translation><!-- AkamaiUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AlohaLogin</masterLabel>
+            <translation><!-- AlohaLogin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApplicationAssignment</masterLabel>
+            <translation><!-- ApplicationAssignment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApplySKUToAccount</masterLabel>
+            <translation><!-- ApplySKUToAccount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AudienceBuilderConfig</masterLabel>
+            <translation><!-- AudienceBuilderConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AutomatedNotificationTemplateEditor</masterLabel>
+            <translation><!-- AutomatedNotificationTemplateEditor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AutomationsConfig</masterLabel>
+            <translation><!-- AutomationsConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BillingUtilizationType</masterLabel>
+            <translation><!-- BillingUtilizationType --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BrandTagAssignment</masterLabel>
+            <translation><!-- BrandTagAssignment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BrandTags</masterLabel>
+            <translation><!-- BrandTags --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BulkAccountCreate</masterLabel>
+            <translation><!-- BulkAccountCreate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BulkAccountCreateThreaded</masterLabel>
+            <translation><!-- BulkAccountCreateThreaded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BulkReturnPathIntegrator</masterLabel>
+            <translation><!-- BulkReturnPathIntegrator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BulkUserCreate</masterLabel>
+            <translation><!-- BulkUserCreate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BulkUserSetup</masterLabel>
+            <translation><!-- BulkUserSetup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BusinessRuleAdmin</masterLabel>
+            <translation><!-- BusinessRuleAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BusinessRuleAssignment</masterLabel>
+            <translation><!-- BusinessRuleAssignment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BusinessRules</masterLabel>
+            <translation><!-- BusinessRules --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BusinessUnitRolesAndUsers</masterLabel>
+            <translation><!-- BusinessUnitRolesAndUsers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ClientSpecificConfigurationSettings</masterLabel>
+            <translation><!-- ClientSpecificConfigurationSettings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CreateDemo</masterLabel>
+            <translation><!-- CreateDemo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CustomBounceManagement</masterLabel>
+            <translation><!-- CustomBounceManagement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DBServers</masterLabel>
+            <translation><!-- DBServers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DCipherUtility</masterLabel>
+            <translation><!-- DCipherUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DataExtensionAdmin</masterLabel>
+            <translation><!-- DataExtensionAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DataExtensionManagement</masterLabel>
+            <translation><!-- DataExtensionManagement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DataExtractProvisioning</masterLabel>
+            <translation><!-- DataExtractProvisioning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diagnostics</masterLabel>
+            <translation><!-- Diagnostics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DiscoverConfig</masterLabel>
+            <translation><!-- DiscoverConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DiscoverSendLogSetup</masterLabel>
+            <translation><!-- DiscoverSendLogSetup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETDefaultContainer</masterLabel>
+            <translation><!-- ETDefaultContainer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETDefaultSkin</masterLabel>
+            <translation><!-- ETDefaultSkin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETEndPoints</masterLabel>
+            <translation><!-- ETEndPoints --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETErrorMonitoring</masterLabel>
+            <translation><!-- ETErrorMonitoring --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EditionAdmin</masterLabel>
+            <translation><!-- EditionAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EditionAdminApps</masterLabel>
+            <translation><!-- EditionAdminApps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EditionAdminBRs</masterLabel>
+            <translation><!-- EditionAdminBRs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmailArchiveConfig</masterLabel>
+            <translation><!-- EmailArchiveConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmailSubscriptionUpdate</masterLabel>
+            <translation><!-- EmailSubscriptionUpdate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EnhancedFTP</masterLabel>
+            <translation><!-- EnhancedFTP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EventLogSearch</masterLabel>
+            <translation><!-- EventLogSearch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Framework</masterLabel>
+            <translation><!-- Framework --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GlobalUnsubUtility</masterLabel>
+            <translation><!-- GlobalUnsubUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HeaderFooterAdmin</masterLabel>
+            <translation><!-- HeaderFooterAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HubAppMgmt</masterLabel>
+            <translation><!-- HubAppMgmt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IMHEnablement</masterLabel>
+            <translation><!-- IMHEnablement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IPWhiteListAdmin</masterLabel>
+            <translation><!-- IPWhiteListAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ImportVersionUtility</masterLabel>
+            <translation><!-- ImportVersionUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JobLinkUpdateUtility</masterLabel>
+            <translation><!-- JobLinkUpdateUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LPConfig</masterLabel>
+            <translation><!-- LPConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ListDetectiveCategoryAdmin</masterLabel>
+            <translation><!-- ListDetectiveCategoryAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ListDetectiveDomainAdmin</masterLabel>
+            <translation><!-- ListDetectiveDomainAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ListDetectiveMemberAdmin</masterLabel>
+            <translation><!-- ListDetectiveMemberAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ListDetectiveUserNameAdmin</masterLabel>
+            <translation><!-- ListDetectiveUserNameAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MSFTGMOBusinessUnitSetup</masterLabel>
+            <translation><!-- MSFTGMOBusinessUnitSetup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ManageAccessUtility</masterLabel>
+            <translation><!-- ManageAccessUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ManageNotifications</masterLabel>
+            <translation><!-- ManageNotifications --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MassSettingUpdate</masterLabel>
+            <translation><!-- MassSettingUpdate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MediaTypeOverride</masterLabel>
+            <translation><!-- MediaTypeOverride --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MemberBusinessRuleInsert</masterLabel>
+            <translation><!-- MemberBusinessRuleInsert --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MobileLineChannel</masterLabel>
+            <translation><!-- MobileLineChannel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MobileSubscriberSearch</masterLabel>
+            <translation><!-- MobileSubscriberSearch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NotificationEditor</masterLabel>
+            <translation><!-- NotificationEditor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ParentAccountChangeUtility</masterLabel>
+            <translation><!-- ParentAccountChangeUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PartnerAPIConfig</masterLabel>
+            <translation><!-- PartnerAPIConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PrivateDomainAdmin</masterLabel>
+            <translation><!-- PrivateDomainAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PrivateLabelAdmin</masterLabel>
+            <translation><!-- PrivateLabelAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ProvisioningAccountSetup</masterLabel>
+            <translation><!-- ProvisioningAccountSetup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ProvisioningDBs</masterLabel>
+            <translation><!-- ProvisioningDBs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RMMExtensionManagement</masterLabel>
+            <translation><!-- RMMExtensionManagement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ReportInterface</masterLabel>
+            <translation><!-- ReportInterface --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ResetPassword</masterLabel>
+            <translation><!-- ResetPassword --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RestoreFolderUtility</masterLabel>
+            <translation><!-- RestoreFolderUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ReturnPath</masterLabel>
+            <translation><!-- ReturnPath --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMSConfig</masterLabel>
+            <translation><!-- SMSConfig --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMSVendorAdmin</masterLabel>
+            <translation><!-- SMSVendorAdmin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMTPRelay</masterLabel>
+            <translation><!-- SMTPRelay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMTPRelayCredentials</masterLabel>
+            <translation><!-- SMTPRelayCredentials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SendConfiguration</masterLabel>
+            <translation><!-- SendConfiguration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SmsMemberShortCode</masterLabel>
+            <translation><!-- SmsMemberShortCode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SprocExecuteUtility</masterLabel>
+            <translation><!-- SprocExecuteUtility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SubscriberSearch</masterLabel>
+            <translation><!-- SubscriberSearch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TriggeredSendQueue</masterLabel>
+            <translation><!-- TriggeredSendQueue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TrustedDomainManagement</masterLabel>
+            <translation><!-- TrustedDomainManagement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UserSyncLogs</masterLabel>
+            <translation><!-- UserSyncLogs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VenderConfiguration</masterLabel>
+            <translation><!-- VenderConfiguration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VoiceConfig</masterLabel>
+            <translation><!-- VoiceConfig --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The number of production incidents associated with this Work record. May include out-of-memory errors or gacks. --></help>
+        <label><!-- Production Incidents --></label>
+        <name>Num_Of_Prod_Occ__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of cases associated with this Work record. --></help>
+        <label><!-- Cases --></label>
+        <name>Number_of_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Change Lists --></label>
+        <name>Number_of_Change_Lists__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Orgs affected --></label>
+        <name>Number_of_Orgs_affected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of T&amp;P SLA Violations --></label>
+        <name>Number_of_SLA_Violations__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Tests/Classes affected --></label>
+        <name>Number_of_Tests_Classes_affected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Origin --></label>
+        <name>Origin__c</name>
+    </fields>
+    <fields>
+        <help><!-- The name of a GUS user or any salesforce.com email address --></help>
+        <label><!-- transfer Other Recipients --></label>
+        <name>Other_Recipients__c</name>
+    </fields>
+    <fields>
+        <label><!-- Out of SLA --></label>
+        <name>Out_of_SLA__c</name>
+    </fields>
+    <fields>
+        <help><!-- Add the GUS Work ID of any parent work item.  Separate multiple work IDs with commas.  View and edit the relationship via the related list. --></help>
+        <label><!-- Add Parent ID --></label>
+        <name>Parent_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Partner Plan --></label>
+        <name>Partner_Plan__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Source Control Status --></label>
+        <name>Perforce_Status__c</name>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open Once</masterLabel>
+            <translation><!-- Open Once --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Preserve Formatting Copy --></label>
+        <name>Preserve_Formatting_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preserve Formatting --></label>
+        <name>Preserve_Formatting__c</name>
+    </fields>
+    <fields>
+        <label><!-- transfer Previous Comments --></label>
+        <name>Previous_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority (default) --></label>
+        <name>Priority_Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority Mapping Copy --></label>
+        <name>Priority_Mapping_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority Mapping --></label>
+        <name>Priority_Mapping__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority Override Explanation Copy --></label>
+        <name>Priority_Override_Explanation_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority Override Explanation --></label>
+        <name>Priority_Override_Explanation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Backlog Rank --></label>
+        <name>Priority_Rank__c</name>
+    </fields>
+    <fields>
+        <help><!-- For bugs, priority is automatically determined based upon the combination of Impact and Frequency.
+
+For user stories, P0 represents the highest priority, P4 the lowest. --></help>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>P0</masterLabel>
+            <translation><!-- P0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P1</masterLabel>
+            <translation><!-- P1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P2</masterLabel>
+            <translation><!-- P2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P3</masterLabel>
+            <translation><!-- P3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P4</masterLabel>
+            <translation><!-- P4 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Area --></label>
+        <name>Product_Area__c</name>
+        <picklistValues>
+            <masterLabel>API</masterLabel>
+            <translation><!-- API --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Used only by the Clients team. Dependent on the Product Area picklist. --></help>
+        <label><!-- Product Child --></label>
+        <name>Product_Child__c</name>
+        <picklistValues>
+            <masterLabel>AXIS</masterLabel>
+            <translation><!-- AXIS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If you leave it empty on save you will be the Product Owner --></help>
+        <label><!-- Product Owner --></label>
+        <name>Product_Owner__c</name>
+        <relationshipLabel><!-- Work (Product Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Tag Name --></label>
+        <name>Product_Tag_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- TE Activity --></label>
+        <name>Product_Tag__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- QA Engineer --></label>
+        <name>QA_Engineer__c</name>
+        <relationshipLabel><!-- Work (QA Engineer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- How would you explain the change to customers? Try not to give away internal details. Be as general as possible. --></help>
+        <label><!-- Readme Notes --></label>
+        <name>Readme_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Record(Deprecated) --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Red Account --></label>
+        <name>Red_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Regressed --></label>
+        <name>Regressed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related URL Link --></label>
+        <name>Related_URL_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related URL --></label>
+        <name>Related_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>Release__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Request Senior Mgr Review --></label>
+        <name>Request_RD_Mgr_Review__c</name>
+    </fields>
+    <fields>
+        <help><!-- App Bug Fix - TF caught a product bug&lt;br&gt;
+TC: Due to app changes - Test changed b/c app behavior changed&lt;br&gt;
+TC: Test issue only - Test needed fixing&lt;br&gt;
+More: search Google Sites for &quot;test resolution&quot; --></help>
+        <label><!-- Test Resolution --></label>
+        <name>Resolution__c</name>
+        <picklistValues>
+            <masterLabel>App Bug Fix</masterLabel>
+            <translation><!-- App Bug Fix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate Test Failure</masterLabel>
+            <translation><!-- Duplicate Test Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Reproducible: Autobuild environment issue</masterLabel>
+            <translation><!-- Not Reproducible: Autobuild environment issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Reproducible: Broken By Another Team</masterLabel>
+            <translation><!-- Not Reproducible: Broken By Another Team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Reproducible: Other (please specify in Chatter feed)</masterLabel>
+            <translation><!-- Not Reproducible: Other (please specify in Chatter feed) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Reproducible: SauceLabs issue</masterLabel>
+            <translation><!-- Not Reproducible: SauceLabs issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Reproducible: Unknown</masterLabel>
+            <translation><!-- Not Reproducible: Unknown --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Change: Due to app changes</masterLabel>
+            <translation><!-- Test Change: Due to app changes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Change: Test issue only</masterLabel>
+            <translation><!-- Test Change: Test issue only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Removed/Disabled</masterLabel>
+            <translation><!-- Test Removed/Disabled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Resolved By --></label>
+        <name>Resolved_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Resolved On --></label>
+        <name>Resolved_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Resolved --></label>
+        <name>Resolved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Root Cause Analysis --></label>
+        <name>Root_Cause_Analysis_2__c</name>
+        <relationshipLabel><!-- Work &amp; Action Plan --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Find the build number in the settings of the S1 Hybrid app --></help>
+        <label><!-- S1 App Build Number --></label>
+        <name>S1_App_Build_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scheduled Build Copy --></label>
+        <name>Scheduled_Build_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scheduled Build Name --></label>
+        <name>Scheduled_Build_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rank in a scheduled build for team --></label>
+        <name>Scheduled_Build_Rank__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Scheduled Build field is a lookup to the Build object.  Enter a pre-existing build where the change will be made. --></help>
+        <label><!-- Scheduled Build --></label>
+        <name>Scheduled_Build__c</name>
+        <relationshipLabel><!-- Work (Scheduled Build) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scheduled On --></label>
+        <name>Scheduled_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requires Schema Change --></label>
+        <name>Schema__c</name>
+    </fields>
+    <fields>
+        <help><!-- Stores the last time the Scrum Team field was modified --></help>
+        <label><!-- Scrum Team Last Modified --></label>
+        <name>Scrum_Team_Last_Modified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team Name --></label>
+        <name>Scrum_Team_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scrumforce ID --></label>
+        <name>Scrumforce_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Security --></label>
+        <name>Security__c</name>
+    </fields>
+    <fields>
+        <help><!-- The person who gets engaged when an escalation of the current investigation occurs --></help>
+        <label><!-- Senior Management POC --></label>
+        <name>Senior_Management_POC__c</name>
+        <relationshipLabel><!-- Work (Senior Management POC) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Severity Copy --></label>
+        <name>Severity_Copy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Severity Level --></label>
+        <name>Severity_Level__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Solution Overview --></label>
+        <name>Solution_Overview__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sprint Name --></label>
+        <name>Sprint_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rank of this work item in a sprint --></label>
+        <name>Sprint_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint Timeframe YYYY.MMx --></label>
+        <name>Sprint_Timeframe__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <name>Sprint__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Stage --></label>
+        <name>Stage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Acknowledged</masterLabel>
+            <translation><!-- Acknowledged --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Defunct</masterLabel>
+            <translation><!-- Closed - Defunct --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Duplicate</masterLabel>
+            <translation><!-- Closed - Duplicate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Eng Internal</masterLabel>
+            <translation><!-- Closed - Eng Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Known Bug Exists</masterLabel>
+            <translation><!-- Closed - Known Bug Exists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - LAP Request Approved</masterLabel>
+            <translation><!-- Closed - LAP Request Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - LAP Request Denied</masterLabel>
+            <translation><!-- Closed - LAP Request Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - New Bug Logged</masterLabel>
+            <translation><!-- Closed - New Bug Logged --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - No Fix - Feature Request</masterLabel>
+            <translation><!-- Closed - No Fix - Feature Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - No Fix - Will Not Fix</masterLabel>
+            <translation><!-- Closed - No Fix - Will Not Fix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - No Fix - Working as Designed</masterLabel>
+            <translation><!-- Closed - No Fix - Working as Designed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Resolved With Internal Tools</masterLabel>
+            <translation><!-- Closed - Resolved With Internal Tools --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Resolved Without Code Change</masterLabel>
+            <translation><!-- Closed - Resolved Without Code Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deferred</masterLabel>
+            <translation><!-- Deferred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate</masterLabel>
+            <translation><!-- Duplicate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eng Internal</masterLabel>
+            <translation><!-- Eng Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fixed</masterLabel>
+            <translation><!-- Fixed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integrate</masterLabel>
+            <translation><!-- Integrate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Investigating</masterLabel>
+            <translation><!-- Investigating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>More Info Reqd from Support</masterLabel>
+            <translation><!-- More Info Reqd from Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Never</masterLabel>
+            <translation><!-- Never --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Reproducible</masterLabel>
+            <translation><!-- Not Reproducible --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not a bug</masterLabel>
+            <translation><!-- Not a bug --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Release</masterLabel>
+            <translation><!-- Pending Release --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QA In Progress</masterLabel>
+            <translation><!-- QA In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Review</masterLabel>
+            <translation><!-- Ready for Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Triaged</masterLabel>
+            <translation><!-- Triaged --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting</masterLabel>
+            <translation><!-- Waiting --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If you leave it empty on save it will automatically assign the value from the TE activity selected. --></help>
+        <label><!-- Story Points --></label>
+        <name>Story_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Story Status --></label>
+        <name>Story_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscribe to Work --></label>
+        <name>Subscribe_to_Work__c</name>
+    </fields>
+    <fields>
+        <label><!-- Performance Engineer --></label>
+        <name>System_Test_Engineer__c</name>
+        <relationshipLabel><!-- Work (Performance Engineer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Build --></label>
+        <name>Target_Build__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tech Writer --></label>
+        <name>Tech_Writer__c</name>
+        <relationshipLabel><!-- Work (Tech Writer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Template Description --></label>
+        <name>Template_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Template Name --></label>
+        <name>Template_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Failure Status --></label>
+        <name>Test_Failure_Status__c</name>
+        <picklistValues>
+            <masterLabel>Blocking</masterLabel>
+            <translation><!-- Blocking --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Signed Off</masterLabel>
+            <translation><!-- Signed Off --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Plan --></label>
+        <name>Test_Plan__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Rank of work item for team in a theme --></label>
+        <name>Theme_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Theme-Deprecated --></label>
+        <name>Theme__c</name>
+        <relationshipLabel><!-- Work --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Age When Closed --></label>
+        <name>Total_Age_When_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rank of work item for trust --></label>
+        <name>Trust_Rank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type Value --></label>
+        <name>Type_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Bug</masterLabel>
+            <translation><!-- Bug --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bug List</masterLabel>
+            <translation><!-- Bug List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gack</masterLabel>
+            <translation><!-- Gack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Help</masterLabel>
+            <translation><!-- Help --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integrate</masterLabel>
+            <translation><!-- Integrate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Deterministic Test</masterLabel>
+            <translation><!-- Non Deterministic Test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Skunkforce</masterLabel>
+            <translation><!-- Skunkforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Case</masterLabel>
+            <translation><!-- Test Case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Change</masterLabel>
+            <translation><!-- Test Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Failure</masterLabel>
+            <translation><!-- Test Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Tool</masterLabel>
+            <translation><!-- Test Tool --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Translation</masterLabel>
+            <translation><!-- Translation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- UE Engineer --></label>
+        <name>UE_Engineer__c</name>
+        <relationshipLabel><!-- Work (UE Engineer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Used to determine whether or not a work record should be shown on the Work Prioritizer page --></help>
+        <label><!-- Include in Prioritize View --></label>
+        <name>Use_Prioritizer__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Profile of the Creator --></label>
+        <name>User_Profile_of_the_Creator__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Type (As a...) --></label>
+        <name>User_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Was Ever Returned to Support --></label>
+        <name>Was_Ever_Returned_to_Support__c</name>
+    </fields>
+    <fields>
+        <help><!-- Concatenation of WorkId and Subject --></help>
+        <label><!-- WorkId and Subject --></label>
+        <name>WorkId_and_Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- Document the name of the automated test to prevent this bug happenning again. --></help>
+        <label><!-- test --></label>
+        <name>ftest__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Failures Count --></label>
+        <name>of_Test_Failures__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of test failures associated with this record, updated hourly. Clicking on the number redirects to a report with real-time data, which also shows the fixed test failures associated with the record. --></help>
+        <label><!-- Test Failures --></label>
+        <name>visual_link_num_of_Test_Failures__c</name>
+    </fields>
+    <layouts>
+        <layout>Bug Layout</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sprint Details --></label>
+            <section>Sprint Details</section>
+        </sections>
+        <sections>
+            <label><!-- Subject --></label>
+            <section>Subject</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Bug Layout (Admin)</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Email Notifications --></label>
+            <section>Email Notifications</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sprint Details --></label>
+            <section>Sprint Details</section>
+        </sections>
+        <sections>
+            <label><!-- Subject --></label>
+            <section>Subject</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Bug Layout (QA Manager)</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Email Notifications --></label>
+            <section>Email Notifications</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sprint Details --></label>
+            <section>Sprint Details</section>
+        </sections>
+        <sections>
+            <label><!-- Subject --></label>
+            <section>Subject</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Bug Template</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sprint Details --></label>
+            <section>Sprint Details</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Template Information --></label>
+            <section>Template Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Field User Story</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Details --></label>
+            <section>Details</section>
+        </sections>
+        <sections>
+            <label><!-- Optional --></label>
+            <section>Optional</section>
+        </sections>
+        <sections>
+            <label><!-- User Story --></label>
+            <section>User Story</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Investigation</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>ToDo</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sprint --></label>
+            <section>Sprint</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>User Story</layout>
+        <sections>
+            <label><!-- Assignments --></label>
+            <section>Assignments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sprint Details --></label>
+            <section>Sprint Details</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Update Work --></label>
+        <name>CustomEditBug</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Update Work --></label>
+        <name>CustomEditInvestigation</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Update Work --></label>
+        <name>CustomEditUserStory</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Check In Questions --></label>
+        <name>Work_Check_In_Questions</name>
+    </quickActions>
+    <recordTypes>
+        <description><!-- Used to track defects or problems --></description>
+        <label><!-- Bug --></label>
+        <name>Bug</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to request R&amp;D triage/diagnosis support for a customer support escalation --></description>
+        <label><!-- Investigation --></label>
+        <name>Investigation</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to store common values which can then be applied to new Bugs --></description>
+        <label><!-- Template --></label>
+        <name>Template</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to track a unit of work that does not need to have anything checked into Source Control nor does it need to have auto assignment rules applied --></description>
+        <label><!-- ToDo --></label>
+        <name>ToDo</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used by Field TEs. Used to create feature requests. You are able to check in code against the user story record. --></description>
+        <label><!-- Field --></label>
+        <name>User_Story</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Enter a valid scheduled build when setting the Source Control Status to Open or Open Once. --></errorMessage>
+        <name>Scheduled_Build_Not_Blank_P4_Status_Chng</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- An assignee must be specified if the source control status is changed to Approved - Open or Approved - Open Once --></errorMessage>
+        <name>ValidateAssigneeOnPeforceStatusOpen</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A QA Engineer must be specified if the Status is set to Fixed --></errorMessage>
+        <name>ValidateQAEngineerWithStatus</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please update the Status__c field to something other than New or In Progress before populating the Resolved_By__c field. --></errorMessage>
+        <name>ValidateResolvedByWithStatus</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A Scheduled Build must be specified if the Status is set to Fixed --></errorMessage>
+        <name>ValidateScheduledBuildWithStatus</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Cancel --></label>
+        <name>Cancel</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Change_Record_Type --></label>
+        <name>Change_Record_Type</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Work --></label>
+        <name>Create_Work</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Deep_Clone --></label>
+        <name>Deep_Clone</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Follow --></label>
+        <name>Follow</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mail --></label>
+        <name>Mail</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mail_Using_Template --></label>
+        <name>Mail_Using_Template</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Open_in_Bugforce --></label>
+        <name>Open_in_Bugforce</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Perforce_Checkin_Request --></label>
+        <name>Perforce_Checkin_Request</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Prioritize --></label>
+        <name>Prioritize</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Priority_Matrix_Help --></label>
+        <name>Priority_Matrix_Help</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Print_Notecards --></label>
+        <name>Show_Print_Notecards</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Story_Point --></label>
+        <name>Story_Point</name>
+    </webLinks>
+</CustomObjectTranslation>

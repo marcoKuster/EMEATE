@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Tag Assignment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Tag Assignments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assignment Rule --></label>
+        <name>Assignment_Rule__c</name>
+        <relationshipLabel><!-- Tag Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Tag --></label>
+        <name>Product_Tag__c</name>
+        <relationshipLabel><!-- Tag Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+        <picklistValues>
+            <masterLabel>Bug</masterLabel>
+            <translation><!-- Bug --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Investigation</masterLabel>
+            <translation><!-- Investigation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Story</masterLabel>
+            <translation><!-- User Story --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tag Record Type Key --></label>
+        <name>Tag_Record_Type_Key__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

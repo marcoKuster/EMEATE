@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Committed_Story_Points__c</fullName>
+    <description>Number of story points assigned to work item when it was committed to in this sprint</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of story points assigned to work item when it was committed to in this sprint</inlineHelpText>
+    <label>Committed Story Points</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

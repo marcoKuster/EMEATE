@@ -1,0 +1,40 @@
+<apex:component id="formRow" layout="none">
+    <apex:attribute name="inputId" description="The ID of the input field used." type="String" required="false" default="formInputField" />
+    <apex:attribute name="object" description="The name of the object" type="Object" required="true" />
+    <apex:attribute name="field" description="This name of the field in the Object." type="String" required="true" />
+    <apex:attribute name="required" description="Is this field required?" type="Boolean" required="false" />
+	<apex:attribute name="type" description="" type="String" required="true" />
+	<apex:attribute name="value" description="" type="Object" required="false" />
+	<apex:attribute name="info" description="" type="String" required="false" />
+	<apex:attribute name="readonly" description="" type="Boolean" required="false" />
+	<apex:attribute name="cssclass" description="CSS class that will be applied to the input field" type="String" required="false" />
+
+    <div class="gusFormRow gusRow_{!type}_{!field}">
+    	<!-- NOT read only -->
+		<apex:outputPanel rendered="{!IF(readonly,false,true)}" layout="none">
+			<div class="gusFormField gusFormFieldLeft {!IF(required,'gusFieldRequired','')}">
+				<label for="{!$Component.input}">
+					<apex:outputText value="{!$ObjectType[type].fields[field].Label}" />
+                    <c:ADM_HelpHover2 id="helpHover" type="{!type}" field="{!field}" />
+				</label>
+			</div>
+			<div class="gusFormField gusFormFieldRight {!IF(required,'gusFieldRequired','')}">
+				<apex:inputField id="input" value="{!object[field]}" required="{!required}" styleClass="{!cssclass}" />
+				<apex:outputPanel styleClass="gusFormHelpText" rendered="{!NOT ISBLANK(info)}" title="{!info}"></apex:outputPanel>
+			</div>
+		</apex:outputPanel>
+
+		<!-- read only -->
+		<apex:outputPanel rendered="{!IF(readonly,true,false)}" layout="none">
+			<div class="gusFormField gusFormFieldLeft">
+				<label for="{!$Component.input}">
+					<apex:outputText value="{!$ObjectType[type].fields[field].Label}" />
+				</label>
+			</div>
+			<div class="gusFormField gusFormFieldRight">
+				<apex:outputField id="output" value="{!object[field]}" rendered="{!NOT(ISBLANK(object[field]))}" />
+				<apex:outputPanel layout="block" styleClass="gusBlankValue" rendered="{!ISBLANK(object[field])}">&ndash;</apex:outputPanel>
+			</div>
+		</apex:outputPanel>
+    </div>
+</apex:component>

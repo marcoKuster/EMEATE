@@ -1,0 +1,64 @@
+<apex:page standardController="ADM_Release__c" extensions="ADM_ReleaseRelatedListController" cache="true">
+<apex:styleSheet value="{!$Resource.ADM_common_css}" />
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'css/redmond/jquery-ui-1.9.2.custom.css')}" />
+<apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'js/jquery-ui-1.9.2.custom.min.js')}" />
+<apex:includeScript value="{!$Resource.ADM_common_js}" />
+
+<div class="bPageTitle">
+    <div class="ptBody">
+        <div class="content">
+            <img src="/s.gif" class="pageTitleIcon" />
+            <h1 class="pageType"><a href="{!ListViewLink}">Releases</a> &gt;</h1>
+            <h2 class="pageDescription"> New Release</h2>
+            <div class="blank">&nbsp;</div>
+        </div>
+    </div>
+    <div class="ptBreadcrumb"></div>
+</div>
+
+   
+<apex:form target="_parent">
+<apex:messages styleClass="message gusFormMessage"/>
+	<div class="gusFieldset">
+    <div class="gusLegend">Release Edit</div>
+    <div class="gusRequiredText"></div>
+
+	    <div class="gusFormToolbar gusFormToolbarTop">
+		<apex:commandButton action="{!save}" value="Save"/>
+		<apex:commandButton action="{!doSaveAndNew}" value="Save & New"/> 
+		<apex:commandButton action="{!doCancel}" immediate="true" value="Cancel"/> 
+    </div>
+    
+	    <div class="gusForm">
+        	<div class="gusForm2Column gusAltLabels">                
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="true"  field="Name" value="{!ADM_Release__c.Name}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Release_Manager__c" value="{!ADM_Release__c.Release_Manager__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Release_Date__c" value="{!ADM_Release__c.Release_Date__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Scheduled_End_Date__c" value="{!ADM_Release__c.Scheduled_End_Date__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Planned_Duration__c" value="{!ADM_Release__c.Planned_Duration__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Actual_Release_Date__c" value="{!ADM_Release__c.Actual_Release_Date__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Deployment_Delayed_minutes__c" value="{!ADM_Release__c.Deployment_Delayed_minutes__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="true"  field="Release_Type__c" value="{!ADM_Release__c.Release_Type__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Planned_Unplanned__c" value="{!ADM_Release__c.Planned_Unplanned__c}" />
+            </div>  
+            
+        	<div class="gusForm2Column gusAltLabels">
+	        	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Customer_Facing_Release_Name__c" value="{!ADM_Release__c.Customer_Facing_Release_Name__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Application__c" value="{!ADM_Release__c.Application__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Status__c" value="{!ADM_Release__c.Status__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Short_Note__c" value="{!ADM_Release__c.Short_Note__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Note__c" value="{!ADM_Release__c.Note__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Number_of_Bugs__c" value="{!ADM_Release__c.Number_of_Bugs__c}" />
+	         	<c:ADM_FormRow object="{!ADM_Release__c}" type="ADM_Release__c" required="false" field="Deployment_Instances__c" value="{!ADM_Release__c.Deployment_Instances__c}" />             	            		         	
+        	</div>
+        </div>   
+	    <div class="gusFormToolbar gusFormToolbarBottom">
+        <apex:commandButton action="{!save}" value="Save"/>
+        <apex:commandButton action="{!doSaveAndNew}" value="Save & New"/> 
+       <apex:commandButton action="{!doCancel}" immediate="true" value="Cancel"/> 
+    </div>
+	</div>
+</apex:form>  
+
+</apex:page>

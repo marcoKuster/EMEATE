@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Application Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Core Salesforce Application</fullName>
+                <default>false</default>
+                <label>Core Salesforce Application</label>
+            </value>
+            <value>
+                <fullName>Distributed Customer Facing Application</fullName>
+                <default>false</default>
+                <label>Distributed Customer Facing Application</label>
+            </value>
+            <value>
+                <fullName>Documentation</fullName>
+                <default>false</default>
+                <label>Documentation</label>
+            </value>
+            <value>
+                <fullName>Independent R&amp;D</fullName>
+                <default>false</default>
+                <label>Independent R&amp;D</label>
+            </value>
+            <value>
+                <fullName>Infrastructure</fullName>
+                <default>false</default>
+                <label>Infrastructure</label>
+            </value>
+            <value>
+                <fullName>Internal Monitoring &amp; Management</fullName>
+                <default>false</default>
+                <label>Internal Monitoring &amp; Management</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>Moratorium</fullName>
+                <default>false</default>
+                <label>Moratorium</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

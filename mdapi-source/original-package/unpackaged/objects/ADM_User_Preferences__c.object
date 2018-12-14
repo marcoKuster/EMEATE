@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Stores user preferences for the GUS application.</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>BacklogHideWorkWithSprintToggle__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox is used to determine whether work with a sprint is included in the Unified Walls Backlog Panel</description>
+        <externalId>false</externalId>
+        <label>BacklogHideWorkWithSprintToggle</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LaneScrolling__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Boolean value to set User&apos;s preference on Kanban Lane scrolling</description>
+        <externalId>false</externalId>
+        <label>LaneScrolling</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowBacklogviewonVirtualWall__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the user would like to display backlog view in the virtual wall.</description>
+        <externalId>false</externalId>
+        <label>Show Backlog view on Virtual Wall</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowChatteronVirtualWall__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Indicates if the user will want to show or hide the chatter component on virtual wall.</description>
+        <externalId>false</externalId>
+        <label>Show Chatter on Virtual Wall</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowColoredSubjects__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User Kanban Preference -  show colored subjects on the work card</description>
+        <externalId>false</externalId>
+        <label>ShowColoredSubjects</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowDeleteTaskDialog__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the &quot;Delete Task&quot; dialog on the Virtual Wall</description>
+        <externalId>false</externalId>
+        <label>Show Delete Task Dialog</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowMoveTaskToCompletedDialog__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the &quot;Move Task To Completed&quot; dialog on the Virtual Wall page.</description>
+        <externalId>false</externalId>
+        <label>Show Move Task To Completed Dialog</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowMoveTaskToInProgressDialog__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the &quot;Move Task To In Progress&quot; dialog on the Virtual Wall page.</description>
+        <externalId>false</externalId>
+        <label>Show Move Task To In Progress Dialog</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowMoveUncompletedTasksDialog__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the &quot;Move Uncompleted Tasks&quot; dialog when the Work is closed on the Virtual Wall page.</description>
+        <externalId>false</externalId>
+        <label>Show Move Uncompleted Tasks Dialog</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowMoveWorkToOtherSprintDialog__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the &quot;Move Work to Other Sprint Warning&quot; dialog on the Virtual Wall page.</description>
+        <externalId>false</externalId>
+        <label>Show Move Work To Other Sprint Warning</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowNumberOfDaysInColumn__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference for showing number of days on Work card</description>
+        <externalId>false</externalId>
+        <label>ShowNumberOfDaysInColumn</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowNumberOfPosts__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference -  show number of feed posts on work card</description>
+        <externalId>false</externalId>
+        <label>ShowNumberOfPosts</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowNumberOfTasks__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference - to show number of Tasks</description>
+        <externalId>false</externalId>
+        <label>ShowNumberOfTasks</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowPriority__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference  - Show Priority field on the Work card</description>
+        <externalId>false</externalId>
+        <label>ShowPriority</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowProductTagAssignmentGuidedTour__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Shows the guided tour on the Product Tag Assignment Matrix.</description>
+        <externalId>false</externalId>
+        <label>Show Product Tag Assignment Guided Tour</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowProductTagGuidedTour__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the Guided Tour for the Product Tags on the Work edit page.</description>
+        <externalId>false</externalId>
+        <label>Show Product Tag Guided Tour</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowQE__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User Kanban Preference -  show QE on Work Card</description>
+        <externalId>false</externalId>
+        <label>ShowQE</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowRecordTypeIcon__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference - Show RecordTypeIcon on work card</description>
+        <externalId>false</externalId>
+        <label>ShowRecordTypeIcon</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowRemoveWorkFromSprintDialog__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the &quot;Remove Work From Sprint Warning&quot; dialog on the Virtual Wall page.</description>
+        <externalId>false</externalId>
+        <label>Show Remove Work From Sprint Warning</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowScheduledBuild__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference -  show Scheduled build on work card</description>
+        <externalId>false</externalId>
+        <label>ShowScheduledBuild</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowStoryPoints__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference - show Story Points on the work card</description>
+        <externalId>false</externalId>
+        <label>ShowStoryPoints</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowVirtualWallGuidedTour__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check this to show the Guided Tour on the Virtual Wall page.</description>
+        <externalId>false</externalId>
+        <label>Show Virtual Wall Guided Tour</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowWorkID__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference - show Work Id on the work card</description>
+        <externalId>false</externalId>
+        <label>ShowWorkID</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TabPanelViewPreference__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Unchecked (default) = Shows the tab panels with tabs. Checked = Show tab panels stacked on top of each other.</description>
+        <externalId>false</externalId>
+        <label>Tab Panel View Preference</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>UseColorCoding__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>User Kanban Preference</description>
+        <externalId>false</externalId>
+        <label>UseColorCoding</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>WorkPanelViewPreference__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Show Work Panel</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>User Preferences</label>
+    <visibility>Protected</visibility>
+</CustomObject>

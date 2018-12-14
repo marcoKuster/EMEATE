@@ -1,0 +1,273 @@
+<apex:page id="scrumTeamEditPage" standardController="ADM_Scrum_Team__c" tabStyle="MyTeam__tab" extensions="ADM_ScrumTeamWorkExtension,ADM_CommonControllerExtension"  cache="true">
+<apex:styleSheet value="{!$Resource.ADM_common_css}" />
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'css/redmond/jquery-ui-1.9.2.custom.css')}" />
+<apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+<apex:includeScript value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'js/jquery-ui-1.9.2.custom.min.js')}" />
+<apex:includeScript value="{!$Resource.ADM_common_js}" />
+
+    <script type="text/javascript">
+    function ADM_Scrum_Team__c(){
+          /* Note the field names are case-sensitive. The field names must match the API names */
+          this.Id = null;
+          this.Name = null;
+          this.Active__c = null; 
+          this.Cloud_LU__c = null;
+          this.Capex_Lead__c = null;
+          this.Product_Owner__c=null;
+          this.Scrum_Master__c=null;
+          this.Domain__c = null;
+          this.Story_Point_Scale__c  = null;
+          this.Team_Home_Page__c = null;
+          this.Distribution_Lists__c  = null;
+          this.Definition_of_Done__c = null;
+          this.Definition_of_Ready__c = null;
+          this.Release_Coverage_Needed__c  = null;
+          this.Business_Hours__c = null;
+       }
+
+    //Logic which creates the team object to be saved.
+  function createTeam(teamId){
+      var team = new ADM_Scrum_Team__c();
+        team.Id = teamId;
+        team.Name = $('.teamName').val();
+        team.Active__c = $('.active').attr('checked') == "checked" ? true : false;
+        team.Cloud_LU__c = $('.cloud').val();
+        //FYI Need to get the values for the 3 user fields in this way because user input look up gives only the name and not id. 
+        //Since we are using javascript and not VF for saving we lose the id and this causes issues while saving (we query with name to get id but names are not unique). 
+        //We take the id from VF generated hidden field on the page.
+        var capexLeadId = document.getElementById('scrumTeamEditPage:scrumTeamEditForm:capexLead_lkid').value;
+        var productOwnerId = document.getElementById('scrumTeamEditPage:scrumTeamEditForm:productOwner_lkid').value;
+        var scrumMasterId = document.getElementById('scrumTeamEditPage:scrumTeamEditForm:scrumMaster_lkid').value;
+      
+        team.Capex_Lead__c = (capexLeadId == '') ? $('.capexLead').val() : capexLeadId;
+        team.Product_Owner__c = (productOwnerId == '') ? $('.productOwner').val() : productOwnerId;
+        team.Scrum_Master__c = (scrumMasterId == '') ? $('.scrumMaster').val() : scrumMasterId; 
+        
+        team.Domain__c = $('.domain').val();
+        team.Story_Point_Scale__c  = $('.storyPointScale').val();
+        team.Team_Home_Page__c = $('.teamHomePage').val();
+        team.Distribution_Lists__c  = $('.distributionList').val();
+        team.Definition_of_Done__c = $('.definitionOfDone').val();
+        team.Definition_of_Ready__c = $('.definitionOfReady').val();
+        team.Release_Coverage_Needed__c  = $('.releaseCoverage').attr('checked') == "checked" ? true : false;
+        team.Business_Hours__c = $('.businessHours').val();
+        return team;
+    }
+
+    //Function which calls validate team and then saves the team.
+    function validateAndSaveTeam(teamId){   
+    var team = createTeam(teamId);
+        console.log('Team object being saved : ', team); 
+        var oldName = $('.hiddenName').val(); //Old name used to get the active tests in Luna.
+        checkIfTeamHasActiveTestsWithLuna(oldName,team);   
+    }
+    
+    //Logic to only save and redirect to team detail page.
+    function saveTeam(team){
+      Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ADM_ScrumTeamWorkExtension.updateTeamDetails}',
+                team,
+                function(result, event) {
+                  if(event.type == 'exception') {
+                    showTeamError(event.message);
+                  } 
+                  else {
+                    console.log('Success team saved');
+                    checkAndNavigateToURL('/' + team.Id);
+                  }
+            });
+    }
+    
+    //Logic to validate. Here we check if we rename the team or click active checkbox and show error message accordingly.
+    function validateTeamDetails(team,isActiveTest){
+      var oldName = $('.hiddenName').val();
+        var oldActive = ($('.hiddenActive').val()== true ||$('.hiddenActive').val()== "true" ) ? "true" : "false";
+        var newName = team.Name;
+        var newActive = (team.Active__c== true || team.Active__c== "true") ? "true" : "false";
+
+        
+        //This it enters this if condition it means there is a team name change so we show the error message in the <div> named dialog
+        if(oldName != newName || oldActive!=newActive){
+            if(isActiveTest) { //Here it means there is a name change and there are active tests in luna, So show message in <div> named dialogLunaAndGUS
+              $( "#dialogLunaAndGUS" ).dialog({
+                    width: 500,
+                    buttons: [
+                        {
+                            text: "Ok",
+                            icons: {
+                               primary: "ui-icon-heart"
+                            },
+                            click: function() {
+                                saveTeam(team);
+                               $( this ).dialog( "close" );
+                            }
+                        }
+                    ]
+                });
+            
+            }
+            else{ //Here there are no active tests in Luna and there is a name change, So show message in <div> named dialog.
+                $( "#dialog" ).dialog({
+                    width: 500,
+                    buttons: [
+                        {
+                            text: "Ok",
+                            icons: {
+                               primary: "ui-icon-heart"
+                            },
+                            click: function() {
+                                saveTeam(team);
+                               $( this ).dialog( "close" );
+                            }
+                        }
+                    ]
+                });
+           }
+        }
+        else{ // If code enetrs this else it means there is no name change 
+        saveTeam(team);
+        }
+          
+    }
+    
+    
+    function checkIfTeamHasActiveTestsWithLuna(oldTeamName,team){
+        var url = "https://lunadas.soma.salesforce.com/api/test/v1/q/team-has-active-tests?scrum-team="+oldTeamName+"&look-back-window=12";
+        $.ajax({
+        method: "GET",
+      url: url
+      }).done(function( data ){
+            console.log('From luna');
+            console.log(data);
+            var isActiveTest = data;
+            //In the call back we check for other validations and show appropriate error messages and then save.
+            validateTeamDetails(team,isActiveTest);
+               
+          }).fail(function() {
+            console.log('Error while receiving test api from Luna');
+              showTeamError('Exception while validating tests from Lunadas. Please make sure you have clicked the Aloha SFM button.If the problem persists reach out to GUS Team.');
+          });
+    }
+    
+    function showTeamError(message) {
+        $("#teamErrorMessage").html(message);
+        $("#teamErrorMessageWrapper").show();
+        var el = document.getElementById('teamErrorMessageWrapper');
+        el.scrollIntoView(true);
+       }
+    </script>
+    
+<div class="bPageTitle">
+    <div class="ptBody">
+        <div class="content">
+			<img src="{!$Resource.icon_scrum_team}" alt="Team" class="pageTitleIcon" title="Team" />
+            <h1 class="pageType"><a href="{!ListViewLink}">All Teams</a> &gt; <a href="/{!ADM_Scrum_Team__c.Id}">{!ADM_Scrum_Team__c.Name}</a> &gt; </h1>
+            <h2 class="pageDescription"> {!ADM_Scrum_Team__c.Name}</h2>
+			<div class="blank">&nbsp;</div>
+		</div>
+		<div class="links"><a href="https://help.salesforce.com/htviewhelpdoc?id=co_edit.htm&siteLang=en_US" target="_blank"><span class="helpLink">Help for this Page</span><img src="/s.gif" alt=""  class="helpIcon"/></a></div>
+	</div>
+	<div class="ptBreadcrumb"></div>
+</div>
+
+<apex:form target="_parent" id="scrumTeamEditForm">
+<input type="hidden" value="{!ADM_Scrum_Team__c.Active__c}" class="hiddenActive"/>
+<input type="hidden" value="{!ADM_Scrum_Team__c.Name}" class="hiddenName" />
+
+<div class="message gusFormMessage" id="teamErrorMessageWrapper" style="display:none">
+    <span id="teamErrorMessage">&nbsp;</span>
+</div>
+
+
+
+<apex:messages globalOnly="true" styleClass="message gusFormMessage"/>
+	<div class="gusFieldset">
+	    <div class="gusLegend">Team Edit</div>
+	    <div class="gusRequiredText"></div>
+
+	    <div class="gusFormToolbar gusFormToolbarTop">
+        <input type="button" value="Save" class="btn" onclick="validateAndSaveTeam('{!ADM_Scrum_Team__c.Id}');" />
+          <input type="button" onClick="checkAndNavigateToURL('/{!ADM_Scrum_Team__c.Id}');" value="Cancel" />
+	    </div>
+
+	    <div class="gusForm" style="width:100%;">
+	         <div class="gusForm1Column">
+<!--Added the below field with rendering = false to make sure VF engine will default query the field or else in package we get the Field used without querying error -->
+	            <apex:outputText value="{!ADM_Scrum_Team__c.Name}" rendered="false" />
+            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="teamName" type="ADM_Scrum_Team__c" required="true"  field="Name" />
+            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="storyPointScale" type="ADM_Scrum_Team__c" required="false" field="Story_Point_Scale__c" value="{!ADM_Scrum_Team__c.Story_Point_Scale__c}" />
+            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="distributionList" type="ADM_Scrum_Team__c" required="false" field="Distribution_Lists__c" value="{!ADM_Scrum_Team__c.Distribution_Lists__c}" />
+
+
+             <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="cloud" type="ADM_Scrum_Team__c" required="true"  field="Cloud_LU__c" value="{!ADM_Scrum_Team__c.Cloud_LU__c}" rendered="{!NOT(packagedOrg)}" />
+
+              <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="domain" type="ADM_Scrum_Team__c" required="false" field="Domain__c" value="{!ADM_Scrum_Team__c.Domain__c}"  />
+        <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft">
+                        <label for="{!$Component.input}">
+              <apex:outputText value="{!$ObjectType.ADM_Scrum_Team__c.fields.Capex_Lead__c.label}" />
+            </label>
+                    </div>
+               <div class="gusFormField gusFormFieldRight">
+                   <apex:inputField id="capexLead" label="scrum" value="{!ADM_Scrum_Team__c.Capex_Lead__c}" styleClass="capexLead" />
+               </div>
+               </div>
+               
+
+               <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft">
+                        <label for="{!$Component.input}">
+              <apex:outputText value="{!$ObjectType.ADM_Scrum_Team__c.fields.Product_Owner__c.label}" />
+            </label>
+                    </div>
+               <div class="gusFormField gusFormFieldRight">
+                   <apex:inputField id="productOwner" label="scrum" value="{!ADM_Scrum_Team__c.Product_Owner__c}" styleClass="productOwner" />
+               </div>
+               </div>
+               
+               <div class="gusFormRow">
+                    <div class="gusFormField gusFormFieldLeft">
+                        <label for="{!$Component.input}">
+              <apex:outputText value="{!$ObjectType.ADM_Scrum_Team__c.fields.Scrum_Master__c.label}" />
+            </label>
+                    </div>
+               <div class="gusFormField gusFormFieldRight">
+                   <apex:inputField id="scrumMaster" label="scrum" value="{!ADM_Scrum_Team__c.Scrum_Master__c}" styleClass="scrumMaster" />
+               </div>
+               </div>
+
+            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="teamHomePage" type="ADM_Scrum_Team__c" required="false" field="Team_Home_Page__c" value="{!ADM_Scrum_Team__c.Team_Home_Page__c}"  />
+            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="active" type="ADM_Scrum_Team__c" required="false" field="Active__c" value="{!ADM_Scrum_Team__c.Active__c}" />
+            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="releaseCoverage" type="ADM_Scrum_Team__c" required="false" field="Release_Coverage_Needed__c" value="{!ADM_Scrum_Team__c.Release_Coverage_Needed__c}" />
+                <!-- Business Hours, for GUS Investigation SLAs -->
+                <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="businessHours" type="ADM_Scrum_Team__c" required="true" field="Business_Hours__c" value="{!ADM_Scrum_Team__c.Business_Hours__c}" />
+                <!--c:ADM_FormRow object="{!ADM_Scrum_Team__c}" cssclass="definitionOfDone" type="ADM_Scrum_Team__c" required="false" field="Definition_of_Done__c " value="{!ADM_Scrum_Team__c.Definition_of_Done__c }" /-->
+                 <div class="gusFormRow gusRow_Definition_of_Done__c">
+                      <div class="gusFormField gusFormFieldLeft">   
+                         <label for="{!ADM_Scrum_Team__c.Definition_of_Done__c }">
+                            {!$ObjectType.ADM_Scrum_Team__c.fields.Definition_of_Done__c.Label}
+                            <c:ADM_HelpHover2 id="definitionOfDoneHelp" type="ADM_Scrum_Team__c" field="Definition_of_Done__c" />
+                         </label>
+                     </div>
+                     <div class="gusFormField gusFormFieldRight">
+                      <apex:inputTextarea id="definitionOfDone" styleClass="definitionOfDone" value="{!ADM_Scrum_Team__c.Definition_of_Done__c }"/>
+                     </div>
+                 </div>  
+                 <div class="gusFormRow gusRow_Definition_of_Ready__c ">
+                      <div class="gusFormField gusFormFieldLeft">   
+                         <label for="{!ADM_Scrum_Team__c.Definition_of_Ready__c  }">
+                            {!$ObjectType.ADM_Scrum_Team__c.fields.Definition_of_Ready__c.Label}
+                            <c:ADM_HelpHover2 id="definitionOfReadyHelp" type="ADM_Scrum_Team__c" field="Definition_of_Ready__c" />
+                         </label>
+                     </div>
+                     <div class="gusFormField gusFormFieldRight">
+                      <apex:inputTextarea id="definitionOfReady" styleClass="definitionOfReady" value="{!ADM_Scrum_Team__c.Definition_of_Ready__c  }"/>
+                     </div>
+                 </div>  
+                 <!-- Business Hours end -->
+
+	         </div>
+	    </div>
+	</div>
+</apex:form>
+</apex:page>

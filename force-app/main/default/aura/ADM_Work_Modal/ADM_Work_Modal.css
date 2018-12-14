@@ -1,0 +1,11 @@
+.THIS .slds-modal__container {
+	max-width: none;
+}
+
+.THIS .slds-modal__content {
+	height: 60%;
+}
+
+.THIS .spinner-container {
+	min-height: 150px;
+}

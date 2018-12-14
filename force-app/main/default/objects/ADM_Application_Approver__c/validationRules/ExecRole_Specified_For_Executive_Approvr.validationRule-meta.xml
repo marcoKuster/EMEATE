@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExecRole_Specified_For_Executive_Approvr</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Approver_Role__c, &quot;Executive&quot;) &amp;&amp; ISBLANK(Executive_Role__c)</errorConditionFormula>
+    <errorDisplayField>Executive_Role__c</errorDisplayField>
+    <errorMessage>Executive Role must be specified when &quot;Executive&quot; Approver Role is selected.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Epic__c</fullName>
+    <externalId>false</externalId>
+    <label>Epic</label>
+    <referenceTo>ADM_Epic__c</referenceTo>
+    <relationshipLabel>Epic Burndown Items</relationshipLabel>
+    <relationshipName>Epic_Burndown_Items</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

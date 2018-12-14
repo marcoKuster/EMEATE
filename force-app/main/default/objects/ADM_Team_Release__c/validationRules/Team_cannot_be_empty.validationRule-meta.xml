@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_cannot_be_empty</fullName>
+    <active>true</active>
+    <errorConditionFormula>LEN( Scrum_Team__c ) = 0</errorConditionFormula>
+    <errorDisplayField>Scrum_Team__c</errorDisplayField>
+    <errorMessage>You must select a Scrum Team.</errorMessage>
+</ValidationRule>

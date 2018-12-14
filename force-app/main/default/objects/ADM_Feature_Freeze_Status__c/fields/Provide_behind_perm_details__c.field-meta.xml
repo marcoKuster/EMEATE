@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provide_behind_perm_details__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Provide details explaining how a perm is used to disable incomplete features.</inlineHelpText>
+    <label>Provide details on your features perm</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

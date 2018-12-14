@@ -1,0 +1,1382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Position</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Roster</value>
+    </caseValues>
+    <fields>
+        <label><!-- Backfill Date --></label>
+        <name>Backfill_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Backfill Name --></label>
+        <name>Backfill_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Unit --></label>
+        <name>Business_Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Candidate Name --></label>
+        <name>Candidate_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use Parent_Cloud__c instead of this field as this field is deprecated now. Use this field only to refer to old values --></help>
+        <label><!-- Cloud_Deprecated(Use Parent Cloud) --></label>
+        <name>Cloud_LU__c</name>
+        <relationshipLabel><!-- Positions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Parent Cloud has been separated from Team --></help>
+        <label><!-- Parent Cloud Lock --></label>
+        <name>Cloud_Lock__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cloud (Deprecated) --></label>
+        <name>Cloud__c</name>
+        <picklistValues>
+            <masterLabel>Analyst Relations</masterLabel>
+            <translation><!-- Analyst Relations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Analytics</masterLabel>
+            <translation><!-- Analytics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCE/Site Reliability</masterLabel>
+            <translation><!-- CCE/Site Reliability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Capacity</masterLabel>
+            <translation><!-- Capacity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Capacity and SR</masterLabel>
+            <translation><!-- Capacity and SR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chatter</masterLabel>
+            <translation><!-- Chatter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Compute - System</masterLabel>
+            <translation><!-- Compute - System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Compute Deploy</masterLabel>
+            <translation><!-- Compute Deploy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer</masterLabel>
+            <translation><!-- Customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Center Automation</masterLabel>
+            <translation><!-- Data Center Automation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Platform and Services</masterLabel>
+            <translation><!-- Data Platform and Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data.com - Product Delivery</masterLabel>
+            <translation><!-- Data.com - Product Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data.com - San Francisco</masterLabel>
+            <translation><!-- Data.com - San Francisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data.com - San Mateo</masterLabel>
+            <translation><!-- Data.com - San Mateo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data.com - Service Delivery</masterLabel>
+            <translation><!-- Data.com - Service Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Database</masterLabel>
+            <translation><!-- Database --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Database and Core</masterLabel>
+            <translation><!-- Database and Core --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demo Marketing</masterLabel>
+            <translation><!-- Demo Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Desk.com</masterLabel>
+            <translation><!-- Desk.com --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dev Marketing</masterLabel>
+            <translation><!-- Dev Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware</masterLabel>
+            <translation><!-- Hardware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Heroku</masterLabel>
+            <translation><!-- Heroku --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IT</masterLabel>
+            <translation><!-- IT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Industry</masterLabel>
+            <translation><!-- Industry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Delivery</masterLabel>
+            <translation><!-- Infrastructure Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation><!-- Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Matrix</masterLabel>
+            <translation><!-- Matrix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile</masterLabel>
+            <translation><!-- Mobile --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monitoring</masterLabel>
+            <translation><!-- Monitoring --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Network</masterLabel>
+            <translation><!-- Network --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Network and Systems Platform</masterLabel>
+            <translation><!-- Network and Systems Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pardot</masterLabel>
+            <translation><!-- Pardot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Path-To-Production</masterLabel>
+            <translation><!-- Path-To-Production --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Platform</masterLabel>
+            <translation><!-- Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Platform - Declarative</masterLabel>
+            <translation><!-- Platform - Declarative --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Platform - Programmatic</masterLabel>
+            <translation><!-- Platform - Programmatic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Platform - Services</masterLabel>
+            <translation><!-- Platform - Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Platform Programmatic UI</masterLabel>
+            <translation><!-- Platform Programmatic UI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Productivity</masterLabel>
+            <translation><!-- Productivity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R&amp;D App Delivery</masterLabel>
+            <translation><!-- R&amp;D App Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Relate IQ</masterLabel>
+            <translation><!-- Relate IQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reliability</masterLabel>
+            <translation><!-- Reliability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales</masterLabel>
+            <translation><!-- Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Cloud</masterLabel>
+            <translation><!-- Salesforce Cloud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sayonara</masterLabel>
+            <translation><!-- Sayonara --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Search</masterLabel>
+            <translation><!-- Search --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security &amp; Compliance</masterLabel>
+            <translation><!-- Security &amp; Compliance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service</masterLabel>
+            <translation><!-- Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shared Services</masterLabel>
+            <translation><!-- Shared Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T&amp;P Shared</masterLabel>
+            <translation><!-- T&amp;P Shared --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust</masterLabel>
+            <translation><!-- Trust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Work.com</masterLabel>
+            <translation><!-- Work.com --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cost Center --></label>
+        <name>Cost_Center__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <help><!-- Free-text area to record notes on this Headcount. --></help>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Division__c</name>
+    </fields>
+    <fields>
+        <help><!-- Effective quarter to hire headcount.  Only Finance can move headcount from quarter to quarter. --></help>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+        <picklistValues>
+            <masterLabel>FY12-Q4</masterLabel>
+            <translation><!-- FY12-Q4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY13-Q1</masterLabel>
+            <translation><!-- FY13-Q1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY13-Q2</masterLabel>
+            <translation><!-- FY13-Q2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY13-Q3</masterLabel>
+            <translation><!-- FY13-Q3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY13-Q4</masterLabel>
+            <translation><!-- FY13-Q4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY14-Q1</masterLabel>
+            <translation><!-- FY14-Q1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY14-Q2</masterLabel>
+            <translation><!-- FY14-Q2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY14-Q3</masterLabel>
+            <translation><!-- FY14-Q3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY14-Q4</masterLabel>
+            <translation><!-- FY14-Q4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY15-Q1</masterLabel>
+            <translation><!-- FY15-Q1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY15-Q2</masterLabel>
+            <translation><!-- FY15-Q2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY15-Q3</masterLabel>
+            <translation><!-- FY15-Q3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY15-Q4</masterLabel>
+            <translation><!-- FY15-Q4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY16-Q1</masterLabel>
+            <translation><!-- FY16-Q1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY16-Q2</masterLabel>
+            <translation><!-- FY16-Q2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY16-Q3</masterLabel>
+            <translation><!-- FY16-Q3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY16-Q4</masterLabel>
+            <translation><!-- FY16-Q4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY17-Q1</masterLabel>
+            <translation><!-- FY17-Q1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY17-Q2</masterLabel>
+            <translation><!-- FY17-Q2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY17-Q3</masterLabel>
+            <translation><!-- FY17-Q3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY17-Q4</masterLabel>
+            <translation><!-- FY17-Q4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY18-Q1</masterLabel>
+            <translation><!-- FY18-Q1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY18-Q2</masterLabel>
+            <translation><!-- FY18-Q2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY18-Q3</masterLabel>
+            <translation><!-- FY18-Q3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FY18-Q4</masterLabel>
+            <translation><!-- FY18-Q4 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Employee Name (Text) --></label>
+        <name>Employee_Name_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Employee Number (Text) --></label>
+        <name>Employee_Number_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- FY Starting Cloud --></label>
+        <name>FY_Starting_Cloud__c</name>
+    </fields>
+    <fields>
+        <help><!-- Department can be entered manually by Finance, but will be auto-populated by the value from the User record in the Employee Name field (User Lookup) if available. --></help>
+        <label><!-- Employee Department OLD --></label>
+        <name>Headcount_Department__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of employee filling the position (lookup to User) --></help>
+        <label><!-- Employee Name --></label>
+        <name>Headcount_Name__c</name>
+        <relationshipLabel><!-- Roster (Employee Name) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Hiring Manager Department --></label>
+        <name>Hiring_Manager_Department__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hiring Manager --></label>
+        <name>Hiring_Manager__c</name>
+        <relationshipLabel><!-- Roster (Hiring Manager) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Initial Status Value --></label>
+        <name>Initial_Status_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location_Deprecated --></label>
+        <name>Location__c</name>
+        <picklistValues>
+            <masterLabel>Alabama - Remote</masterLabel>
+            <translation><!-- Alabama - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arizona - Phoenix</masterLabel>
+            <translation><!-- Arizona - Phoenix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arizona - Remote</masterLabel>
+            <translation><!-- Arizona - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Australia -  Sydney</masterLabel>
+            <translation><!-- Australia -  Sydney --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Australia - Melbourne</masterLabel>
+            <translation><!-- Australia - Melbourne --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Belgium - Remote</masterLabel>
+            <translation><!-- Belgium - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brazil - Sao Paulo</masterLabel>
+            <translation><!-- Brazil - Sao Paulo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA - Palo Alto</masterLabel>
+            <translation><!-- CA - Palo Alto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA - San Francisco</masterLabel>
+            <translation><!-- CA - San Francisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA - San Mateo</masterLabel>
+            <translation><!-- CA - San Mateo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA - Santa Monica</masterLabel>
+            <translation><!-- CA - Santa Monica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>California - Remote</masterLabel>
+            <translation><!-- California - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada - Fredericton</masterLabel>
+            <translation><!-- Canada - Fredericton --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada - Halifax</masterLabel>
+            <translation><!-- Canada - Halifax --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada - Remote</masterLabel>
+            <translation><!-- Canada - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada - Saint John</masterLabel>
+            <translation><!-- Canada - Saint John --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada - Toronto</masterLabel>
+            <translation><!-- Canada - Toronto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada - Vancouver</masterLabel>
+            <translation><!-- Canada - Vancouver --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Colorado - Louisville</masterLabel>
+            <translation><!-- Colorado - Louisville --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Colorado - Remote</masterLabel>
+            <translation><!-- Colorado - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Connecticut - Remote</masterLabel>
+            <translation><!-- Connecticut - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denmark - Copenhagen</masterLabel>
+            <translation><!-- Denmark - Copenhagen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denmark - Remote</masterLabel>
+            <translation><!-- Denmark - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FL - Tampa</masterLabel>
+            <translation><!-- FL - Tampa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Florida - Remote</masterLabel>
+            <translation><!-- Florida - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>France - Grenoble</masterLabel>
+            <translation><!-- France - Grenoble --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>France - Paris</masterLabel>
+            <translation><!-- France - Paris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>France - Remote</masterLabel>
+            <translation><!-- France - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Georgia - Atlanta</masterLabel>
+            <translation><!-- Georgia - Atlanta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Georgia - Remote</masterLabel>
+            <translation><!-- Georgia - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Germany - Frankfurt</masterLabel>
+            <translation><!-- Germany - Frankfurt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Germany - Munich</masterLabel>
+            <translation><!-- Germany - Munich --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Germany - Remote</masterLabel>
+            <translation><!-- Germany - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hawaii - Remote</masterLabel>
+            <translation><!-- Hawaii - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Idaho - Remote</masterLabel>
+            <translation><!-- Idaho - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Illinois - Chicago</masterLabel>
+            <translation><!-- Illinois - Chicago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Illinois - Remote</masterLabel>
+            <translation><!-- Illinois - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>India - Bangalore</masterLabel>
+            <translation><!-- India - Bangalore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>India - Hyderabad</masterLabel>
+            <translation><!-- India - Hyderabad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Indiana - Indianapolis (ET)</masterLabel>
+            <translation><!-- Indiana - Indianapolis (ET) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Indiana - Remote</masterLabel>
+            <translation><!-- Indiana - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Iowa - Remote</masterLabel>
+            <translation><!-- Iowa - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ireland - Dublin</masterLabel>
+            <translation><!-- Ireland - Dublin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Israel - Remote</masterLabel>
+            <translation><!-- Israel - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Israel - Tel Aviv</masterLabel>
+            <translation><!-- Israel - Tel Aviv --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japan - Remote</masterLabel>
+            <translation><!-- Japan - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japan - Tokyo</masterLabel>
+            <translation><!-- Japan - Tokyo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kentucky - Remote</masterLabel>
+            <translation><!-- Kentucky - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Louisiana - Remote</masterLabel>
+            <translation><!-- Louisiana - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maine - Remote</masterLabel>
+            <translation><!-- Maine - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Massachusetts - Boston</masterLabel>
+            <translation><!-- Massachusetts - Boston --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Massachusetts - Remote</masterLabel>
+            <translation><!-- Massachusetts - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Michigan - Remote</masterLabel>
+            <translation><!-- Michigan - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minnesota - Remote</masterLabel>
+            <translation><!-- Minnesota - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Missouri - Remote</masterLabel>
+            <translation><!-- Missouri - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NY - New York</masterLabel>
+            <translation><!-- NY - New York --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nevada - Remote</masterLabel>
+            <translation><!-- Nevada - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Hampshire - Remote</masterLabel>
+            <translation><!-- New Hampshire - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Jersey - Remote</masterLabel>
+            <translation><!-- New Jersey - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Jersey - Short Hills</masterLabel>
+            <translation><!-- New Jersey - Short Hills --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Mexico - Remote</masterLabel>
+            <translation><!-- New Mexico - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New York - Melville</masterLabel>
+            <translation><!-- New York - Melville --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New York - Remote</masterLabel>
+            <translation><!-- New York - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>North Carolina - Remote</masterLabel>
+            <translation><!-- North Carolina - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ohio - Remote</masterLabel>
+            <translation><!-- Ohio - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oklahoma - Remote</masterLabel>
+            <translation><!-- Oklahoma - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oregon - Portland</masterLabel>
+            <translation><!-- Oregon - Portland --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oregon - Remote</masterLabel>
+            <translation><!-- Oregon - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pennsylvania - Remote</masterLabel>
+            <translation><!-- Pennsylvania - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rhode Island - Remote</masterLabel>
+            <translation><!-- Rhode Island - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Singapore</masterLabel>
+            <translation><!-- Singapore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>South Carolina - Remote</masterLabel>
+            <translation><!-- South Carolina - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sweden - Stockholm</masterLabel>
+            <translation><!-- Sweden - Stockholm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Switzerland - Remote</masterLabel>
+            <translation><!-- Switzerland - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tennessee - Remote</masterLabel>
+            <translation><!-- Tennessee - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Texas - Dallas</masterLabel>
+            <translation><!-- Texas - Dallas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Texas - Irving</masterLabel>
+            <translation><!-- Texas - Irving --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Texas - Remote</masterLabel>
+            <translation><!-- Texas - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UT-Salt Lake City</masterLabel>
+            <translation><!-- UT-Salt Lake City --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom - London</masterLabel>
+            <translation><!-- United Kingdom - London --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom - Remote</masterLabel>
+            <translation><!-- United Kingdom - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom - Slough</masterLabel>
+            <translation><!-- United Kingdom - Slough --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom - Staines</masterLabel>
+            <translation><!-- United Kingdom - Staines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VA - Herndon</masterLabel>
+            <translation><!-- VA - Herndon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VA - Reston</masterLabel>
+            <translation><!-- VA - Reston --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WA - Seattle</masterLabel>
+            <translation><!-- WA - Seattle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WA - Spokane</masterLabel>
+            <translation><!-- WA - Spokane --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Washington - Remote</masterLabel>
+            <translation><!-- Washington - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Washington D.C. - Remote</masterLabel>
+            <translation><!-- Washington D.C. - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>West Virginia - Remote</masterLabel>
+            <translation><!-- West Virginia - Remote --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wisconsin - Remote</masterLabel>
+            <translation><!-- Wisconsin - Remote --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Manager/IC --></label>
+        <name>Manager_IC__c</name>
+        <picklistValues>
+            <masterLabel>Individual Contributor</masterLabel>
+            <translation><!-- Individual Contributor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager</masterLabel>
+            <translation><!-- Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Blank: no activity on this position 
+Green: Likely to close within the assigned quarter 
+Yellow: May close within the assigned quarter but I&apos;m not confident 
+Red: Unlikely to close within assigned quarter
+Blue: May close before assigned quarter --></help>
+        <label><!-- Manager Status --></label>
+        <name>Manager_Status__c</name>
+        <picklistValues>
+            <masterLabel>Blue</masterLabel>
+            <translation><!-- Blue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter your update here for hiring status on this position. Do not include confidential information. --></help>
+        <label><!-- Manager Update --></label>
+        <name>Manager_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- OOM Transfer Date --></label>
+        <name>OOM_Transfer_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- OOM Transfer? --></label>
+        <name>OOM_Transfer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open Market Opportunity --></label>
+        <name>OOM__c</name>
+        <relationshipLabel><!-- Roster --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Organization --></label>
+        <name>Organization__c</name>
+        <picklistValues>
+            <masterLabel>Analyst Relations</masterLabel>
+            <translation><!-- Analyst Relations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Analytics GTM</masterLabel>
+            <translation><!-- Analytics GTM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCE</masterLabel>
+            <translation><!-- CCE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CMO</masterLabel>
+            <translation><!-- CMO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demo Marketing</masterLabel>
+            <translation><!-- Demo Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Development</masterLabel>
+            <translation><!-- Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Documentation</masterLabel>
+            <translation><!-- Documentation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global Recruiting</masterLabel>
+            <translation><!-- Global Recruiting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISV</masterLabel>
+            <translation><!-- ISV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IT</masterLabel>
+            <translation><!-- IT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IT Apps</masterLabel>
+            <translation><!-- IT Apps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IT Infra</masterLabel>
+            <translation><!-- IT Infra --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation><!-- Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Matrix</masterLabel>
+            <translation><!-- Matrix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PerfEng</masterLabel>
+            <translation><!-- PerfEng --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product</masterLabel>
+            <translation><!-- Product --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Management</masterLabel>
+            <translation><!-- Product Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Marketing</masterLabel>
+            <translation><!-- Product Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Products</masterLabel>
+            <translation><!-- Products --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QE</masterLabel>
+            <translation><!-- QE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real Estate Management</masterLabel>
+            <translation><!-- Real Estate Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewals</masterLabel>
+            <translation><!-- Renewals --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SOMA</masterLabel>
+            <translation><!-- SOMA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales</masterLabel>
+            <translation><!-- Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce University</masterLabel>
+            <translation><!-- Salesforce University --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service</masterLabel>
+            <translation><!-- Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Reliability</masterLabel>
+            <translation><!-- Site Reliability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strategy &amp; Ops</masterLabel>
+            <translation><!-- Strategy &amp; Ops --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Support</masterLabel>
+            <translation><!-- Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sys Eng</masterLabel>
+            <translation><!-- Sys Eng --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T&amp;P Shared</masterLabel>
+            <translation><!-- T&amp;P Shared --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TPL</masterLabel>
+            <translation><!-- TPL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TPM</masterLabel>
+            <translation><!-- TPM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TechOps</masterLabel>
+            <translation><!-- TechOps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust Technology</masterLabel>
+            <translation><!-- Trust Technology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UE</masterLabel>
+            <translation><!-- UE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UX</masterLabel>
+            <translation><!-- UX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Experience</masterLabel>
+            <translation><!-- User Experience --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Original Effective Date --></label>
+        <name>Original_Effective_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- The parent cloud is what finance uses to track headcount with roster. The cloud object is what engineering leadership uses to drive engineering workflows. --></help>
+        <label><!-- Parent Cloud --></label>
+        <name>Parent_Cloud__c</name>
+        <relationshipLabel><!-- Roster --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Blank: no activity on this position 
+Green: Likely to close within the assigned quarter 
+Yellow: May close within the assigned quarter but I&apos;m not confident 
+Red: Unlikely to close within assigned quarter
+Blue: May close before assigned quarter --></help>
+        <label><!-- Recruiter Status --></label>
+        <name>Recruiter_Status__c</name>
+        <picklistValues>
+            <masterLabel>Blue</masterLabel>
+            <translation><!-- Blue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter your update here for hiring status on this position. Do not include confidential information. --></help>
+        <label><!-- Recruiter Update --></label>
+        <name>Recruiter_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recruiter --></label>
+        <name>Recruiter__c</name>
+        <relationshipLabel><!-- Roster (Recruiter) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Region is set by Finance. --></help>
+        <label><!-- Region_Deprecated --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>APAC - All Countries</masterLabel>
+            <translation><!-- APAC - All Countries --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas - Canada</masterLabel>
+            <translation><!-- Americas - Canada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas - Latin America</masterLabel>
+            <translation><!-- Americas - Latin America --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas - USA</masterLabel>
+            <translation><!-- Americas - USA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EMEA - All Countries</masterLabel>
+            <translation><!-- EMEA - All Countries --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japan</masterLabel>
+            <translation><!-- Japan --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+        <picklistValues>
+            <masterLabel>Analyst</masterLabel>
+            <translation><!-- Analyst --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Architect</masterLabel>
+            <translation><!-- Architect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCE</masterLabel>
+            <translation><!-- CCE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CPIO</masterLabel>
+            <translation><!-- CPIO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Capacity Planner</masterLabel>
+            <translation><!-- Capacity Planner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Co-Prime</masterLabel>
+            <translation><!-- Co-Prime --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CoE</masterLabel>
+            <translation><!-- CoE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contractor-Dev</masterLabel>
+            <translation><!-- Contractor-Dev --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contractor-Other</masterLabel>
+            <translation><!-- Contractor-Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contractor-Quality Engineer</masterLabel>
+            <translation><!-- Contractor-Quality Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contractor-Sys Eng</masterLabel>
+            <translation><!-- Contractor-Sys Eng --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contractor-UX</masterLabel>
+            <translation><!-- Contractor-UX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DBA</masterLabel>
+            <translation><!-- DBA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Center Engineer</masterLabel>
+            <translation><!-- Data Center Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Developer</masterLabel>
+            <translation><!-- Developer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Executive</masterLabel>
+            <translation><!-- Executive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Executive Assistant</masterLabel>
+            <translation><!-- Executive Assistant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General G&amp;A</masterLabel>
+            <translation><!-- General G&amp;A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IT</masterLabel>
+            <translation><!-- IT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager</masterLabel>
+            <translation><!-- Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing Support</masterLabel>
+            <translation><!-- Marketing Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Network Engineer</masterLabel>
+            <translation><!-- Network Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance Engineer</masterLabel>
+            <translation><!-- Performance Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Manager</masterLabel>
+            <translation><!-- Product Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Marketing Manager</masterLabel>
+            <translation><!-- Product Marketing Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Manager</masterLabel>
+            <translation><!-- Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Project Management</masterLabel>
+            <translation><!-- Project Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provisioning Specialist / Asset Manager</masterLabel>
+            <translation><!-- Provisioning Specialist / Asset Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality Engineer</masterLabel>
+            <translation><!-- Quality Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real Estate Management</masterLabel>
+            <translation><!-- Real Estate Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Release Engineer</masterLabel>
+            <translation><!-- Release Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Release Manager</masterLabel>
+            <translation><!-- Release Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales</masterLabel>
+            <translation><!-- Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security Engineer</masterLabel>
+            <translation><!-- Security Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Reliability Engineer</masterLabel>
+            <translation><!-- Site Reliability Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Storage Engineer</masterLabel>
+            <translation><!-- Storage Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Admin</masterLabel>
+            <translation><!-- System Admin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Systems Engineer</masterLabel>
+            <translation><!-- Systems Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TPM</masterLabel>
+            <translation><!-- TPM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Writer</masterLabel>
+            <translation><!-- Technical Writer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust</masterLabel>
+            <translation><!-- Trust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UE</masterLabel>
+            <translation><!-- UE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UX</masterLabel>
+            <translation><!-- UX --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Only records showing green are open for hiring. Records showing yellow may become open again, but currently are not open. --></help>
+        <label><!-- Offer Signal --></label>
+        <name>Signal__c</name>
+    </fields>
+    <fields>
+        <help><!-- A place for notes related to the source field. --></help>
+        <label><!-- Source Description --></label>
+        <name>Source_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+        <picklistValues>
+            <masterLabel>Acquisition</masterLabel>
+            <translation><!-- Acquisition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incremental</masterLabel>
+            <translation><!-- Incremental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plan</masterLabel>
+            <translation><!-- Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Split</masterLabel>
+            <translation><!-- Split --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transfer In</masterLabel>
+            <translation><!-- Transfer In --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <help><!-- Open - New = New position added by Finance
+Open - Backfill = Existing position available for Backfill
+Offer - In Progress = Offer extended to candidate
+Offer - Accepted = Offer accepted by candidate
+Filled = Position filled by an employee --></help>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Filled</masterLabel>
+            <translation><!-- Filled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Offer Accepted</masterLabel>
+            <translation><!-- Offer Accepted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Offer In Progress</masterLabel>
+            <translation><!-- Offer In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open - Backfill</masterLabel>
+            <translation><!-- Open - Backfill --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open - New</masterLabel>
+            <translation><!-- Open - New --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Reference to Job ID in Talentforce, entered by Recruiting. --></help>
+        <label><!-- Job ID --></label>
+        <name>Talentforce_Offer__c</name>
+    </fields>
+    <fields>
+        <help><!-- Target start date for candidates that have accepted an offer --></help>
+        <label><!-- Target Start Date --></label>
+        <name>Target_Start_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- The cloud field is calculated by the team assigned to the roster record. --></help>
+        <label><!-- Cloud --></label>
+        <name>Team_Cloud__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scrum Team assigned to the position. --></help>
+        <label><!-- Team --></label>
+        <name>Team__c</name>
+        <relationshipLabel><!-- Roster --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- via --></label>
+        <name>via__c</name>
+        <picklistValues>
+            <masterLabel>Left T&amp;P</masterLabel>
+            <translation><!-- Left T&amp;P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Hire</masterLabel>
+            <translation><!-- New Hire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reciprocated Opportunity Open Market</masterLabel>
+            <translation><!-- Reciprocated Opportunity Open Market --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reciprocated Transfer</masterLabel>
+            <translation><!-- Reciprocated Transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unreciprocated Opportunity Open Market</masterLabel>
+            <translation><!-- Unreciprocated Opportunity Open Market --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unreciprocated Transfer</masterLabel>
+            <translation><!-- Unreciprocated Transfer --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- When moving a Headcount to status &quot;Open - Backfill,&quot; there must be a name in the Headcount Name field, which will be moved into the Backfill Name field automatically. --></errorMessage>
+        <name>Backfill_Headcount_must_have_BF_name</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When marking a Headcount as &quot;Filled,&quot; you must choose an associated User for the Headcount Name field. --></errorMessage>
+        <name>Filled_Headcount_must_have_name</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Headcount in New status can&apos;t have any names associated with it via the Headcount Name or Backfill Name fields. --></errorMessage>
+        <name>New_headcount_cant_have_any_Names</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Transfer_Headcount --></label>
+        <name>Transfer_Headcount</name>
+    </webLinks>
+</CustomObjectTranslation>

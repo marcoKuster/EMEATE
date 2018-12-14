@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Correct_status_value</fullName>
+    <active>true</active>
+    <description>Status has to be: Planned, In progress, Passed, Failed, or Blocked</description>
+    <errorConditionFormula>NOT(OR(
+   ISPICKVAL(Status__c, &quot;Planned&quot;),
+   ISPICKVAL(Status__c, &quot;In Progress&quot;),
+   ISPICKVAL(Status__c, &quot;Passed&quot;),
+   ISPICKVAL(Status__c, &quot;Failed&quot;),
+   ISPICKVAL(Status__c, &quot;Blocked&quot;)))</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>Status has to be: Planned, In progress, Passed, Failed, or Blocked</errorMessage>
+</ValidationRule>

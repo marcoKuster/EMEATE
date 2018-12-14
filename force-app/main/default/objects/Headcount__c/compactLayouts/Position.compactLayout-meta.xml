@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position</fullName>
+    <fields>Name</fields>
+    <fields>Headcount_Name__c</fields>
+    <fields>Parent_Cloud__c</fields>
+    <label>Position</label>
+</CompactLayout>

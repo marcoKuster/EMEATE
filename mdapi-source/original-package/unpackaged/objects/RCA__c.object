@@ -1,0 +1,2042 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to support Root Cause Analysis.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AAR_Record_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>AAR Record Link</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>AAR__c</fullName>
+        <externalId>false</externalId>
+        <label>AAR #</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Action_Plan_Completion_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Action Plan Completion Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Action_Plan_Summary__c</fullName>
+        <externalId>false</externalId>
+        <label>Action Plan Summary</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Action_Plan__c</fullName>
+        <externalId>false</externalId>
+        <label>Action Plan in Scrumforce</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Assignee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assignee</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>RCA_Assignee</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Bug__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Bug</label>
+        <referenceTo>ADM_Work__c</referenceTo>
+        <relationshipLabel>Root Cause Analysis</relationshipLabel>
+        <relationshipName>RCA_Bug</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Category_Other__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>We all hate the other field but over time this free text field might give us a good indication of what we are missing in the previous category fields.</inlineHelpText>
+        <label>Root Cause Category (Other)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Completed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Completed Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Impacting__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Impacting</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Duration__c</fullName>
+        <externalId>false</externalId>
+        <label>Duration</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Estimated_Delivery__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Message Owners: Use this field to update Support on the ETA for the RCM/Issue Message if you are still investigating and will not have the message within the 5 business day SLA.  Flip &quot;Message Status&quot; to &quot;Under Investigation&quot;</inlineHelpText>
+        <label>Estimated Delivery</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Event_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Incident_End_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Incident End Time</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Incident_Participants__c</fullName>
+        <externalId>false</externalId>
+        <label>Incident Participants</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Incident_Start_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Incident Start Time</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Message_Requestor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Tier 3 case owner who requested the messaging on behalf of the customer.</inlineHelpText>
+        <label>Message Requestor</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Root_Cause_Analysis2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Message_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Message Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Still Investigating</fullName>
+                    <default>false</default>
+                    <label>Still Investigating</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Delivered</fullName>
+                    <default>false</default>
+                    <label>Delivered</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Messaging_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Field to identify messaging owner. OSC for RCA + RCM service incidents, Product Manager for RCA + RCM or Issue Message for product incidents.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Field to identify messaging owner. OSC for RCA + RCM service incidents, Product Manager for RCA + RCM or Issue Message for product incidents.</inlineHelpText>
+        <label>Messaging Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Mess_Root_Cause_Analysis</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RCA_Completed_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date when the RCA owner finishes filling in the details.</inlineHelpText>
+        <label>RCA Completed Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>RCA_Incident_Summary__c</fullName>
+        <description>Brief summary of what occurred.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Brief summary of what occurred.</inlineHelpText>
+        <label>RCA Incident Summary</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RCA_Invitees__c</fullName>
+        <externalId>false</externalId>
+        <label>RCA Invitees</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>RCA_Participants__c</fullName>
+        <externalId>false</externalId>
+        <label>RCA Participants</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>RCA_Review_Forum__c</fullName>
+        <externalId>false</externalId>
+        <label>RCA Review Forum</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Applications Review</fullName>
+                    <default>false</default>
+                    <label>Applications Review</label>
+                </value>
+                <value>
+                    <fullName>Analytics Big Data Review</fullName>
+                    <default>false</default>
+                    <label>Analytics Big Data Review</label>
+                </value>
+                <value>
+                    <fullName>Automation Review</fullName>
+                    <default>false</default>
+                    <label>Automation Review</label>
+                </value>
+                <value>
+                    <fullName>Core Review</fullName>
+                    <default>false</default>
+                    <label>Core Review</label>
+                </value>
+                <value>
+                    <fullName>data.com Review</fullName>
+                    <default>false</default>
+                    <label>data.com Review</label>
+                </value>
+                <value>
+                    <fullName>HA Review</fullName>
+                    <default>false</default>
+                    <label>HA Review</label>
+                </value>
+                <value>
+                    <fullName>Internal HA Review</fullName>
+                    <default>false</default>
+                    <label>Internal HA Review</label>
+                </value>
+                <value>
+                    <fullName>IT Review</fullName>
+                    <default>false</default>
+                    <label>IT Review</label>
+                </value>
+                <value>
+                    <fullName>Marketing Cloud</fullName>
+                    <default>false</default>
+                    <label>Marketing Cloud</label>
+                </value>
+                <value>
+                    <fullName>Platform Review</fullName>
+                    <default>false</default>
+                    <label>Platform Review</label>
+                </value>
+                <value>
+                    <fullName>work.com Review</fullName>
+                    <default>false</default>
+                    <label>work.com Review</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>RCA_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Allows the team to see how many RCA records are still pending completion.</inlineHelpText>
+        <label>RCA Status</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>true</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>RCA Complete</fullName>
+                    <default>false</default>
+                    <label>RCA Complete</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Closed - RCA Complete</fullName>
+                    <default>false</default>
+                    <label>Closed - RCA Complete</label>
+                </value>
+                <value>
+                    <fullName>Closed - Action Plan Complete</fullName>
+                    <default>false</default>
+                    <label>Closed - Action Plan Complete</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>RCA_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>5 value options are presented here to allow the owner to categorize the release at a high level.</inlineHelpText>
+        <label>RCA Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>E-Release/Break-Fix Request</fullName>
+                    <default>false</default>
+                    <label>E-Release/Break-Fix Request</label>
+                </value>
+                <value>
+                    <fullName>Deployment Delayed</fullName>
+                    <default>false</default>
+                    <label>Deployment Delayed</label>
+                </value>
+                <value>
+                    <fullName>Rollback</fullName>
+                    <default>false</default>
+                    <label>Rollback</label>
+                </value>
+                <value>
+                    <fullName>Incorrect/Incomplete Code Release</fullName>
+                    <default>false</default>
+                    <label>Incorrect/Incomplete Code Release</label>
+                </value>
+                <value>
+                    <fullName>Incorrect/Incomplete Deployment</fullName>
+                    <default>false</default>
+                    <label>Incorrect/Incomplete Deployment</label>
+                </value>
+                <value>
+                    <fullName>Performance Degradation</fullName>
+                    <default>false</default>
+                    <label>Performance Degradation</label>
+                </value>
+                <value>
+                    <fullName>Service Degradation</fullName>
+                    <default>false</default>
+                    <label>Service Degradation</label>
+                </value>
+                <value>
+                    <fullName>Service Disruption</fullName>
+                    <default>false</default>
+                    <label>Service Disruption</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>RCM_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Designates whether or not messaging is required for a given incident.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box if a customer has requested formal root cause messaging.</inlineHelpText>
+        <label>RCM Required</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RCM_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Use this field to denote if the RCM or Issue Message request was verbal or written. If the customer did not specify, the message should always be delivered verbally.</inlineHelpText>
+        <label>Message Format</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Verbal</fullName>
+                    <default>true</default>
+                    <label>Verbal</label>
+                </value>
+                <value>
+                    <fullName>Written</fullName>
+                    <default>false</default>
+                    <label>Written</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Ready_for_Manager_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Messaging Owners: Check this box when the RCM is ready for manager approval.</inlineHelpText>
+        <label>Ready for Manager Approval</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Release__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Gives the team the ability to tie the RCA records to specific releases in GUS to gather valuable metrics over time.</inlineHelpText>
+        <label>Release</label>
+        <referenceTo>ADM_Release__c</referenceTo>
+        <relationshipLabel>Root Cause Analysis</relationshipLabel>
+        <relationshipName>RCA_Release</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reported_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Reported By</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>External Customer</fullName>
+                    <default>false</default>
+                    <label>External Customer</label>
+                </value>
+                <value>
+                    <fullName>Internal Customer</fullName>
+                    <default>false</default>
+                    <label>Internal Customer</label>
+                </value>
+                <value>
+                    <fullName>Monitoring</fullName>
+                    <default>false</default>
+                    <label>Monitoring</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Request_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Request Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Request_Details__c</fullName>
+        <defaultValue>&quot;Please include the Account Name, Contact Name &amp; Case Number of the messaging request.&quot;</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Please include the Account and Contact names, Case Number, and any other details related to this request</inlineHelpText>
+        <label>Request Details</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Review_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates when a particular RCA is reviewed in a given management meeting.</inlineHelpText>
+        <label>Review Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Root_Cause_Category__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Many more options are provided here to categorize the incident at a more granular level.</inlineHelpText>
+        <label>Root Cause Category</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <controllingField>RCA_Type__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>3rd Party Variable</fullName>
+                    <default>false</default>
+                    <label>3rd Party Variable</label>
+                </value>
+                <value>
+                    <fullName>Environment Disparity</fullName>
+                    <default>false</default>
+                    <label>Environment Disparity</label>
+                </value>
+                <value>
+                    <fullName>Customer-Specific Environment Issue</fullName>
+                    <default>false</default>
+                    <label>Customer-Specific Environment Issue</label>
+                </value>
+                <value>
+                    <fullName>Impact from Another Team</fullName>
+                    <default>false</default>
+                    <label>Impact from Another Team</label>
+                </value>
+                <value>
+                    <fullName>Insufficient Automation</fullName>
+                    <default>false</default>
+                    <label>Insufficient Automation</label>
+                </value>
+                <value>
+                    <fullName>Inadequate Test Coverage</fullName>
+                    <default>false</default>
+                    <label>Inadequate Test Coverage</label>
+                </value>
+                <value>
+                    <fullName>Inadequate Functional Design</fullName>
+                    <default>false</default>
+                    <label>Inadequate Functional Design</label>
+                </value>
+                <value>
+                    <fullName>Misunderstood Dependencies</fullName>
+                    <default>false</default>
+                    <label>Misunderstood Dependencies</label>
+                </value>
+                <value>
+                    <fullName>Corner Case</fullName>
+                    <default>false</default>
+                    <label>Corner Case</label>
+                </value>
+                <value>
+                    <fullName>Known Issue that was Deprioritized</fullName>
+                    <default>false</default>
+                    <label>Known Issue that was Deprioritized</label>
+                </value>
+                <value>
+                    <fullName>Deficient Usability</fullName>
+                    <default>false</default>
+                    <label>Deficient Usability</label>
+                </value>
+                <value>
+                    <fullName>Documentation Issue</fullName>
+                    <default>false</default>
+                    <label>Documentation Issue</label>
+                </value>
+                <value>
+                    <fullName>Translation Issue</fullName>
+                    <default>false</default>
+                    <label>Translation Issue</label>
+                </value>
+                <value>
+                    <fullName>Hardware/Network Issues</fullName>
+                    <default>false</default>
+                    <label>Hardware/Network Issues</label>
+                </value>
+                <value>
+                    <fullName>Regression</fullName>
+                    <default>false</default>
+                    <label>Regression</label>
+                </value>
+                <value>
+                    <fullName>Autobuild Issue</fullName>
+                    <default>false</default>
+                    <label>Autobuild Issue</label>
+                </value>
+                <value>
+                    <fullName>Code Checked into Incorrect Branch</fullName>
+                    <default>false</default>
+                    <label>Code Checked into Incorrect Branch</label>
+                </value>
+                <value>
+                    <fullName>Staging/Promotion Issue</fullName>
+                    <default>false</default>
+                    <label>Staging/Promotion Issue</label>
+                </value>
+                <value>
+                    <fullName>Incorrect/Incomplete Code Released</fullName>
+                    <default>false</default>
+                    <label>Incorrect/Incomplete Code Released</label>
+                </value>
+                <value>
+                    <fullName>Release Runner Issues</fullName>
+                    <default>false</default>
+                    <label>Release Runner Issues</label>
+                </value>
+                <value>
+                    <fullName>DICE Issues</fullName>
+                    <default>false</default>
+                    <label>DICE Issues</label>
+                </value>
+                <value>
+                    <fullName>Application</fullName>
+                    <default>false</default>
+                    <label>Application</label>
+                </value>
+                <value>
+                    <fullName>Configuration</fullName>
+                    <default>false</default>
+                    <label>Configuration</label>
+                </value>
+                <value>
+                    <fullName>Database</fullName>
+                    <default>false</default>
+                    <label>Database</label>
+                </value>
+                <value>
+                    <fullName>Hardware</fullName>
+                    <default>false</default>
+                    <label>Hardware</label>
+                </value>
+                <value>
+                    <fullName>Network</fullName>
+                    <default>false</default>
+                    <label>Network</label>
+                </value>
+                <value>
+                    <fullName>Operator Error</fullName>
+                    <default>false</default>
+                    <label>Operator Error</label>
+                </value>
+                <value>
+                    <fullName>Release</fullName>
+                    <default>false</default>
+                    <label>Release</label>
+                </value>
+                <value>
+                    <fullName>Software</fullName>
+                    <default>false</default>
+                    <label>Software</label>
+                </value>
+                <value>
+                    <fullName>Storage</fullName>
+                    <default>false</default>
+                    <label>Storage</label>
+                </value>
+                <value>
+                    <fullName>System</fullName>
+                    <default>false</default>
+                    <label>System</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>3rd Party Variable</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <valueName>Environment Disparity</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Customer-Specific Environment Issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Impact from Another Team</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <valueName>Insufficient Automation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <valueName>Inadequate Test Coverage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Inadequate Functional Design</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <valueName>Misunderstood Dependencies</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Corner Case</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Known Issue that was Deprioritized</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Deficient Usability</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Documentation Issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Translation Issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Regression</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <valueName>Code Checked into Incorrect Branch</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>Incorrect/Incomplete Code Released</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Operator Error</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <valueName>Hardware/Network Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <valueName>Autobuild Issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <valueName>Staging/Promotion Issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+                <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+                <valueName>Release Runner Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+                <controllingFieldValue>Rollback</controllingFieldValue>
+                <valueName>DICE Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Application</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Configuration</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Database</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Hardware</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Network</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Release</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Software</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>Storage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Performance Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Degradation</controllingFieldValue>
+                <controllingFieldValue>Service Disruption</controllingFieldValue>
+                <valueName>System</valueName>
+            </valueSettings>
+        </valueSet>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Root_Cause_Messaging__c</fullName>
+        <defaultValue>&quot;Messaging Templates: https://sites.google.com/a/salesforce.com/release-operations-program-management/Home/release-processes/whats-on-the-release-operations-backlog/root-cause-analysis-process&quot;</defaultValue>
+        <description>This field is used to record the customer facing messaging pertaining to a given incident.  The messaging falls under two different categories, &quot;Product&quot; &amp; &quot;Service&quot; related.  There is a template for each that can be found here: https://sites.google.com/a/salesforce.com/release-operations-program-management/Home/release-processes/whats-on-the-release-operations-backlog/root-cause-analysis-process.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is in the process of being EOL&apos;d. Please attach the RCM to the appropriate RCA record.</inlineHelpText>
+        <label>Root Cause Messaging</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Scrum_Team__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Scrum Team</label>
+        <referenceTo>ADM_Scrum_Team__c</referenceTo>
+        <relationshipLabel>Root Cause Analysis</relationshipLabel>
+        <relationshipName>RCA_Scrum_Team</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Timeline_of_Events__c</fullName>
+        <externalId>false</externalId>
+        <label>Timeline of Events</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>What_was_the_customer_impact__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This answers the question of who was affected by the incident.  Was it all customers?  Only customers on NAX?</inlineHelpText>
+        <label>What was the customer impact?</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>What_was_the_resolution__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This is a fairly straightforward question that asks the owner to detail how exactly the incident was resolved.</inlineHelpText>
+        <label>What was the resolution?</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Why_did_this_occur_2__c</fullName>
+        <defaultValue>&quot;Include the 5 reasons (why&apos;s) for the Incident - http://en.wikipedia.org/wiki/5_Whys&quot;</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>“The 5 Whys is a question-asking method used to explore the cause/effect relationships underlying a particular problem. Ultimately, the goal of applying the 5 Whys method is to determine a root cause of a defect or problem.”</inlineHelpText>
+        <label>Why did this occur?</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <label>Root Cause Analysis</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>RCA_Status__c</columns>
+        <columns>Scrum_Team__c</columns>
+        <columns>Assignee__c</columns>
+        <columns>Root_Cause_Category__c</columns>
+        <columns>Release__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>RCA-{0000000}</displayFormat>
+        <label>RCA Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Root Cause Analysis</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Issue_Message</fullName>
+        <active>true</active>
+        <description>Choose this Record Type if the request for message does not meet RCM criteri but is  a P0 bug, a P1 or P2 bug with significant customer impact (10+ customers or top customer), or by management (Support or Technology) request</description>
+        <label>Issue Message</label>
+        <picklistValues>
+            <picklist>Customer_Impacting__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Message_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Still Investigating</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Review_Forum__c</picklist>
+            <values>
+                <fullName>Applications Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Core Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal HA Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Platform Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>data%2Ecom Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>work%2Ecom Review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Status__c</picklist>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Type__c</picklist>
+            <values>
+                <fullName>Deployment Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Release%2FBreak-Fix Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Code Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Deployment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Performance Degradation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rollback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Degradation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Disruption</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCM_Type__c</picklist>
+            <values>
+                <fullName>Verbal</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Written</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reported_By__c</picklist>
+            <values>
+                <fullName>External Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Root_Cause_Category__c</picklist>
+            <values>
+                <fullName>3rd Party Variable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Autobuild Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Code Checked into Incorrect Branch</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corner Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer-Specific Environment Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DICE Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Database</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deficient Usability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Documentation Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment Disparity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hardware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hardware%2FNetwork Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Impact from Another Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate Functional Design</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate Test Coverage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Code Released</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insufficient Automation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Known Issue that was Deprioritized</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Misunderstood Dependencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operator Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regression</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Runner Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Staging%2FPromotion Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Translation Issue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RCA_Only</fullName>
+        <active>true</active>
+        <description>Choose this record type if this is a request only for a Root Cause Analysis (no messaging request).</description>
+        <label>RCA Only</label>
+        <picklistValues>
+            <picklist>Customer_Impacting__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Message_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Still Investigating</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Review_Forum__c</picklist>
+            <values>
+                <fullName>Analytics Big Data Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Applications Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automation Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Core Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal HA Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing Cloud</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Platform Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>data%2Ecom Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>work%2Ecom Review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Status__c</picklist>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RCA Complete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Type__c</picklist>
+            <values>
+                <fullName>Deployment Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Release%2FBreak-Fix Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Code Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Deployment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Performance Degradation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rollback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Degradation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Disruption</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCM_Type__c</picklist>
+            <values>
+                <fullName>Verbal</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Written</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reported_By__c</picklist>
+            <values>
+                <fullName>External Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Root_Cause_Category__c</picklist>
+            <values>
+                <fullName>3rd Party Variable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Autobuild Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Code Checked into Incorrect Branch</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corner Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer-Specific Environment Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DICE Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Database</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deficient Usability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Documentation Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment Disparity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hardware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hardware%2FNetwork Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Impact from Another Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate Functional Design</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate Test Coverage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Code Released</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insufficient Automation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Known Issue that was Deprioritized</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Misunderstood Dependencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operator Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regression</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Runner Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Staging%2FPromotion Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Translation Issue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RCA_RCM_Request</fullName>
+        <active>true</active>
+        <description>Choose this record type if a customer has requested an RCM and this meets the criteria for an RCA</description>
+        <label>RCA/RCM Request</label>
+        <picklistValues>
+            <picklist>Customer_Impacting__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Message_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Still Investigating</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Review_Forum__c</picklist>
+            <values>
+                <fullName>Analytics Big Data Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Applications Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Core Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal HA Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing Cloud</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Platform Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>data%2Ecom Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>work%2Ecom Review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Status__c</picklist>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RCA Complete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCA_Type__c</picklist>
+            <values>
+                <fullName>Deployment Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Release%2FBreak-Fix Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Code Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Deployment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Performance Degradation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rollback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Degradation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Disruption</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RCM_Type__c</picklist>
+            <values>
+                <fullName>Verbal</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Written</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reported_By__c</picklist>
+            <values>
+                <fullName>External Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Root_Cause_Category__c</picklist>
+            <values>
+                <fullName>3rd Party Variable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Autobuild Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Code Checked into Incorrect Branch</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corner Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer-Specific Environment Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DICE Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Database</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deficient Usability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Documentation Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment Disparity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hardware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hardware%2FNetwork Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Impact from Another Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate Functional Design</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate Test Coverage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incorrect%2FIncomplete Code Released</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insufficient Automation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Known Issue that was Deprioritized</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Misunderstood Dependencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operator Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regression</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Runner Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Staging%2FPromotion Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Translation Issue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Release__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>RCA_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Root_Cause_Category__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>RCA_Incident_Summary__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>RCA_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Scrum_Team__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>OBJECT_ID</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Release__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Scrum_Team__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Release__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>RCA_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>RCA_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Scrum_Team__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>RCA_RCM_Google_Site</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>RCA/RCM Google Site</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://sites.google.com/a/salesforce.com/release-operations-program-management/Home/release-processes/whats-on-the-release-operations-backlog/root-cause-analysis-process</url>
+    </webLinks>
+</CustomObject>

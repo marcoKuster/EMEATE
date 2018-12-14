@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Teams_Self_Assessment__c</fullName>
+    <description>Teams will be asked to assess their risk of meeting FF, 2 weeks out from the FF milestone date</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If your team is at risk of not meeting any of the Feature Freeze Criteria listed on this record, you should mark your status as Red or Yellow and explain reasons why.</inlineHelpText>
+    <label>Assess Teams Risk of meeting FF</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Green</fullName>
+                <default>false</default>
+                <label>Green</label>
+            </value>
+            <value>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+                <label>Yellow</label>
+            </value>
+            <value>
+                <fullName>Red</fullName>
+                <default>false</default>
+                <label>Red</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

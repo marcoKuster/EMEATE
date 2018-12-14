@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Instances_must_be_specified</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Use_Default_Verification_Instance__c, &#39;No&#39;), ISBLANK(Instance_for_Verification__c))</errorConditionFormula>
+    <errorDisplayField>Instance_for_Verification__c</errorDisplayField>
+    <errorMessage>Verification instances must be specified when &quot;No&quot; selected for the &quot;Default Verification Instance?&quot; field.</errorMessage>
+</ValidationRule>

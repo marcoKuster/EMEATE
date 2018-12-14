@@ -1,0 +1,27 @@
+<aura:component controller="ADM_Profile_TeamListController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+
+<aura:handler name="init" action="{!c.teamLookUpAction}" value="{!this}" />
+<aura:attribute name="members" type="ADM_Scrum_Team_Member__c[]" />
+
+    <lightning:card iconName="custom:custom15">
+        <aura:set attribute="title">Teams ({!v.members.length})</aura:set>
+        <aura:if isTrue="{!v.members != null}">
+            <aura:iteration items="{!v.members}" var="member">
+                <div class="slds-tile slds-card__body--inner slds-p-bottom--small"><!-- If we add footer back in, remove padding class -->
+                    <h3 class="slds-truncate" title="{!member.Scrum_Team__r.Name}">
+                        <ui:outputURL aura:id="oURL" label="{!member.Scrum_Team__r.Name}" value="{!'/'+member.Scrum_Team__r.Id}" class="slds" />
+                    </h3>
+                    <div class="slds-tile__detail slds-text-body--small slds-truncate">
+                        <aura:if isTrue="{! not(empty(member.Role__c)) }"><span>{!member.Role__c}</span></aura:if> <!-- Role is not a required field -->
+                        <span>{!member.Allocation__c}%</span>
+                    </div>
+                </div>
+            </aura:iteration>
+        <aura:set attribute="else">
+            <p>No records to display</p>
+        </aura:set>
+        </aura:if>
+        <!--<aura:set attribute="footer">View All</aura:set>-->
+    </lightning:card>
+
+</aura:component>

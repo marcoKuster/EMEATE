@@ -1,0 +1,932 @@
+<apex:component controller="ADM_TagAssignmentComponentController">
+    <apex:attribute name="tagID" description="Reference to the product tag object" type="String" required="required" assignTo="{!tagID}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui_1813_redmond, 'js/jquery-1.5.1.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui_1813_redmond, 'js/jquery-ui-1.8.13.custom.min.js')}" /> 
+    <apex:styleSheet value="{!URLFOR($Resource.jquery_ui_1813_redmond, 'css/redmond/jquery-ui-1.8.13.custom.css')}" />
+   
+    <apex:includeScript value="{!$Resource.guilder_js}" /> 
+    <apex:styleSheet value="{!$Resource.guilder_css}" />  
+      
+    <style>
+        .required-input {
+            
+            border-left:4px solid #DC143C !important;
+            
+            
+        }
+        
+        .newRuleTextBox {
+            width:100%;
+            border:1px solid #A6C9E2;
+        }   
+        
+        .tagmatrix
+        {
+            /*font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; */
+            width:100%;
+            border-collapse:collapse;
+        }
+        .tagmatrix td, .tagmatrix th 
+        {
+            font-size:0.9em;
+            border:1px solid #A6C9E2;
+            padding:3px 7px 2px 7px;
+            color: #2E80C4;
+        
+        }
+        .tagmatrix th 
+        {
+            font-size:0.9em;
+            text-align:left;
+           
+            /*background-color:#a6c9e2;*/
+            color:#2e6e9e;
+            font-weight:strong;
+            border:0px;
+        
+        }
+        .tagmatrix td 
+        {
+            color: #00335b;
+             /*#F4F4F4; /* #dae6f0; */
+        }
+        
+        .rownotselected {
+          background-color:#F5F8F9;
+          font-sttengt
+        }
+        
+        .rowselected {
+            background-color:#FFFFFF important!;
+            border:2px solid #00335b; 
+        }         
+        
+                
+        /* Salesforce.com standard stylesheets override the H3 tag to make it 
+           inline, however the accordion UI expects it to be block. */
+        .ui-accordion-header {
+            display: block;
+        }
+        .ui-accordion .ui-accordion-content {
+            padding-left: 0px;
+            padding-right: 1px;
+        }
+        
+        a:link {text-decoration:none;}
+        a:visited {text-decoration:none;}
+        a:hover {text-decoration:underline;}
+        a:active {text-decoration:underline;}
+    </style>  
+  
+    <script>
+        var selectedRows = new Array();
+        
+        function unselectRule(ruleID, recordType) {
+           //for this ruleID hide bug_unselected_{ruleID} and unhide bugicon_selected_{ruleID}
+            $('.' + recordType + '_unselected_rule_' + ruleID).show();
+            $('.' + recordType + '_selected_rule_' + ruleID).hide();
+            
+            //save change
+            {!$RemoteAction.ADM_TagAssignmentComponentController.unselectAssignmentRule}('{!tagID}', recordType, handleUnselectNewAssignmentRule);
+            
+            //remove highlight for this record type
+            removeRowHighlightByRecordType(recordType);
+            
+            if(selectedRows.length == 0) {
+               //let user know this tag is not available until selected
+               showMatrixInfo('Please select at least one of your team\'s assignment rules or create a new one to use with this tag:');
+            } else {
+                //refresh
+                highlightSelectedRows();
+            }    
+        }
+        
+        function selectRule(ruleID, recordType) {
+            
+            //unselect all existing rules using this record type by hiding all images with "bugicon_selected" class and unhiding all with "bugicon_unselected_"
+            var hiddenClasses = '.' + recordType + '_selected';    
+            var showClasses = '.' + recordType + '_unselected';
+            $(hiddenClasses).hide();
+            $(showClasses).show();
+            
+            //also deselect any new rule selections
+            $newrulerow = $('#newrulerow');
+            resetNewRuleRecordTypeFlags($newrulerow, recordType);
+            if($newrulerow.data('assignmentmatrix-visible')) {
+                $newrulerow.find('.' + recordType + '_selected_new').hide();
+                $newrulerow.find('.' + recordType + '_unselected_new').show();
+            }
+            
+            //repeat for investigations.  TODO: All this logic was written before we were asked to slip in the accordion component.  Needs a rewrite.
+            $newinvestigationrulerow = $('#newinvestigationrulerow');
+            resetNewRuleRecordTypeFlags($newinvestigationrulerow, recordType);
+            if($newinvestigationrulerow.data('assignmentmatrix-visible')) {
+                $newinvestigationrulerow.find('.' + recordType + '_selected_new').hide();
+                $newinvestigationrulerow.find('.' + recordType + '_unselected_new').show();
+            }
+            
+            console.debug('inside selectRule() to be shown:' + '.' + recordType + '_selected_rule_' + ruleID);;
+            
+            
+            //make JS Remote call to save assignment
+            {!$RemoteAction.ADM_TagAssignmentComponentController.selectNewAssignmentRule}(ruleID, recordType, '{!tagID}', handleSelectNewAssignmentRule);  
+            
+            //for this ruleID hide bug_unselected_{ruleID} and unhide bugicon_selected_{ruleID}
+            $('.' + recordType + '_unselected_rule_' + ruleID).hide();
+            $('.' + recordType + '_selected_rule_' + ruleID).show();
+            
+            
+            //remove any other rows with this recordtype and rule
+            removeRowHighlightByRecordType(recordType);
+            
+            //add current row to array
+            selectedRows.push({recordType: recordType, ruleID: ruleID});   
+            
+            //refresh
+            highlightSelectedRows();
+            
+            resetMatrixInfo();
+        }
+        
+        function getRecordTypesSelectedForRule(assignmentRuleId) {
+            var recordTypes = [];
+            for(var index = 0 ; index < selectedRows.length; index++) {
+                if(assignmentRuleId == selectedRows[index].ruleID) {
+                    recordTypes.push(selectedRows[index].recordType);
+                }
+            }
+            return recordTypes;
+        }
+        
+        function unhighlightRow($row) {
+            $row
+                .removeClass("rowselected")
+                .addClass("rownotselected")
+        }
+        
+        function highlightRow($row) {
+            $row
+                .removeClass("rownotselected")
+                .addClass("rowselected");
+        }
+        
+        function highlightSelectedRows() {
+            //unhighlight the new rule
+            unhighlightRow($('#newrulerow'));
+            unhighlightRow($('#newinvestigationrulerow'));
+            
+            //unhighlight all of the rows
+            unhighlightRow($('.rulerow'));
+            
+            //highlight the rows that were selected
+            $.each( selectedRows, function(i, v) {
+                highlightRow($('.' + v.recordType + '_tag_matrix' + ' .rule' + v.ruleID));
+            });
+        }
+        
+        /**
+         * clears the selected rule for the specified record type
+         */
+        function removeRowHighlightByRecordType(recordType) {
+            var removeMe;
+            console.debug('pre loop 1 array length:' + selectedRows.length);
+            $.each( selectedRows, function(i, v) {
+                console.debug('in loop 1 i:' + i + ' v:' + v + ' recordType:' + recordType);
+                if(v.recordType === recordType) {
+                   removeMe = i;
+                }
+             });
+            if(removeMe != null) {
+                console.debug('index to be removed:' + removeMe);
+                selectedRows.splice(removeMe,1);
+            }
+            console.debug('post loop 1 array length:' + selectedRows.length);
+        }
+        
+        
+        function handleSelectNewAssignmentRule(vfResults, event) { 
+            //placeholder    
+        }
+        
+        function handleUnselectNewAssignmentRule(vfResults, event) { 
+            //placeholder    
+        }
+        
+        function resetNewRuleRecordTypeFlags($container/*, type*/) {
+            
+            function resetSingleRecordTypeFlag(/*String*/ type) {
+                $container.find('input[name="' + type + 'Selected"]').val('false');
+            }
+            
+            //if the type name is specified, reset only the specified type
+            if(arguments.length > 1) {
+                resetSingleRecordTypeFlag(arguments[1]);
+            } else {
+                //reset all types
+                var types = ['bug', 'story', 'investigation'];
+                for(var index = 0; index < types.length; index++) {
+                    resetSingleRecordTypeFlag(types[index]);
+                }
+            }
+        }
+        
+        function storeRecordTypeForNewRule($container, recordType) {
+            $container.find('input[name="' + recordType + 'Selected"]').val('true');
+            
+            //if this record type was previously assigned to a another rule deselect it
+            $('.' + recordType + '_selected').hide();
+            $('.' + recordType + '_unselected').show();
+            
+            //select the new icon
+            $container.find('.' + recordType + '_unselected_new').hide();
+            $container.find('.' + recordType + '_selected_new').show();
+            
+            //save the currently selected item so that it can be restored when
+            //the cancel button is clicked
+            savePreviousSelected($container, recordType);
+            
+            //handle row highlight. 1st remove any other rows with this recordtype and rule
+            removeRowHighlightByRecordType(recordType);
+            
+            //add current row to array
+            selectedRows.push({recordType:recordType, ruleID:'new'});
+            
+            //refresh
+            highlightSelectedRows();
+        }
+        
+        /** 
+         * Shows the create rule form for the specified container.
+         */
+        function setupCreateNewRule($container) {
+            $container.data('assignmentmatrix-visible', true);
+            $container.find('.createNewRuleButton').hide();
+            $container.find('.saveNewRuleButton').show();
+            $container.find('.cancelNewRuleButton').show();
+            $container.find('.unselected_new').show();
+            $container.find('.newRuleTextBox').show();
+        }
+        
+        function showMatrixError(errorMessage) {
+            $("#matrixErrorMessage").html("Error: " + errorMessage);
+            $("#matrixErrorMessageWrapper").show();
+        
+        }
+        
+        function resetMatrixError() {
+            $("#matrixErrorMessage").html("&nbsp;");
+            $("#matrixErrorMessageWrapper").hide();
+        
+        }
+        
+        function showMatrixInfo(infoMessage) {
+            $("#matrixInfoMessage").html(infoMessage);
+            $("#matrixInfoMessageWrapper").css('visibility', 'visible');
+        
+        }
+        
+        function resetMatrixInfo() {
+            $("#matrixInfoMessage").html("&nbsp;");
+            $("#matrixInfoMessageWrapper").css('visibility', 'hidden');
+            
+        }
+                
+        function saveNewRule($container, formData) {
+            resetMatrixError();
+            
+            //provide all of the default form values
+            var allFormData = $.extend({
+                productowner: '', 
+                assignee: '',
+                qaEngineer: '', 
+                techWriter: '', 
+                perfEngineer: '', 
+                ueEngineer: '', 
+                smpoc: '', 
+                erpoc: '', 
+                otherreps: '',
+                bugSelected: 'false',
+                storySelected: 'false',
+                investigationSelected: 'false',
+                sev1Assignee: '',
+                sev2Assignee: '',
+                sev3Assignee: '',
+                sev4Assignee: ''
+            }, formData);
+            
+            //convert the string values to boolean
+            var bugSelected = allFormData.bugSelected == 'true';
+            var storySelected =  allFormData.storySelected == 'true';
+            var investigationSelected = allFormData.investigationSelected == 'true';
+            
+            //verify at least one record type icon has been clicked
+            if(!bugSelected && !storySelected && !investigationSelected) {
+                resetMatrixInfo();
+                showMatrixError('Please select at least one record type by clicking its icon before creating a new Assignment Rule');
+            } else {
+                var failureCallback = function(event) {
+                    var errorMessage = '';
+                    var errorIndex = event.message.indexOf('could not be matched to a username, email address or alias in the system', 0);
+                    console.debug('errorIndex:' + errorIndex);
+                    if (errorIndex != -1) {
+                        //pretty up platform error message
+                        errorMessage = 'One or more Followers could not be matched to a username, email address or alias in the system';
+                    } else {
+                        errorMessage = event.message;
+                    }
+                    
+                    resetMatrixInfo();
+                    showMatrixError(errorMessage);
+                };
+                var successCallback = function() {
+                    resetNewRuleRecordTypeFlags($container);
+                    $container.data('assignmentmatrix-visible', false);
+                    
+                    //deselect record creation row for all record types.  the newly created rule will be highlighted instead when the matrix reloads
+                    selectedRows = new Array();
+                    
+                    //clear the previously selected history
+                    clearPreviousSelected($container);
+                    
+                    reloadMatrix();
+                    resetMatrixError();
+                };
+            
+                //save rule
+                {!$RemoteAction.ADM_TagAssignmentComponentController.saveNewAssignmentRule}(
+                    allFormData.productowner, 
+                    allFormData.assignee, 
+                    allFormData.qaEngineer, 
+                    allFormData.techWriter, 
+                    allFormData.perfEngineer, 
+                    allFormData.ueEngineer,
+                    allFormData.smpoc, 
+                    allFormData.erpoc, 
+                    allFormData.otherreps, 
+                    bugSelected, 
+                    storySelected, 
+                    investigationSelected, 
+                    '{!tagID}', 
+                    '{!tag.Team__c}', 
+                    allFormData.sev1Assignee, 
+                    allFormData.sev2Assignee, 
+                    allFormData.sev3Assignee, 
+                    allFormData.sev4Assignee, 
+                    
+                    function(vfResults, event) { 
+                        if(event.type == 'exception') {
+                            failureCallback(event);
+                        } else {
+                            successCallback();
+                        }
+                    }
+                );
+            }
+            
+         }
+         
+         function getFormData(/*Object|DOM|String*/ container) {
+            var form = {};
+            var inputFields = $(container).find('input').each(function(index){
+                form[$(this).attr('name')] = $(this).val();
+            });
+            return form;
+         }
+        
+        function cancelNewRule($container) {
+            resetNewRuleRecordTypeFlags($container);
+            $container.data('assignmentmatrix-visible', false);
+            
+            //show the show form button
+            $container.find('.createNewRuleButton').show();
+            
+            //hide the save/cancel buttons
+            $container.find('.saveNewRuleButton').hide();
+            $container.find('.cancelNewRuleButton').hide();
+            
+            //hide the record type buttons
+            $container.find('.unselected_new').hide();
+            $container.find('.selected_new').hide();
+            
+            //hide the input fields
+            $container.find('.newRuleTextBox').hide();
+            
+            //unhighlight the row
+            unhighlightRow($container);
+            
+            //restore the record type selection to the previously selected rule
+            restorePreviousSelected($container);
+            clearPreviousSelected($container);
+        }
+        
+        /**
+         * Saves a savepoints for the record type selection
+         */
+        function savePreviousSelected($container, recordType) {
+            
+            //get the currently selected ID for the record type
+            var currentlySelectedId = null;
+            for(var index = 0; index < selectedRows.length; index++) {
+                if(selectedRows[index].recordType === recordType) {
+                    currentlySelectedId = selectedRows[index].ruleID;
+                    break; 
+                }
+            }
+            
+            var previouslySelected = ($container.data('assignmentmatrix-previouslySelected') || {});
+            previouslySelected[recordType] = currentlySelectedId; 
+            $container.data('assignmentmatrix-previouslySelected', previouslySelected);
+        }
+        
+        /**
+         * Clears the previously set savepoints for the record type selections
+         */
+        function clearPreviousSelected($container) {
+            $container.data('assignmentmatrix-previouslySelected', {});
+        }
+        
+        /**
+         * Restores the record type selections in the container to the previously 
+         * set savepoint
+         */
+        function restorePreviousSelected($container) {
+            var previous = $container.data('assignmentmatrix-previouslySelected');
+            if(previous != null) {
+                for(var recordType in previous) {
+                    var value = previous[recordType];
+                    if(value != null && value.length > 0) {
+                        selectRule(value, recordType);
+                    }
+                }
+            }
+        }
+        
+        function initLocalAutoCompletes() {
+            //init auto-completes
+            var acUserNames = "{!JSENCODE(userFullNameList)}".split(',');
+            $(".person-auto-complete").autocomplete({source: acUserNames});
+        }
+        
+        var _calloutDomQueued = false;
+        function initCallout(/*String*/ id, /*String*/ message) {
+            if(message == null || message.length == 0) {
+                return;
+            }
+            
+            $(document).ready(function() {
+
+            
+                //create the container to hold the message
+                if(_calloutDomQueued == false) {
+                    $('<div></div>')
+                        .attr({id: 'callout'})
+                        .addClass('ui-state-highlight ui-corner-all')
+                        .css({
+                            'background':'#FFFCCC',
+                            'min-height': '26px'
+                        })
+                        .hide()
+                        .appendTo(document.body);
+                    $('<div></div>')
+                        .attr({id: 'callout-content'})
+                        .css({
+                            'padding':'6px'
+                        })
+                        .appendTo('#callout');
+                    $('<span></span>')
+                        .attr({id: 'callout-arrow'})
+                        .css({
+                           display: 'block',
+                           width: '9px',
+                           height: '15px',
+                           top: '5px',
+                           right: '-9px',
+                           background: 'url({!$Resource.callout_right_png})',
+                           position: 'absolute'
+                        })
+                        .appendTo('#callout');
+                    _calloutDomQueued = true;
+                }
+                
+                //link
+                var $container = $('#' + id);
+                $container.hover(function(event){
+                    console.log('hover over');
+                    $('#callout-content')
+                        .html(message);
+                    $('#callout')
+                        .stop(true, true)
+                        .css({
+                            'position' : 'absolute',
+                            'left': '0px',
+                            'top': '0px'
+                        })
+                        .show();
+                    $('#callout')   
+                        .position({
+                            my: 'right center',
+                         at: 'left center',
+                            of: $container,
+                         offset: '-10 0'
+                        });
+                }, function(event) {
+                    $('#callout')
+                        .fadeOut(100);
+                });
+            
+            
+            });
+        }
+    </script>   
+  
+<script>
+$(document).ready(function() {
+
+        $('div.links').prepend('<a href="#" onClick="guider.hideAll();showTour();return false">Guided Tour</a> | ');
+
+        <apex:outputPanel layout="none" rendered="{!showGuidedTour == true && readOnly == false}">
+            showTour();
+        </apex:outputPanel>
+
+});
+
+function showTour() {
+        guider.createGuider({
+            attachTo: "#hoverButtons",
+            buttons: [{name: "Continue", onclick: guider.next}, {name: "Don\'t show again", onclick: hideTour }],
+            description: 'Create and share assignment rules to assign people to bugs, user stories, and investigations.<br/><br/>Click <b>Create New</b> to create a new rule, and then choose which record type you want by clicking on the corresponding icon.',
+            id: "boxButtons",
+            next: "boxProductOwner",
+            overlay: false,
+            position: 11,
+            width: 400,
+            title: "Assign Work Records the Fast and Easy Way"
+        }).show(); 
+        
+    
+        guider.createGuider({
+            attachTo: "#hoverProductOwner",
+            buttons: [{name: "Close", onclick: hideTour}, {name: "Don\'t show again", onclick: hideTour }],
+            description: "Each column corresponds to a field of the same name on the work record. You can assign multiple fields at one time.",
+            id: "boxProductOwner",
+            overlay: false,
+            title: "Assign All These Fields at One Time",
+            position: 11,
+            width: 400
+        });
+}
+
+function hideTour() {
+    guider.hideAll();
+    {!$RemoteAction.ADM_TagAssignmentComponentController.neverShowGuidedTour}(function(result,event) {
+        if (event.type == 'exception') {
+            console.warn('Error occured while saving user preferences: ' + event.message);
+        }
+    });
+}
+</script>
+  
+     <div class="ui-widget" id="matrixErrorMessageWrapper" style="display:none">
+        <div class="ui-state-highlight ui-corner-all" style="padding:3px;background:#FFFCCC !important;'"> 
+           
+          <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/exclamation.png')}" style="vertical-align:middle;" />  <span style="color:red !important;" id="matrixErrorMessage">&nbsp;</span>
+        </div>
+    </div> 
+    
+    <div class="ui-widget" id="matrixInfoMessageWrapper" style="{!matrixInfoMessageWrapperStyle}">
+        <div class="ui-state-highlight ui-corner-all" style="padding:3px;background:#FFFCCC !important;'"> 
+           
+          <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/information.png')}" style="vertical-align:middle" />  <span id="matrixInfoMessage">Please select at least one of your team's assignment rules or create a new one to use with this tag:</span>
+        </div>
+   </div>
+
+
+<br/><br/>
+<apex:outputPanel id="matrixOP" >
+    
+    <div id="mainaccordion">
+        <h3><a href="#Bugs_and_User_Stories">Bugs and User Stories</a></h3>
+        <div>
+        <table id="tagmatrix" class="tagmatrix bug_tag_matrix story_tag_matrix" width="100%" style="table-layout: fixed;">
+            <tr>
+                <th id="hoverButtons" class="ui-state-default" style="width: 150px;" colspan="2">&nbsp;</th>
+                <th id="hoverProductOwner" class="ui-state-default" style="width: 80px">Product Owner</th>
+                <th id="hoverAssignee" class="ui-state-default" style="width: 70px">Assignee</th>
+                <th id="hoverQAEngineer" class="ui-state-default" style="width: 80px">QA Engineer</th>
+                <th id="hoverTechWriter" class="ui-state-default" style="width: 80px">Tech Writer</th>
+                <th id="hoverPerfEngineer" class="ui-state-default" style="width: 80px">Perf Engineer</th>
+                <th id="hoverUEEngineer" class="ui-state-default" style="width: 80px">UE Engineer</th>
+                <th id="hoverOther" style="width: 210px; padding-bottom:7px" class="ui-state-default">Followers<c:helpHover id="helpHoverOtherReps" body="Enter usernames or email addresses" type="help"/></th>
+                <th id="hoverUsedBy" class="ui-state-default" style="width: 80px">Used By<c:helpHover id="helpHoverUsedBy1" body="This column shows any other Product Tags also using this Assignment Rule." type="help"/></th>
+            </tr>
+            <apex:outputPanel layout="none" rendered="{!not(readOnly)}">
+            <tr id="newrulerow" class="rulenew rownotselected">
+                <td colspan="2">
+                    <div>     
+                        <button id="createNewRuleButton" class="createNewRuleButton" onClick="setupCreateNewRule($('#newrulerow'))" style="width:95px">Create New</button>
+                    </div>
+                    
+                    <input name="bugSelected" type="hidden" value="false" />
+                    <apex:image value="{!$Resource.bugicon_selected}" title="Bug" styleClass="bug_selected_new selected_new" style="display:none;padding-right:7px; padding-top:5px;" />
+                    <apex:image value="{!$Resource.bugicon_unselected}" title="Bug" onClick="storeRecordTypeForNewRule($('#newrulerow'), 'bug');" styleClass="bug_unselected_new unselected_new" style="display:none;padding-right:7px; padding-top:5px;" />
+        
+                    <input name="storySelected" type="hidden" value="false" />
+                    <apex:image value="{!$Resource.storyicon_selected}" title="User Story" styleClass="story_selected_new selected_new" style="display:none;padding-right:7px; padding-top:5px;" />
+                    <apex:image value="{!$Resource.storyicon_unselected}" title="User Story" onClick="storeRecordTypeForNewRule($('#newrulerow'), 'story');" styleClass="story_unselected_new unselected_new" style="display:none;padding-right:7px; padding-top:5px;" />
+                </td>
+                <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="productowner" name="productowner" style="display:none" /></td>
+                <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="assignee" name="assignee" style="display:none" /></td>
+                <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="qaEngineer" name="qaEngineer" style="display:none" /></td>
+                <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="techWriter" name="techWriter" style="display:none" /></td>
+                <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="perfEngineer" name="perfEngineer" style="display:none" /></td>
+                <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="ueEngineer" name="ueEngineer" style="display:none" /></td>
+                <td><input type="text" id="otherreps" name="otherreps" style="display:none;width:54%;" class="newRuleTextBox" /></td>
+                <td>
+                    <button id="saveNewRuleButton" class="saveNewRuleButton" onClick="saveNewRule($('#newrulerow'), getFormData($('#newrulerow')))" style="display:none;width:34px">Save</button>
+                    <button id="cancelNewRuleButton" class="cancelNewRuleButton" onClick="cancelNewRule($('#newrulerow'))" style="display:none;width:44px">Cancel</button>
+                </td>
+            </tr>
+            </apex:outputPanel>
+            <apex:repeat value="{!teamRuleAssignments}" var="wrapper">
+                <apex:outputPanel layout="none" rendered="{! not(wrapper.readOnly) || wrapper.bugAssigned || wrapper.storyAssigned}">
+                    <tr id="{!wrapper.rule.id}" class="rule{!wrapper.rule.id} rulerow rownotselected" data-id="{!wrapper.rule.id}" data-usedby="{!wrapper.usedBy}"> 
+                        <td style="width: 90px"> 
+                            <apex:image value="{!$Resource.bugicon_selected}" title="Bug"  styleClass="bug_selected bug_selected_rule_{!wrapper.rule.id}" style="display:none;padding-right:7px; padding-top:5px; vertical-align:middle; width: 26px; height: 26px;" />
+                            <apex:image value="{!$Resource.bugicon_unselected}" title="Bug" styleClass="bug_unselected bug_unselected_rule_{!wrapper.rule.id}" style="display:none;padding-right:7px; padding-top:5px; vertical-align:middle; width: 26px; height: 26px;" />
+                            
+                            <apex:image value="{!$Resource.storyicon_selected}" title="User Story" styleClass="story_selected story_selected_rule_{!wrapper.rule.id}" style="display:none;padding-right:7px; padding-top:5px; vertical-align:middle;" />
+                            <apex:image value="{!$Resource.storyicon_unselected}" title="User Story" styleClass="story_unselected story_unselected_rule_{!wrapper.rule.id}" style="display:none;padding-right:7px; padding-top:5px; vertical-align:middle;" />
+                            
+                            <script>
+                                //if rec type has assignment display the selected image icon, else display its unselected image icon
+                                
+                                if({!wrapper.bugAssigned}) {
+                                    $('.bug_selected_rule_{!wrapper.rule.id}').show();
+                                    selectedRows.push({recordType:'bug', ruleID:'{!wrapper.rule.id}'});
+                                } else {
+                                    $('.bug_unselected_rule_{!wrapper.rule.id}').show();
+                                }
+                                
+                                if({!wrapper.storyAssigned}) {
+                                    $('.story_selected_rule_{!wrapper.rule.id}').show();
+                                    selectedRows.push({recordType:'story', ruleID:'{!wrapper.rule.id}'});
+                                } else {
+                                    $('.story_unselected_rule_{!wrapper.rule.id}').show();
+                                }
+                            </script>
+                            <apex:outputPanel layout="none" rendered="{!not(wrapper.readOnly)}">
+                            <script type="text/javascript">
+                                $('.bug_selected_rule_{!wrapper.rule.id}').click(function(){
+                                    unselectRule('{!wrapper.rule.id}', 'bug');
+                                });
+                                $('.bug_unselected_rule_{!wrapper.rule.id}').click(function(){
+                                    selectRule('{!wrapper.rule.id}', 'bug');
+                                });
+                                
+                                $('.story_selected_rule_{!wrapper.rule.id}').click(function(){
+                                    unselectRule('{!wrapper.rule.id}', 'story');
+                                });
+                                $('.story_unselected_rule_{!wrapper.rule.id}').click(function(){
+                                    selectRule('{!wrapper.rule.id}', 'story');
+                                });
+                            </script>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!wrapper.bugAssigned}">
+                            <script type="text/javascript">
+                                //since bug is selected for this row, we need to highlight
+                                highlightRow($('.bug_tag_matrix .rule{!wrapper.rule.id}'));
+                            </script>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!wrapper.storyAssigned}">
+                            <script type="text/javascript">
+                                //since story is selected for this row, we need to highlight
+                                highlightRow($('.story_tag_matrix .rule{!wrapper.rule.id}'));
+                            </script>
+                            </apex:outputPanel>
+                        </td>
+                        <td style="width: 60px">    
+                            <span class="deleteLink" style="cursor:pointer"><img src="{!$Resource.IconDelete}" title="Delete Assignment Rule" style="padding-right: 7px; padding-top: 5px; vertical-align: middle;" /></span>
+                            <span><a href="/{!wrapper.rule.id}" class="assignmentRuleLink" title="View Rule" target="_blank" style="color:#015ba7!important;">&gt;&gt;</a></span>
+                        </td>
+                        <td>{!wrapper.rule.Product_Owner__r.Name}</td>
+                        <td>{!wrapper.rule.Assignee_Assignment__r.Name}</td>
+                        <td>{!wrapper.rule.QA_Assignment__r.Name}</td>
+                        <td>{!wrapper.rule.Tech_Writer_Assignment__r.Name}</td>
+                        <td>{!wrapper.rule.Systest_Assignment__r.Name}</td>
+                        <td>{!wrapper.rule.UE_Engineer__r.Name}</td>
+                        <td style="word-wrap: break-word;">{!wrapper.rule.Additional_Emails__c}</td>
+                        
+                        <apex:variable var="calloutContainerId" value="matrixUsedBy{!wrapper.rule.Id}" />
+                        <td id="{!calloutContainerId}" style="whitespace: nowrap;">
+                            <div>{!wrapper.truncatedUsedBy}</div>
+                            <apex:outputPanel layout="none" rendered="{!wrapper.usedBy != wrapper.truncatedUsedBy}">
+                                <script type="text/javascript">
+                                    initCallout('{!calloutContainerId}', '{!JSINHTMLENCODE(wrapper.usedBy)}');
+                                </script>
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+            </apex:repeat>
+            <apex:outputText rendered="{!teamRuleAssignments.size == 0}">
+                <tr>
+                    <td colspan="10"> No assignment rules found.</td>
+                </tr>   
+            </apex:outputText>
+        </table>
+        </div>
+        
+        <h3 id="hoverInvestigations"><a href="#Investigations">Investigations</a></h3>
+        <div>
+            <table id="investigationtagmatrix" class="tagmatrix investigation_tag_matrix" width="100%" style="table-layout: fixed;">
+                <tr>
+                    <th class="ui-state-default ui-corner-left" style="width: 90px;" colspan="2">&nbsp;</th>
+                    <th class="ui-state-default" style="width: 80px;">Product Owner</th>
+                    <th class="ui-state-default" style="width: 80px;">Sev 1 Assignee </th>
+                    <th class="ui-state-default" style="width: 80px;">Sev 2 Assignee</th>
+                    <th class="ui-state-default" style="width: 80px;">Sev 3 Assignee</th>
+                    <th class="ui-state-default" style="width: 80px;">Sev 4 Assignee</th>
+                    <th class="ui-state-default" style="width: 80px;">QA Engineer</th>
+                    <th class="ui-state-default" style="width: 80px;">Snr Mgr POC</th>
+                    <th class="ui-state-default" style="width: 80px;">Exception POC</th>
+                    <th style="width: 120px; padding-bottom:7px" class="ui-state-default">Followers<c:helpHover id="helpHoverOtherReps2" body="Enter email addresses ending in @salesforce.com" type="help"/></th>
+                    <th class="ui-state-default ui-corner-right" style="width: 80px">Used By<c:helpHover id="helpHoverUsedBy2" body="This column shows any other Product Tags also using this Assignment Rule." type="help"/></th>
+                </tr>
+                <apex:outputPanel layout="none" rendered="{!not(readOnly)}">
+                <tr id="newinvestigationrulerow" class="rulenew rownotselected">
+                    <td colspan="2"> 
+                        <div>     
+                            <button id="createNewRuleButton" class="createNewRuleButton" onClick="setupCreateNewRule($('#newinvestigationrulerow'))" style="width:102px">Create New</button>
+                        </div>
+                        
+                        <input name="investigationSelected" type="hidden" value="false" />
+                        <apex:image value="{!$Resource.investigationicon_selected}" title="Investigation" styleClass="investigation_selected_new selected_new" style="display:none;padding-right:0px; padding-top:5px;" />
+                        <apex:image value="{!$Resource.investigationicon_unselected}" title="Investigation" onClick="storeRecordTypeForNewRule($('#newinvestigationrulerow'), 'investigation');" styleClass="investigation_unselected_new unselected_new" style="display:none;padding-right:0px; padding-top:5px;" />
+                    </td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="productowner" name="productowner" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="sev1Assignee" name="sev1Assignee" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="sev2Assignee" name="sev2Assignee" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="sev3Assignee" name="sev3Assignee" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete required-input" id="sev4Assignee" name="sev4Assignee" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="qaEngineer" name="qaEngineer" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="smpoc" name="smpoc" style="display:none" /></td>
+                    <td><input class="ui-corner-top ui-corner-bottom newRuleTextBox person-auto-complete" id="erpoc" name="erpoc" style="display:none" /></td>
+                    <td><input type="text" id="otherreps" name="otherreps" style="display:none;width:95%;" class="newRuleTextBox" /></td>
+                    <td>
+                        <button id="saveNewRuleButton" class="saveNewRuleButton" onClick="saveNewRule($('#newinvestigationrulerow'), getFormData($('#newinvestigationrulerow')))" style="display:none;width:34px">Save</button>
+                        <button id="cancelNewRuleButton" class="cancelNewRuleButton" onClick="cancelNewRule($('#newinvestigationrulerow'))" style="display:none;width:44px">Cancel</button>
+                    </td>
+                </tr>   
+                </apex:outputPanel>
+                <apex:repeat value="{!teamRuleAssignments}" var="wrapper">
+                    <apex:outputPanel layout="none" rendered="{! not(wrapper.readOnly) || wrapper.investigationAssigned}">
+                    <tr id="investigations_{!wrapper.rule.id}" class="rule{!wrapper.rule.id} rulerow rownotselected" data-id="{!wrapper.rule.id}" data-usedBy="{!wrapper.usedBy}"> 
+                        <td style="width: 90px">
+                            <apex:image value="{!$Resource.investigationicon_selected}" title="Investigation" styleClass="investigation_selected investigation_selected_rule_{!wrapper.rule.id}" style="display:none;padding-right:0px; padding-top:5px; vertical-align:middle" />
+                            <apex:image value="{!$Resource.investigationicon_unselected}" title="Investigation" styleClass="investigation_unselected investigation_unselected_rule_{!wrapper.rule.id}" style="display:none;padding-right:0px; padding-top:5px; vertical-align:middle" />
+                            
+                            <script>
+                                //if rec type has assignment display the selected image icon, else display its unselected image icon
+                                if({!wrapper.investigationAssigned}) {
+                                    $('.investigation_selected_rule_{!wrapper.rule.id}').show();
+                                    selectedRows.push({recordType:'investigation', ruleID:'{!wrapper.rule.id}'});
+                                } else {
+                                    $('.investigation_unselected_rule_{!wrapper.rule.id}').show();
+                                }
+                            </script>
+                            
+                            <apex:outputPanel layout="none" rendered="{!not(wrapper.readOnly)}">
+                                <script>
+                                    $('.investigation_selected_rule_{!wrapper.rule.id}').click(function(){
+                                        unselectRule('{!wrapper.rule.id}', 'investigation');
+                                    });
+                                    
+                                    $('.investigation_unselected_rule_{!wrapper.rule.id}').click(function(){
+                                        selectRule('{!wrapper.rule.id}', 'investigation')
+                                    });
+                                </script>
+                            </apex:outputPanel>
+                                    
+                            <apex:outputPanel layout="none" rendered="{!wrapper.investigationAssigned}">
+                            <script type="text/javascript">
+                                //since investigation is assigned, we need to highlight
+                                highlightRow($('.investigation_tag_matrix .rule{!wrapper.rule.id}'));
+                            </script>
+                            </apex:outputPanel>
+                        </td>
+                        <td style="width: 60px">    
+                            <span class="deleteLink" style="cursor:pointer"><img src="{!$Resource.IconDelete}" title="Delete Assignment Rule" style="padding-right: 7px; padding-top: 5px; vertical-align: middle;" /></span>
+                            <span><a style="color:#015ba7!important;" title="View Rule" target="_blank" href="/{!wrapper.rule.id}">&gt;&gt;</a></span>
+                        </td>
+                        <td>{!wrapper.rule.Product_Owner__r.Name}</td>
+                        <td>{!wrapper.rule.Sev_1_Assignee__r.Name}</td>
+                        <td>{!wrapper.rule.Sev_2_Assignee__r.Name}</td>
+                        <td>{!wrapper.rule.Sev_3_Assignee__r.Name}</td>
+                        <td>{!wrapper.rule.Sev_4_Assignee__r.Name}</td>
+                        <td>{!wrapper.rule.QA_Assignment__r.Name}</td>
+                        <td>{!wrapper.rule.Senior_Management_POC_Assignment__r.Name}</td>
+                        <td>{!wrapper.rule.Exception_Request_POC__r.Name}</td>
+                        <td>{!wrapper.rule.Additional_Emails__c}</td>
+                        
+                        <apex:variable var="calloutContainerId" value="investigationUsedBy{!wrapper.rule.Id}" />
+                        <td id="{!calloutContainerId}" style="whitespace: nowrap;">
+                            <div>{!wrapper.truncatedUsedBy}</div>
+                            <apex:outputPanel layout="none" rendered="{!wrapper.usedBy != wrapper.truncatedUsedBy}">
+                                <script type="text/javascript">
+                                    initCallout('{!calloutContainerId}', '{!JSINHTMLENCODE(wrapper.usedBy)}');
+                                </script>
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:outputText rendered="{!teamRuleAssignments.size == 0}">
+                    <tr>
+                        <td colspan="9"> No assignment rules found.</td>
+                    </tr>   
+                </apex:outputText>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(function(){
+        $('#mainaccordion').accordion({
+            autoHeight: false, 
+            navigation: true,
+            collapsible: true,
+            active: ($(document).data('accordion-activeIndex') || 0),
+            change: function(event, ui){
+                //save the index of the active accordion so that if the accordion
+                //gets rebuilt, we can open the appropriate view
+                $(document).data('accordion-activeIndex', ui.options.active);
+            }
+        });
+        
+        
+        $('.deleteLink').live('click', function(e){
+            e.stopPropagation();
+            var assignmentRuleId =  $(this).closest('.rulerow').data('id');
+            if(assignmentRuleId) {
+                var selectedRecordTypes = getRecordTypesSelectedForRule(assignmentRuleId);
+                
+                if(selectedRecordTypes.length > 0) {
+                    resetMatrixInfo();
+                    
+                    var labels = {
+                        'bug': 'Bugs',
+                        'story': 'User Stories',
+                        'investigation': 'Investigations'
+                    };
+                    var getLabel = function(value) {
+                        return labels[value]  || value;
+                    };
+                    
+                    var text = getLabel(selectedRecordTypes[0]);
+                    if(selectedRecordTypes.length == 1) {
+                        text = getLabel(selectedRecordTypes[0]);
+                    } else if(selectedRecordTypes.length == 2) {
+                        text = getLabel(selectedRecordTypes[0]) + ' and ' + getLabel(selectedRecordTypes[1]);
+                    } else if(selectedRecordTypes.length == 3) {
+                        text = getLabel(selectedRecordTypes[0]) + ', ' + getLabel(selectedRecordTypes[1]) + ' and ' + getLabel(selectedRecordTypes[2]);
+                    }
+                    
+                    showMatrixError('Unable to delete the Assignment Rule because it is still assigned to ' + text + '. Click the Record Type icon to deselect and try deleting again.');
+                    return;
+                }
+                
+                var $ruleRow = $('.rulerow[data-id=' + assignmentRuleId + ']');
+                if($ruleRow.data('usedBy')) {
+                    resetMatrixInfo();
+                    showMatrixError('Unable to delete the Assignment Rule because it is in use by another Product Tag.');
+                    return;
+                }
+                
+                $ruleRow.fadeOut();
+                console.log('Deleting Assignment Rule ' + assignmentRuleId);
+                {!$RemoteAction.ADM_TagAssignmentComponentController.deleteAssignmentRule}(assignmentRuleId, function(data, event){
+                    if(event.type == 'exception') {
+                        resetMatrixInfo();
+                        showMatrixError(event.message);
+                        $('.rulerow[data-id=' + assignmentRuleId + ']').stop(false, true).show();
+                    } else {
+                        resetMatrixInfo();
+                        resetMatrixError();
+                        $('.rulerow[data-id=' + assignmentRuleId + ']').remove();
+                        console.log('Deleted Assignment Rule ' + assignmentRuleId);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+    
+</apex:outputPanel>
+    
+    <apex:form >
+        <apex:actionFunction action="{!reloadMatrix}" name="reloadMatrix" onComplete="window.location.reload();" />
+    </apex:form>
+    <script>
+        initLocalAutoCompletes()
+    </script>
+</apex:component>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resolved__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( Status__c, &quot;Fixed&quot;, 1, &quot;Tested&quot;, 1, &quot;Closed&quot;, 1, &quot;Completed&quot;, 1, &quot;Not Reproducible&quot;, 1, &quot;Not a bug&quot;, 1, &quot;Duplicate&quot;, 1,
+&quot;Closed - Duplicate&quot;, 1, &quot;Closed - Known Bug Exists&quot;, 1, &quot;Never&quot;, 1,&quot;Closed-U/Ftest&quot;, 1, &quot;Closed-Untested&quot;, 1, &quot;QA In Progress&quot;, 1,
+&quot;Closed - New Bug Logged&quot;, 1, &quot;Closed - No Fix - Working as Designed&quot;,1,
+&quot;Closed - LAP Request Approved&quot;, 1, &quot;Closed - LAP Request Denied&quot;, 1, &quot;Closed - Resolved Without Code Change&quot;, 1,
+&quot;Closed - No Fix - Feature Request&quot;,1, &quot;Closed - No Fix - Will Not Fix&quot;,1, &quot;Rejected&quot;, 1, &quot;Closed - Resolved With Internal Tools&quot;, 1, &quot;Closed - Defunct&quot;, 1, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Resolved</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

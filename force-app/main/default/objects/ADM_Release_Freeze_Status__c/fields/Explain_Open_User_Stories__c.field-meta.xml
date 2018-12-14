@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_Open_User_Stories__c</fullName>
+    <description>Explain any Open User Stories</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Explain any Open User Stories</inlineHelpText>
+    <label>Explain Open User Stories</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

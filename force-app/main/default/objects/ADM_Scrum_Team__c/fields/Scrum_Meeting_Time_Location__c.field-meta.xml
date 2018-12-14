@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scrum_Meeting_Time_Location__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>The time and location of the team&#39;s scrum meeting. Include dial-in #, if applicable.</inlineHelpText>
+    <label>Scrum Meeting Time/Location</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

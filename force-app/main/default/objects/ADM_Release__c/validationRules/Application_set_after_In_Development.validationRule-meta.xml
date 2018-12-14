@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_set_after_In_Development</fullName>
+    <active>true</active>
+    <description>The Application field must be set when the Status is not NULL or &quot;In Development&quot;.</description>
+    <errorConditionFormula>ISBLANK( Application__c ) &amp;&amp; NOT(ISPICKVAL(Status__c, &quot;&quot;)) &amp;&amp; NOT(ISPICKVAL(Status__c, &quot;In Development&quot;))</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>The Application must be set when the Release Status is not In Development</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ShowMoveTaskToCompletedDialog__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Check this to show the &quot;Move Task To Completed&quot; dialog on the Virtual Wall page.</description>
+    <externalId>false</externalId>
+    <label>Show Move Task To Completed Dialog</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

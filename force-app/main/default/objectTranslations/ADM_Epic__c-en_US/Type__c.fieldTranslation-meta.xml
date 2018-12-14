@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Type --></label>
+    <name>Type__c</name>
+    <picklistValues>
+        <masterLabel>In-Market</masterLabel>
+        <translation><!-- In-Market --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Others</masterLabel>
+        <translation><!-- Others --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>PDO</masterLabel>
+        <translation><!-- PDO --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Target</masterLabel>
+        <translation><!-- Target --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

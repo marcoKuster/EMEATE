@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Needed_By_Date_in_Future</fullName>
+    <active>true</active>
+    <errorConditionFormula>Deliver_By__c &lt;  TODAY()</errorConditionFormula>
+    <errorDisplayField>Deliver_By__c</errorDisplayField>
+    <errorMessage>The &#39;Needed By&#39; date cannot be in the past.</errorMessage>
+</ValidationRule>

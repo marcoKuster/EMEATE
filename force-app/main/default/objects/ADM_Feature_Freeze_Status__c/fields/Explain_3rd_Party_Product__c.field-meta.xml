@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_3rd_Party_Product__c</fullName>
+    <description>If the Answer is NO then provide an explanation and the plan.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If the Answer is NO then provide an explanation and the plan.</inlineHelpText>
+    <label>Explain Unapproved 3rd Party Product</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

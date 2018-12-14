@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manual_Auto_Annotation__c</fullName>
+    <description>Formula that states if a test case has any executions of an automation type.</description>
+    <externalId>false</externalId>
+    <formula>if (and(Count_Automated_Executions__c &lt;= 0,0=LEN(Ftest_Id__c)),&quot;Manual&quot;, if (OR(ISNULL(Ftest_Id__c), LEN(Ftest_Id__c) == 0), &quot;Automated w/o Annotation&quot;, &quot;Automated and Annotated&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Can be in one of three values:
+Manual, Automated, and Incomplete Automation.
+Incomplete Automation = invalid annotation or Execution not Marked as Passed or Failed</inlineHelpText>
+    <label>Is Automated and Annotated?</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

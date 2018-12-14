@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Update User Preferences">
+    <aura:attribute name="field" type="String"/>
+    <aura:attribute name="value" type="Object"/>
+</aura:event>

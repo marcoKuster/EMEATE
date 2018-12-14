@@ -1,0 +1,12 @@
+<apex:page standardController="Quarterly_Plan__c" extensions="QuarterlyPlanHistoryExtension" lightningStylesheets="True">
+    <apex:pageBlock title="Partner Plan History">
+        <apex:pageBlockTable value="{!allHistory}" var="h">
+            <apex:column value="{!h.createdDate}" headerValue="DATE"/>
+            <apex:column value="{!h.partnerName}" headerValue="PARTNER"/>
+            <apex:column value="{!h.field}" headerValue="Field"/>
+            <apex:column value="{!h.oldValue}" headerValue="OLD VALUE"/>
+            <apex:column value="{!h.newValue}" headerValue="NEW VALUE"/>           
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:relatedList list="Histories"/>
+</apex:page>

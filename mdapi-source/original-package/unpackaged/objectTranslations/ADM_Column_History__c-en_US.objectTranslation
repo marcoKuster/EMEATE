@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Column History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Column History</value>
+    </caseValues>
+    <fields>
+        <label><!-- Column --></label>
+        <name>Column__c</name>
+        <relationshipLabel><!-- Column History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Duration_By_Work_Days --></label>
+        <name>Duration_By_Work_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration --></label>
+        <name>Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Entered --></label>
+        <name>Time_Entered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Left --></label>
+        <name>Time_Left__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Column History --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,55 @@
+<aura:component extensible="true" controller="ADM_AssignmentRulePickerController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="assignmentRulesForBugs" type="List"/>
+    <aura:attribute name="assignmentRulesForUserStories" type="List"/>
+    <aura:attribute name="assignmentRulesForInvestigations" type="List"/>
+
+<aura:iteration items="{!v.assignmentRulesForBugs}" var="assignmentRule" >
+    
+<div  class="slds-tile slds-media slds-hint-parent" style="padding:10px;border: 1px solid #cccccc;border-radius:5px;background:white;">
+  <div class="slds-media__figure">
+    <lightning:icon iconName="custom:custom34" size="medium" alternativeText="Rule for Bugs"/>
+  </div>
+  <div aura:id="Bugwrapper" class="slds-media__body">
+       <!-- this div is populated at run time -->
+  </div>
+</div>
+
+</aura:iteration>
+ 
+ 
+<div aura:id="story-content" style="padding-top:20px">    
+<aura:iteration items="{!v.assignmentRulesForUserStories}" var="assignmentRule" >
+    
+<div class="slds-tile slds-media slds-hint-parent" style="padding:10px;border: 1px solid #cccccc;border-radius:5px;background:white;">
+  <div class="slds-media__figure">
+    <lightning:icon iconName="custom:custom55" size="medium" alternativeText="Rule for User Stories"/>
+  </div>
+  <div aura:id="UserStorywrapper" class="slds-media__body">
+      <!-- this div is populated at run time -->
+  </div>
+</div>    
+</aura:iteration>
+</div>    
+
+   
+<div aura:id="investigation-content" style="padding-top:20px">    
+<aura:iteration items="{!v.assignmentRulesForInvestigations}" var="assignmentRule" >
+    
+<div class="slds-tile slds-media slds-hint-parent" style="padding:10px;border: 1px solid #cccccc;border-radius:5px;background:white;">
+  <div class="slds-media__figure">
+    <lightning:icon iconName="custom:custom39" size="medium" alternativeText="Rule for Investigations"/>
+  </div>
+  <div aura:id="Investigationwrapper" class="slds-media__body">
+      <!-- this div is populated at run time -->
+  </div>
+</div>    
+</aura:iteration>  
+</div>    
+
+    
+
+
+        
+    
+</aura:component>

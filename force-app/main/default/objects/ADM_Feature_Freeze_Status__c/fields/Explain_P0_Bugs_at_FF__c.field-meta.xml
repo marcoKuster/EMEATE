@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_P0_Bugs_at_FF__c</fullName>
+    <description>IT Feature Freeze Criteria for teams to provide explanation for any open P0 bugs at FF.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Provide an explanation for any open P0 bugs at FF.</inlineHelpText>
+    <label>Explain P0 Bugs at FF</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

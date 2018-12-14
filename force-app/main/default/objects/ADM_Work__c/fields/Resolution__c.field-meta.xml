@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resolution__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>App Bug Fix - TF caught a product bug&lt;br&gt;
+TC: Due to app changes - Test changed b/c app behavior changed&lt;br&gt;
+TC: Test issue only - Test needed fixing&lt;br&gt;
+More: search Google Sites for &quot;test resolution&quot;</inlineHelpText>
+    <label>Test Resolution</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>App Bug Fix</fullName>
+                <default>false</default>
+                <label>App Bug Fix</label>
+            </value>
+            <value>
+                <fullName>Test Change: Due to app changes</fullName>
+                <default>false</default>
+                <label>Test Change: Due to app changes</label>
+            </value>
+            <value>
+                <fullName>Test Change: Test issue only</fullName>
+                <default>false</default>
+                <label>Test Change: Test issue only</label>
+            </value>
+            <value>
+                <fullName>Test Removed/Disabled</fullName>
+                <default>false</default>
+                <label>Test Removed/Disabled</label>
+            </value>
+            <value>
+                <fullName>Duplicate Test Failure</fullName>
+                <default>false</default>
+                <label>Duplicate Test Failure</label>
+            </value>
+            <value>
+                <fullName>Not Reproducible: Autobuild environment issue</fullName>
+                <default>false</default>
+                <label>Not Reproducible: Autobuild environment issue</label>
+            </value>
+            <value>
+                <fullName>Not Reproducible: SauceLabs issue</fullName>
+                <default>false</default>
+                <label>Not Reproducible: SauceLabs issue</label>
+            </value>
+            <value>
+                <fullName>Not Reproducible: Broken By Another Team</fullName>
+                <default>false</default>
+                <label>Not Reproducible: Broken By Another Team</label>
+            </value>
+            <value>
+                <fullName>Not Reproducible: Unknown</fullName>
+                <default>false</default>
+                <label>Not Reproducible: Unknown</label>
+            </value>
+            <value>
+                <fullName>Not Reproducible: Other (please specify in Chatter feed)</fullName>
+                <default>false</default>
+                <label>Not Reproducible: Other (please specify in Chatter feed)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Child__c</fullName>
+    <description>Used only by the Clients team. Dependent on the Product Area picklist.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used only by the Clients team. Dependent on the Product Area picklist.</inlineHelpText>
+    <label>Product Child</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AXIS</fullName>
+                <default>false</default>
+                <label>AXIS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

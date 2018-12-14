@@ -1,0 +1,1 @@
+public class ADM_UnexpectedValueException extends Exception {			public String unexpectedValue {     	get;    	set;    }}

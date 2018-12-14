@@ -1,0 +1,44 @@
+<apex:component controller="ADM_MessageComponentController">
+    <apex:attribute name="type" type="String" 
+        description="Level of message to show for styling purposes: info, warning, error" default="warning" required="false"/>
+    <apex:attribute name="imgAttributes" type="String"
+        description="Alt and Title attribute value for image" default="" required="false" />
+    <apex:attribute name="imgSrc" type="String" 
+        description="Resoure location of the image to output" required="false"
+        assignTo="{!localSrc}" />
+    <apex:attribute name="imgStyle" type="String"
+        description="Style to apply to image" default="" required="false" />
+    <apex:attribute name="message" type="String"
+        description="description to be output" required="true" />
+    <apex:attribute name="lockRecord" type="Locking_Record__c" description="description to be output" 
+                                       required="false"/>
+    
+    <apex:outputPanel layout="block" styleClass="message {!LOWER(type)}M3" rendered="{!message != ''}">
+        <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px; margin:0px;">
+            <tbody>
+                <tr valign="top">
+                    <td>
+                        <apex:image styleClass="{!imgStyle}" alt="{!UPPER(imgAttributes)}" 
+                            title="{!UPPER(imgAttributes)}" value="{!src}" style="padding:0 5px 0 0 !important;"/>
+                    </td>
+                    <td class="messageCell">
+                        <apex:outputPanel StyleClass="messageText">
+                            <span><h4></h4></span>
+                                <apex:outputText value="{!message}"/>
+                                <apex:outputPanel id="recordIdPanel" rendered="{!NOT(ISNULL(lockRecord))}">
+	                                <apex:outputLabel value="Click"/>
+	                                <apex:outputLink value="/{!URLENCODE(lockRecord.Id)}">{!lockRecord.Name}</apex:outputLink>
+	                                <apex:outputLabel value="for more information."/>
+                                </apex:outputPanel>
+                            <br />
+                        </apex:outputPanel>                                
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </apex:outputPanel>
+</apex:component>

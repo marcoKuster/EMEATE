@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Ampersand_in_names</fullName>
+    <active>false</active>
+    <description>We want to make sure that teams don&#39;t use &amp; in names because it breaks certain reports where team name is used in the URL for the scontrol</description>
+    <errorConditionFormula>CONTAINS(Name, &#39;&amp;&#39;)</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>Scrum Team name cannot contain &quot;&amp;&quot;, please use &quot;and&quot; instead</errorMessage>
+</ValidationRule>

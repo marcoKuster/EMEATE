@@ -1,0 +1,88 @@
+.THIS .slds-button--icon-border.slds-is-selected .slds-button__icon .slds-icon {
+    fill: rgb(255, 255, 255);
+}
+
+.THIS .slds-button-group button span.slds-icon_container {
+  pointer-events: none;
+}
+
+.THIS .slds-dropdown .slds-dropdown__item button {
+	width: 100%;
+	text-align: left;
+}
+
+.THIS .slds-dropdown .slds-dropdown__item button:hover {
+	background-color: rgb(244, 246, 249);
+}
+
+.THIS .new-work-dropdown {
+    width:8rem;
+}
+
+.THIS .sprint-preload-placeholder {
+    height: 4px;
+    border-radius: .125rem;
+    background: rgb(224, 229, 238);
+}
+
+.THIS .sprint-preload-name {
+    width: 200px;
+    align-self: center;
+}
+
+.THIS .sprint-preload-remaining {
+    width: 50px;
+}
+
+.THIS .sprint-preload-header-subtext {
+    width: 200px;
+    align-self: center;
+}
+
+.THIS .sprint-button-tristate {
+    background-color: #B4C1D4;
+    border-color: #B4C1D4;
+}
+
+/*  had to create this instead of using slds-is-selected
+    because otherwise tristate was taking precedence over slds-is-selected
+    due to the fact that the slds-is-selected stylesheet comes before this one
+ */
+.THIS .sprint-button-selected {
+    background-color: rgb(0, 112, 210);
+    border-color: rgb(0, 112, 210);
+    color: rgb(255, 255, 255);
+}
+
+.THIS .sprint-button-selected svg {
+    fill: rgb(255,255,255);
+}
+
+.THIS .header-bold {
+    font-weight: 700;
+}
+
+.THIS button span.slds-avatar--circle {
+    pointer-events: none;
+}
+
+.THIS .avatar-selected {
+    border: 3px solid #0070d2;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.THIS .fadeInDown {
+  animation-name: fadeInDown;
+  animation-duration: 0.3s;
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Specify_Category</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(TEXT( Category__c ))</errorConditionFormula>
+    <errorDisplayField>Category__c</errorDisplayField>
+    <errorMessage>The Application&#39;s Category must be specified.</errorMessage>
+</ValidationRule>

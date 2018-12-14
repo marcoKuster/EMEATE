@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Supported_one_app_Browsers_Tested__c</fullName>
+    <description>Used to track if teams who have features that are surfaced in the S1 Mobile application have tested their functionality on one.app of all the supported browsers (as per the current S1 Support Matrix).</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Has the team tested their functionality on one.app for all the supported browsers as per the current S1 Support Matrix?</inlineHelpText>
+    <label>Release Tested on all one.app Browsers</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>N/A for this team</fullName>
+                <default>false</default>
+                <label>N/A for this team</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

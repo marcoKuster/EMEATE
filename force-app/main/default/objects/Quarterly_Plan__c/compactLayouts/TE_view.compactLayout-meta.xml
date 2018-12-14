@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TE_view</fullName>
+    <fields>Name</fields>
+    <fields>Total_Available_Time__c</fields>
+    <fields>Remaining_Time__c</fields>
+    <fields>Partner_Time__c</fields>
+    <fields>Full_Utilisation__c</fields>
+    <fields>Total_DP_Planned__c</fields>
+    <fields>Expertise_Time__c</fields>
+    <fields>Self_Enablement__c</fields>
+    <fields>Scale_Activitiesq__c</fields>
+    <fields>Other_Time__c</fields>
+    <label>TE view</label>
+</CompactLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DB_Upgrade_Script_Complete__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Database scripts are complete and incorporated into database upgrade process.</inlineHelpText>
+    <label>DB Upgrade Scripts Complete and Verified</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>False</fullName>
+                <default>true</default>
+                <label>False</label>
+            </value>
+            <value>
+                <fullName>True</fullName>
+                <default>false</default>
+                <label>True</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

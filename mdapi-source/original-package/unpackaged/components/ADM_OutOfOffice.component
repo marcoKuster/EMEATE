@@ -1,0 +1,19 @@
+<apex:component controller="ADM_ScrumTeamMembersOutOfOffice"> 
+
+<apex:pageBlock title="Team Members Out of Office">    
+    <apex:pageMessages />
+    <apex:dataTable width="100%" border="0" cellpadding="0" cellspacing="0" styleClass="list tableSize" headerClass="headerRow" value="{!teamMembersOutOfOffice}" var="teamMember" rowClasses="odd,even" rendered="{!teamMembersOutOfOffice.size > 0}">
+        <apex:column >
+            <apex:facet name="header">Scrum Team Member</apex:facet>        
+            <apex:outputLink value="/{!teamMember.id}" target="_parent" >
+                <apex:outputField value="{!teamMember.User__r.Name}" />
+            </apex:outputLink>
+        </apex:column>
+        <apex:column headervalue="Record Type" value="{!teamMember.RecordType.Name}"/>
+        <apex:column headerValue="Start Date" value="{!teamMember.Start_Date__c}"/>            
+        <apex:column headerValue="End Date" value="{!teamMember.End_Date__c}"/>
+        <apex:column headerValue="% Allocation" value="{!teamMember.Allocation__c}"/>
+        <apex:column headerValue="Description" value="{!teamMember.Description__c}"/>
+    </apex:dataTable>
+</apex:pageBlock>    
+</apex:component>

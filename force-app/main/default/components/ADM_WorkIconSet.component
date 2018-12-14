@@ -1,0 +1,19 @@
+<apex:component >
+	<apex:attribute name="recordTypeName" type="String" required="true" description="todo"/>
+	<script language="javascript" type="text/javascript">
+	    var els = $(".pageTitleIcon").each(function(index, node) {
+                    var url = new Object();
+                    url.us = '{!URLFOR($Resource.storyicon)}';
+                    url.bug = '{!URLFOR($Resource.bugicon)}';
+                    url.todo = '{!URLFOR($Resource.todoicon)}';
+                    url.investigation = '{!URLFOR($Resource.investigationicon)}';
+                    url.template = '{!URLFOR($Resource.templateicon)}';
+                    setIcon('{!JSENCODE(recordTypeName)}', node, url);
+                });
+	    
+	    var recordTypeNameEls = $(".pageType").each(function(index, node) {
+	        var match = new RegExp("Work", "ig");
+	        node.innerHTML = node.innerHTML.replace(match, '{!JSENCODE(recordTypeName)}');
+	    });
+	</script> 
+</apex:component>

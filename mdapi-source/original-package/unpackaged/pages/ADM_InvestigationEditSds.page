@@ -1,0 +1,5 @@
+<apex:page id="investigationEdit" standardController="ADM_Work__c" extensions="ADM_InvestigationExtension,ADM_WorkRemoteActionsExtension" showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+<apex:include pageName="ADM_InvestigationSds" />
+
+</apex:page>

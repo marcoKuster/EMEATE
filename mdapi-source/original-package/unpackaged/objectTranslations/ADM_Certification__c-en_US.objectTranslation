@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Certification</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Certifications</value>
+    </caseValues>
+    <fields>
+        <label><!-- Additional Comments --></label>
+        <name>Additional_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certified On --></label>
+        <name>Certified_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certified --></label>
+        <name>Certified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Product Owner</masterLabel>
+            <translation><!-- Product Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scrum Master</masterLabel>
+            <translation><!-- Scrum Master --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Certifications --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Certification Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- User is required to save Certification data --></errorMessage>
+        <name>User_Required_on_Certification_record</name>
+    </validationRules>
+</CustomObjectTranslation>

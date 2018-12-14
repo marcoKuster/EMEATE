@@ -1,0 +1,32 @@
+<apex:component layout="none">
+<apex:attribute name="task" type="ADM_Task__c" required="true" description="The task to be shown" />
+<apex:attribute name="style" type="String" required="false" description="CSS style display to render either 'block' or 'none'." />
+<apex:attribute name="cssclass" type="String" required="false" description="CSS style display to render either 'block' or 'none'." />
+<apex:attribute name="isNew" type="Boolean" required="false" default="false" description="Is this a new task?" />
+
+<li class="task_card {!cssclass}" data-taskid="{!task.Id}" data-userid="{!task.Assigned_To__r.Id}" data-lastmodifieddate="{!task.LastModifiedDate}" style="{!style}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+</li>
+
+<script type="text/javascript">
+    // This makeTaskCardHtml function comes from the static resource ADM_Common_js
+    var html = makeTaskCardHtml(
+        {!isNew},
+        {!task.Capex_Enabled__c} || {!task.Work__r.Capex_Enabled__c},
+        {!task.Capex_Enabled__c},
+        "{!JSINHTMLENCODE(task.Id)}",
+        "{!JSINHTMLENCODE(task.Subject__c)}",
+        "{!JSINHTMLENCODE(task.Assigned_To__c)}",
+        "{!JSINHTMLENCODE(task.Assigned_To__r.Name)}",
+        "{!JSINHTMLENCODE(task.Assigned_To__r.FirstName)}",
+        "{!JSINHTMLENCODE(task.Assigned_To__r.SmallPhotoUrl)}",
+        {!BLANKVALUE(task.Hours_Remaining__c, 0)},
+        {!BLANKVALUE(task.Actual_Hours__c, 0.0)}
+    );
+
+    var $taskCard = $("[data-taskid=" + "{!task.Id}" + "]");
+    if ($taskCard && $taskCard.find('.task_row1').length === 0) { // Only add taskCard if its not already there
+        $taskCard.append($(html))
+    }
+</script>
+
+</apex:component>

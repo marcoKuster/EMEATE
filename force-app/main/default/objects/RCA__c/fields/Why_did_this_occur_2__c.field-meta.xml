@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Why_did_this_occur_2__c</fullName>
+    <defaultValue>&quot;Include the 5 reasons (why&#39;s) for the Incident - http://en.wikipedia.org/wiki/5_Whys&quot;</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>“The 5 Whys is a question-asking method used to explore the cause/effect relationships underlying a particular problem. Ultimately, the goal of applying the 5 Whys method is to determine a root cause of a defect or problem.”</inlineHelpText>
+    <label>Why did this occur?</label>
+    <length>32000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

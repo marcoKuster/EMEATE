@@ -1,0 +1,2 @@
+<apex:page standardController="Partner_Plan__c" extensions="PartnerPlanViewRedirect" action="{!redirectToQuarterlyPlan}">
+</apex:page>

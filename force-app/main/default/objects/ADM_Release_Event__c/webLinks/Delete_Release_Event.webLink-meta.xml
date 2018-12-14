@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Delete_Release_Event</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Delete Release Event</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>{!REQUIRESCRIPT (&quot;/soap/ajax/13.0/connection.js&quot;)} 
+var records = {!GETRECORDIDS($ObjectType.ADM_Release_Event__c)};
+if (records[0] == null) { 
+	alert(&quot;Please select at least one row.&quot;) 
+} else {
+	if (confirm(&#39;Are you sure?&#39;)) {
+		result = sforce.connection.deleteIds([records]);
+		if (!result[0].getBoolean(&quot;success&quot;)) throw &quot;Delete failed.&quot;;
+		window.location.reload(); 
+	}
+}</url>
+</WebLink>

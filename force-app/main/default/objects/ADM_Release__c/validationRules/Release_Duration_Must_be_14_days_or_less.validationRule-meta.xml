@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Duration_Must_be_14_days_or_less</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( ISNULL(Scheduled_End_Date__c), false, (DATEVALUE(Scheduled_End_Date__c)   -  DATEVALUE(Release_Date__c)) &gt; 14)</errorConditionFormula>
+    <errorDisplayField>Scheduled_End_Date__c</errorDisplayField>
+    <errorMessage>End date cannot be more than 14 days later than Release Date.</errorMessage>
+</ValidationRule>

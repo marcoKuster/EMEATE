@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Specified_Functional_Approver_Role</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Approver_Role__c, &quot;Functional&quot;) &amp;&amp; ISBLANK(Functional_Team__c)</errorConditionFormula>
+    <errorDisplayField>Functional_Team__c</errorDisplayField>
+    <errorMessage>Functional Team must be specified when &quot;Functional&quot; Approver Role is selected.</errorMessage>
+</ValidationRule>

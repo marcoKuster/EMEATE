@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>ADM_Work__c.Subject__c</field>
+    </columns>
+    <columns>
+        <field>ADM_Work__c.Sprint__c</field>
+    </columns>
+    <columns>
+        <field>ADM_Work__c.Story_Points__c</field>
+    </columns>
+    <columns>
+        <field>ADM_Work__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>ADM_Work__c.Closed_On__c</field>
+    </columns>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ADM_Work__c.Theme__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Team stories in release (by theme)</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$ADM_Work__c@ADM_Work__c.Scheduled_Build__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ADM_Work__c.Closed_On__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

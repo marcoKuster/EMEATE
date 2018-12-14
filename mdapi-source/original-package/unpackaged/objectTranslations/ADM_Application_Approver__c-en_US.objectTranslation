@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Application Approver</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Application Approvers</value>
+    </caseValues>
+    <fields>
+        <label><!-- Application --></label>
+        <name>Application__c</name>
+        <relationshipLabel><!-- Application Approvers --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Inform Only - -  will receive all notifications; 
+May Approve - -  may approve the request;
+Must Approve - -  must approve all requests; 
+Notify When Approved - -  will be notified only when the request has been Approved.
+Primary - -  Cloud
+Secondary - -  Cloud --></help>
+        <label><!-- Approval Context --></label>
+        <name>Approval_Context__c</name>
+        <picklistValues>
+            <masterLabel>Exception Primary</masterLabel>
+            <translation><!-- Exception Primary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exception Secondary</masterLabel>
+            <translation><!-- Exception Secondary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inform Only</masterLabel>
+            <translation><!-- Inform Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>May Approve</masterLabel>
+            <translation><!-- May Approve --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Must Approve</masterLabel>
+            <translation><!-- Must Approve --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Notify When Approved</masterLabel>
+            <translation><!-- Notify When Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Primary</masterLabel>
+            <translation><!-- Primary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secondary</masterLabel>
+            <translation><!-- Secondary --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Select the type of approvals in which this Approver participates. --></help>
+        <label><!-- Approval Type --></label>
+        <name>Approval_Type__c</name>
+        <picklistValues>
+            <masterLabel>Major</masterLabel>
+            <translation><!-- Major --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Patch</masterLabel>
+            <translation><!-- Patch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Releases</masterLabel>
+            <translation><!-- Releases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eRelease</masterLabel>
+            <translation><!-- eRelease --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eReleases</masterLabel>
+            <translation><!-- eReleases --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Email of Approver. If Approver is specified, may be blank or must match Approver&apos;s User email. If Approver is not specified, this field may be set to a distribution list. --></help>
+        <label><!-- Approver Email --></label>
+        <name>Approver_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- Approval Role. Note: &quot;Distribution List&quot; indicated this Approver is for notifications only. &quot;Functional&quot; requires that a Team be entered in the Functional Role field. --></help>
+        <label><!-- Approver Role --></label>
+        <name>Approver_Role__c</name>
+        <picklistValues>
+            <masterLabel>Buildmaster</masterLabel>
+            <translation><!-- Buildmaster --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cloud Leader</masterLabel>
+            <translation><!-- Cloud Leader --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Development Engineer</masterLabel>
+            <translation><!-- Development Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Development Manager</masterLabel>
+            <translation><!-- Development Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution List</masterLabel>
+            <translation><!-- Distribution List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Executive</masterLabel>
+            <translation><!-- Executive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Functional</masterLabel>
+            <translation><!-- Functional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance</masterLabel>
+            <translation><!-- Performance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QE Manager</masterLabel>
+            <translation><!-- QE Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality Engineer</masterLabel>
+            <translation><!-- Quality Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Release Coverage</masterLabel>
+            <translation><!-- Release Coverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Release Engineer</masterLabel>
+            <translation><!-- Release Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Release Manager</masterLabel>
+            <translation><!-- Release Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TechOps Engineer</masterLabel>
+            <translation><!-- TechOps Engineer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TechOps Manager</masterLabel>
+            <translation><!-- TechOps Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Approver. Must be blank if Approver Email is a distribution list. --></help>
+        <label><!-- Approver --></label>
+        <name>Approver__c</name>
+        <relationshipLabel><!-- Application Approvers --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Cloud to which this Approver is related. --></help>
+        <label><!-- Cloud --></label>
+        <name>Cloud__c</name>
+        <relationshipLabel><!-- Application Approvers --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Enter the title or role of the Executive when &quot;Executive&quot; Approver Role is selected, otherwise leave blank. --></help>
+        <label><!-- Executive Role --></label>
+        <name>Executive_Role__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Scrum Team represented by this Approver when &quot;Functional&quot; Approval Role is selected, otherwise leave blank. --></help>
+        <label><!-- Functional Team --></label>
+        <name>Functional_Team__c</name>
+        <relationshipLabel><!-- Application Approvers --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Application Approver Layout</layout>
+        <sections>
+            <label><!-- Approver Information --></label>
+            <section>Approver Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The Approval Context must be specified. --></errorMessage>
+        <name>Approval_Conext_Must_Be_Specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Approval Context must be specified. --></errorMessage>
+        <name>Approval_Context_Must_Be_Specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When an Approver is specified, Approver Email must be blank or match the user&apos;s system-defined email. --></errorMessage>
+        <name>Approver_Email_must_match_users_email</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Approver Role must be specified. --></errorMessage>
+        <name>Approver_Role_Must_Be_Specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Approval Type must be specified. --></errorMessage>
+        <name>Approver_Type_is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must specify an Approver for Approver Role &quot;Release Coverage&quot;. --></errorMessage>
+        <name>Approver_must_be_specified_for_Coverage</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must specify either an Approver or an Email. --></errorMessage>
+        <name>Approver_or_Email_must_be_specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cloud must be blank unless the Approval Role is Cloud Leader --></errorMessage>
+        <name>Cloud_must_be_blank_unless_Cloud_Leader</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cloud must be specified when Approval Role is Cloud Leader --></errorMessage>
+        <name>Cloud_must_be_specified_for_Cloud_Leader</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Executive Role must be specified when &quot;Executive&quot; Approver Role is selected. --></errorMessage>
+        <name>ExecRole_Specified_For_Executive_Approvr</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Approver Role must be &quot;Executive&quot; when Executive Role is specified. --></errorMessage>
+        <name>Exec_Role_Blank_unless_Executive_Role</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Approver Role must be &quot;Functional&quot; when Functional Team is specified. --></errorMessage>
+        <name>Team_Blank_unless_Functional_ApproveRole</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Functional Team must be specified when &quot;Functional&quot; Approver Role is selected. --></errorMessage>
+        <name>Team_Specified_Functional_Approver_Role</name>
+    </validationRules>
+</CustomObjectTranslation>

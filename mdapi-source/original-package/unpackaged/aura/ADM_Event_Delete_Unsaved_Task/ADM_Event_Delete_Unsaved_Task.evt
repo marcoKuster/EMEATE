@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Delete an unsaved task">
+    <aura:attribute name="workId" type="String"/>
+    <aura:attribute name="taskId" type="String"/>
+    <aura:attribute name="status" type="String"/>
+</aura:event>

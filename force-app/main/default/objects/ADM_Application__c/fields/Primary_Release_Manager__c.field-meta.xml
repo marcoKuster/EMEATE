@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Release_Manager__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Primary Release Manager has primary responsibility for managing the releases for teams supported by this .</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the name of the Release Manager with primary responsibility for the releases of products supported by this Application.</inlineHelpText>
+    <label>Primary Release Manager</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>ADM_Application_RM1</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

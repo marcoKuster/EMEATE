@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>FTest</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>FTests</value>
+    </caseValues>
+    <fields>
+        <label><!-- Has Annotation --></label>
+        <name>Annotation_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- FTest ID --></label>
+        <name>FTest_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exclude from Report --></label>
+        <name>Report_Exception__c</name>
+        <picklistValues>
+            <masterLabel>Generated Test</masterLabel>
+            <translation><!-- Generated Test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PLSQL Findbugs</masterLabel>
+            <translation><!-- PLSQL Findbugs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unit Test</masterLabel>
+            <translation><!-- Unit Test --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- FTests --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Test Labels --></label>
+        <name>Test_Labels__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Suite --></label>
+        <name>Test_Suite__c</name>
+        <picklistValues>
+            <masterLabel>basic</masterLabel>
+            <translation><!-- basic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>extended</masterLabel>
+            <translation><!-- extended --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>standard</masterLabel>
+            <translation><!-- standard --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>FTest Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

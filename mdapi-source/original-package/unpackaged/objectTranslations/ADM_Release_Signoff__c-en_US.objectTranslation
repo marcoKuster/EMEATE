@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release Signoff</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Release Signoff</value>
+    </caseValues>
+    <fields>
+        <label><!-- AppStore Approval --></label>
+        <name>AppStore_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- AppStore --></label>
+        <name>AppStore__c</name>
+        <relationshipLabel><!-- Release Signoff (AppStore) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Approval Status --></label>
+        <name>Approval_Status__c</name>
+        <picklistValues>
+            <masterLabel>GO</masterLabel>
+            <translation><!-- GO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NO GO</masterLabel>
+            <translation><!-- NO GO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Build --></label>
+        <name>Build__c</name>
+        <relationshipLabel><!-- Release Signoff --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Core Approval --></label>
+        <name>Core_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Core --></label>
+        <name>Core__c</name>
+        <relationshipLabel><!-- Release Signoff (Core) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Date Approved --></label>
+        <name>Date_Approved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Engineering Exec Approval --></label>
+        <name>Dev_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Engineering Exec --></label>
+        <name>Dev__c</name>
+        <relationshipLabel><!-- Release Signoff (Engineering Exec) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Doc Approval --></label>
+        <name>Doc_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Doc --></label>
+        <name>Doc__c</name>
+        <relationshipLabel><!-- Release Signoff (Doc) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- L10N Approval --></label>
+        <name>L10N_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- L10N --></label>
+        <name>L10N__c</name>
+        <relationshipLabel><!-- Release Signoff (L10N) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Platform Approval --></label>
+        <name>Platform_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>Platform__c</name>
+        <relationshipLabel><!-- Release Signoff (Platform) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Approval --></label>
+        <name>Product_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- Release Signoff (Product) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cross-Cloud Exec Approval --></label>
+        <name>QA_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cross-Cloud Exec --></label>
+        <name>QA__c</name>
+        <relationshipLabel><!-- Release Signoff (Cross-Cloud Exec) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- TQE --></label>
+        <name>QE__c</name>
+        <relationshipLabel><!-- Release Signoff (TQE) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- QPD Approval --></label>
+        <name>QPD_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- QPD --></label>
+        <name>QPD__c</name>
+        <relationshipLabel><!-- Release Signoff (QPD) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RM Approval --></label>
+        <name>RM_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- RM --></label>
+        <name>RM__c</name>
+        <relationshipLabel><!-- Release Signoff (RM) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release Approved --></label>
+        <name>Release_Approved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Security Approval --></label>
+        <name>Security_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Security --></label>
+        <name>Security__c</name>
+        <relationshipLabel><!-- Release Signoff (Security) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Staggered Release --></label>
+        <name>Staggered_Release__c</name>
+    </fields>
+    <fields>
+        <label><!-- PerfEng Approval --></label>
+        <name>Systest_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- PerfEng --></label>
+        <name>Systest__c</name>
+        <relationshipLabel><!-- Release Signoff (PerfEng) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- TQE Approval --></label>
+        <name>TQE_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- TechOps Approval --></label>
+        <name>TechOps_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- TechOps --></label>
+        <name>TechOps__c</name>
+        <relationshipLabel><!-- Release Signoff (TechOps) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tech SVP Approval --></label>
+        <name>Tech_SVP_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tech SVP --></label>
+        <name>Tech_SVP__c</name>
+        <relationshipLabel><!-- Release Signoff (Tech SVP) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- UX Approval --></label>
+        <name>UE_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- UX --></label>
+        <name>UE__c</name>
+        <relationshipLabel><!-- Release Signoff (UX) --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>GUS Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for GUS Release --></label>
+            <section>Functional Signoff for GUS Release</section>
+        </sections>
+        <sections>
+            <label><!-- R&amp;D Exec Signoff for GUS Release --></label>
+            <section>R&amp;D Exec Signoff for GUS Release</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Overall Release Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for Overall Release --></label>
+            <section>Functional Signoff for Overall Release</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>R0 Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for R0 Release --></label>
+            <section>Functional Signoff for R0 Release</section>
+        </sections>
+        <sections>
+            <label><!-- R&amp;D Exec Signoff for R0 Release --></label>
+            <section>R&amp;D Exec Signoff for R0 Release</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>R1 Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for R1 Release --></label>
+            <section>Functional Signoff for R1 Release</section>
+        </sections>
+        <sections>
+            <label><!-- R&amp;D Exec Signoff for R1 Release --></label>
+            <section>R&amp;D Exec Signoff for R1 Release</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>R2 Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for R2 Release --></label>
+            <section>Functional Signoff for R2 Release</section>
+        </sections>
+        <sections>
+            <label><!-- R&amp;D Exec Signoff for R2 Release --></label>
+            <section>R&amp;D Exec Signoff for R2 Release</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Release Freeze Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for Release Freeze --></label>
+            <section>Functional Signoff for Release Freeze</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>SB Signoff Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Functional Signoff for Sandbox Release --></label>
+            <section>Functional Signoff for Sandbox Release</section>
+        </sections>
+        <sections>
+            <label><!-- R&amp;D Exec Signoff for Sandbox Release --></label>
+            <section>R&amp;D Exec Signoff for Sandbox Release</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- GUS --></description>
+        <label><!-- GUS --></label>
+        <name>GUS</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- R0 --></label>
+        <name>R0</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- R1 --></label>
+        <name>R1</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- R2 --></label>
+        <name>R2</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- This is the overall release signoff record --></description>
+        <label><!-- Release Freeze --></label>
+        <name>Release_Freeze</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sandbox --></label>
+        <name>Sandbox</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

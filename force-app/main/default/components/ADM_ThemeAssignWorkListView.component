@@ -1,0 +1,130 @@
+<apex:component controller="ADM_ThemeAssignWorkListViewController" allowDML="true">
+    <apex:attribute name="theme" description="The theme to be added and removed to the work records" type="ADM_Theme__c" required="true" assignTo="{!aTheme}" />
+    <apex:attribute name="soslString" description="The SOSL of Work records to list. If empty, all work records for the current theme will be displayed. If '.', no records will be displayed" type="String" assignTo="{!aQuery}" />
+    
+    <apex:attribute name="label" description="The label legend on the list view header" type="String" assignTo="{!aLabel}"  />
+    <apex:attribute name="pageSize" description="The page size to display" type="Integer" default="10" assignTo="{!aPageSize}" />
+    <apex:attribute name="backgroundColor" description="The page size to display" type="String" default="" assignTo="{!aBackgroundColor}" />
+
+    <apex:attribute name="massSelect" description="Whether to display the mass select or deselect checkbox" type="Boolean" default="true" />    
+
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'css/redmond/jquery-ui-1.9.2.custom.css')}" />
+	<apex:styleSheet value="{!$Resource.ADM_common_css}" />
+	<apex:styleSheet value="{!$Resource.ADM_work_css}" />
+    <style>
+    	.firstWorkRow td {
+        
+        	border-bottom: 0px solid rgb(227, 222, 184);
+        }
+    </style>
+    <script>
+    	function toggleDetails(row) {
+            var table = row.parentElement;
+            var detailRow = null;
+        	for (var i = 0; i < table.children.length; i++) {
+                if (table.children[i] === row) {
+                    detailRow = table.children[i + 1];
+                    console.log('Found at '+i);
+                    break;
+                }
+            }
+            if (detailRow) {
+            	var div = detailRow.firstElementChild.firstElementChild;
+                var display = div.style.display;
+                div.style.display = display === 'none' ? 'block' : 'none';
+            }
+        }
+    </script>
+    
+    <apex:form id="workListView" styleClass="gusDetailView gusFieldset" style="{!aBackgroundColor}">
+        <apex:outputPanel styleClass="gusLegend" rendered="{!hasLabel}">{!aLabel}{!aListCount}</apex:outputPanel>
+        <apex:pageMessages /> 
+        <apex:outputPanel rendered="{!Not(IsNull(workList))}">
+            
+            
+            <!-- The ADM_Work__c list view -->
+            <table border="0" cellspacing="0" width="100%" class="list">
+                <tr class="headerRow">
+                    <!-- Keeping the widths the same as ADM_ParentWorkRelatedList-->
+                    <th width="5%">
+                        <apex:inputCheckbox value="{!selectedAll}" rendered="{!massSelect}">
+                            <apex:actionSupport event="onchange" action="{!changeAll}" rerender="workListView" status="assigningStatus"/>
+                        </apex:inputCheckbox></th>
+                    <th width="10%">Work ID</th>
+                    <th width="10%">Assignee</th>
+                    <th width="40%">Subject</th>
+                    
+                    <th width="8%">Type</th>
+                    <th width="5%">Priority</th>
+                    <th width="5%">Scheduled Build</th>
+                    <th width="8%">Team</th>
+                    <th width="5%">Status</th>
+                </tr>
+                <apex:repeat value="{!workItems}" id="workList" var="item">
+                    <!-- Commented out toggle details, in case we want to add in a way to view the details later -->
+                    <tr><!-- class="firstWorkRow" onclick="toggleDetails(this)"> -->
+                        <td>
+                            <apex:inputCheckbox value="{!item.hasTheme}">
+                                <apex:actionSupport event="onchange" action="{!updateAssignedThemes}" rerender="workListView" status="assigningStatus"/>
+                            </apex:inputCheckbox>
+                        </td>
+                        <td><apex:outputLink value="/{!item.work.Id}">{!item.work.name}</apex:outputLink></td>
+                        <td><apex:outputLink value="/{!item.work.Assignee__c}">{!item.work.Assignee__r.Name}</apex:outputLink></td>
+                        <td>{!item.work.Subject__c}</td>
+                        <td>{!item.work.Type__c}</td>
+                        <td>{!item.work.Priority__c}</td>
+                        <td><apex:outputLink value="/{!item.work.Scheduled_Build__c}">{!item.work.Scheduled_Build_Name__c}</apex:outputLink></td>
+                        <td><apex:outputLink value="/{!item.work.Scrum_Team__c}">{!item.work.Scrum_Team_Name__c}</apex:outputLink></td>
+                        <td>{!item.work.Status__c}</td>
+                    </tr>
+                    <!-- Commented out, in case we want to add in a way to view the details later
+                    <tr>
+                    	<td colspan="9" minHeight="0px">
+                            <div style="display:none">
+                                <strong>Product Tag: </strong><apex:outputLink value="/{!item.work.Product_Tag__c}">{!item.work.Product_Tag_Name__c}</apex:outputLink><br /><br />
+                                <strong>Details:</strong>
+                        	    {!item.details}
+                            </div>
+                        </td>
+                    </tr>
+					-->
+                </apex:repeat>
+            </table>
+            
+            <apex:actionstatus id="assigningStatus">
+            	<apex:facet name="start">
+                	<div class="waitingSearchDiv waitingSearchDivStart" id="el_loading"> 
+                    	<div class="waitingHolder waitingHolderStart">
+                        	<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        	<span class="waitingDescription">Assigning...</span>
+                    	</div>
+                	</div>
+            	</apex:facet>
+        	</apex:actionstatus>
+            
+            <apex:actionstatus id="pagingStatus">
+            	<apex:facet name="start">
+                	<div class="waitingSearchDiv waitingSearchDivStart" id="el_loading"> 
+                    	<div class="waitingHolder waitingHolderStart">
+                        	<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        	<span class="waitingDescription">Loading...</span>
+                    	</div>
+                	</div>
+            	</apex:facet>
+        	</apex:actionstatus>
+            
+            <!-- Pagination buttons. If we want them on top, we need to copy and paste these to the gusFormToolbarTop -->
+            <apex:outputPanel rendered="{!hasMoreThanOnePage}" >
+                <div class="gusFormToolbar gusFormToolbarBottom">
+                    <apex:commandButton action="{!workList.first}" disabled="{!not(workList.hasPrevious)}" value="|<<" reRender="workListView"  status="pagingStatus" />
+                    <apex:commandButton action="{!workList.previous}" disabled="{!not(workList.hasPrevious)}" value="<" reRender="workListView"  status="pagingStatus" />
+                    <apex:commandButton action="{!workList.next}" disabled="{!not(workList.hasNext)}" value=">" reRender="workListView"  status="pagingStatus" />
+                    <apex:commandButton action="{!workList.last}" disabled="{!not(workList.hasNext)}" value=">>|" reRender="workListView"  status="pagingStatus" />
+                    <div style="float:right;font-weight:bold;font-size:12px;padding:10px">
+                        Page {!workList.pageNumber}/{!availablePages}
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+</apex:component>

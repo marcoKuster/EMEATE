@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Posted_to_Chatter__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field tracks if the comment has been posted to chatter. This field is used to tell if we need to display legacy comments, for more info see dependent story: W-1756310</description>
+    <externalId>false</externalId>
+    <label>Posted to Chatter</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

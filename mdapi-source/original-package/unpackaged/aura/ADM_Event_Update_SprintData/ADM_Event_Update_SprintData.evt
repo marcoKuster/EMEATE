@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Update sprint data">
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="recordType" type="String"/>
+</aura:event>

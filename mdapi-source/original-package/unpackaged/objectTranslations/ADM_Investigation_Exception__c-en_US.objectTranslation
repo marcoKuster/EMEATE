@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Exception Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Exception Requests</value>
+    </caseValues>
+    <fields>
+        <help><!-- The person making the decision - varies by status --></help>
+        <label><!-- Assigned To --></label>
+        <name>Assigned_To__c</name>
+        <relationshipLabel><!-- Exception Requests (Assigned To) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Should be filled out by the Assigned To --></help>
+        <label><!-- Decision Explanation --></label>
+        <name>Decision_Explanation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Investigation --></label>
+        <name>Investigation__c</name>
+        <relationshipLabel><!-- Exception Requests --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Should be filled out by the Requestor --></help>
+        <label><!-- Reason for Request --></label>
+        <name>Reason_for_Request__c</name>
+    </fields>
+    <fields>
+        <help><!-- Person who created the exception. Value entered automatically upon saving the record. --></help>
+        <label><!-- Requestor --></label>
+        <name>Requestor__c</name>
+        <relationshipLabel><!-- Exception Requests (Requestor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parent Investigation Resolved</masterLabel>
+            <translation><!-- Parent Investigation Resolved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Under Review</masterLabel>
+            <translation><!-- Under Review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Check the Help For this page link for more examples --></help>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Acknowledgment of a Severity 4 Investigation</masterLabel>
+            <translation><!-- Acknowledgment of a Severity 4 Investigation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>After hours request for after hours resources</masterLabel>
+            <translation><!-- After hours request for after hours resources --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>After hours triage/diagnosis of Sev 2</masterLabel>
+            <translation><!-- After hours triage/diagnosis of Sev 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>During business hours request for after hours resources/communication</masterLabel>
+            <translation><!-- During business hours request for after hours resources/communication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>More status updates/assigned resources</masterLabel>
+            <translation><!-- More status updates/assigned resources --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SLA violated by Support</masterLabel>
+            <translation><!-- SLA violated by Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SLA violated by T&amp;P</masterLabel>
+            <translation><!-- SLA violated by T&amp;P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Severity level upgrade</masterLabel>
+            <translation><!-- Severity level upgrade --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Investigation Exception Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please provide a decision explanation when setting the status to &apos;Approved&apos;. --></errorMessage>
+        <name>Dec_Explanation_Empty_Status_Approved</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a decision explanation when setting the status to &apos;Rejected&apos;. --></errorMessage>
+        <name>Dec_Explanation_Empty_With_Status_Reject</name>
+    </validationRules>
+</CustomObjectTranslation>

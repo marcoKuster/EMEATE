@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CS_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field defaults to the Investigation creator if the creator is in support (otherwise it defaults to blank). It can also be populated/overridden manually.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This field defaults to the Investigation creator if the creator is in support (otherwise it defaults to blank). It can also be populated/overridden manually.</inlineHelpText>
+    <label>Support Contact</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Work4</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,140 @@
+<apex:component id="workParentRelatedListComponent" controller="ADM_ParentWorkRelatedListController" allowDML="true">
+<apex:attribute name="AWorkID" description="Reference to the ID of the object" type="Id" required="required" assignTo="{!workid}"/>  
+
+<apex:outputPanel id="parentWorkListWrapper" >
+
+<apex:pageBlock id="parentWorkListPageBlock" title="Parent Work Records" >
+<apex:pageBlockButtons location="top">
+  <apex:commandButton id="redirectToNewParentWorkRecordBtn" action="{!redirectToNewParentWorkRecord}" value="New"  /> &nbsp;
+</apex:pageBlockButtons>
+<apex:repeat value="{!ErrorMessages}" var="error" id="errors">
+    <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/exclamation.png')}" style="vertical-align:text-top;padding-bottom:4px" /> &nbsp;<apex:outputText value="{!error}" styleClass="errorMsg" /><br/>
+</apex:repeat>
+<apex:pageMessages id="pm"/>
+
+<table border="0" cellspacing="0" width="100%" class="list">
+<tr class="headerRow">
+    <th width="5%">Action</th>
+    <th width="3%"></th>
+    <th width="10%">Work ID</th>
+    <th width="10%">Assignee</th>
+    <th width="40%">Subject</th>
+    <th width="8%">Type</th>
+    <th width="5%">Priority</th>
+    <th width="5%">Scheduled Build</th>
+    <th width="5%">Resolved</th>
+    <th width="5%">Closed</th>
+</tr>
+<apex:repeat value="{!RelatedParentWorkList}" id="relatedParentWorkList" var="worklink">
+<tr>
+    <td>
+        <apex:outputPanel id="parentWorkIconsWrapper1">
+            <apex:image url="{!$Resource.IconDelete}" id="deleteParentWorkIcon" alt="Remove Relationship" title="Remove Relationship" style="cursor:pointer;">
+                <apex:actionSupport event="onclick" action="{!deleteParentWork}" rerender="parentWorkListWrapper"  onsubmit="document.getElementById('{!$Component.deleteParentWorkIcon}').className='hidden';document.getElementById('inlineDeleteStatus{!worklink.id}').className=''">
+                    <apex:param assignTo="{!IDOfParentWorkBeingModified}" name="pid" value="{!worklink.id}" />
+                </apex:actionSupport>
+            </apex:image>
+            <img src="{!$Resource.ajaxloadersmall}" id="inlineDeleteStatus{!worklink.id}" class="hidden" />
+        </apex:outputPanel>
+    </td>
+    <td style="text-align:center;"><apex:image url="{!URLFOR($Resource.silkIcons, 'icons/page_white.png')}" rendered="{!worklink.Duplicate__c}" alt="Original" title="Original" /></td>
+    <td><apex:outputPanel id="parentWorkFieldWrapper"><span id="parentIDOutput{!worklink.id}"><apex:outputField value="{!worklink.Parent_Work__c}" /> </span></apex:outputPanel></td>
+    <td><apex:outputField value="{!worklink.Parent_Work__r.Assignee__c}" /></td>
+    <td><apex:outputLink value="/{!worklink.Parent_Work__r.id}" target="_parent"><apex:outputField value="{!worklink.Parent_Work__r.Subject__c}" /></apex:outputLink></td>
+    <td><apex:outputField value="{!worklink.Parent_Work__r.Type__c}" /></td>
+    <td><apex:outputField value="{!worklink.Parent_Work__r.Priority__c}" /></td>
+    <td><apex:outputField value="{!worklink.Parent_Work__r.Scheduled_Build__c}" /></td>
+    <td>
+        <apex:outputText rendered="{!worklink.Parent_Work__r.Resolved__c == 0.0}" ><apex:image url="{!$Resource.cross}" alt="The item remains unresolved" title="The item remains unresolved" /></apex:outputText>
+        <apex:outputText rendered="{!worklink.Parent_Work__r.Resolved__c == 1.0}" ><apex:image url="{!$Resource.tick}" /></apex:outputText>
+    </td>
+    <td>
+        <apex:outputText rendered="{!worklink.Parent_Work__r.Closed__c == 0.0}"><apex:image url="{!$Resource.cross}" /></apex:outputText>
+        <apex:outputText rendered="{!worklink.Parent_Work__r.Closed__c == 1.0}"><apex:image url="{!$Resource.tick}" /></apex:outputText>
+    </td>
+</tr>
+</apex:repeat>
+
+<tr class="actionFooter">
+    <td colspan="10" style="vertical-align:middle;height:28px;">
+        <apex:outputPanel id="parentWorkIcons">
+            <apex:actionStatus id="relatedWorkStatus">
+                <apex:facet name="start"><apex:image url="{!$Resource.ajaxloadersmall}" style="vertical-align:middle;margin-right:10px;" /></apex:facet>
+            </apex:actionStatus>
+            <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/add.png')}" id="addParentWorkIcon" styleClass="addParentWorkIcon" style="vertical-align:middle;cursor:pointer;" rendered="{!NOT(RelatedParentWorkCreateFlag)}" alt="Add New Parent Relationship" title="Add New Parent Relationship"  />
+            <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/cross.png')}" styleClass="hidden cancelParentWorkIcon" style="vertical-align:middle;margin-right:10px;cursor:pointer;" id="cancelParentWorkIcon" alt="Cancel" title="Cancel"  />
+            <apex:image url="{!URLFOR($Resource.customlookup)}" styleClass="hidden parentLookupIcon" style="vertical-align:middle;margin-right:5px;cursor:pointer;" id="parentLookupIcon" alt="Locate Work" title="Locate Work"  />
+        </apex:outputPanel>     
+        <apex:outputPanel id="newParentWork" styleClass="hidden newParentWork">                       
+            <apex:inputText value="{!newParentWorkName}" style="width:75px;min-width:0px;height:26px;" id="newParentWorkInput" styleClass="newParentWorkInput gusStyle" />
+            <span style="font-weight:normal"> is this record's </span>
+            <apex:selectList id="relationshipType" value="{!relationshipType}" size="1" styleClass="gusStyle" style="width:auto;min-width:0px;padding-right:16px;height:26px;">
+                <apex:selectOption itemValue="parent" itemLabel="Parent"/>
+                <apex:selectOption itemValue="original" itemLabel="Original"/>
+            </apex:selectList> 
+            <apex:commandButton action="{!createNewParentWork}" value="Save" status="relatedWorkStatus"  id="saveParentWorkBtn" rerender="{!$Component.parentWorkListWrapper}" styleClass="saveParentWorkBtn" style="vertical-align:middle;" />
+        </apex:outputPanel>     
+    </td>
+</tr>
+</table>
+
+<div style="padding:0px 10px;">
+	<apex:outputText rendered="{!AND(relatedParentWorkListSize > 5, ParentWorkLimit == true)}" >
+	    <apex:commandLink id="disableParentWorkLimitLink" styleClass="disableParentWorkLimitLink" action="{!disableParentWorkLimit}" rerender="parentWorkListWrapper">
+	        <br/>1 to 5 of &nbsp;<apex:outputText value="{!relatedParentWorkListSize}" /> - Show All
+	    </apex:commandLink>
+	</apex:outputText>
+	<apex:outputText rendered="{!AND(relatedParentWorkListSize > 5, ParentWorkLimit == false)}" >
+	    <apex:commandLink id="enableParentWorkLimitLink" styleClass="enableParentWorkLimitLink" action="{!enableParentWorkLimit}" rerender="parentWorkListWrapper">
+	        <br/>1 to&nbsp;<apex:outputText value="{!relatedParentWorkListSize}" /> of &nbsp;<apex:outputText value="{!relatedParentWorkListSize}" /> - Show Less
+	    </apex:commandLink>
+	</apex:outputText>
+	 <img src="{!$Resource.ajaxloadersmall}" id="parentWorkListSizeProgress" class="hidden parentWorkListSizeProgress" />
+	
+	<apex:outputText rendered="{!relatedParentWorkListSize == 0}">
+	        <br/>No records to display.  Click the plus icon to create a new record.
+	</apex:outputText>
+	
+	<apex:outputText rendered="{!AND(relatedParentWorkListSize < 6, relatedParentWorkListSize > 0)}">
+	        <br/>1&nbsp;to&nbsp;<apex:outputText value="{!relatedParentWorkListSize}" />&nbsp;of&nbsp;<apex:outputText value="{!relatedParentWorkListSize}" />
+	</apex:outputText>
+</div>
+
+</apex:pageBlock>
+</apex:outputPanel>
+
+<script type="text/javascript">
+//using jQuery.delegate because this component is used on ADM_WorkDetail, which still uses jQuery 1.5.2
+
+$(document).delegate('.addParentWorkIcon', 'click', function() {
+    $('.addParentWorkIcon').addClass('hidden');
+    $('.cancelParentWorkIcon').removeClass('hidden');
+    $('.parentLookupIcon').removeClass('hidden');
+    $('.newParentWork').removeClass('hidden');
+});
+
+$(document).delegate('.cancelParentWorkIcon', 'click', function() {
+    $('.cancelParentWorkIcon').addClass('hidden');
+    $('.parentLookupIcon').addClass('hidden');
+    $('.addParentWorkIcon').removeClass('hidden');
+    $('.newParentWork').addClass('hidden');
+});
+
+$(document).delegate('.parentLookupIcon', 'click', function() {
+    registerLookup('{!$Component.parentWorkListPageBlock.newParentWorkInput}');
+    openCustomPopup(this);
+});
+
+$(document).delegate('.saveParentWorkBtn', 'click', function() {
+    $('.cancelParentWorkIcon').addClass('hidden');
+    $('.saveParentWorkBtn').addClass('btnDisabled');
+});
+
+$(document).delegate('.disableParentWorkLimitLink', 'click', function() {
+    $('.parentWorkListSizeProgress').removeClass('hidden');
+});
+$(document).delegate('.enableParentWorkLimitLink', 'click', function() {
+    $('.parentWorkListSizeProgress').removeClass('hidden');
+});
+</script>
+</apex:component>

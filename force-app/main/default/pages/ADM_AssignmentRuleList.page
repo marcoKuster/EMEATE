@@ -1,0 +1,4 @@
+<!-- This page is needed so that inline editing is disabled on the Assignment Rule list view -->
+<apex:page tabStyle="ADM_Assignment_Rule__c">
+    <apex:listViews type="ADM_Assignment_Rule__c"/>
+</apex:page>

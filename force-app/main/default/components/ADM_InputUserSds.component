@@ -1,0 +1,159 @@
+<apex:component id="richAutoComplete" controller="ADM_RichAutoCompleteController" layout="none">
+    <apex:attribute name="object" description="The object" type="sObject" required="true" assignTo="{!currentSObject}" />
+    <apex:attribute name="inputFieldName" description="This name of the field in the Object." type="String" required="true" assignTo="{!currentField}" />
+    <apex:attribute name="inputObjectName" description="" type="String" required="true" />
+    <apex:attribute name="value" description="" type="Object" required="false" />
+    <apex:attribute name="required" description="Is this field required?" type="Boolean" required="false" />
+	<apex:attribute name="renderRow" type="Boolean" description="If false, component only renders input field. If true, component renders surrounding divs" default="false" required="false" />
+    <apex:attribute name="info" description="Provide custom Help Hover text" type="String" required="false" />
+    <apex:attribute name="readonly" description="" type="Boolean" required="false" />
+    <apex:attribute name="inputStyleClass" description="CSS class that will be applied to the input field" type="String" required="false" />
+	<apex:attribute name="inputColumnStyleClass" type="String" description="CSS class that will be applied to the column" required="false" />
+    <apex:attribute name="smallPhotoUrl" description="Thumbnail of the user" type="String" required="false" />
+    
+	<!-- renderRow:false, read only -->
+	<apex:outputPanel rendered="{!IF(renderRow,false,true)}" layout="none">
+	    <apex:outputPanel rendered="{!IF(readonly,true,false)}" layout="none">
+			<apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(object[inputFieldName]))}">
+				<span class="slds-avatar slds-avatar--circle slds-avatar--x-small slds-m-right--x-small"><apex:image value="{!smallPhotoUrl}" /></span>
+				<a href="/{!object[inputFieldName]}"><apex:outputField value="{!object[inputFieldName]}" /></a>
+			</apex:outputPanel>
+			<apex:outputPanel layout="none" rendered="{!ISBLANK(object[inputFieldName])}">
+			-
+			</apex:outputPanel>
+	    </apex:outputPanel>
+	</apex:outputPanel>
+
+
+	<!-- renderRow:false, input -->
+	<apex:outputPanel rendered="{!IF(renderRow,false,true)}" layout="none">
+	    <apex:outputPanel rendered="{!IF(readonly,false,true)}" layout="none">
+
+						<div id="{!$Component.richAutoComplete}_container" class="gusRichAutoComplete">
+							<apex:inputText id="inputStandalone" value="{!name}" styleClass="gusRichAutoCompleteInput gusStyle {!inputStyleClass}" />
+							<img src="/profilephoto/005/F" class="gusRichAutoCompleteProfileImage userInputProfileImage" />
+							<apex:inputHidden id="idInputStandalone" value="{!object[inputFieldName]}" />
+							<apex:inputHidden id="profileImageInputStandalone" value="{!profileImageUrl}" />
+							<script type="text/javascript">
+							(function() {
+							    var $container = $(document.getElementById('{!$Component.richAutoComplete}_container'));
+							    
+							    //visualforce apex:inputHidden doesn't support styleClass so we have to add it at runtime
+							    $(document.getElementById('{!$Component.idInputStandalone}')).addClass('gusRichAutoCompleteUserID');
+							    $(document.getElementById('{!$Component.profileImageInputStandalone}')).addClass('gusRichAutoCompleteProfileImageUrlInput');
+							    
+							    var component = new gus.RichUserLookupComponent({
+							        $container: $container,
+							        placeholder: '',
+							        controller: {
+							            getUsersWithNameLike: function(options) {
+							                var term = options.term;
+							                if(!term) {
+							                    throw new Error('Term is required for search');
+							                }
+							                
+							                {!$RemoteAction.ADM_RichAutoCompleteController.getUsersWithNameLike}(term, function(data, event) { 
+							                    if(event.status) {
+							                        if(options.success) {
+							                            options.success(data);
+							                        }
+							                    } else {
+							                        if(options.fail) {
+							                            options.fail([{message: event.message}]);
+							                        }
+							                    }
+							                }, {escape:false})
+							            }
+							        }
+							    });
+							    component.render();
+							    return component;    
+							})();
+							</script>
+						</div>
+
+	    </apex:outputPanel>
+	</apex:outputPanel>
+
+	<!-- renderRow:true, read only -->
+	<apex:outputPanel rendered="{!IF(renderRow,true,false)}" layout="none">
+	    <apex:outputPanel rendered="{!IF(readonly,true,false)}" layout="none">
+			<div class="slds-col slds-col--padded slds-p-bottom--medium size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+				<div class="slds-form-element">
+					<span class="slds-form-element__label"><apex:outputText value="{!$ObjectType[inputObjectName].fields[inputFieldName].Label}" /></span>
+					<div class="slds-form-element__control">
+						<span class="slds-form-element__static">
+							<apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(object[inputFieldName]))}">
+								<span class="slds-avatar slds-avatar--circle slds-avatar--x-small slds-m-right--x-small"><apex:image value="{!smallPhotoUrl}" /></span>
+								<a href="/{!object[inputFieldName]}"><apex:outputField value="{!object[inputFieldName]}" /></a>
+							</apex:outputPanel>
+							<apex:outputPanel layout="none" rendered="{!ISBLANK(object[inputFieldName])}">
+							-
+							</apex:outputPanel>
+						</span>
+					</div>
+				</div>
+			</div>
+	    </apex:outputPanel>
+	</apex:outputPanel>
+	
+	<!-- renderRow:true, input -->
+	<apex:outputPanel rendered="{!IF(renderRow,true,false)}" layout="none">
+	    <apex:outputPanel rendered="{!IF(readonly,false,true)}" layout="none">
+			<div class="slds-col slds-col--padded slds-p-bottom--medium {!inputColumnStyleClass}">
+				<div class="slds-form-element">
+					<label class="slds-form-element__label" for="{!$Component.richAutoComplete.input}">
+		                {!$ObjectType[inputObjectName].fields[inputFieldName].Label}
+		                <c:ADM_HelpHover2 id="helpHover" type="{!inputObjectName}" field="{!inputFieldName}" />
+		                <apex:outputPanel layout="none" rendered="{!required == true}"><apex:outputText value="*" styleClass="assistiveText"/></apex:outputPanel>
+		            </label>
+					<div class="slds-form-element__control">
+						<div id="{!$Component.richAutoComplete}_container" class="gusRichAutoComplete">
+							<apex:inputText id="input" value="{!name}" styleClass="gusRichAutoCompleteInput gusStyle {!inputStyleClass}" />
+							<img src="/profilephoto/005/F" class="gusRichAutoCompleteProfileImage userInputProfileImage" />
+							<apex:inputHidden id="idInput" value="{!object[inputFieldName]}" />
+							<apex:inputHidden id="profileImageInput" value="{!profileImageUrl}" />
+							<script type="text/javascript">
+							(function() {
+							    var $container = $(document.getElementById('{!$Component.richAutoComplete}_container'));
+							    
+							    //visualforce apex:inputHidden doesn't support styleClass so we have to add it at runtime
+							    $(document.getElementById('{!$Component.idInput}')).addClass('gusRichAutoCompleteUserID');
+							    $(document.getElementById('{!$Component.profileImageInput}')).addClass('gusRichAutoCompleteProfileImageUrlInput');
+							    
+							    var component = new gus.RichUserLookupComponent({
+							        $container: $container,
+							        placeholder: '',
+							        controller: {
+							            getUsersWithNameLike: function(options) {
+							                var term = options.term;
+							                if(!term) {
+							                    throw new Error('Term is required for search');
+							                }
+							                
+							                {!$RemoteAction.ADM_RichAutoCompleteController.getUsersWithNameLike}(term, function(data, event) { 
+							                    if(event.status) {
+							                        if(options.success) {
+							                            options.success(data);
+							                        }
+							                    } else {
+							                        if(options.fail) {
+							                            options.fail([{message: event.message}]);
+							                        }
+							                    }
+							                }, {escape:false})
+							            }
+							        }
+							    });
+							    component.render();
+							    return component;    
+							})();
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+	    </apex:outputPanel>
+	</apex:outputPanel>
+
+</apex:component>

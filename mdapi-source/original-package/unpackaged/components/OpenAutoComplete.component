@@ -1,0 +1,544 @@
+<!--
+This auto complete component tries to be as generic as possible and open to all objects to allow anyone to use it. 
+Feel free to add to this component or email thomas.dvornik@salesforce or jhatton@salesforce.com with any questions. 
+
+Below is an visualforce page with example usage.
+
+<apex:page controller="FeedbackPageController">
+    <script> 
+        function selected(name) {
+            alert('You selected on '+name);
+        }
+        
+        function noResults() { alert('No Results'); }
+        function results(resultList) { 
+            alert(resultList.toString());
+        }
+    </script>
+
+    <style>
+        .myStyle {
+            width: 500px;
+            background: lightgrey;
+            padding: 5px;
+            border: 1px solid darkgrey;
+        }
+    </style>
+
+    <apex:form id="theForm">
+        User autocomplete with all defaults:
+        <br />
+        
+        <c:OpenAutoComplete inputId="usertextbox" objectName="User" />
+ 
+        <br /><br />
+        
+        User autocomplete with results and no result listeners:
+        <br />
+        <c:OpenAutoComplete inputId="usertextboxwResult" objectName="User" onNoResults="noResults"/> <!--Couldn't get to work... onResults="results" ->
+ 
+        <br /><br />
+        
+        Challenges lookup with a selected function, width, and custom style with a default text:
+        <br />
+        <c:OpenAutoComplete width="500px" className="myStyle" onSelect="selected" inputId="mychallenge" objectName="Challenge__c" defaultText="Let me help you select a user..."/>
+        
+        <br /><br />
+        
+        Now lets try to offset it and make sure the suggestions show correctly.
+        An offset user auto complete that uses default styles, 100% width, and alerts on select:
+        <br />
+        <div style="margin-left:500px;">
+            <c:OpenAutoComplete width="100%" onSelect="selected" inputId="offset" objectName="User" />
+        </div>
+        
+        <br /><br />
+        
+        This is an example of binding an object to an autocomplete with default text:
+        <br />
+        <c:OpenAutoComplete inputId="binding" objectName="User" bindingObject="{!myText}" defaultText="Select a user..." />
+        <apex:commandButton value="See text" action="{!save}" rerender="myOutput"/><br/>
+        <apex:outputPanel id="myOutput">The text in the above box is: {!myText}</apex:outputPanel>
+        <br /><br />  
+    </apex:form>
+    You can also get it by id! <button onClick="alert(document.getElementById('binding').value);">See text using id</button>
+     
+</apex:page>
+
+
+-->
+
+<apex:component controller="OpenAutoCompleteController">   
+
+    <apex:attribute name="objectName" description="This is the lookup Object." type="String" required="true"/>
+    <apex:attribute name="inputId" description="Id of the InputField to which the AutoComplete Componente will belong, use {!$Component.THEID}" type="String" required="true"/>
+
+    <apex:attribute name="bindingObject" description="This is the object in the controller that will be binded to the text box." type="Object" required="false"/>
+    
+    <apex:attribute name="onSelect" description="The name of the javascript function or action method to be called when a suggested item is highlighted and selected (enter key or mouse click). Arg: the name of the selected element" type="String" required="false" />
+    <!-- Couldn't get this one to work...
+       <apex:attribute name="onResults" description="The name of the javascript function or action method to be called when items are found. Please note that this method can be called multiple times in a short period of time if the user keeps typing. Arg: list of names found (max of 10)" type="String" required="false" />
+    -->
+    <apex:attribute name="onNoResults" description="The name of the javascript function or action method to be called when a no items are found. Please note that this method can be called multiple times in a short period of time if the user keeps typing." type="String" required="false" />
+
+    <apex:attribute name="className" description="This is the name of the CSS class used to style the auto-complete result box. If you define your own style, you should include position:absolute; so it doesn't move all the other elements." type="String" required="false"/>
+    <apex:attribute name="width" description="auto complete result box width, In case you need to adjust it for certain inputs" type="String" required="false"/>
+    <apex:attribute name="defaultText" description="The default text" type="String" required="false"/>
+
+    <script>
+        disableFormSubmitOnKeyboardEnter('{!inputId}');
+        
+        /* Can put everything under this in a static resource */
+        
+        /**
+         * Stops enter from submitting the form so that it will only select the suggested element
+         */
+        function disableFormSubmitOnKeyboardEnter(elementId) {
+            if (window.Event) {
+                window.captureEvents(Event.KEYDOWN);
+                window.onkeydown = function(e) { return doAction(e.which, e.target); };
+            } else {
+                document.onkeydown = function() { return doAction(event.keyCode, event.srcElement); };
+            }
+            
+            function doAction(keyCode, element) {
+                if (keyCode == 13 && element.id == elementId) {  
+                    return false;
+                }
+                return true;
+            }
+        }
+        
+        AutoComplete = function (input, suggestions, lookupto, clearfunction, objectn) {
+
+            //Global Variables
+            
+            var IS_IE = true;
+            var timer;
+            var bgColor = "#b0c4de";
+            var searchColor = "#FFFFCC";
+            var bgColorRGB = "rgb(176,196,222)";
+            var searchString = "Searching...";
+            var searchID = suggestions.id+"tmpsearch";
+            var clearFunction = clearfunction;
+            var noResultsID = "{!inputId}N_R";
+            
+            //Attach Event Handlers
+            if (input.attachEvent) {
+                input.attachEvent("onkeyup", handleKeyUp);
+                input.attachEvent("onkeydown", handleArrows);
+                input.attachEvent("onblur",handleBlur);
+                input.attachEvent("onfocus",handleFocus);
+                suggestions.attachEvent("onmouseover",initializeMouseOver);
+            } else {
+                IS_IE = false;
+                bgColor= "#a3ceff";
+                bgColorRGB= "rgb(163, 206, 255)";
+                input.onkeyup=handleKeyUp;
+                input.onkeydown=handleArrows;
+                input.onblur=handleBlur; 
+                input.onfocus=handleFocus;
+                suggestions.onmouseover=initializeMouseOver;
+            }
+            
+            function hideAutoComplete() {
+                suggestions.innerHTML = "";
+                suggestions.style.display = "none";
+            }
+          
+            function getCursor() {
+                if (suggestions.innerHTML.length == 0) {
+                    return -1;
+                } else {
+                    if (suggestions.childNodes[0].id == searchID || suggestions.childNodes[0].id == noResultsID) {
+                        return -1;
+                    }
+                    
+                    for (var i = 0; i < suggestions.childNodes.length; i++) {
+                        if (suggestions.childNodes[i].style.backgroundColor == bgColor || suggestions.childNodes[i].style.backgroundColor == bgColorRGB) {
+                            return i;
+                        }
+                    }
+                    return suggestions.childNodes.length;   
+                }
+            }
+            
+            function initializeMouseOver(event) {
+                if (suggestions.childNodes.length > 0) {
+                    if (suggestions.childNodes[0].id == searchID || suggestions.childNodes[0].id == noResultsID) {
+                        return;
+                    } else {
+                        if (IS_IE) {
+                            for (var i = 0; i < suggestions.childNodes.length; i++) {
+                                suggestions.childNodes[i].attachEvent("onmouseover",handleMouseOver);
+                                suggestions.childNodes[i].attachEvent("onmouseout",handleMouseOut);
+                                suggestions.childNodes[i].attachEvent("onmousedown",handleMouseClick);      
+                            }
+                        } else {
+                            for (var i = 0; i < suggestions.childNodes.length; i++){                      
+                                suggestions.childNodes[i].onmouseover = handleMouseOver;
+                                suggestions.childNodes[i].onmouseout = handleMouseOut;
+                                suggestions.childNodes[i].onmousedown = handleMouseClick;       
+                            }
+                        }   
+                    }
+                }
+            }
+            
+            function handleMouseClick(event) {
+                if (IS_IE) {
+                    if(event.srcElement.id) {
+                        input.value = event.srcElement.id;
+                    } else {
+                        input.value = event.srcElement.innerText;
+                    }     
+                } else {
+                    if(event.target.id) {
+                        input.value =  event.target.id;
+                    } else {
+                        input.value =  event.target.textContent;
+                    }
+                }
+            
+                highlightChosenUser(); 
+            }
+            
+            function handleMouseOver(event) {
+                if (IS_IE) {
+                    if (event.srcElement.style.backgroundColor != bgColor) {
+                        event.srcElement.style.backgroundColor = searchColor;
+                    }    
+                } else {
+                    if(event.target.style.backgroundColor != bgColorRGB) {
+                        event.target.style.backgroundColor = searchColor;
+                    }
+                }
+            }
+            
+            function handleMouseOut(event) {
+                if (IS_IE) {
+                    if (event.srcElement.style.backgroundColor != bgColor) {
+                        event.srcElement.style.backgroundColor = "";
+                    }
+                } else {
+                    if (event.target.style.backgroundColor != bgColorRGB) {
+                        event.target.style.backgroundColor = "";
+                    }
+                }
+            }
+            
+            function handleKeyUp(event){
+                //if key is not an arrow or enter
+                if (event.keyCode != 40 && event.keyCode != 38 && event.keyCode != 13 && 
+                        event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 27) {
+                    if (timer != null) {
+                        clearTimeout(timer);
+                        timer = null;
+                    }
+                                 
+                    if (input.value.length == 0) {
+                        hideAutoComplete();
+                    } else {       
+                        timer = setTimeout(function() {
+                                window[lookupto](input.value,objectn);
+                                displayStatus();
+                            },350);
+                    }
+                } 
+            }
+            
+            function displayStatus() {
+                suggestions.innerHTML = '';
+                suggestions.style.display = '';
+                var myElement = document.createElement('div');
+                myElement.id = searchID;
+                myElement.style.backgroundColor = searchColor;
+                var textNode = document.createTextNode(searchString);
+                myElement.appendChild(textNode);
+                suggestions.appendChild(myElement);
+            }
+            
+            function handleArrows(event) {
+                if (input.value.length == 0 || event.keyCode == 27) {
+                    //make sure autocomplete has no values
+                    hideAutoComplete();
+                    return;
+                }
+               
+                try {
+                    var cursor = getCursor();
+                    
+                    if (event.keyCode == 13 || event.keyCode == 9) {
+                        if (cursor != -1 && cursor < suggestions.childNodes.length) {
+                            if (IS_IE) {
+                                if(suggestions.childNodes[cursor].id) {
+                                    input.value = suggestions.childNodes[cursor].id;
+                                } else {
+                                    input.value = suggestions.childNodes[cursor].innerText;
+                                }
+                            } else {
+                                if (suggestions.childNodes[cursor].id) {
+                                    input.value = suggestions.childNodes[cursor].id;
+                                } else {
+                                    input.value = suggestions.childNodes[cursor].textContent;
+                                }
+                                hideAutoComplete();
+                            }
+                            //highlight user on enter if the input text is populated 
+                            highlightChosenUser();
+                        }
+                    } else if (event.keyCode == 40 || event.keyCode == 38) {
+                        if (cursor != -1) {
+                            if (event.keyCode == 40) {
+                                if (cursor == suggestions.childNodes.length) {
+                                    suggestions.childNodes[0].style.backgroundColor = bgColor;
+                                } else if (cursor < suggestions.childNodes.length - 1) {
+                                    suggestions.childNodes[cursor].style.backgroundColor = "";
+                                    suggestions.childNodes[cursor + 1].style.backgroundColor = bgColor;
+                                }
+                            } else {
+                                if (cursor > 0) {
+                                    suggestions.childNodes[cursor].style.backgroundColor = "";
+                                    suggestions.childNodes[cursor - 1].style.backgroundColor = bgColor;
+                                
+                                } else {
+                                    hideAutoComplete();
+                                }
+                            }
+                        }
+                    }
+                } catch(e) {}
+            }
+            
+            function highlightChosenUser() {
+                {!IF(onSelect != NULL, onSelect+'(input.value);', '')}
+            }
+            
+            function handleBlur() {       
+                hideAutoComplete();
+                if (timer != null){
+                    window[clearFunction]();
+                    clearTimeout(timer);
+                    timer = null;
+                } else {
+                    window[clearFunction]();
+                }
+            }
+            
+            function handleFocus() {
+                hideAutoComplete();
+                //console.debug('handleFocus: ' + input.value);
+            }
+        }
+        
+        /**
+         * Disable browsers autocomplete on a textbox.
+         */
+        function disableAutoComplete(textBox) {
+            if (textBox.autocomplete == undefined) {
+              // Firefox
+              textBox.setAttribute ("autocomplete", "off");
+            }
+            else {
+              textBox.autocomplete = "off";
+            }
+        }
+    </script>
+
+    <style>
+        .suggestions
+        {
+            position:relative;
+            top: 1px;
+            _top: 0px;
+            z-index:9999999; !important
+        }
+    
+    
+        .autocomplete
+        {
+            background: #FFFFFF !important;
+            border: solid 2px #8dbbce !important;
+            !width: 300px !important;
+            font-family:Verdana, Arial, Helvetica, sans-serif;
+            font-size: 98% !important;
+            z-index:9999999 !important;
+            display:block;
+            left: -3px;
+            position:absolute;
+        }
+    
+        .autocomplete div
+        {
+            padding: 2px 4px 2px 10px !important;
+            z-index:9999999; !important
+            display:block;
+            cursor:default; 
+        }
+        .boxWidth{!inputId} {
+            {!IF(ISBLANK(width), '', 'width: '+width+';')}
+        }
+    </style>
+
+    <apex:actionFunction name="search{!inputId}" action="{!searchSuggestions}" rerender="autoSuggestionResults" immediate="true" >
+        <apex:param name="aname" value="" />
+        <apex:param name="objectname" value="" />
+    </apex:actionFunction>
+
+    <apex:actionFunction name="clear{!inputId}" action="{!clearValues}" rerender="autoSuggestionResults" immediate="true"/>
+
+    <div style="position: relative;" >
+        <apex:inputText id="oac_temp" value="{!bindingObject}" styleClass="boxWidth{!inputId}"/>
+        <script>
+            document.getElementById('{!$Component.oac_temp}').id = '{!inputId}';
+        </script>
+        
+        <div id="suggestions" class="suggestions">
+            <div id="auto{!inputId}" class="{!IF(className == null, 'autocomplete', className)} boxWidth{!inputId}" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        new AutoComplete(document.getElementById('{!inputId}'),document.getElementById('auto{!inputId}'),'search{!inputId}','clear{!inputId}','{!objectName}');
+    </script>                                                                     
+
+
+    <!-- suggestions -->
+    <apex:outputPanel id="autoSuggestionResults" layout="block">
+        <script>
+            var container = document.getElementById('auto{!inputId}');
+            container.innerHTML = '';
+    
+            var myElement;
+            var textNode;
+            var aIds;   
+        </script>
+ 
+        <apex:actionStatus >
+            <apex:facet name="stop">
+                <apex:repeat value="{!resultsname}" var="a" rendered="{!currentlySearching}">
+                    
+                    <script>
+                        myElement = document.createElement('div');
+                        
+                        if ({!hasNoResults}) {
+                            myElement.id = '{!inputId}N_R';
+                            myElement.style.background = "#CCCCFF";
+                            textNode = document.createTextNode('{!a}');                   
+                        } else {          
+                            textNode = document.createTextNode('{!a}');
+                        }
+            
+                        myElement.appendChild(textNode);
+                        container.appendChild(myElement);       
+                     </script>
+                </apex:repeat>    
+            </apex:facet>
+        </apex:actionStatus>
+    
+        <script>
+            if (document.getElementById('{!inputId}').type == 'hidden') {
+                var cont = document.getElementById('auto{!inputId}');
+                cont.innerHTML = '';
+                cont.style.display = 'none';
+            } else {
+            {!IF(NOT(ISBLANK(onNoResults)), IF(hasSearchedAgain, IF(hasNoResults, onNoResults+'();', '//Has results'), '//Has not searched again'), '//No onNoResults function')}
+            //{IF(NOT(ISBLANK(onResults)), IF(hasSearchedAgain, IF(NOT(hasNoResults), onResults+'('+resultsJSString+');', '//No results'), '//Has not searched again'), '//No onResults function')}
+            }
+            
+        </script>
+    </apex:outputPanel>
+    
+    <!-- TODO: Clean up the below code. Most of it isn't being used
+    
+    <script type="text/javascript">
+        $(function()
+        {
+            $('#feedList').jScrollPane();
+            setWidthToFitPage();
+            $('#raHelpBar').slideDown('slow');
+        });
+        
+        $(window).resize(function() {
+          setWidthToFitPage();
+        });
+
+    </script>
+    --> 
+    <script type="text/javascript">
+        // We have to resort to javascript to disable the browser based auto-complete 
+        // as the autocomplete HTML attribute is considered invalid by visual force
+        
+        //TODO: Replace id with the param if passed in or a more uniquely created id from this component.
+        disableAutoComplete(document.getElementById('{!inputId}'));
+        
+        
+        
+        //var selectedUserRow; 
+        
+        /*
+        function highlightSelectedUser() {
+    
+            $('#feedList').jScrollPane();
+            if(selectedUserRow) {
+                $(selectedUserRow).removeClass("raUserRowSelected");
+            }
+            var id = "user" + $("#currentUser").val().substr(0,15);
+            var row = document.getElementById(id); 
+            selectedUserRow = row;
+            $(selectedUserRow).addClass("raUserRowSelected");
+            loadingScreen.hide();
+            document.getElementById("j_id0:form:j_id44").focus();
+        }
+        
+        function closePanel(trigger) {
+            $(trigger).parent().hide();
+        }
+        
+        //smysore
+        function userPanelInit() {
+            $('div[id*=userPanelContents2]').height(window.innerHeight-380+'px');
+            $('#userpanelDiv').height(window.innerHeight-300+'px');
+            //alert($('div[id*=userPanelContents2]').height());
+        }
+        //smysore
+       
+        function setWidthToFitPage() {
+            $('#cloudBtm').width($('#contentWrapper').width());          
+        }
+        */
+
+    </script> 
+    
+  <script type="text/javascript">
+    /** Add ghost text **/
+   
+    // dont auto focus search box
+    var txtContent  = document.getElementById('{!inputId}');   
+    window.addEventListener("load", function() {
+            txtContent.blur();
+        }, false);
+        
+    txtContent.value = '{!defaultText}';
+    txtContent.style.color = "#BBB";
+    
+    txtContent.addEventListener("focus", function() {
+          if (this.value == '{!defaultText}') {
+            this.value = "";
+            this.style.color = "#222";
+          }
+        }, false);
+        
+    txtContent.addEventListener("blur", function() {
+          if (this.value == "") {
+            this.value = '{!defaultText}';
+            this.style.color = "#BBB";
+          }
+        }, false); 
+        
+  </script> 
+    
+    
+    
+
+</apex:component>

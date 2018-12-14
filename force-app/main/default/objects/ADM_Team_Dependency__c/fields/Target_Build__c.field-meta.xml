@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Build__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The build in which you would like the deliverable completed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The build in which you would like the deliverable completed. If the deliverable is not associated with a specific build, enter the major product release corresponding to the season in which this deliverable is needed (e.g. 162 - Winter &#39;10).</inlineHelpText>
+    <label>Target Build</label>
+    <referenceTo>ADM_Build__c</referenceTo>
+    <relationshipLabel>Team Dependencies</relationshipLabel>
+    <relationshipName>Team_Dependencies</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

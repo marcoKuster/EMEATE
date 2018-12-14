@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Feature Freeze Exception Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Feature Freeze Exception Request</value>
+    </caseValues>
+    <fields>
+        <help><!-- Code checked in and follows department standards. --></help>
+        <label><!-- Code Complete --></label>
+        <name>Code_Complete__c</name>
+    </fields>
+    <fields>
+        <help><!-- Code coverage for this feature. --></help>
+        <label><!-- Code Coverage Percentage --></label>
+        <name>Code_Coverage_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- Database scripts are complete and incorporated into database upgrade process. --></help>
+        <label><!-- DB Upgrade Scripts Complete and Verified --></label>
+        <name>DB_Upgrade_Script_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- User documentation complete and checked in. --></help>
+        <label><!-- Documentation Complete --></label>
+        <name>Documentation_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- What effort is required to backout/disable the functionality and ensure the code line is potentially releasable? --></help>
+        <label><!-- Effort to Disable Feature --></label>
+        <name>Effort_to_Disable_Feature__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date the scrum team marked the exception as complete. --></help>
+        <label><!-- Exception Complete --></label>
+        <name>Exception_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feature Freeze Status --></label>
+        <name>Feature_Freeze_Status__c</name>
+        <relationshipLabel><!-- Feature Freeze Exception Request --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Feature name --></help>
+        <label><!-- Feature Name or Overall Status --></label>
+        <name>Feature_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- List SHOWSTOPPER bugs and when they will be fixed and tested. --></help>
+        <label><!-- List of Showstopper Bugs --></label>
+        <name>List_of_Showstopper_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- All UI labels ready for localization vendors. --></help>
+        <label><!-- UI Labels Ready for Localization --></label>
+        <name>Localization_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Major Exception --></label>
+        <name>Major_Exception__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of  Bugs and Test Failures to Fix. --></help>
+        <label><!-- Num of Bugs/TF to Verify --></label>
+        <name>Num_P2_Bugs_TF_to_Fix_Verify__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P1 bugs and test failures to be fixed or verified.  DoD criterion is 0.  FF criterion is no more than 1. --></help>
+        <label><!-- Num of Bugs/TF to Fix --></label>
+        <name>Num_of_P1_Bugs_TF_to_be_Fixed_Verified__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of BLOCKING, RELEASE BLOCKING, or FEATURE BLOCKING bugs that are not Verified and Closed. --></help>
+        <label><!-- Number of P0/Blocking Bugs --></label>
+        <name>Number_of_Blocking_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of open regressions for this feature. Automated tests written and reviewed for all closed regressions.  DoD criterion is 0. --></help>
+        <label><!-- Number of Open Regressions --></label>
+        <name>Number_of_Open_Regressions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P1 and P2 bugs for this feature older than one week that are not verified and closed.  FF criterion is 0. --></help>
+        <label><!-- Number of TF &gt; 1 Week --></label>
+        <name>Number_of_P1_P2_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Percent of test cases that are automated. DoD criterion is 70%. --></help>
+        <label><!-- Percent Test Cases Automated --></label>
+        <name>Percent_Test_Cases_Automated__c</name>
+    </fields>
+    <fields>
+        <help><!-- What are the options if this exception request is not approved? --></help>
+        <label><!-- Plan if Exception Denied --></label>
+        <name>Plan_if_Exception_Denied__c</name>
+    </fields>
+    <fields>
+        <help><!-- What is the plan – including dates and owners – to complete this work and the Release Sprint activities by Release Freeze? --></help>
+        <label><!-- Plan to Complete by Release Freeze --></label>
+        <name>Plan_to_Complete_by_Release_Freeze__c</name>
+    </fields>
+    <fields>
+        <help><!-- Metrics to concretely measure customer usage of the sprint functionality have been defined and New Metric Request has been filed for any metrics not yet in the data warehouse.  See  http://wikiforce.soma.salesforce.com/pmwiki.php/Main/ProductMetrics --></help>
+        <label><!-- Product Metrics Defined --></label>
+        <name>Product_Metrics_Defined__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The date the R&amp;D Exec Team signed off on Feature Freeze. --></help>
+        <label><!-- R&amp;D Exec Approved --></label>
+        <name>R_D_Exec_Approved__c</name>
+    </fields>
+    <fields>
+        <help><!-- What remains to meet Feature Freeze criteria? --></help>
+        <label><!-- Remaining Work --></label>
+        <name>Remaining_Work__c</name>
+    </fields>
+    <fields>
+        <help><!-- Security Standards met and critical issues resolved. --></help>
+        <label><!-- Security Standards Met --></label>
+        <name>Security_Standards_Met__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Performance/scalability impact ascertained and sys testing scheduled/completed if required. --></help>
+        <label><!-- SysTest Status --></label>
+        <name>SysTest_Status__c</name>
+        <picklistValues>
+            <masterLabel>Complete</masterLabel>
+            <translation><!-- Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unscheduled</masterLabel>
+            <translation><!-- Unscheduled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Percent of test cases passing.  DoD criterion is 100% for P1/P2 cases. --></help>
+        <label><!-- Test Cases Passing Percentage --></label>
+        <name>Test_Cases_Passing_Percentage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Usability testing has been completed, with all resulting P1 and P2 UI issues fixed. --></help>
+        <label><!-- Usability Testing Complete --></label>
+        <name>Usability_Testing_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- UE has reviewed any new features; P1 and P2 UI bugs fixed. --></help>
+        <label><!-- User Experience Complete --></label>
+        <name>User_Experience_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Code and the UI have been reviewed to ensure 508 compliance and features that cannot be made compliant have been brought to the attention of the UE team.  See the compliance checklist:  http://wikiforce/pmwiki.php/Main/Accessibility508. --></help>
+        <label><!-- 508 Compliance Complete --></label>
+        <name>X508_Compliance_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- delete me --></label>
+        <name>delete_me__c</name>
+    </fields>
+    <layouts>
+        <layout>Feature Freeze Exception Approval Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Exception Request --></label>
+            <section>Exception Request</section>
+        </sections>
+        <sections>
+            <label><!-- Feature Status --></label>
+            <section>Feature Status</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Feature Freeze Exception Request Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Exception Request --></label>
+            <section>Exception Request</section>
+        </sections>
+        <sections>
+            <label><!-- Feature Status --></label>
+            <section>Feature Status</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Percentage must be between 0 and 100 --></errorMessage>
+        <name>Code_Coverage_Percentage_0_to_100</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Percentage must be between 0 and 100 --></errorMessage>
+        <name>Test_Case_Pass_Percentage_0_to_100</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Exception_Complete --></label>
+        <name>Exception_Complete</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- R_D_Exec_Approval --></label>
+        <name>R_D_Exec_Approval</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,122 @@
+<apex:component >
+	<apex:attribute name="productArea" type="String" required="true" description="todo" />
+	<apex:attribute name="majorFunctionalArea" type="String" required="true" description="todo" />
+	<apex:attribute name="assignee" type="String" required="true" description="todo" />
+	<apex:attribute name="qa" type="String" required="true" description="todo" />
+	<apex:attribute name="prodowner" type="String" required="true" description="todo" />
+	<apex:attribute name="scrumteamName" type="String" required="true" description="todo" />
+	<apex:attribute name="ue" type="String" required="true" description="todo" />
+	<apex:attribute name="systest" type="String" required="true" description="todo" />
+	<apex:attribute name="techwriter" type="String" required="true" description="todo" />
+	<apex:attribute name="seniorManagementPOC" type="String" required="true" description="todo" />
+	
+	    <script type="text/javascript" src="{!URLFOR($Resource.jquery_1_5_2_min)}" />
+	
+	<script type="text/javascript">
+		var seniorManagementPOC = new Object();
+		var techwriter = new Object();
+		var systest = new Object();
+		var ue = new Object();
+		var scrumteam = new Object();
+		var prodowner = new Object();
+		var qa = new Object();
+		var assignee = new Object(); 
+		var mgr_review = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:request_mgr_review');
+		
+		seniorManagementPOC.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemSeniorManagementPOC:smField:autoCompleteComp:autoComp');
+		techwriter.field  = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemTW:twField:autoCompleteComp:autoComp');
+		systest.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemSTE:steField:autoCompleteComp:autoComp');
+		ue.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemUE:ueField:autoCompleteComp:autoComp');
+		scrumteam.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemScrumteam:stField:autoCompleteComp:autoComp');
+		prodowner.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemPO:poField:autoCompleteComp:autoComp');
+		qa.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemQA:qaField:autoCompleteComp:autoComp');
+		assignee.field = document.getElementById('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemAssignee:aField:autoCompleteComp:autoComp');
+			
+		
+		pa = "{!productArea}";
+		mfa = "{!majorFunctionalArea}";
+		
+		assignee.value = "{!JSENCODE(assignee)}";
+		qa.value = "{!qa}";
+		prodowner.value = "{!prodowner}";
+		scrumteam.value = "{!scrumteamName}";
+		ue.value = "{!ue}";
+		systest.value = "{!systest}";
+		techwriter.value = "{!techwriter}";
+		seniorManagementPOC.value = "{!seniorManagementPOC}";                                    
+
+		
+		updateAssignments(seniorManagementPOC, techwriter, systest, ue, scrumteam, prodowner, qa, assignee, mgr_review);
+		
+		function updateAssignments(seniorManagementPOC, techwriter, systest, ue, scrumteam, prodowner, qa, assignee, mgr_review) {
+		    //TODO: the field highlighting is currently broken even with dojo possibility since 172.  
+		    if(!assignee.field) { 
+		    } else {
+		        if(assignee.field.value == '' && assignee.value != '') {
+		            assignee.field.value = assignee.value;
+		           // $(assignee.field).addClass('input_highlight');
+		        }
+		    }    
+		
+		    if(!qa.field) {
+		    	
+		    } else {
+		       qa.field.value = qa.value;
+		       //$(qa.field).addClass('input_highlight');
+		       
+		    }
+		
+		    if(!prodowner.field) {
+		    } else {
+		        if(prodowner.field.value == '' && prodowner.value != '') {
+		            prodowner.field.value = prodowner.value;
+		            //$(prodowner.field).addClass('input_highlight');
+		        }
+		    }
+		
+		    if(!scrumteam.field) {
+		    } else {
+		        if(scrumteam.field.value == '' && scrumteam.value != '') {
+		            scrumteam.field.value = scrumteam.value;
+		            //$(scrumteam.field).addClass('input_highlight');
+		        }
+		    }
+		
+		    if(!ue.field) {
+		    } else {
+		        if(ue.field.value == '' && ue.value != '') {
+		            ue.field.value = ue.value;
+		            //$(ue.field).addClass('input_highlight');
+		        }
+		    }
+		
+		    if(!systest.field) {
+		    } else {
+		        if(systest.field.value == '' && systest.value != '') {
+		            systest.field.value = systest.value;
+		            //$(systest.field).addClass('input_highlight');
+		        }
+		    }                                    
+		
+			
+		    if(!techwriter.field) {
+		    } else {
+		    	
+		        if(techwriter.field.value == '' && techwriter.value != '') {
+		        	
+		            techwriter.field.value = techwriter.value;
+		            //$(techwriter.field).addClass('input_highlight');
+		        }
+		    }
+		
+		    if(!seniorManagementPOC.field) {
+		    } else {
+		        if(mgr_review.checked && seniorManagementPOC.field.value == '' && seniorManagementPOC.value != '') {
+		            seniorManagementPOC.field.value = seniorManagementPOC.value;
+		            //$(seniorManagementPOC.field).addClass('input_highlight');
+		        }
+		    }
+		}
+		
+	</script>
+</apex:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Functional_Specification__c</fullName>
+    <description>Url to the functional specification, if one exists</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Url to the functional specification, if one exists</inlineHelpText>
+    <label>Functional Specification</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

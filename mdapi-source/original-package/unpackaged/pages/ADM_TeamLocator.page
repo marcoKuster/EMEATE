@@ -1,0 +1,10 @@
+<apex:page controller="ADM_TeamLocatorController" action="{!goToCurrentTeam}">
+<!--
+          With introduction of lightning Flexi page we use standard layout for LEX view page and custom VF page for
+          Classic so chaning destinationurl to blank so that ADM_TeamSelector for the redirect it to "/<<id>>"
+          Since ADM_TeamSelector is reused in multiple places like Kanban and BacklogManager etc.
+
+    -->
+    <c:ADM_TeamSelector destinationurl="" destinationlabel="Team Page" destinationparam="id"></c:ADM_TeamSelector>
+
+</apex:page>

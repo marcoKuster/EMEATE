@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Customer_Facing__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>A check in this field indicates that the application is customer-facing, not internal-only.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>A check in this field indicates that the application is customer-facing, not internal-only.</inlineHelpText>
+    <label>Is Customer Facing</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

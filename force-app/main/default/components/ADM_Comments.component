@@ -1,0 +1,263 @@
+<apex:component controller="ADM_WorkDetails" allowDML="true">
+    <apex:attribute name="workObject" description="Reference to the work object" type="ADM_Work__c" required="required" assignTo="{!work}"/>
+    <apex:attribute name="renderCommentsSection" description="Boolean to decide if the commentsFromVFRemoting section will be rendered" type="Boolean" required="false" default="false" />
+    <apex:attribute name="isEditWork" description="Boolean flag used to determine state that viewer is in with record" type="Boolean" required="false" default="true"/>
+    <apex:attribute name="isNewWork" description="Boolean used to determine whether or not to get old commentsFromVFRemoting" type="Boolean" assignTo="{!isNew}" />
+    <apex:attribute name="recordType" description="Record type of the work being edited or viewed. Helpful because we don't have this information for new work records." type="String" assignTo="{!recordTypeName}" />
+    
+    <apex:pageBlockSection id="pageBlockSectionComments" title="Comments" columns="1" showHeader="true" rendered="{!renderCommentsSection}">
+        <apex:pageBlockSectionItem id="pageBlockSectionItemStepsToReproduceBug" rendered="{!OR(recordTypeName == 'Bug', recordTypeName == 'Template')}">
+            <apex:outputPanel >
+                <c:helpHover id="helpHoverComment" label="Details and Steps to Reproduce" body="Text contents of this field will be sent in initial record creation only" type="help" />
+            </apex:outputPanel>
+            <apex:outputPanel layout="block">
+                <apex:outputPanel layout="block" />
+                <apex:inputField value="{!work.Details_and_Steps_to_Reproduce__c}" styleClass="adm_inputField"/>
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="pageBlockSectionItemStepsToReproduceInv" rendered="{!recordTypeName == 'Investigation'}">
+            <apex:outputPanel >
+                <c:helpHover id="helpHoverComment" label="Details and Steps to Reproduce" body="Text contents of this field will be sent in initial record creation only" type="help" />
+            </apex:outputPanel>
+           
+         
+            <apex:outputPanel layout="block" styleClass="requiredInput">
+                <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                <apex:inputField value="{!work.Details_and_Steps_to_Reproduce__c}" styleClass="adm_inputField"/>
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="pageBlockSectionItemComment">
+            <apex:outputPanel >
+                <c:helpHover id="helpHoverComment" label="Comment" body="{!helpText}" type="help" />
+            </apex:outputPanel>
+            <apex:outputPanel layout="block"> 
+                <apex:outputPanel layout="block" style="padding-left:5px;">
+                    <apex:inputField id="inputFieldComment" value="{!work.Description__c}" styleClass="adm_longInputField"/>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" rendered="{!OR(recordTypeName ='Bug',recordTypeName ='User Story')}">
+                    <input value="Checkin Questions"  class="btn" type="button" alt="Change control Checkin Questions" title="Change control Checkin Question" onclick="addCheckinQuestions('{!$Component.inputFieldComment}', {Scheduled_Build__c: $('.scheduled-build-input').val() || null})"/>                  
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" rendered="{!recordTypeName = 'Investigation'}">
+                    <input value="Investigation Questions"  class="btn" type="button" alt="Investigation Questions" title="Investigation Question" onclick="addInvestigationQuestions('{!$Component.inputFieldComment}')"/>
+                </apex:outputPanel>             
+            </apex:outputPanel> 
+        </apex:pageBlockSectionItem> 
+        <apex:outputField value="{!work.Previous_Comments__c}" rendered="{!NOT(isNew)}">
+            <apex:inlineEditSupport disabled="true"/>
+         </apex:outputField> 
+    </apex:pageBlockSection>
+    
+    <script language="javascript" type="text/javascript">
+        var recordType = '{!recordTypeName}';
+        var recordId = '{!work.Id}';    
+        var showComments = '{!showComments}';
+        var commentIconOpen = "{!URLFOR($Resource.silkIcons, 'icons/comments_add.png')}";
+        var commentIconClose = "{!URLFOR($Resource.silkIcons, 'icons/comments_delete.png')}";
+        var commentIcon = "{!URLFOR($Resource.silkIcons, 'icons/comment.png')}";    
+        var commentsFromVFRemoting = new Array();
+        var standardRecipients;
+        var commentsBody;
+        var standardRecipientsBody;
+        var otherRecipients;
+        var otherRecipientsBody;
+        var previousComments;
+        var init = true;
+        var commentsBackgroundColor = '#FFFFFF;'
+        var commentsBorder = 'border: none !important;';
+        
+        function getStandardRecipients() {
+            ADM_WorkDetails.getStandardRecipients(recordId, handleStandardRecipients);
+        }
+        
+        function getOtherRecipients() {
+            ADM_WorkDetails.getOtherRecipients(recordId, handleOtherRecipients);
+        }
+        
+        function handleOtherRecipients(resultFromVFRemoting, event) {
+            var html = '';
+            var otherRecipient;
+            
+            if(event.type == 'exception') {
+                console.debug('An exception occurred getting standard recipients: ' + event.message);
+            } else {
+                otherRecipientsBody.innerHTML = removePlus(resultFromVFRemoting); 
+            }
+        }
+        
+        function handleStandardRecipients(resultFromVFRemoting, event) {
+            var html = '';
+            
+            if(event.type == 'exception') {
+                console.debug('An exception occurred getting standard recipients: ' + event.message);
+            } else {
+                standardRecipientsBody.innerHTML = removePlus(resultFromVFRemoting);
+            }
+        }
+        
+        function getComments() {
+            ADM_WorkDetails.getComments(recordId, handleComments);
+        }
+        
+        function getChatterWarning() {
+            var styledChatterMessage = '';
+            var linkToNextGenPage = '';
+            //only add a warning if chatter content exists
+            if('{!containsOriginalChatterContent}' == 'true') {
+                //calculate the correct link to detail page based on record type
+                if('{!recordTypeName}' == 'Bug') {
+                    linkToNextGenPage = '/apex/adm_bugdetail?id={!workobject.id}';
+                } else if('{!recordTypeName}' == 'User Story')  {
+                    linkToNextGenPage = '/apex/adm_userstorydetail?id={!workobject.id}';
+                } else if('{!recordTypeName}' == 'Investigation')  {
+                    linkToNextGenPage = '/apex/adm_investigationdetail?id={!workobject.id}';
+                } else {
+                    //no other record types are supported so don't display any warning and just return
+                    return '';
+                }
+                var chatterContentMessage = 'This {!recordTypeName}  contains chatter content visible only on the next generation work page, <a href="' + linkToNextGenPage + '">available here</a>. If you would like to always use the new version, you can configure your GUS preferences via your <a href="/{!$User.Id}?tab=Gus_Settings">Chatter profile</a>.';
+                styledChatterMessage = '<div class="ui-widget"><div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"><p> <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span><strong>FYI</strong>  - ' + chatterContentMessage + '</p></div></div>';
+            }
+            return styledChatterMessage;
+        }
+        
+        function handleComments(resultFromVFRemoting, event) {
+            var comment;
+            var html = '';
+            
+            if(event.type == 'exception') {
+                console.debug('An exception occurred getting commentsFromVFRemoting: ' + event.message);
+            } else {
+                commentsFromVFRemoting = resultFromVFRemoting;
+                if({!isEditWork}) {
+                    commentsBackgroundColor = '#F8F8F8;'
+                }
+                 
+                //add chatter warning accept on the edit page 
+                var editPage = '{!isEditWork}';
+                if(editPage == 'false') {
+                    html +=  getChatterWarning();
+                }
+                html += '<table class="list" border="0" cellspacing="0" cellpadding="0" style="width:100%; table-layout:fixed; background-color:' + commentsBackgroundColor + commentsBorder + '"><tbody>';
+                
+                
+                if(commentsFromVFRemoting.length > 0) {
+                    if(showComments === 'true') {
+                        previousComments.innerHTML += '&nbsp;<img id="commentStateController" src="' + commentIconClose + '" onclick="toggleComments();" style="cursor:pointer;"/>';
+                    } else {
+                        previousComments.innerHTML += '&nbsp;<img id="commentStateController" src="' + commentIconOpen + '" onclick="toggleComments();" style="cursor:pointer;"/>';         
+                    }
+                    for(var i = 0; i < commentsFromVFRemoting.length; i++) {
+                        comment = commentsFromVFRemoting[i];
+                        html += '<tr><td style="border-bottom: 1px solid #EEEEE8 !important; ">';
+                        if(i == 0) {
+                            html += '<div style="padding-bottom:3px;color:#323232 !important;">';
+                        } else { 
+                            html += '<div style="padding-bottom:3px;color:#323232 !important; padding-top:3px;">';
+                        }
+                        html += '<strong>';
+                        html += removePlus(escapeHTML(decodeURIComponent(comment.Created_By__c)));
+                        html += '<img src="' + commentIcon + '"/>';
+                        html += '&nbsp;&nbsp;&nbsp;<span style="font-size:80%;">[' + comment.LocaleCreatedDate__c + ']</span>';
+                        html += '</strong></div>';
+                        if(showComments === 'true') {
+                            commentBodyClass = "ADM_CommentBody";
+                        } else {
+                            commentBodyClass = "ADM_CommentBody hidden";        
+                        }
+                        
+                        html += '<div class="' + commentBodyClass + '" style="text-wrap:normal; word-wrap: break-word; padding-bottom:3px;color:#323232 !important;"><pre>' + escapeHTML(decodeURIComponent(comment.Body__c.replace(/\+/g,  " "))) + '<pre></div>';
+                        html += '</td></tr>';
+                    }
+                } else {
+                    html += '<tr><td><div style="color:#323232 !important; padding-top:3px;">No comments to display</div></td></tr>';
+                    previousComments.innerHTML += '&nbsp;<img id="commentStateController" src="' + commentIcon + '" />'; 
+                }
+                
+                html += '</tbody></table>';
+                commentsBody.innerHTML = processRelatedURL(html);
+            } 
+        }
+        
+
+
+
+        function changePrintableViewLink() {
+            // override default because it doesn't print comments           
+            $('div.links a.configLinks[title="Printable View (New Window)"]').attr('href','javascript:window.print();').attr('title','Print this Page').text('Print this Page');
+            console.log('changePrintableViewLink triggered');
+        }
+
+
+        
+        function updateRecipientsAndComments() {
+            updateLabels(); 
+            
+            var tds = $("td,th");
+            var els = $.each(tds, function(index, node) {
+                if(node.innerHTML.indexOf('>Assignees<') > 0 && node.className === 'labelCol') {
+                    standardRecipientsBody = tds[index + 1];
+                    getStandardRecipients(); 
+                } else if(node.innerHTML === 'Previous Comments') {
+                    commentsBody = tds[index + 1];
+                    previousComments = node;
+                    getComments(node);              
+                    toggleComments();
+                } else if(node.innerHTML.indexOf('>Other Recipients<') > 0 && node.className.indexOf("labelCol") > -1) {                
+                    otherRecipientsBody = tds[index + 1];
+                    getOtherRecipients();           
+                }   
+            }); 
+        }
+        
+        function updateLabels() {
+            
+            
+            var els = $.each($(".labelCol"), function(index, node) {
+                var match = new RegExp("transfer ", "ig");
+                node.innerHTML = node.innerHTML.replace(match, "");
+            });
+        }
+        
+        function toggleComments() {
+            var commentController = $('commentStateController');
+            var els = $.each($(".ADM_CommentBody"), function(index, node) {
+                if(node.className.indexOf('hidden') > 0) {
+                    $(node).removeClass('hidden');
+                    commentsHidden = false;
+                } else {
+                    $(node).addClass('hidden');
+                    commentsHidden = true;
+                }
+            });
+            
+            
+            if(init) {
+                init = false;
+            } else {        
+                if(commentsHidden) {
+                    //alert('about to set comment icon for img:' + $('commentStateController') + ' new Icon:' + commentIconOpen + ' current src:' + $('commentStateController').attr("src"));
+                    $('commentStateController').attr('src', commentIconOpen);
+                    //alert('set comment icon new src:' + $('commentStateController').attr("src"));
+                } else {
+                    $('commentStateController').attr('src', commentIconClose);
+                }
+            }
+        }
+        
+        function hideComments() {
+            if(showComments != 'true') { 
+                var els = $.each($(".hideListButton"), function(index, node) {
+                    if(node.name === "Comments") {
+                        twistSection(node); 
+                    }
+                });
+            }
+        }   
+        
+        if(!{!isNew}) {
+            updateRecipientsAndComments();
+        }
+        
+        changePrintableViewLink();
+    </script> 
+</apex:component>

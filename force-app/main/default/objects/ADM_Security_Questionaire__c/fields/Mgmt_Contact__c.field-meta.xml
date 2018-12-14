@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mgmt_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Management contact for usability and functionality questions.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Management contact for usability and functionality questions.</inlineHelpText>
+    <label>Management Contact</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>SecQ_Mgmt_Contact</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

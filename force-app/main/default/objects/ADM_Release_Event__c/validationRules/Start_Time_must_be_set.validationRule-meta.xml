@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Time_must_be_set</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(Scheduled_Start__c)</errorConditionFormula>
+    <errorDisplayField>Scheduled_Start__c</errorDisplayField>
+    <errorMessage>Event Start Time must be set.</errorMessage>
+</ValidationRule>

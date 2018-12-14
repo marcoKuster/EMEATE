@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Details of the test case. Setup info, steps to follow, etc. --></help>
+    <label><!-- Long Description --></label>
+    <name>Steps_to_Reproduce__c</name>
+</CustomFieldTranslation>

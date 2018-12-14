@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- All features should  have either a Feature Request Bug/Work record or a Bug List to track bugs.  Please enter the URL to this Record --></help>
+    <label><!-- Bug List --></label>
+    <name>BugList__c</name>
+</CustomFieldTranslation>

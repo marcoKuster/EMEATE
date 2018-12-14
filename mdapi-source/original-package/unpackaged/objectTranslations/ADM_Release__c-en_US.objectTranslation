@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Releases</value>
+    </caseValues>
+    <fields>
+        <label><!-- Actual Release Date --></label>
+        <name>Actual_Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application --></label>
+        <name>Application__c</name>
+        <relationshipLabel><!-- Releases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created By (import) --></label>
+        <name>Created_By_import__c</name>
+        <relationshipLabel><!-- Releases (Created By (import)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created On (import) --></label>
+        <name>Created_On_import__c</name>
+    </fields>
+    <fields>
+        <help><!-- (Optional) Enter the name communicated to customers for this release. This name may appear in the customer-facing 12-month TRUST calendar. --></help>
+        <label><!-- Customer Facing Release Name --></label>
+        <name>Customer_Facing_Release_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment Delayed (minutes) --></label>
+        <name>Deployment_Delayed_minutes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the instances to receive this release as a space separated list (1 space between each instance). For example: NA1 NA2 CS2 --></help>
+        <label><!-- Deployment Instances --></label>
+        <name>Deployment_Instances__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duplicate Validator --></label>
+        <name>Duplicate_Validator__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use this field to put in detailed information regarding the release --></help>
+        <label><!-- Note --></label>
+        <name>Note__c</name>
+    </fields>
+    <fields>
+        <help><!-- # of Work records that were released during the deployment of this release. --></help>
+        <label><!-- Number of Work Records --></label>
+        <name>Number_of_Bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Stamps --></label>
+        <name>Number_of_Stamps__c</name>
+    </fields>
+    <fields>
+        <help><!-- Planned duration of deployment in minutes. If &quot;Scheduled End Date&quot; is specified, this value will be calculated on Save. --></help>
+        <label><!-- Planned Duration --></label>
+        <name>Planned_Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Planned duration of GS0 deployment in minutes. If &quot;Planned GS0 End Date&quot; is specified, this value will be calculated on Save. --></help>
+        <label><!-- Planned Release Duration To Pilot Org --></label>
+        <name>Planned_GS0_Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the date/time for the expected completion of the GS0 deployment. If specified, the &quot;Planned GS0 Duration&quot; field will be calculated on Save. --></help>
+        <label><!-- Scheduled Release End Date To Pilot Org --></label>
+        <name>Planned_GS0_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please specify if this release is deployed to GS0 separately. --></help>
+        <label><!-- Scheduled Release Date To Pilot Org --></label>
+        <name>Planned_GUS_Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planned / Unplanned --></label>
+        <name>Planned_Unplanned__c</name>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unplanned</masterLabel>
+            <translation><!-- Unplanned --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Scheduled Release Date --></label>
+        <name>Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Delay Category --></label>
+        <name>Release_Delay_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Manager --></label>
+        <name>Release_Manager__c</name>
+        <relationshipLabel><!-- Releases (Release Manager) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release Type --></label>
+        <name>Release_Type__c</name>
+        <picklistValues>
+            <masterLabel>Major</masterLabel>
+            <translation><!-- Major --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Patch</masterLabel>
+            <translation><!-- Patch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>e</masterLabel>
+            <translation><!-- e --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the date/time for the expected completion of the deployment. If specified, the &quot;Planned Duration&quot; field will be calculated on Save. --></help>
+        <label><!-- Scheduled End Date --></label>
+        <name>Scheduled_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use this field to provide a short description of the release. --></help>
+        <label><!-- Short Note --></label>
+        <name>Short_Note__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled or Never Released</masterLabel>
+            <translation><!-- Canceled or Never Released --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployed - Date Changed</masterLabel>
+            <translation><!-- Deployed - Date Changed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployed - Exceeded Release Window</masterLabel>
+            <translation><!-- Deployed - Exceeded Release Window --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployed - Other Issues</masterLabel>
+            <translation><!-- Deployed - Other Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployed Successfully</masterLabel>
+            <translation><!-- Deployed Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployment Introduced Regression</masterLabel>
+            <translation><!-- Deployment Introduced Regression --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployment in Progress</masterLabel>
+            <translation><!-- Deployment in Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Development</masterLabel>
+            <translation><!-- In Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Deployment - Halted</masterLabel>
+            <translation><!-- Partial Deployment - Halted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Deployment - Superseded</masterLabel>
+            <translation><!-- Partial Deployment - Superseded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Rollback</masterLabel>
+            <translation><!-- Partial Rollback --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for Deployment</masterLabel>
+            <translation><!-- Ready for Deployment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Redeployed After Rollback</masterLabel>
+            <translation><!-- Redeployed After Rollback --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rollback</masterLabel>
+            <translation><!-- Rollback --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Release Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Release Layout (Admin)</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Actual Release Date is required if the release has been fully or partially deployed. --></errorMessage>
+        <name>Actual_Deploy_Date_Required_if_Deployed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Application must be set when the Release Status is not In Development --></errorMessage>
+        <name>Application_set_after_In_Development</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Instance list must be of the form: NA1,NA2,CS2,...
+Use capital letters and no whitespace.
+Allowed prefixes are NA, CS, EU, AP, GS or SR only. --></errorMessage>
+        <name>Comma_Separated_Instances</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Scheduled End Date must be set when Scheduled Date is specified. --></errorMessage>
+        <name>End_needed_when_Sched_date_specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- GS0 End date cannot be more than 14 days later than GS0 Release Date. --></errorMessage>
+        <name>GS0_Duration_Must_be_14_days_or_less</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- End date cannot be more than 14 days later than Release Date. --></errorMessage>
+        <name>Release_Duration_Must_be_14_days_or_less</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Release Manager must be specified if the release has been fully or partially deployed. --></errorMessage>
+        <name>Release_Manager_required_if_deployed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Scheduled Release Date must be specified. --></errorMessage>
+        <name>Scheduled_Date_Required_if_no_GS0_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Instance list must be of the form: NA1 NA2 CS2 ...
+Use capital letters and only a space between instances.
+Allowed prefixes are NA, CS, EU, AP, GS or SR only. --></errorMessage>
+        <name>Space_Separated_Instances</name>
+    </validationRules>
+</CustomObjectTranslation>

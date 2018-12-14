@@ -1,0 +1,305 @@
+<apex:component controller="ADM_SprintChartsController2" allowDML="true" layout="none">  
+    <apex:attribute name="sprintId" description="used to determine what to do" type="String" required="required" assignTo="{!sprintId}"/>
+	<style>
+	.slds [hidden=false]{display:inline;}
+	</style>
+	<script type="text/javascript">
+    //store the name space vs hard-coding it
+    var qualifiedName='{!$ObjectType.ADM_Sprint__c.Name}';
+ 	var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Sprint__c'));
+    
+    {!JSENCODE(PackageNameSpace)}AssigneeHoursChart.on('beforeconfig', function(chartCfg) {
+			chartCfg.theme = 'Base';
+			chartCfg.series[0].stacked = true;
+		}); 
+		
+		function recalcBaseline() {
+			console.debug('inside recalcBaseline()');
+            {!$RemoteAction.ADM_SprintChartsController2.recalcBaseline}('{!sprintId}', function(data,event) {
+				console.debug('inside recalcBaseline() data:' + data);
+                if (event.status) {
+					updateSprintBurndownChart();
+				} else {
+					startNotification('Error recalculating Burndown chart baselinet: ' + event.message);
+				}		
+			});
+		}
+		      		
+   		function rerenderCharts() {
+  			updateSprintBurndownChart();
+  			updateHoursRemainingChart();
+  			updateTeamVelocityChart();
+   		}
+     		
+   		function updateSprintBurndownChart() {
+			{!$RemoteAction.ADM_SprintChartsController2.updateSprintBurndownChart}('{!sprintId}', function(data,event) {
+				console.debug('inside updateSprintBurndownChart() data:' + data);
+                if (event.status) {
+					$(".burndownChart").attr('src', data);
+				} else {
+					startNotification('Error during update of Burndown Chart: ' + event.message);
+				}		
+			}, {escape: false});
+   		}
+     		
+   		function updateHoursRemainingChart() {
+			{!$RemoteAction.ADM_SprintChartsController2.updateHoursAvailableChart}('{!sprintId}', $(".chooseViewChartByOption").val(), function(data,event) {
+				if (event.status) {
+			    	{!JSENCODE(PackageNameSpace)}AssigneeHoursChart.chart.curHeight = data.chartHeight;
+			    	{!JSENCODE(PackageNameSpace)}AssigneeHoursChart.chart.height = data.chartHeight;
+			    	// Increase the size of the div the chart is in
+			    	$('.assigneeHoursChartWrapper div:first-child').css('height',data.chartHeight);
+			    	
+					// Reload the chart with data passed back
+					{!JSENCODE(PackageNameSpace)}AssigneeHoursChart.reload(data.chartData, false, true);
+				} else {
+					startNotification('Error during update of Hours Assigned Chart: ' + event.message);
+				}		
+			}, {escape: false});
+   		}
+	</script>
+		    
+	<apex:form id="SprintForm">
+       	<div id="block">
+
+		    <apex:includeScript value="{!$Resource.GoogleChartsJs}"/>
+		    
+	        <apex:outputPanel layout="block" id="chartsBlock">
+	
+	            <div id="chartBlock" style="text-align:center;">
+	
+					<div style="border-bottom:1px #000 solid;padding:20px 0px;">
+						<apex:image styleClass="burndownChart" id="burndownChart" value="{!BurndownChartURL}" width="320" height="256" />
+						<input value="Reset Chart Baseline"  class="btn" type="button" alt="Reset Chart Baseline" title="Reset Chart Baseline" onclick="recalcBaseline()"/>
+					</div>
+					
+					<div style="border-bottom:1px #000 solid;padding:20px 0px;">
+					
+						<apex:outputPanel layout="block" styleclass="assigneeHoursChartWrapper">
+							<apex:chart name="AssigneeHoursChart" height="{!hoursByAssigneeChartDataHeight}" width="400" data="{!hoursByAssigneeChartData}">
+								<apex:legend position="right"/>
+			                    <apex:axis type="Category" position="left" fields="assigneeName"/>
+		    	                <apex:axis type="Numeric" position="bottom" fields="Assigned,Under,Over"  grid="true"/>
+		        	            <apex:barSeries tips="false" orientation="horizontal" axis="bottom"  xField="Assigned,Under,Over" yField="assigneeName"/>
+							</apex:chart>
+						</apex:outputPanel>
+						
+						<apex:outputPanel id="buttonsBlock">
+		                    View this Chart By:&nbsp;
+		
+		                    <apex:selectList styleClass="chooseViewChartByOption" id="chooseViewChartByOption" value="{!ViewChartByOption}" size="1" onChange="updateHoursRemainingChart()">
+		
+		                        <apex:selectOptions value="{!ViewByOptions}" />
+		
+		                    </apex:selectList> <br />
+		
+							The <span style="color:#0000FF">blue </span>  bar represents the number of hours available that are not assigned to any tasks.
+		                    The <span style="color:#00aa00">green </span> bar represents the assigned hours. 
+		                    The <span style="color:#FF0000">red</span> bar represents the hours assigned to tasks that are over the available hours. 
+		
+		                </apex:outputPanel>
+
+					</div>
+					
+					<apex:outputPanel layout="block" id="velocityBlock">
+						<apex:outputpanel id="imageChartId"></apex:outputpanel>	
+						
+				    	<apex:outputPanel id="containerBlock">
+					        <script type="text/javascript">
+					            google.charts.load('current', {packages: ['gauge','corechart']});
+					            google.charts.setOnLoadCallback(updateTeamVelocityChart);
+					            var sprints = new Array();
+					            var currPoints = 0;         
+					            var avgVelocity, maxVelocity, minVelocity, spValue;
+					            var totalSprints = 0;           
+					            var statsi = 0;
+					            var defaultNumberSprints = 6;
+					            var imageChart = document.getElementById('{!$Component.SprintForm.imageChartId}');
+					            
+					            function calcStats() {
+					                var totalPts = 0;
+					                var storyPts = 0;
+					                maxVelocity = 0;
+					                
+					                for(var i = 0; i < sprints.length; i++) {
+					                    //#1 get total pts for the calcuation of the avg
+					                    var sprint = sprints[i];
+                                        storyPts = parseInt(sprint[nameSpace + 'Completed_Story_Points__c']);
+					                    totalPts += storyPts;
+					                    //#2 evaluate the max
+					                    if(storyPts > maxVelocity) maxVelocity = storyPts;
+					                    if(i == 0) {
+					                        minVelocity = storyPts;
+					                    } else if(minVelocity > storyPts) {
+					                        minVelocity = storyPts;
+					                    }
+					                }
+					                if(totalPts > 0) {
+					                    avgVelocity = totalPts / sprints.length;
+					                } else {
+					                    avgVelocity = 0;
+					                    minVelocity = 0;
+					                }
+					            }
+					            
+					            function updateSprints(selEl) {       
+					                console.debug('you selected to view sprints: ' + selEl.value);      
+					                numberSprints = selEl.value;
+					                createCookie("vel_chart_{!scrumTeamId}", numberSprints, 1);
+					                getTotalSprints();
+					            }
+					            
+					            function getTotalSprints() {
+					                 {!$RemoteAction.ADM_SprintChartsController2.getTotalSprints}('{!scrumTeamId}', handleTotalSprints);
+					            }
+					            
+					            function handleTotalSprints(result, event) {
+					                if(event.type == 'exception') {
+					                    console.debug('handleTotalSprints err: ' + event.message);
+					                } else if(result != null) {
+					                    totalSprints = result;
+					                    getCurrSprints();
+					                } else {
+					                    console.debug('handleTotalSprints err: result is null');
+					                }
+					            }
+					            
+					            function getCurrSprints() {
+					                console.debug('cookie?: ' + readCookie("vel_chart_{!scrumTeamId}"));
+					                var currCookieVal = readCookie("vel_chart_{!scrumTeamId}");
+					                var numberSprints = defaultNumberSprints;               
+					                if(currCookieVal != null) {
+					                	numberSprints = currCookieVal;
+					                    spValue = currCookieVal;
+					                }
+					                 {!$RemoteAction.ADM_SprintChartsController2.getCurrSprints}('{!scrumTeamId}', numberSprints, handleCurrSprints);              
+					            }
+					            
+					            function handleCurrSprints(result, event) {
+					                var date;
+					                if(event.type == 'exception') {
+					                    console.debug('An exception occurred handleCurrSprints: ' + event.message);
+					                } else if(result != null) {
+					                    sprints = result;   
+					                    if(sprints != null && sprints.length > 0) {
+					                        imageChart.innerHTML = '';
+					                    }   
+					                    calcStats();
+					                    console.debug('sprintsize = ' + sprints.length + ' currPts: ' + currPoints + ' maxVelocity: ' + maxVelocity + ' minVelocity: ' + minVelocity + ' avgVelocity: ' + avgVelocity);
+					                                    
+					                    drawImageChart();
+					                } 
+					            }
+					          
+					            function updateTeamVelocityChart() {
+					                console.debug('update drawing now');
+					                getTotalSprints();
+					            }
+					          
+					            function createCookie(name,value,days) {
+					                if(days) {
+					                    var date = new Date();
+					                    date.setTime(date.getTime()+(days*24*60*60*1000));
+					                    var expires = "; expires="+date.toGMTString();
+					                } else {
+					                    var expires = "";
+					                }
+					                document.cookie = name+"="+value+expires+"; path=/";
+					            }
+					            
+					            function readCookie(name) {
+					                var nameEQ = name + "=";
+					                var ca = document.cookie.split(';');
+					                for(var i=0;i < ca.length;i++) {
+					                    var c = ca[i];
+					                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+					                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+					                }
+					                return null;
+					            }
+					            
+					            function drawImageChart() {
+					                var data = new google.visualization.DataTable();
+					                data.addColumn('string', 'End Date');
+					                data.addColumn('number', 'Average');
+					                data.addColumn('number', 'Actual');
+									console.debug('drawImageChart() sprints:');
+                                    console.debug(sprints);
+					                for(var i = sprints.length - 1; i >= 0 ; i--) {
+					                    var sprint = sprints[i]; 
+					                    sprintDate = new Date(parseInt(sprint[nameSpace + 'End_Date__c']));
+					                    sprintDate.setDate(sprintDate.getDate() + 1);
+					                    //note: format dates since toDateString() is too verbose.  Add 1 to month as value returned is 0-11 see http://w3schools.com/jsref/jsref_obj_date.asp
+					                    var formattedDate = + (sprintDate.getMonth() + 1) + '/' + sprintDate.getDate() + '/' + sprintDate.getFullYear(); 
+					                    data.addRow([formattedDate, parseInt(avgVelocity), parseInt(sprint[nameSpace + 'Completed_Story_Points__c'])]);
+					                }
+					                
+					                if(sprints.length == 0) {
+					                    var today = new Date();
+					                    var tomorrow = new Date();
+					                    tomorrow.setDate(today.getDate()+1);
+					                    console.debug('today: ' + today + ' tomorrow: ' + tomorrow);
+					                    data.addRow([today.toString(), parseInt(avgVelocity), parseInt(avgVelocity)]);
+					                    data.addRow([tomorrow.toString(), parseInt(avgVelocity), parseInt(avgVelocity)]);
+									}
+					                
+					                if(spValue == null) {
+					                    spValue = defaultNumberSprints;
+					                }
+					                var s2vEl = document.getElementById('sprints2view');
+					                
+					                if(s2vEl != null && s2vEl.options.length < 1 && totalSprints > 1) {
+					                    var s2vSelected = false;
+					                    var s2vLabel;
+					                    var s2vValue;
+					                    for(var i = 2; i <= totalSprints; i++) {
+					                        s2vLabel = i;
+					                        s2vValue = i;
+					                        console.debug(spValue + ' - spValue');
+					                        console.debug(s2vValue + ' - s2vValue');
+					                        if(spValue == s2vValue) {
+					                            s2vSelected = true;
+					                        } else {
+					                            s2vSelected = false;
+					                        }
+					                        s2vEl.options[i-2] = new Option(s2vLabel, s2vValue, false, s2vSelected);
+					                    }
+					                } 
+					                
+					                var chart = new google.visualization.AreaChart(imageChart);
+					                
+					                // With the current chart width at 430, the dates will display nicely up to 5 sprints. After that
+					                // they will need to be slanted. The google jsapi used to automatically handle this when the width
+					                // was 800, however, it doesn't does this when the width is lowered. We have to handle this ourselves.
+					                var slantedTextVar = spValue > 5 ? true : false;
+					                chart.draw(data, {width: 400, height: 256, title: 'Team Velocity' ,
+					                    hAxis: {title: 'End Date of Sprint', titleTextStyle: {color: '#FF0000'}, slantedText: slantedTextVar, slantedTextAngle: 30}
+					                });
+					            }
+					        </script>   
+				    	
+					    </apex:outputPanel>
+						
+						<apex:outputpanel id="gaugeId"></apex:outputpanel>
+							<script>console.debug('gaugeId: {!$Component.gaugeId}');</script>
+						</apex:outputPanel>
+					
+				        <apex:outputPanel layout="block" id="imageChartContainer">
+				            <div id="snpPBS" columns="1" showHeader="false">              
+				                <apex:outputPanel layout="block">
+				                    Sprints to Show&nbsp;
+				                    <apex:outputPanel rendered="{!sprints.size > 2}">                   
+				                        <select id="sprints2view" onchange="updateSprints(this);"></select>
+				                    </apex:outputPanel>         
+				                    <apex:outputText value="{!sprints.size}" rendered="{!sprints.size < 3}"></apex:outputText>
+				                </apex:outputPanel>
+				            </div>
+						</apex:outputPanel>
+	
+	            </div>
+	
+	        </apex:outputPanel>
+        </div>
+	</apex:form>
+		        
+</apex:component>

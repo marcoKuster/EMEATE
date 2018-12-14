@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Area__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Area</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Core - Architecture</fullName>
+                <default>false</default>
+                <label>Core - Architecture</label>
+            </value>
+            <value>
+                <fullName>CSS</fullName>
+                <default>false</default>
+                <label>CSS</label>
+            </value>
+            <value>
+                <fullName>CSS - Knowledge Base</fullName>
+                <default>false</default>
+                <label>CSS - Knowledge Base</label>
+            </value>
+            <value>
+                <fullName>Ideas</fullName>
+                <default>false</default>
+                <label>Ideas</label>
+            </value>
+            <value>
+                <fullName>Partner Networks</fullName>
+                <default>false</default>
+                <label>Partner Networks</label>
+            </value>
+            <value>
+                <fullName>Platform - Administration &amp; Distribution</fullName>
+                <default>false</default>
+                <label>Platform - Administration &amp; Distribution</label>
+            </value>
+            <value>
+                <fullName>Platform - Analytics</fullName>
+                <default>false</default>
+                <label>Platform - Analytics</label>
+            </value>
+            <value>
+                <fullName>Platform - AppExchange</fullName>
+                <default>false</default>
+                <label>Platform - AppExchange</label>
+            </value>
+            <value>
+                <fullName>Platform - Application Development</fullName>
+                <default>false</default>
+                <label>Platform - Application Development</label>
+            </value>
+            <value>
+                <fullName>Platform - Application Services</fullName>
+                <default>false</default>
+                <label>Platform - Application Services</label>
+            </value>
+            <value>
+                <fullName>Platform - Appstore</fullName>
+                <default>false</default>
+                <label>Platform - Appstore</label>
+            </value>
+            <value>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+                <label>Mobile</label>
+            </value>
+            <value>
+                <fullName>Platform - Other</fullName>
+                <default>false</default>
+                <label>Platform - Other</label>
+            </value>
+            <value>
+                <fullName>Collaboration</fullName>
+                <default>false</default>
+                <label>Collaboration</label>
+            </value>
+            <value>
+                <fullName>Content</fullName>
+                <default>false</default>
+                <label>Content</label>
+            </value>
+            <value>
+                <fullName>AppStore Edition</fullName>
+                <default>false</default>
+                <label>AppStore Edition</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Messaging</fullName>
+                <default>false</default>
+                <label>Messaging</label>
+            </value>
+            <value>
+                <fullName>Email Clients</fullName>
+                <default>false</default>
+                <label>Email Clients</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ShowMoveUncompletedTasksDialog__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Check this to show the &quot;Move Uncompleted Tasks&quot; dialog when the Work is closed on the Virtual Wall page.</description>
+    <externalId>false</externalId>
+    <label>Show Move Uncompleted Tasks Dialog</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

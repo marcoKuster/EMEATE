@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Offset_or_StartTime_must_be_specified</fullName>
+    <active>true</active>
+    <description>Either Hours/Minutes Offset must be specified or Start Time must be specified.</description>
+    <errorConditionFormula>ISBLANK(Hour_Offset__c) &amp;&amp; ISBLANK(Minute_Offset__c) &amp;&amp; ISBLANK(Start_Time__c)</errorConditionFormula>
+    <errorMessage>Either Hours/Minutes Offset must be specified or Start Time must be specified.</errorMessage>
+</ValidationRule>

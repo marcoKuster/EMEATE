@@ -1,0 +1,24 @@
+<aura:component controller="ADM_SprintVirtualWallController" extends="c:ADM_Chart_Shared">
+    <aura:attribute name="dataAndOptions" type="Object" description=""/>
+    <aura:attribute name="sprintData" type="Object" description=""/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.handleSprintDataEvent}" />
+
+    <p class="slds-m-bottom--small slds-grid slds-grid--align-center slds-grid--vertical-align-center">Sprint Burndown</p>
+
+    <p aura:id="error-message" class="slds-grid slds-grid--align-center slds-text-color--error slds-is-collapsed">
+        There was an error displaying this chart.
+    </p>
+
+    <div class="slds-grid slds-grid--align-center">
+        <span aura:id="chart" class="slds-show">
+            <c:ADM_Chart
+                type="line"
+                height="250"
+                width="350"
+                dataAndOptions="{! v.dataAndOptions }"
+            />
+        </span>
+    </div>
+
+</aura:component>

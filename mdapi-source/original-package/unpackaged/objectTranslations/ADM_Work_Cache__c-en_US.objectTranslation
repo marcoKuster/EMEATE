@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work Cache</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work Cache</value>
+    </caseValues>
+    <fields>
+        <label><!-- Change List Description --></label>
+        <name>Change_List_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Changes --></label>
+        <name>Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Names With Changes --></label>
+        <name>Field_Names_With_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Been Closed --></label>
+        <name>Has_Been_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Been Opened --></label>
+        <name>Has_Been_Opened__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Work Cache --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Work Cache --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

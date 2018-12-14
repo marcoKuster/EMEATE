@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Category --></label>
+    <name>Category__c</name>
+    <picklistValues>
+        <masterLabel>Admin</masterLabel>
+        <translation><!-- Admin --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Application Testing</masterLabel>
+        <translation><!-- Application Testing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Core Testing</masterLabel>
+        <translation><!-- Core Testing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Data Management</masterLabel>
+        <translation><!-- Data Management --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Error Handling</masterLabel>
+        <translation><!-- Error Handling --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Functionality</masterLabel>
+        <translation><!-- Functionality --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Globalization</masterLabel>
+        <translation><!-- Globalization --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Help</masterLabel>
+        <translation><!-- Help --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Other</masterLabel>
+        <translation><!-- Other --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Performance and System Testing</masterLabel>
+        <translation><!-- Performance and System Testing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Platform Testing</masterLabel>
+        <translation><!-- Platform Testing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Regression Testing</masterLabel>
+        <translation><!-- Regression Testing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Security</masterLabel>
+        <translation><!-- Security --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>UI testing</masterLabel>
+        <translation><!-- UI testing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Upgrade Script</masterLabel>
+        <translation><!-- Upgrade Script --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

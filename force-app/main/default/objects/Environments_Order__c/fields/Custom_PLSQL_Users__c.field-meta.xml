@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_PLSQL_Users__c</fullName>
+    <description>custom plsql users for the environment</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the complete list of PLSQL users needed for this request if we are NOT opting for the standard list of users.  The DBAs will ensure this list of users is created and available for use.</inlineHelpText>
+    <label>Custom PLSQL Users</label>
+    <length>30</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confirmed_not_on_BM_Top_10_List__c</fullName>
+    <description>Team must confirm that they are not on the Buildmaster&#39;s Top 10 sheet:
+
+https://docs.google.com/a/salesforce.com/spreadsheet/ccc?key=0AkkHOEHyPs0CdG54akZNN2FCektGSllIOENCVk8zUlE#gid=0</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Has team confirmed that it is not on the Buildmaster&#39;s Top 10 list?</inlineHelpText>
+    <label>Confirmed not on BM Top 10 List?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No</fullName>
+                <default>true</default>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

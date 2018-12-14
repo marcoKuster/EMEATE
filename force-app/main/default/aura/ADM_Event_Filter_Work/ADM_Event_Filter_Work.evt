@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Filter sprint work">
+    <aura:attribute name="workVisibility" type="Object"/>
+</aura:event>

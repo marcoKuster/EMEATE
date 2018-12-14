@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Changes_to_Logging__c</fullName>
+    <description>Any changes to the way things are logged?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Any changes to the way things are logged?</inlineHelpText>
+    <label>Changes to Logging</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

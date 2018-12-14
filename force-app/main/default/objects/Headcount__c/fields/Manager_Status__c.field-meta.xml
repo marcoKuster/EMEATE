@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manager_Status__c</fullName>
+    <description>Manager&#39;s -GYR signal for recruiting status on this position.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Blank: no activity on this position 
+Green: Likely to close within the assigned quarter 
+Yellow: May close within the assigned quarter but I&#39;m not confident 
+Red: Unlikely to close within assigned quarter
+Blue: May close before assigned quarter</inlineHelpText>
+    <label>Manager Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Green</fullName>
+                <default>false</default>
+                <label>Green</label>
+            </value>
+            <value>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+                <label>Yellow</label>
+            </value>
+            <value>
+                <fullName>Red</fullName>
+                <default>false</default>
+                <label>Red</label>
+            </value>
+            <value>
+                <fullName>Blue</fullName>
+                <default>false</default>
+                <label>Blue</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

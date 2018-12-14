@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Known_Issue_Link__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Known_Issue_ID__c),&quot;No Known Issue&quot;,HYPERLINK(&quot;https://success.salesforce.com/issues_view?id=&quot; &amp; Known_Issue_ID__c, &quot;View Known Issue (&quot; &amp; TEXT(Known_Issue_Num_Reporting_Customers__c) &amp; &quot; reports)&quot;,&quot;_knownissue&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Known Issue Link</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

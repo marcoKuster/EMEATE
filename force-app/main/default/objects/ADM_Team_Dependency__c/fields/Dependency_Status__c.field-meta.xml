@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dependency_Status__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>The status of this dependency.
+
+Prioritized = Deliverable has a user story and is prioritized on the backlog.
+
+Committed = Team is confident the work can be done in the needed timeframe and PO committed to maintaining the priority of the deliverable.</inlineHelpText>
+    <label>Dependency Status</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New</fullName>
+                <default>true</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>More Info Needed</fullName>
+                <default>false</default>
+                <label>More Info Needed</label>
+            </value>
+            <value>
+                <fullName>Prioritized</fullName>
+                <default>false</default>
+                <label>Prioritized</label>
+            </value>
+            <value>
+                <fullName>Committed</fullName>
+                <default>false</default>
+                <label>Committed</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+                <label>Deferred</label>
+            </value>
+            <value>
+                <fullName>Never</fullName>
+                <default>false</default>
+                <label>Never</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

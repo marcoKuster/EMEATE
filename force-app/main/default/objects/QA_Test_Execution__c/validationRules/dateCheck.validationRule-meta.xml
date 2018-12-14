@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dateCheck</fullName>
+    <active>true</active>
+    <description>Check for date in the Date of Last Execution. If it is set to future date then prompt an error message to reset the date which is less than current date.</description>
+    <errorConditionFormula>AND(Date_of_Last_Execution__c   &gt;  NOW(),  NOT( ISBLANK( Date_of_Last_Execution__c ) ) )</errorConditionFormula>
+    <errorDisplayField>Date_of_Last_Execution__c</errorDisplayField>
+    <errorMessage>Date of Last Execution should be less than the current date!</errorMessage>
+</ValidationRule>

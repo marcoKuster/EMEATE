@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- P2 are not considered by any calculation --></help>
+    <label><!-- Priority --></label>
+    <name>Priority__c</name>
+    <picklistValues>
+        <masterLabel>P1</masterLabel>
+        <translation><!-- P1 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>P2</masterLabel>
+        <translation><!-- P2 --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

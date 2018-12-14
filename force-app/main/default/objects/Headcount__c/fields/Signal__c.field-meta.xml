@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Signal__c</fullName>
+    <description>Only records showing green are open for hiring. Records showing yellow may become open again, but currently are not open.</description>
+    <externalId>false</externalId>
+    <formula>IMAGE(
+CASE( Status__c ,
+&quot;Open - New&quot;, &quot;/img/samples/color_green.gif&quot;,
+&quot;Open - Backfill&quot;, &quot;/img/samples/color_green.gif&quot;,
+&quot;Offer in Progress&quot;, &quot;/img/samples/color_yellow.gif&quot;,
+&quot;Offer Accepted&quot;, &quot;/img/samples/color_yellow.gif&quot;,
+&quot;Filled&quot;, &quot;/img/samples/color_red.gif&quot;,
+&quot;/s.gif&quot;),
+&quot;status color&quot;,15,30)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Only records showing green are open for hiring. Records showing yellow may become open again, but currently are not open.</inlineHelpText>
+    <label>Offer Signal</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

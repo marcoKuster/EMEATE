@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Blocking_Bugs__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>No BLOCKING, RELEASE BLOCKING, or FEATURE BLOCKING bugs. All resolved bugs are Verified and Closed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>No BLOCKING, RELEASE BLOCKING, or FEATURE BLOCKING bugs. All resolved bugs are Verified and Closed.</inlineHelpText>
+    <label>No Blocking Bugs</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,17 @@
+.THIS.slds-modal__footer {
+    margin: 0 -1rem -1rem;
+}
+
+.THIS .adm-bold {
+    font-weight: bold;
+}
+
+.THIS .adm-italic {
+    font-style: italic;
+}
+
+.THIS .modal-header {
+    font-weight: 300;
+    font-size: 1.25rem;
+    line-height: 1.25;
+}

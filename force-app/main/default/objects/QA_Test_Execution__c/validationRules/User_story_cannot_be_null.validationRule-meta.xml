@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>User_story_cannot_be_null</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK( User_Story__c )</errorConditionFormula>
+    <errorDisplayField>User_Story__c</errorDisplayField>
+    <errorMessage>Test Execution Insert|Update Error: User Story is mandatory to insert|update a test execution record.</errorMessage>
+</ValidationRule>

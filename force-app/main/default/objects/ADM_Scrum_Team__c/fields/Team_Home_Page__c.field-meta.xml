@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Home_Page__c</fullName>
+    <description>A link to the team&#39;s home page.  For example their Google Site, Chatter Group or alternative resource where users can find more information about this team.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the URL for your team&#39;s main site (Google, GitHub, etc). If you don&#39;t have a site, enter the URL for your team&#39;s primary Chatter group.</inlineHelpText>
+    <label>Team Homepage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

@@ -1,0 +1,30 @@
+<apex:page controller="ADM_TeamSelectorController" sidebar="false">
+    <apex:includeScript value="/support/console/42.0/integration.js"/>
+    <apex:outputPanel id="multipleTeam" layout="none" rendered="{!currentSprintCount > 1}">
+        <c:ADM_TeamSelector destinationurl="" destinationlabel="Sprint Wall" destinationparam="currentSprintId"></c:ADM_TeamSelector>
+    </apex:outputPanel>
+    <apex:outputPanel id="singleTeam" layout="none" rendered="{!currentSprintCount == 1}">
+        <script type="text/javascript">
+            if (typeof sforce == 'object' && sforce.one) {
+                sforce.one.navigateToSObject('{!currentSprintId}');
+
+                if (sforce.console && sforce.console.isInConsole()) {
+                    sforce.one.navigateToList('{!sprintListViewId}', null, '{!sprintObjectWithNameSpace}');
+                }
+            } else {
+                location.href='/{!currentSprintId}';
+            }
+            
+        </script>
+    </apex:outputPanel>
+
+    <apex:outputPanel layout="none" rendered="{!currentSprintCount == 0}">
+        <script type="text/javascript">
+            if (typeof sforce == 'object' && sforce.one) {
+                sforce.one.navigateToList('{!sprintListViewId}', null, '{!sprintObjectWithNameSpace}');
+            } else {
+                location.href='/{!allSprintsLink}';
+            }
+        </script>
+    </apex:outputPanel>
+</apex:page>

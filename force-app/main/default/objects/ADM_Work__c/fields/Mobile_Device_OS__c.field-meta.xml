@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile_Device_OS__c</fullName>
+    <externalId>false</externalId>
+    <label>Mobile Device OS</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Android 4.2.x</fullName>
+                <default>false</default>
+                <label>Android 4.2.x</label>
+            </value>
+            <value>
+                <fullName>Android 4.3</fullName>
+                <default>false</default>
+                <label>Android 4.3</label>
+            </value>
+            <value>
+                <fullName>Android 4.4.x</fullName>
+                <default>false</default>
+                <label>Android 4.4.x</label>
+            </value>
+            <value>
+                <fullName>Android 5.x</fullName>
+                <default>false</default>
+                <label>Android 5.x</label>
+            </value>
+            <value>
+                <fullName>iOS 8</fullName>
+                <default>false</default>
+                <label>iOS 8</label>
+            </value>
+            <value>
+                <fullName>iOS 9.0</fullName>
+                <default>false</default>
+                <label>iOS 9.0</label>
+            </value>
+            <value>
+                <fullName>iOS 9.0.1</fullName>
+                <default>false</default>
+                <label>iOS 9.0.1</label>
+            </value>
+            <value>
+                <fullName>iOS 9.0.2</fullName>
+                <default>false</default>
+                <label>iOS 9.0.2</label>
+            </value>
+            <value>
+                <fullName>iOS 9.1</fullName>
+                <default>false</default>
+                <label>iOS 9.1</label>
+            </value>
+            <value>
+                <fullName>iOS 9.2</fullName>
+                <default>false</default>
+                <label>iOS 9.2</label>
+            </value>
+            <value>
+                <fullName>Windows 10.0</fullName>
+                <default>false</default>
+                <label>Windows 10.0</label>
+            </value>
+            <value>
+                <fullName>Windows 10 Pro</fullName>
+                <default>false</default>
+                <label>Windows 10 Pro</label>
+            </value>
+            <value>
+                <fullName>Windows 8.0</fullName>
+                <default>false</default>
+                <label>Windows 8.0</label>
+            </value>
+            <value>
+                <fullName>Windows 8.0 Pro</fullName>
+                <default>false</default>
+                <label>Windows 8.0 Pro</label>
+            </value>
+            <value>
+                <fullName>Windows 8.1</fullName>
+                <default>false</default>
+                <label>Windows 8.1</label>
+            </value>
+            <value>
+                <fullName>Windows 8.1 Pro</fullName>
+                <default>false</default>
+                <label>Windows 8.1 Pro</label>
+            </value>
+            <value>
+                <fullName>Windows Phone 10.0</fullName>
+                <default>false</default>
+                <label>Windows Phone 10.0</label>
+            </value>
+            <value>
+                <fullName>Windows Phone 8.0</fullName>
+                <default>false</default>
+                <label>Windows Phone 8.0</label>
+            </value>
+            <value>
+                <fullName>Windows Phone 8.1</fullName>
+                <default>false</default>
+                <label>Windows Phone 8.1</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

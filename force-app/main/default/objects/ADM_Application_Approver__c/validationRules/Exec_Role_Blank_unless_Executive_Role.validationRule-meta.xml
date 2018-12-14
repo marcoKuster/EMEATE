@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exec_Role_Blank_unless_Executive_Role</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(ISBLANK(Executive_Role__c)) &amp;&amp; NOT(ISPICKVAL(Approver_Role__c, &quot;Executive&quot;))</errorConditionFormula>
+    <errorDisplayField>Executive_Role__c</errorDisplayField>
+    <errorMessage>Approver Role must be &quot;Executive&quot; when Executive Role is specified.</errorMessage>
+</ValidationRule>

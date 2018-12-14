@@ -1,0 +1,1195 @@
+<apex:component id="tasksComponent" layout="none" controller="ADM_TasksController">
+<apex:attribute required="true" name="object" type="ADM_Work__c" description="The name of the object wrapped in Visualforce ex: {!ADM_Work__c}" assignTo="{!work}" />
+
+<style>
+.ADM_Tasks_holder{box-sizing:border-box;-moz-box-sizing:border-box;display:table;table-layout:fixed;width:100%;min-width:665px;}
+.ADM_Tasks_holder *{box-sizing:border-box;-moz-box-sizing:border-box;font-family:'Lucida Grande','Lucida Sans','Arial',sans-serif;}
+.ADM_Tasks_row1{display:table-row;}
+.ADM_Tasks_row1 > div{display:table-cell;text-align:center;padding:10px;font-weight:bold;}
+.ADM_Tasks_row1 > div:first-child{border-right:0px;}
+.ADM_Tasks_row1 > div:last-child{border-left:0px;}
+
+.work_columns{position:relative;display:table-row;height:100%;width:100%;padding:0px;background:#E3F3FF;border-top-right-radius:5px;border-bottom-right-radius:5px;}
+
+.work_columns div.work_column{background:#E3F3FF;border:1px #ccc solid;border-left-width:0px;border-right-width:0px;}
+.work_columns div.work_column:first-child{border-left-width:1px;border-top-left-radius:5px;border-bottom-left-radius:5px;}
+.work_columns div.work_column:last-child{border-right-width:1px;border-top-right-radius:5px;border-bottom-right-radius:5px;}
+.work_columns div.drag_bounds{position:absolute;left:-10px;top:-10px;right:-4px;bottom:-76px;padding:10px;border:1px red solid;}
+
+.work_column{display:table-cell;vertical-align:top;text-align:center;position:relative;height:100%;}
+
+/* tasks: normal view */
+.work_column .work_tasks>ul{display:block;position:relative;margin:0;list-style:none;width:100%;height:100%;padding:5px 5px 10px 5px;border:1px #E3F3FF solid;border-left:1px #c5dbec solid;box-sizing:border-box;-moz-box-sizing:border-box;outline:0;-webkit-user-select:none;-moz-user-select:none;-o-user-select:none;-khtml-user-select:none;user-select:none;}
+.work_column .work_tasks:last-child>ul{border-top-right-radius:10px;border-bottom-right-radius:10px;}
+.work_column .work_tasks>ul>li{margin:0px 0px 10px 0px;}
+.work_column .work_tasks>ul>li.task_card{display:table;position:relative;margin:0px 0px 10px 0px;margin-bottom:6px/*-1px*/;border:1px #C0C0C0 solid;border-radius:5px;padding:0px;background:#fff;width:100%;font-size:11px;}
+.work_column .work_tasks>ul>li.blankTask{position:relative;border:1px #C0C0C0 solid;border-radius:5px;background:#fff;height:62px;margin:0;margin-top:-55px;}
+.work_column .work_tasks>ul>li.blankTask:first-child  {margin-top:0px !important;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(1) {z-index:0;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(2) {z-index:0;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(3) {z-index:0;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(4) {z-index:0;}
+.work_column .work_tasks>ul.stacked>li.task_highlight{position:absolute !important;top:40px !important;z-index:25 !important;}
+.work_column .work_tasks>ul.stacked>li.task_card{margin-top:-55px !important;}
+.work_column .work_tasks>ul.stacked>li.task_card[data-type=new]{margin-top:0px !important;}
+.showAllTasks{display:block;text-align:center;margin-top:-20px;}
+.showAllTasks a{display:inline-block;padding:4px;font-size:9px;font-weight:bold;text-align:center;color:#8ba9bf;}
+.showAllTasks a:hover{color:#8ba9bf;/*#1D5987*/}
+.task_highlight{background:#d0e1f0 !important;border:1px #d0e1f0 solid !important;border-radius:5px;}
+.work_column .work_tasks>ul>li:last-child{margin-bottom:0px;}
+.task_row1{display:table;width:100%;}
+.task_row1_holder{display:table-cell;vertical-align:top;}
+.task_desc{width:100%;padding:5px 0px;}
+.task_desc textarea{width:100%;padding:0px 5px;outline:0;max-height:33px;border:0;background:transparent;resize:none;box-sizing:border-box;-moz-box-sizing:border-box;margin:0;overflow:auto;}
+.task_desc textarea::selection,.task_desc textarea::-moz-selection{background:#dcdcad;}
+.task_img{display:table-cell;vertical-align:top;padding:6px 4px 0px 4px;height:25px;}
+.task_img img{width:25px;height:25px;border-radius:5px;outline:0;}
+.task_img img.img_clickable{cursor:pointer;}
+.task_grippy,.task_grippy_static{display:table-cell;background:url('/resource/{!namespace}grippy_sideways') 0px 2px no-repeat;width:13px;min-width:13px;cursor:move;padding-right:5px;}
+.task_grippy_centered{background-position-y:10px;}
+.task_row2{display:table;background:#e5e5e5;padding:3px 6px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:9px;font-weight:bold;border-top:1px #D7D7D7 solid;width:100%;}
+.task_row2_holder{display:table-cell;vertical-align:middle;width:100%;}
+.task_row2_hours_container{display:inline-table;}
+.task_row2_hours_container_row{display:table-row;}
+.task_rh{display:table-cell;color:#848484;white-space:nowrap;padding-right:2px;padding-left:5px;}
+.task_hours{display:table-cell;}
+.task_hours input{font-family:'Lucida Grande', 'Lucida Sans', 'Arial', sans-serif;font-size: 1em;background:transparent;color:#000;font-weight:bold;outline:0;cursor:text;min-width:15px;border-radius:5px;border:1px transparent solid;padding:2px 2px 4px 2px;text-align:center;}
+.task_hours input:focus{border:1px #C5C5C5 solid;background:#FFFFCC;padding:2px 11px 4px 11px;}
+.task_hours input:hover{border:1px #C5C5C5 solid;}
+.task_hours input::selection,.task_hours input::-moz-selection{background:#dcdcad;}
+.task_ah{display:table-cell;color:#848484;white-space:nowrap;padding-right:2px;padding-left:5px;text-align:left;}
+.task_actual_hours{display:table-cell;}
+.task_actual_hours input{font-family:'Lucida Grande', 'Lucida Sans', 'Arial', sans-serif;font-size: 1em;background:transparent;color:#000;font-weight:bold;outline:0;cursor:text;min-width:15px;border-radius:5px;border:1px transparent solid;padding:2px 2px 4px 2px;text-align:center;}
+.task_actual_hours input:focus{border:1px #C5C5C5 solid;background:#FFFFCC;padding:2px 11px 4px 11px;}
+.task_actual_hours input:hover{border:1px #C5C5C5 solid;}
+.task_actual_hours input::selection,.task_actual_hours input::-moz-selection{background:#dcdcad;}
+.task_hint{display:table-cell;width:100%;text-align:right;color:#848484;}
+.task_hint img{vertical-align:-3px;margin-right:5px;}
+.task_assignee_name{display:table-cell;width:100%;text-align:right;color:#848484;padding-right:5px;display:none;}
+.task_assignee_name a{color: #848484;text-decoration: none;}
+.task_assignee_name a:hover{text-decoration: underline;}
+.task_hint, .task_capex, .task_capex_checkbox, .task_link, .task_dd{display:table-cell;vertical-align:middle;width:100%;text-align:right;}
+.task_dd .delete-task-button {height:16px;width:17px;outline:0;margin-bottom:2px;cursor:pointer;border:0px;background:transparent}
+.ui-icon{background-image: url('/resource/{!namespace}ui_icons_acacac_256x240');}
+.ui-icon:hover{background-image:url('/resource/{!namespace}ui_icons_217bc0_256x240');}
+.task_button_grey{border:1px #C5C5C5 solid;background:url('/resource/{!namespace}arrow_small') 50% 50% no-repeat;}
+.task_button_grey_arrow{background:url('/resource/{!namespace}arrow_small');width:16px;height:16px;position:absolute;top:50%;left:50%;margin-left:-8px;margin-top:-8px;}
+
+.ui-icon{width:16px;height:16px;display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat;}
+.ui-icon-trash{background-position:-176px -96px;}
+.ui-icon-check{background-position:-64px -144px;background-image:url('/resource/{!namespace}ui_icons_217bc0_256x240');}
+.ui-icon-blank,
+.ui-icon-blank:hover{background:none !important;}
+
+.dropdown{border-radius:5px;background:#fff;position:absolute;z-index:1999;display:none;padding:7px !important;box-sizing:border-box;-moz-box-sizing:border-box;font-size:11px !important;box-shadow:1px 1px 20px #c0c0c0;max-height:150px;overflow-y:auto;overflow-x:hidden;border:1px #79B7E7 solid !important;}
+.dropdown .menu_group{font-size:10px !important;font-weight:bold;margin:0;margin-top:10px;}
+.dropdown li{padding:3px;white-space:nowrap;border:1px transparent solid;}
+.dropdown li:first-child{margin-top:0 !important;}
+.dropdown li.ui-state-focus{border:1px #79B7E7 solid;background:#D0E5F5;color:#1D5987;border-radius:5px;}
+
+.button-active{z-index:2000 !important;border-bottom:1px transparent solid !important;}
+.button-active-grey{border-bottom:1px #dcdcdc solid !important;}
+.button-active-left{border-bottom-left-radius:0 !important;}
+.button-active-right{border-bottom-right-radius:0 !important;}
+.dropdown-active-left{border-top-left-radius:0 !important;}
+.dropdown-active-right{border-top-right-radius:0 !important;}
+#menu_users.dropdown{max-height:300px;}
+#menu_users.dropdown a{vertical-align:middle;}
+#menu_users.dropdown a span{display:inline-block;vertical-align:middle;position:relative;top:auto;left:auto;}
+#menu_users.dropdown img{height:25px;width:25px;}
+
+#task_error {background-color: rgb(194, 57, 52);color: rgb(255, 255, 255);left: 50%;position: fixed;text-align: center;top: 5%;transform: translate(-50%, -5%);width: 90%;}
+#task_error button {float: right;}
+#task_error button use {fill: #fff;}
+.slds-hide{display:none;}
+
+/*.ui-menu .ui-menu-item{float:none;clear:none;display:block;}
+.ui-menu .ui-menu-item{margin:0;padding:0;zoom:1;width:100%;}
+.ui-menu .ui-menu-item a{outline:0;text-decoration:none;display:block;padding:.2em .4em;line-height:1.5;zoom:1;}*/
+</style>
+
+<div class="ADM_Tasks_holder" data-workid="{!workAndTasks.Id}">
+    <div class="ADM_Tasks_row1">
+        <div class="ADM_Tasks_column">
+            Not started
+        </div>
+        <div class="ADM_Tasks_column">
+            In Progress
+        </div>
+        <div class="ADM_Tasks_column">
+            Completed
+        </div>
+    </div>
+    <div class="work_columns">
+        <div class="work_column work_column1">
+
+            <apex:variable var="plannedStackLength" value="{!9}" />
+            <apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!workAndTasks.PlannedTasks.size < plannedStackLength}">
+                <ul data-type="Not Started" data-stacklength="{!TEXT(plannedStackLength)}">
+                    <apex:repeat value="{!workAndTasks.PlannedTasks}" var="plannedTask" id="plannedRepeaterLess">
+                    <c:ADM_Sprint_VirtualWall_TaskCard task="{!plannedTask}" />
+                    </apex:repeat>
+                    <li class="showAllTasks" style="display:none;"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!workAndTasks.PlannedTasks.size} tasks</a></li>
+                </ul>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!workAndTasks.PlannedTasks.size >= plannedStackLength}">
+                <ul data-type="Not Started" class="stacked" data-stacklength="{!TEXT(plannedStackLength)}">
+                    <li class="blankTask freeze"></li>
+                    <li class="blankTask freeze"></li>
+                    <li class="blankTask freeze"></li>
+                    <apex:variable var="plannedCounter" value="{!1}" />
+                    <apex:repeat value="{!workAndTasks.PlannedTasks}" var="plannedTask" id="plannedRepeaterMore">
+                        <c:ADM_Sprint_VirtualWall_TaskCard task="{!plannedTask}" rendered="{!plannedCounter != workAndTasks.PlannedTasks.size}" style="display:none;" cssclass="freeze" />
+                        <c:ADM_Sprint_VirtualWall_TaskCard task="{!plannedTask}" rendered="{!plannedCounter == workAndTasks.PlannedTasks.size}" />
+                        <apex:variable var="plannedCounter" value="{!plannedCounter+1}" />
+                    </apex:repeat>
+                    <li class="showAllTasks"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!workAndTasks.PlannedTasks.size} tasks</a></li>
+                </ul>
+            </apex:outputPanel>
+
+        </div>
+        <div class="work_column work_column2">
+
+            <apex:variable var="inProgressStackLength" value="{!9}" />
+            <apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!workAndTasks.InProgressTasks.size < inProgressStackLength}">
+                <ul data-type="In Progress" data-stacklength="{!TEXT(inProgressStackLength)}">
+                    <apex:repeat value="{!workAndTasks.InProgressTasks}" var="progTask" id="inProgRepeaterLess">
+                    <c:ADM_Sprint_VirtualWall_TaskCard task="{!progTask}" />
+                    </apex:repeat>
+                    <li class="showAllTasks" style="display:none;"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!workAndTasks.InProgressTasks.size} tasks</a></li>
+                </ul>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!workAndTasks.InProgressTasks.size >= inProgressStackLength}">
+                <ul data-type="In Progress" class="stacked" data-stacklength="{!TEXT(inProgressStackLength)}">
+                    <li class="blankTask freeze"></li>
+                    <li class="blankTask freeze"></li>
+                    <li class="blankTask freeze"></li>
+                    <apex:variable var="inProgressCounter" value="{!1}" />
+                    <apex:repeat value="{!workAndTasks.InProgressTasks}" var="progTask" id="inProgRepeaterMore">
+                        <c:ADM_Sprint_VirtualWall_TaskCard task="{!progTask}" rendered="{!inProgressCounter != workAndTasks.InProgressTasks.size}" style="display:none;" cssclass="freeze" />
+                        <c:ADM_Sprint_VirtualWall_TaskCard task="{!progTask}" rendered="{!inProgressCounter == workAndTasks.InProgressTasks.size}" />
+                        <apex:variable var="inProgressCounter" value="{!inProgressCounter+1}" />
+                    </apex:repeat>
+                    <li class="showAllTasks"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!workAndTasks.InProgressTasks.size} tasks</a></li>
+                </ul>
+            </apex:outputPanel>
+
+        </div>
+        <div class="work_column work_column3">
+
+            <apex:variable var="completedStackLength" value="{!9}" />
+            <apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!workAndTasks.CompletedTasks.size < completedStackLength}">
+            <ul data-type="Completed" data-stacklength="{!TEXT(completedStackLength)}">
+                <apex:repeat value="{!workAndTasks.CompletedTasks}" var="completedTask" id="completedRepeaterLess">
+                <c:ADM_Sprint_VirtualWall_TaskCard task="{!completedTask}" />
+                </apex:repeat>
+                <li class="showAllTasks" style="display:none;"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!workAndTasks.CompletedTasks.size} tasks</a></li>
+            </ul>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!workAndTasks.CompletedTasks.size >= completedStackLength}">
+                <ul data-type="Completed" class="stacked" data-stacklength="{!TEXT(completedStackLength)}">
+                    <li class="blankTask freeze"></li>
+                    <li class="blankTask freeze"></li>
+                    <li class="blankTask freeze"></li>
+                    <apex:variable var="completedCounter" value="{!1}" />
+                    <apex:repeat value="{!workAndTasks.CompletedTasks}" var="completedTask" id="completedRepeaterMore">
+                        <c:ADM_Sprint_VirtualWall_TaskCard task="{!completedTask}" rendered="{!completedCounter != workAndTasks.CompletedTasks.size}" style="display:none;" cssclass="freeze" />
+                        <c:ADM_Sprint_VirtualWall_TaskCard task="{!completedTask}" rendered="{!completedCounter == workAndTasks.CompletedTasks.size}" />
+                        <apex:variable var="completedCounter" value="{!completedCounter+1}" />
+                    </apex:repeat>
+                    <li class="showAllTasks"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!workAndTasks.CompletedTasks.size} tasks</a></li>
+                </ul>
+            </apex:outputPanel>
+
+        </div>
+    </div>
+</div>
+
+<ul id="menu_users" class="dropdown">
+    <apex:repeat value="{!teamMembers}" var="teamMember">
+        <li data-userid="{!teamMember.Member_Name__r.Id}">
+            <a href="javascript:void(0);">
+                <span class="ui-icon ui-icon-blank"></span>
+                <span><img src="{!teamMember.Member_Name__r.SmallPhotoUrl}" /></span>
+                <span>{!BLANKVALUE(teamMember.Member_Name__r.FirstName, teamMember.Member_Name__r.Name)}</span>
+            </a>
+        </li>
+    </apex:repeat>
+</ul>
+<div class="slds">
+    <div id="task_error" class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture slds-hide" role="alert">
+        <span class="slds-assistive-text">Info</span>
+        <button class="slds-button slds-button--icon-inverse close slds-icon--small zen-btn" onclick="closeTaskError();">
+            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+            </svg>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="task_error_head"></h2>
+        </div>
+    </div>
+
+<script>
+var storyId = '{!workAndTasks.Id}';
+var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+
+function hide_dd() {
+    $('.dropdown').hide();
+    $('#headliner #headliner_status button,#headliner #headliner_assignee button,button.storypoints,button#assigneeOptions,button#activity,button#newButton,button#filterOptions,.work_desc .work_desc_status .work_desc_status_view button,.work_desc .work_desc_status .work_desc_status_dropdown button').removeClass('ui-state-active button-active ui-state-focus button-active-left button-active-right');
+    $(document).unbind('click', hide_dd);
+}
+
+function closeTaskError() {
+    $('#task_error').addClass('slds-hide');
+}
+
+function initializeTaskSortable($dom) {
+
+    $dom.find(".work_tasks>ul").sortable({
+        opacity: 0.5,
+        distance: 10,
+        cancel: '.task_desc,.task_hours input, .task_actual_hours input, .task_dd,.task_link',
+        forcePlaceholderSize: true,
+        placeholder: "task_highlight",
+        items: "li.task_card",
+        tolerance: 'pointer',
+        connectWith: ".work_tasks>ul",
+        //containment: ".drag_bounds",
+        stop: function(event, ui) {
+         recalcRow();
+
+            // OLD LIST
+            modifyList($(this));
+            modifyList(ui.item.closest('ul'));
+            $(this).closest('.work_columns').find('li').css('z-index','');
+            //endNotification($dom.data('last_message_id'));
+        },
+        over: function(event, ui) {
+         recalcRow();
+        },
+        start:function(event, ui) {
+            $(ui.placeholder).height($(ui.item).outerHeight()); // hack for Chrome Windows
+            //hide_dd();
+            recalcRow();
+        },
+        update:function(event, ui) {
+            console.log('sortable event: update');
+
+            //this update is invoked twice if dropped from on list to another list, so we want to block the
+            //second sorting call
+            if(typeof $dom.data('sorting-state') !== 'undefined' && $dom.data('sorting-state').indexOf(event.timeStamp) != -1) {
+                return;
+            }
+
+            //add the current event time to the sorting state
+            if(typeof $dom.data('sorting-state') == 'undefined') {
+                $dom.data('sorting-state', [event.timeStamp]);
+            } else {
+                $dom.data('sorting-state').push(event.timeStamp);
+            }
+            function popState() {
+                $dom.data('sorting-state').splice($dom.data('sorting-state').indexOf(event.timeStamp));
+            }
+
+            startNotification('Saving...');
+
+            var request = {
+                workId: storyId,
+                plannedTasks: [],
+                inProgressTasks: [],
+                completedTasks: []
+            };
+            $dom.find('ul[data-type="Not Started"] li[data-taskid]').each(function(index, item){
+                request.plannedTasks.push($(item).data('taskid'));
+            });
+            $dom.find('ul[data-type="In Progress"] li[data-taskid]').each(function(index, item){
+                request.inProgressTasks.push($(item).data('taskid'));
+            });
+            $dom.find('ul[data-type="Completed"] li[data-taskid]').each(function(index, item){
+                request.completedTasks.push($(item).data('taskid'));
+            });
+
+            $dom.find('.work_column3 li .task_hours input').val(0); // set hours to completed in third column
+
+             Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ADM_TasksController.updateTaskOrder}',
+                 request,
+                 function(result, event){
+                    if (event.status) {
+                        popState();
+                        var work = result;
+
+                        //update the returned task items
+                        var tasks = [].concat(result.notStartedTasks, result.inProgressTasks, result.completedTasks);
+                        for(var index = 0; index < tasks.length; index++) {
+                            $('[data-taskid="' + tasks[index].Id + '"]').taskCard('sobject', tasks[index]);
+                        }
+
+                        //endNotification();
+                    } else if (event.type ==='exception') {
+                        popState();
+                        errorNotification('<div>Error during task order:</div>' + event.message);
+                    }
+                },{escape:false}
+            );
+        }
+    });
+}
+
+function startNotification(txt, obj){
+//
+}
+
+function endNotification(){
+//  $('.task_hint img').remove();
+}
+
+function errorNotification(msg) {
+    console.warn(msg);
+}
+
+function modifyList(el) {
+    if (el.children('li.task_card').length >= el.data('stacklength')) {
+        stackTasks(el);
+    } else {
+        unstackTasks(el);
+    }
+}
+
+function stackTasks(el) {
+    if (el.data('stayopen') != true) {
+        el.addClass('stacked');
+        el.children('li.blankTask').remove();
+        el.prepend('<li class="blankTask freeze"></li><li class="blankTask freeze"></li><li class="blankTask freeze"></li>');
+        el.children('li.task_card:not(li.task_card:last)').css('display','none').addClass('freeze');
+        el.children('li.task_card:not(li.task_card[data-type=new]):last').css('display','table').removeClass('freeze');
+        el.children('li.showAllTasks').children('a').text('Expand ' + $(el).children('li.task_card:not(li.task_card[data-type=new])').length + ' tasks');
+    } else {
+        el.children('li.showAllTasks').children('a').text('Collapse ' + $(el).children('li.task_card:not(li.task_card[data-type=new])').length + ' tasks');
+    }
+
+    el.append( el.children('li.showAllTasks') );
+    if (el.children('li.task_card').length >= el.data('stacklength')) {
+        el.children('li.showAllTasks').css('display','block');
+    }
+    recalcRow();
+}
+
+function unstackTasks(el) {
+    el.removeClass('stacked');
+    el.children('li.blankTask').remove();
+    el.children('li.task_card').css('display','table').removeClass('freeze');
+    el.children('li.showAllTasks').children('a').text('Collapse ' + $(el).children('li.task_card:not(li.task_card[data-type=new])').length + ' tasks');
+    el.children('li.showAllTasks').css('display','none');
+    el.append( el.children('li.showAllTasks') );
+    recalcRow();
+}
+
+function toggleTasks(el) {
+    if (el.hasClass('stacked') && el.children('li.task_card').length >= el.data('stacklength')) {
+        unstackTasks(el);
+        el.children('li.showAllTasks').css('display','block');
+        el.attr('stayopen',true).data('stayopen',true);
+    } else {
+        el.removeAttr('stayopen').removeData('stayopen');
+        stackTasks(el);
+    }
+}
+
+function recalcRow(row) {
+    var maxHeight = 0;
+    $('.work_column,.work_tasks > ul').css('height','auto');
+    $('.work_column').each(function() {
+        var height = $(this).outerHeight();
+        if ( height > maxHeight ) {
+            maxHeight = height;
+        }
+    });
+    $('.work_tasks > ul').css('height', maxHeight + 90);
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+TASK: DELETE
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function deleteTask(id) {
+    $('li[data-taskid=' + id + ']').fadeOut(500, function() {
+        recalcRow();
+    });
+    Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.ADM_TasksController.deleteTask}',
+        id,
+        function(result, event) {
+            var data = result;
+            if (event.status) {
+                var listOwner = $('li[data-taskid=' + id + ']').closest('ul');
+                $('li[data-taskid=' + id + ']').remove();
+                modifyList(listOwner);
+                //endNotification();
+            } else if (event.type === 'exception') {
+                $('li[data-taskid=' + id + ']').show();
+                errorNotification('<div>Error during delete:</div>' + event.message);
+            }
+        },{escape:false}
+    );
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+RESTRICT INPUT
+/----------------------------------------------------------------------------------------------------------------------------------*/
+var digitsOnly = /[1234567890]/g;
+var integerOnly = /[0-9\.]/g;
+var alphaOnly = /[A-Za-z]/g;
+var usernameOnly = /[0-9A-Za-z\._-]/g;
+
+function restrictInput(e,restrictionType) {
+    var code = e.keyCode || e.which;
+    var character = String.fromCharCode(code);
+
+    if (!e.ctrlKey && code!=9 && code!=8 && code!=36 && code!=37 && code!=38 && (code!=39 || (code==39 && character=="'")) && code!=40) {
+        if (character.match(restrictionType)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+function restrictInputToDigitsOnly(e) {
+    return restrictInput(e, digitsOnly);
+}
+function restrictInputToNumberOnly(e) {
+    return restrictInput(e, /[0-9\.]/g);
+}
+
+/* new task */
+function newTaskAction() {
+    console.log('newTaskAction()');
+    if($('.ADM_Tasks_holder ul[data-type="Not Started"]').find('li[data-type="new"]').length === 0) {
+        console.log('executing part B');
+        $('<li></li>').taskCard().appendTo($('.ADM_Tasks_holder ul[data-type="Not Started"]')).find('.task_desc textarea').focus();
+        recalcRow();
+    }
+}
+
+
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+TASKCARD PLUGIN
+/----------------------------------------------------------------------------------------------------------------------------------*/
+(function($){
+    var setLastModifiedDate = function(value) {
+        var serializedValue = null;
+
+        if(typeof value === 'object' && value.getTime) {
+            serializedValue = value.getTime();
+        } else if(typeof value === 'number') {
+            serializedValue = value;
+        }
+
+        return this.each(function() {
+            $(this).attr('data-lastmodifieddate', serializedValue).data('lastmodifieddate', serializedValue);
+        });
+    };
+
+    var updateTaskCard = function($dom, sobject) {
+        //store the name space vs hard-coding it
+        var qualifiedName='{!$ObjectType.ADM_Task__c.Name}';
+        var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Task__c'));
+        if(typeof sobject === 'undefined' || sobject == null) {
+            return;
+        }
+
+        $dom.attr('data-taskid', sobject.Id).data('taskid', sobject.Id);
+
+        $dom.find('.task_link a').attr('href','/' + sobject.Id);
+
+        if(typeof sobject.LastModifiedDate !== 'undefined') {
+            setLastModifiedDate.call($dom, sobject.LastModifiedDate);
+        }
+
+        if(typeof sobject.Subject__c !== 'undefined') {
+            $dom.find('.task_desc textarea').val(sobject.Subject__c);
+        }
+
+        if(typeof sobject[nameSpace + 'Assigned_To__r'] !== 'undefined') {
+            $dom.attr('data-userid', sobject[nameSpace + 'Assigned_To__r'].Id).data('userid', sobject[nameSpace + 'Assigned_To__r'].Id);
+
+            //add the img element if it does not exist
+            var $img = $dom.find('.task_img img');
+            if($img.length == 0) {
+                $img = $('<img />').addClass('img_clickable').appendTo($dom.find('.task_img').empty());
+            }
+
+            $img.attr({'src': sobject[nameSpace + 'Assigned_To__r'].SmallPhotoUrl, 'title': sobject[nameSpace + 'Assigned_To__r'].Name, 'alt': sobject[nameSpace + 'Assigned_To__r'].Name});
+
+            if($dom.find('.task_assignee_name a').length == 0) {
+                $dom.find('.task_assignee_name').append($('<a target="_blank"></a>'))
+            }
+            $dom.find('.task_assignee_name a')
+                .attr('href', '/' + sobject[nameSpace + 'Assigned_To__r'].Id)
+                .text(sobject[nameSpace + 'Assigned_To__r'].FirstName || sobject[nameSpace + 'Assigned_To__r'].Name);
+        }
+
+        if(typeof sobject.Hours_Remaining__c !== 'undefined') {
+            $dom.find('.task_hours input').val(sobject.Hours_Remaining__c.toString().replace(/\.0/, ''));
+        }
+
+        if(typeof sobject.Actual_Hours__c !== 'undefined') {
+            $dom.find('.task_actual_hours input').val(sobject.Actual_Hours__c.toString().replace(/\.0/, ''));
+        }
+
+		if(typeof sobject.Capex_Enabled__c !== 'undefined') {
+            var capex_enabled = sobject.Capex_Enabled__c;
+            $dom.find('.task_capex_checkbox input').prop("checked", capex_enabled);
+
+            if (capex_enabled) {
+                $dom.find('.task_row2').find('.task_row2_hours_container_row').css('display', 'table-row');
+                $dom.find('.task_row2').find('.task_grippy').addClass('task_grippy_centered');
+            } else {
+                $dom.find('.task_row2').find('.task_row2_hours_container_row').css('display', 'none');
+                $dom.find('.task_row2').find('.task_grippy').removeClass('task_grippy_centered');
+            }
+
+        }
+
+        //determine if the task needs to be moved to another column
+        var currentColumn = $dom.closest('[data-type]').data('type');
+        var expectedColumn = $.taskCard.getExpectedColumnName(sobject);
+        if(currentColumn != expectedColumn) {
+           //$dom.closest('[data-workid]').find('[data-type="' + expectedColumn + '"]').append($dom);
+           $('[data-type="' + expectedColumn + '"]').append($dom);
+        }
+    };
+
+    // fields where we'll toggle on/off the readonly property when editing
+    var readOnlyFields = ['subject', 'remaining', 'actual'];
+    var fieldToSelector = {
+        subject: '.task_desc textarea',
+        remaining: '.task_hours input',
+        actual: '.task_actual_hours input',
+        capex: '.task_capex_checkbox input',
+        assignee: '.task_img img',
+        grippy: '.task_grippy'
+    }
+
+    var methods = {
+        init : function(options) {
+            var settings = $.extend({}, options);
+
+            return this.each(function() {
+                var $this = $(this);
+                var html = makeTaskCardHtml(true);
+
+                $this.addClass('task_card').append($(html));
+
+                if(settings.sobject && settings.sobject != null) {
+                    updateTaskCard($this, settings.sobject);
+                } else {
+                    $this.data('type', 'new').attr('data-type', 'new');
+                    $this.find('.task_dd,.task_link,.task_assignee_name,.task_grippy,.task_capex,.task_capex_checkbox').hide();
+                    $this.find('.task_img img').attr({src: "{!JSENCODE(userSmallPhotoUrl)}", title: "{!URLENCODE($User.FirstName)}"});
+                    $this.find('.task_hint').text('<Enter> to Create Task, <Tab> to Input Hours');
+                }
+            });
+        },
+
+        sobject : function(sobject) {
+            if(sobject) {
+                return this.each(function(){
+                    updateTaskCard($(this), sobject);
+                });
+            } else {
+                var $first = this.first();
+                if($first.data('taskid')) {
+                    return {Id:$first.data('taskid')};
+                } else {
+                    return undefined;
+                }
+            }
+        },
+
+        lastModifiedDate : function(date) {
+            if(date) {
+                return setLastModifiedDate.call(this, date);
+            } else {
+                var value = this.first().data('lastmodifieddate');
+                return (value)? new Date(value) : undefined;
+            }
+        },
+
+        startEditing : function() {
+            return this.each(function(){
+                $(this).attr('data-state', 'editing').data('state', 'editing');
+                $(this).trigger('taskCardediting');
+            });
+        },
+
+        stopEditing : function() {
+            return this.each(function(){
+                $(this).removeAttr('data-state').removeData('state', 'editing');
+                $(this).trigger('taskCardedited');
+            });
+        },
+
+        isEditing : function() {
+            return this.first().data('state') === 'editing' || this.first().attr('data-state') === 'editing';
+        },
+
+        startUpdating: function(fieldUpdating) {
+            $(this).find(fieldToSelector.grippy).css('visibility', 'hidden');
+            $(this).find(fieldToSelector.assignee).css('opacity', '0.5');
+            if (fieldUpdating !== 'capex') {
+                $(this).find(fieldToSelector.capex).prop('disabled', true);
+        }
+
+            readOnlyFields.forEach(function(field){
+                if (field !== fieldUpdating){
+                    $(fieldToSelector[field]).prop('readonly', true);
+                }
+            })
+        },
+
+        stopUpdating: function() {
+            $(this).find(fieldToSelector.grippy).css('visibility', 'visible');
+            $(this).find(fieldToSelector.assignee).css('opacity', '1');
+            $(this).find(fieldToSelector.capex).prop('disabled', false);
+
+            readOnlyFields.forEach(function(field){
+                $(fieldToSelector[field]).prop('readonly', false);
+            })
+        }
+    };
+
+    $.fn.taskCard = function(method) {
+        if ( methods[method] ) {
+            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof method === 'object' || ! method ) {
+            return methods.init.apply( this, arguments );
+        } else {
+            $.error( 'Method ' +  method + ' does not exist on jQuery.taskCard' );
+        }
+    };
+
+    /**
+     * Returns the expected column name for given a task sobject.
+     */
+    $.taskCard = {
+        getExpectedColumnName : function(sobject) {
+            var expectedColumn = 'Not Started';
+            if(sobject[nameSpace+'Status__c'] === 'Completed') {
+               expectedColumn = 'Completed';
+            } else if(sobject[nameSpace+'Status__c'] === 'In Progress') {
+               expectedColumn = 'In Progress';
+            }
+            return expectedColumn;
+        }
+    };
+})(jQuery);
+
+$(function() {
+
+    var userDropdown = $('#menu_users').menu().hide();
+
+    $(document).on('dblclick','.work_tasks ul',function(e) {
+        if (e.target === this) {
+            if($(this).find('li[data-type="new"]').length === 0) {
+                $('<li></li>').taskCard().appendTo($(this)).find('.task_desc textarea').focus();
+                recalcRow();
+            }
+        }
+    });
+
+    // double click in showalltasks li to add task
+    $(document).on('dblclick','li.showAllTasks',function(e) {
+        if($(this).closest('ul').find('li[data-type="new"]').length === 0) {
+            $('<li></li>').taskCard().appendTo($(this).closest('ul')).find('.task_desc textarea').focus();
+            recalcRow();
+        }
+    });
+
+/*-----------------------------------------------------------------------------------------------------------------------------------*/
+/* !Task Functions                                                                                                                   */
+/*-----------------------------------------------------------------------------------------------------------------------------------*/
+    /* TASK: EDIT TASK */
+    var originalTaskText = '';
+    //$(".task_desc textarea").on('focus',function() {
+    $(document).on('focus',".task_desc textarea",function() {
+         $(this).closest('.task_card').css('background-color','#FFFFCC').taskCard('startEditing');
+         originalTaskText = $(this).val();
+         $(this).closest('.task_card').taskCard('startUpdating', 'subject');
+    }).on('blur',".task_desc textarea",function() {
+         $(this).closest('li').find('.task_hint').html(''); // double check this on newly created tasks
+         $(this).closest('.task_card').css('background-color','#FFFFFF').taskCard('stopEditing');
+         if ($(this).val() == '') {
+            if ($(this).closest('li[data-taskid]').data('taskid')) {
+                deleteTask($(this).closest('li[data-taskid]').data('taskid'));
+                $(this).closest('li').fadeOut(500, function() {
+                    recalcRow();
+                });
+            } else {
+                $(this).closest('li').fadeOut(500, function() {
+                    $(this).remove();
+                    recalcRow();
+                });
+            }
+            $(this).closest('.task_card').taskCard('stopUpdating');
+         } else if (originalTaskText != $(this).val()) {
+            var newTask = $(this).closest('li');
+            startNotification('Saving...', newTask);
+            var taskid = $(this).closest('li[data-taskid]').data('taskid') || null;
+            // determine if task has been saved and has it's own userid data value, otherwise default to assignee
+            var assigneeid = $(this).closest('.task_card').data('userid') || '{!$User.Id}';
+            var hoursRemaining = $(newTask).find('.task_hours input').val() || 0;
+            var lastModifiedDate = ($(this).closest('.task_card').taskCard('lastModifiedDate'))? $(this).closest('.task_card').taskCard('lastModifiedDate').toUTCString() : null;
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ADM_TasksController.saveTask}',
+                { Id:taskid,Work__c:storyId,Assigned_To__c:assigneeid,Subject__c:$(this).val().substring(0,255),Starting_Hours__c:0,Hours_Remaining__c:hoursRemaining,Status__c:$(this).closest('ul').data('type') },
+                lastModifiedDate,
+                function(result, event){
+                    var data = result;
+                    if (event.status) {
+                        $(newTask).removeAttr('data-type');
+                        $(newTask).attr('data-taskid',data.Id).data('taskid',data.Id);
+                        $(newTask).attr('data-userid',data.Assignee.Id).data('userid',data.Assignee.Id);
+                        $(newTask).taskCard('lastModifiedDate', data.item.LastModifiedDate);
+                        $(newTask).find('.task_link a').attr('href','/' + data.Id);
+                        $(newTask).find('.task_dd,.task_link').show()
+                        $(newTask).find('.task_img').html('<img src="' + data.Assignee.SmallPhotoUrl + '" class="img_clickable" />');
+                        $(newTask).find('.task_grippy').show();
+                        // Capex should only be shown if the user story is capex. Use makeTaskCardCapexHtml() from Common static resource.
+                        if (data.item && data.item.Work__r && data.item.Work__r.Capex_Enabled__c  && $(newTask).find('.task_capex').length === 0) {
+                            $(newTask).find('.task_assignee_name').after(makeTaskCardCapexHtml());
+                        }
+                        // $(newTask).find('.task_assignee_name').show();
+                        $(newTask).find('.task_hint').html('');
+                        modifyList( $(newTask).closest('ul') );
+                        $(newTask).taskCard('stopUpdating');
+                        //endNotification();
+                    } else if (event.type === 'exception') {
+                        errorNotification('<div>Error during save:</div>' + event.message)
+                        $(newTask).taskCard('stopUpdating');
+                    }
+                },
+                {escape:false}
+            );
+        } else {
+            $(this).closest('.task_card').taskCard('stopUpdating');
+         }
+    }).on('keydown focus paste',".task_desc textarea",function(e) {
+            if ($(this).val().length > 240) {
+                $(this).closest('li').find('.task_hint').css('padding-right','5px').css('color','#FA5A2F').html($(this).val().length + '/255');
+            } else if ($(this).closest('li').find('.task_hint').text().length < 10) {
+                $(this).closest('li').find('.task_hint').html('');
+            }
+
+            if ($(this).val().length >= 255) {
+                $(this).val( $(this).val().substring(0,255) );
+            }
+    }).on('keydown',".task_desc textarea",function(e) {
+        if ($(this).val().length == 0 && e.which == 9 && !e.shiftKey) { // don't allow TAB on a new item with no text (unless it's SHIFT+TAB which goes to previous tab index)
+             e.preventDefault();
+        } else if (e.which == 13 && !e.shiftKey) { // hit enter (except SHIFT + ENTER), blur, focus to new task item (for rapid entry)
+             e.preventDefault();
+            if ($(this).val().length > 0) {
+                $(this).blur();
+                $('<li></li>').taskCard().appendTo( $(this).closest('ul') ).find('.task_desc textarea').focus();
+                }
+         } else if ($(this).val().length == 0 && e.which == 27 && $(this).closest('li[data-taskid]').data('taskid') == undefined) { // hitting ESCAPE on new items when the text is empty blurs (removes item)
+             $(this).blur();
+         } else if (e.which == 27 && $(this).closest('li[data-taskid]').data('taskid')) { // hitting ESCAPE on a saved (existing) item with text will reset text (undo)
+             $(this).val(originalTaskText);
+         }
+    });
+
+    /* TASK: EDIT REMAINING HOURS */
+    var originalTaskHours = '';
+    // $(".task_hours input").on('focus',function() {
+    $(document).on('focus',".task_hours input",function() {
+        // FOCUS //
+         originalTaskHours = $(this).val();
+         $(this).closest('.task_card').taskCard('startEditing');
+         $(this).closest('.task_card').taskCard('startUpdating', 'remaining');
+    }).on('blur',".task_hours input",function(e) {
+        // BLUR //
+        e.stopPropagation();
+        var self = $(this);
+        var newTask = $(this).closest('li');
+        var inProgressColumn = $(this).closest('.work_columns').find('.work_column2>.work_tasks>ul');
+        var completedColumn = $(this).closest('.work_columns').find('.work_column3>.work_tasks>ul');
+
+        //tell the task card to stop editing
+        $(this).closest('.task_card').taskCard('stopEditing')
+
+        // if blank value or period are used, revert to zero
+        if (self.val() == '' || self.val() == '.' || self.val() == '0.' || self.val() == '0.0') {
+            self.val('0')
+        }
+
+        // if hours have not changed, then we don't need to do anything
+        if (originalTaskHours == $(this).val()) {
+            self.closest('.task_card').taskCard('stopUpdating');
+            return;
+        }
+
+        //if we are already in the progress of an update, don't allow another
+        if ($(this).data('blurInProgress')) {
+            return;
+        }
+        $(this).data('blurInProgress',true);
+
+        // is the task set to zero and in Not Started or In Progress column?
+        if ($(this).val() == '0' && $(this).closest('ul').data('type') == 'Not Started' || $(this).val() == '0' && $(this).closest('ul').data('type') == 'In Progress') {
+
+            var taskHours = $(this).val();
+            var onApprove = function() {
+                startNotification('Saving...', newTask);
+                var taskid = self.closest('li[data-taskid]').data('taskid') || null;
+                if (taskid) {
+                    var lastModifiedDate = self.closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ADM_TasksController.saveTask}',
+                        { Id:taskid,Hours_Remaining__c:taskHours.substring(0,4),Order__c:null },
+                        lastModifiedDate,
+                        function(result, event) {
+                            var data = result;
+                            if (event.status) {
+                                var oldList = self.closest('ul');
+                                self.closest('li').appendTo(completedColumn);
+                                $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                                modifyList(oldList);
+                                modifyList(self.closest('ul'));
+                                //endNotification();
+                                self.data('blurInProgress',false);
+                                self.closest('.task_card').taskCard('stopUpdating');
+                            } else if (event.type === 'exception') {
+                                errorNotification(event.message,'Error during save');
+                                $(newTask).find('.task_hours input').val(originalTaskHours);
+                                self.data('blurInProgress',false);
+                                self.closest('.task_card').taskCard('stopUpdating');
+                            }
+                        },{escape:false}
+                    );
+                }
+            };
+
+                onApprove();
+
+        // is the task in the Completed column and not zero?
+        } else if ($(this).val() != '0' && $(this).closest('ul').data('type') == 'Completed') {
+
+            var taskHours = $(this).val();
+            var revertTaskHours = function() {
+                $(newTask).find('.task_hours input').val(originalTaskHours);
+            };
+            var onApprove = function() {
+                startNotification('Saving...', newTask);
+                var taskid = self.closest('li[data-taskid]').data('taskid') || null;
+                if (taskid) {
+                    var lastModifiedDate = self.closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ADM_TasksController.saveTask}',
+                    { Id:taskid,Hours_Remaining__c:taskHours.substring(0,4),Order__c:null },
+                    lastModifiedDate,
+                    function(result, event) {
+                        var data = result;
+                        if (event.status) {
+                            var oldList = self.closest('ul');
+                            self.closest('li').appendTo(inProgressColumn);
+                            $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                            modifyList(oldList);
+                            modifyList(self.closest('ul'));
+                            //endNotification();
+                            self.data('blurInProgress',false);
+                            self.closest('.task_card').taskCard('stopUpdating');
+                        } else if (event.type === 'exception') {
+                            errorNotification(event.message,'Error during save');
+                            revertTaskHours();
+                            self.data('blurInProgress',false);
+                            self.closest('.task_card').taskCard('stopUpdating');
+                        }
+                    },{escape:false}
+                );
+                }
+            };
+
+                onApprove();
+
+        } else {
+
+            // hours changed, but not to zero (in Not Started or In Progress column), update!
+            startNotification('Saving...', newTask);
+            var taskid = $(this).closest('li[data-taskid]').data('taskid') || null;
+            if (taskid) {
+                var lastModifiedDate = $(this).closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ADM_TasksController.saveTask}',
+                    { Id:taskid,Hours_Remaining__c:$(this).val().substring(0,4) },
+                    lastModifiedDate,
+                    function(result, event) {
+                        var data = result;
+                        if (event.status) {
+                            $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                            //endNotification();
+                            self.data('blurInProgress',false);
+                            self.closest('.task_card').taskCard('stopUpdating');
+                        } else if (event.type === 'exception') {
+                            errorNotification(event.message,'Error during save');
+                            $(newTask).find('.task_hours input').val(originalTaskHours);
+                            self.data('blurInProgress',false);
+                            self.closest('.task_card').taskCard('stopUpdating');
+                        }
+                    },{escape:false}
+                );
+            }
+        }
+    }).on('click',".task_hours input", function(e) {
+        $(this).select();
+    }).on('paste',".task_hours input", function(e) {
+        // PASTE //
+        e.preventDefault();
+    }).on('keypress',".task_hours input", function(e) {
+        if ($(this).closest('li').find('.task_desc textarea').val().length == 0) {
+            e.preventDefault();
+        } else {
+            // KEYPRESS //
+            if (e.which == 46 && $(this).val().indexOf('.') >= 0) { // prevent multiple decimals
+                e.preventDefault();
+            }
+
+            if (e.which == 13) {
+                if ($(this).val().length > 0) {
+                    $(this).blur();
+                }
+                e.preventDefault();
+             }
+            return restrictInput(e,integerOnly)
+        }
+    });
+
+    /* TASK: EDIT ACTUAL HOURS */
+    var originalActualTaskHours = '';
+    $(document).on('focus','.task_actual_hours input',function() {
+        // FOCUS //
+         originalActualTaskHours = $(this).val();
+         $(this).closest('.task_card').taskCard('startEditing');
+         $(this).closest('.task_card').taskCard('startUpdating', 'actual');
+    }).on('blur',".task_actual_hours input",function(e) {
+        // BLUR //
+        e.stopPropagation();
+        var self = $(this);
+        var newTask = $(this).closest('li');
+        var value = self.val();
+        var setValue = function(value) {
+            self.val(value);
+        }
+
+        //tell the task card to stop editing
+        $(this).closest('.task_card').taskCard('stopEditing')
+
+        // if blank value or period are used, revert to zero
+        if (value == '' || value == '.' || value == '0.' || value == '0.0') {
+            setValue('0')
+        }
+
+        // if hours have not changed, then we don't need to do anything
+        if (originalActualTaskHours == $(this).val()) {
+            $(this).closest('.task_card').taskCard('stopUpdating');
+            return;
+        }
+
+        // if the user inputs > 80 actual hours, alert them that that is a lot of hours.
+        if (value > 80) {
+          alert('That\'s a lot of hours! Please make sure "Actual Hours" have been input correctly before proceeding.');
+        }
+
+        //if we are already in the progress of an update, don't allow another
+        if ($(this).data('blurInProgress')) {
+            return;
+        }
+        $(this).data('blurInProgress',true);
+
+        // actual hours changed, update!
+        startNotification('Saving...', newTask);
+        var taskid = $(this).closest('li[data-taskid]').data('taskid') || null;
+        if (taskid) {
+            var lastModifiedDate = $(this).closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ADM_TasksController.saveTask}',
+                { Id:taskid,Actual_Hours__c:$(this).val().substring(0,4) },
+                lastModifiedDate,
+                function(result, event) {
+                    var data = result;
+                    if (event.status) {
+                        $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                        endNotification();
+                        $(self).data('blurInProgress',false);
+                        self.closest('.task_card').taskCard('stopUpdating');
+                    } else if (event.type === 'exception') {
+                        errorNotification(event.message,'Error during save');
+                        $(newTask).find('.task_actual_hours input').val(originalActualTaskHours);
+                        $(self).data('blurInProgress',false);
+                        self.closest('.task_card').taskCard('stopUpdating');
+                    }
+                },{escape:false}
+            );
+        } else {
+            console.error('No taskid found');
+            self.closest('.task_card').taskCard('stopUpdating');
+        }
+        // }
+    }).on('click',".task_actual_hours input", function(e) {
+        $(this).select();
+    }).on('paste',".task_actual_hours input", function(e) {
+        // PASTE //
+        e.preventDefault();
+    }).on('keypress',".task_actual_hours input", function(e) {
+        if ($(this).closest('li').find('.task_desc textarea').val().length == 0) {
+            e.preventDefault();
+        } else {
+            // KEYPRESS //
+            if (e.which == 46 && $(this).val().indexOf('.') >= 0) { // prevent multiple decimals
+                e.preventDefault();
+            }
+
+            if (e.which == 13) {
+                if ($(this).val().length > 0) {
+                    $(this).blur();
+                }
+                e.preventDefault();
+             }
+            return restrictInput(e,integerOnly)
+        }
+    });
+
+    // TASK: TOGGLE CAPEX
+    $(document).on('click',".task_capex_checkbox input", function(e) {
+        var self = $(this);
+        startNotification('Saving...');
+        self.closest('.task_card').taskCard('startUpdating', 'capex');
+        $(this).data('blurInProgress',true);
+        var taskid = $(this).closest('li[data-taskid]').data('taskid') || null;
+        var newCapexValue = $(this).is(':checked');
+
+        if (taskid) {
+            var lastModifiedDate = $(this).closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ADM_TasksController.saveTask}',
+                { Id: taskid, Capex_Enabled__c: newCapexValue },
+                lastModifiedDate,
+                function(result, event) {
+                    var data = result;
+                    if (event.status) {
+                        $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                        endNotification();
+                        self.data('blurInProgress',false);
+                        self.closest('.task_card').taskCard('stopUpdating');
+                    } else if (event.type === 'exception') {
+                        errorNotification(event.message,'Error during save');
+                        $('#task_error_head').text(event.message);
+                        $('#task_error').removeClass('slds-hide');
+                        self.prop( "checked", !newCapexValue );
+                        self.data('blurInProgress',false);
+                        self.closest('.task_card').taskCard('stopUpdating');
+                    }
+                },{escape:false}
+            );
+        } else {
+            console.error('No task id');
+            self.closest('.task_card').taskCard('stopUpdating');
+        }
+    });
+
+    // TASK: DOUBLE CLICK LIST TO CREATE TASK
+    //$('.work_tasks ul').on('dblclick',function(e) {
+    $(document).on('dblclick','.work_tasks ul',function(e) {
+        if (e.target === this) {
+            if($(this).find('li[data-type="new"]').length === 0) {
+                $('<li></li>').taskCard().appendTo($(this)).find('.task_desc textarea').focus();
+                recalcRow();
+            }
+        }
+    });
+
+    // TASK: CHANGE USER DROPDOWN
+    $(document).on('click','.task_img img', function(event) {
+        hide_dd();
+        var self = $(this);
+        self.closest('.task_card').taskCard('startUpdating', 'assignee');
+        if ($(this).closest('li').data('taskid')) {
+            userDropdown.find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            userDropdown.find('li[data-userid=' + $(this).closest('li[data-userid]').data('userid') + '] .ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            userDropdown.data('active-button', this);
+            userDropdown.menu().show();
+            userDropdown.position({my:"right top",at:"right top",of:this,offset:"0px -1px"})
+            userDropdown.data('taskid', $(this).closest('li').attr('data-taskid') );
+            userDropdown.data('type','task');
+            $(document).click(function(){
+                hide_dd()
+                self.closest('.task_card').taskCard('stopUpdating');
+            });
+        }
+        return false;
+    });
+
+    // WORK AND TASK: CHANGE USER ASSIGNMENT
+    userDropdown.find('li a').on('click', function(event) {
+        if (userDropdown.data('type') == 'task') {
+            startNotification('Saving...');
+
+            var $taskCard = $('li[data-taskid=' + userDropdown.data('taskid') + ']');
+            var lastModifiedDate = $taskCard.taskCard('lastModifiedDate').toUTCString();
+            var self = $(this);
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ADM_TasksController.saveTask}',
+                { Id:userDropdown.data('taskid'),Assigned_To__c:$(this).closest('li[data-userid]').data('userid')},
+                lastModifiedDate,
+                function(result, event) {
+                    var data = result;
+                    if (event.status) {
+                        var modifyTask = $('li[data-taskid=' + userDropdown.data('taskid') + ']');
+                        $(modifyTask).taskCard('sobject', data.item);
+                        $(modifyTask).attr('data-userid',data.Assignee.Id).data('userid',data.Assignee.Id);
+                        $(modifyTask).find('.task_img').html('<img src="' + data.Assignee.SmallPhotoUrl + '" />');
+                        //endNotification();
+                        self.closest('.task_card').taskCard('stopUpdating');
+                    } else if (event.type === 'exception') {
+                        errorNotification('<div>Error during save:</div>' + event.message);
+                        $('#task_error_head').text(event.message);
+                        $('#task_error').removeClass('slds-hide');
+                        self.closest('.task_card').taskCard('stopUpdating');
+                    }
+                },{escape:false}
+            );
+        }
+    });
+
+    // TASK: DELETE
+    $(document).on('mouseenter','.task_dd .delete-task-button',function() {
+            $(this).addClass('ui-state-hover');
+        })
+        .on('mouseleave','.task_dd .delete-task-button', function() {
+            $(this).removeClass('ui-state-hover');
+        })
+        .on('click','.task_dd .delete-task-button', function(event) {
+            var taskId = $(this).closest('[data-taskid]').data('taskid');
+
+            var onApprove = function() {
+                deleteTask(taskId);
+            };
+
+            onApprove();
+        });
+    recalcRow()
+    initializeTaskSortable($('.work_columns'));
+});
+</script>
+
+</apex:component>

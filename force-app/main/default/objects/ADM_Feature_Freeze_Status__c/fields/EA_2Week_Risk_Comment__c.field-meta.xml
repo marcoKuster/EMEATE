@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EA_2Week_Risk_Comment__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Explain your proposed alternative solution and any assistance you need.</inlineHelpText>
+    <label>Comments or assistance needed</label>
+    <length>2048</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,12 @@
+/* Salesforce Design System v0.3.6 */
+.#{$css-prefix}type-focus {
+  border-bottom: $border-width-thin solid transparent;
+
+  &:hover {
+    border-bottom: $border-width-thin solid $color-text-link-hover;
+  }
+
+  &:focus {
+    @include focus;
+  }
+}

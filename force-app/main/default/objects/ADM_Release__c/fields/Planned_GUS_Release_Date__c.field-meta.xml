@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Planned_GUS_Release_Date__c</fullName>
+    <description>Date and time that this release is deployed to GS0.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Please specify if this release is deployed to GS0 separately.</inlineHelpText>
+    <label>Scheduled Release Date To Pilot Org</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

@@ -1,0 +1,140 @@
+<apex:component controller="ADM_ChatterFollowersComponentController">
+	<apex:attribute name="entityId" type="Id" description="Entity to display followers for" required="required" assignTo="{!parentId}"/>
+<style>
+#ChatterFollowers{min-width:225px;}
+#ChatterFollowers #FollowerHeader{width:100%;margin-bottom:10px;vertical-align:bottom;font-size:11px;font-weight:bold;border-bottom:1px #CFD4D9 solid;padding-bottom:6px;}
+#ChatterFollowers #addFollowerErrors{display:none;}
+#ChatterFollowers #addFollowersBlock{margin-top:10px;margin-bottom:10px;}
+#ChatterFollowers #addFollowersBlock #addFollowerTable{display:table;width:100%;}
+#ChatterFollowers #addFollowersBlock #addFollowerTable #addFollowerInput{display:table-cell;vertical-align:top;position:relative;}
+#ChatterFollowers #addFollowersBlock #addFollowerTable #addFollowerInput input{min-width:0;}
+#ChatterFollowers #addFollowersBlock #addFollowerTable #addFollowerButton{display:table-cell;vertical-align:top;}
+#ChatterFollowers #addFollowersBlock #addFollowerTable #addFollowerButton input{height:30px;margin-left:10px;}
+#ChatterFollowers .followerList{margin-top:10px;}
+#ChatterFollowers .followerList #FollowerTable{display:table;width:100%;}
+#ChatterFollowers .followerList .FollowerRow{display:table-row;}
+#ChatterFollowers .followerList .FollowerImage{height:30px;width:30px;text-align:center;padding-bottom:6px;display:table-cell;vertical-align:middle;}
+#ChatterFollowers .followerList .FollowerImage img.chatter-photo{width:30px;height:30px;}
+#ChatterFollowers .followerList .FollowerName{padding-bottom:6px;font-size:11px;display:table-cell;vertical-align:middle;padding-left:5px;padding-right:5px;width:169px;max-width:169px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;font-weight:bold;}
+#ChatterFollowers .followerList .FollowerName a{text-decoration:none;color:#015BA7;}
+#ChatterFollowers .followerList .FollowerName a:hover{text-decoration:underline;}
+#ChatterFollowers .followerList .FollowerRemove{padding-bottom:6px;display:table-cell;vertical-align:middle;}
+#ChatterFollowers .followerList .FollowerRemove button{display:none;}
+#ChatterFollowers .followerList .FollowerRemove div{cursor:pointer;display:block;width:15px;height:15px;background-repeat:no-repeat;background-image:url(/img/feeds/follow_sprite.png);background-position:0 -54px;}
+#ChatterFollowers .followerList .FollowerRemove div:hover{background-position:0 -75px;}
+
+.slds #ChatterFollowers #addFollowersBlock #addFollowerTable #addFollowerButton input{height:auto;}
+.slds #ChatterFollowers .followerList .FollowerRemove button{display:inline-block;}
+.slds #ChatterFollowers .followerList .FollowerImage img.chatter-photo{width:auto;height:auto;}
+.slds #ChatterFollowers #FollowerHeader{display:none;}
+.slds #ChatterFollowers .followerList .FollowerRemove > div{display:none;}
+.slds input[type=text].gusStyle:focus{background-color:#fff;border-color:#1589EE;}
+
+</style>
+
+	<div id="ChatterFollowers">
+		<div id="FollowerHeader">Followers</div>
+
+		<div id="addFollowerErrors" class="message gusFormMessage slds-notify--error"></div>
+
+		<div id="addFollowersBlock">
+			<apex:form >
+			<div id="addFollowerTable">
+				<div id="addFollowerInput"><c:ADM_Input lookupObject="User" inputStyleClass="slds-input entityFollowerName gusStyle slds-m-right-small" /></div>
+				<div id="addFollowerButton"><input class="slds-m-left--small slds-button slds-button--brand addFollowerButton" type="button" value="Add" onclick="addFollower($('.entityFollowerName').val())" /></div>
+			</div>
+			<apex:actionFunction name="refreshFollowers" rerender="{!$Component.followerList}" />
+			</apex:form>
+		</div>
+
+		<apex:outputPanel id="followerList" layout="block" styleClass="followerList">
+			<div id="FollowerTable">
+			<apex:repeat value="{!followers}" var="follower" id="followersRepeatTag">
+				<div class="FollowerRow" data-id="{!follower.user.Id}">
+					<div class="FollowerImage"><a href="/{!follower.user.Id}" target="_blank"><span class="slds-avatar slds-avatar--circle slds-avatar--x-small"><apex:image url="{!follower.user.smallPhotoUrl}" styleClass="chatter-photo" /></span></a></div>
+					<div class="FollowerName"><a href="/{!follower.user.Id}" target="_blank">{!follower.user.Name}</a></div>
+					<div class="FollowerRemove">
+						<div onClick="removeFollower('{!follower.es.Id}','{!follower.user.Id}');" id="deleteFollowerIcon-{!follower.es.Id}"></div>
+						<button class="slds-button slds-button--icon-container" onClick="removeFollower('{!follower.es.Id}','{!follower.user.Id}');" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+							<svg aria-hidden="true" class="slds-button__icon">
+								<use xlink:href="/resource/SLDS_assets/icons/utility-sprite/svg/symbols.svg#clear"></use>
+							</svg>
+							<span class="slds-assistive-text">Remove Follower</span>
+						</button>
+					</div>
+				</div>
+			</apex:repeat>
+			</div>
+		</apex:outputPanel>
+	</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+                if ({!IF(JSINHTMLENCODE($CurrentPage.parameters.isdtp) == 'p1','false', 'true')} === true) {
+					$('#addFollowerTable').addClass('zen');
+					$('.addFollowerButton').addClass('zen-btn zen-highlightBtn');
+				}
+
+				$('.entityFollowerName').keypress(function(event) {
+					if (event.keyCode == 13) {
+						addFollower($(this).val());
+						event.preventDefault();
+					}
+				});
+
+				$('div[data-chatter-widget=subscribeBtn] span[data-chatter-subscribe=1] a').bind( "click", function() {
+					// Follow
+					$('#FollowerTable').prepend('<div class="FollowerRow FollowerRowLoading"><div class="FollowerImage"><img src="{!$Resource.ajaxloadersmall}"></div><div class="FollowerName">Loading...</div><div class="FollowerRemove"></div></div>');
+					refreshFollowers();
+  				});
+
+				$('div[data-chatter-widget=subscribeBtn] a[data-chatter-subscribe=0]').bind( "click", function() {
+					// Unfollow
+					$('.FollowerRow[data-id={!$User.Id}]').fadeOut(300);
+					refreshFollowers();
+  				});
+
+
+			});
+
+			function trimErrorMessage(errorMessage) {
+				return errorMessage.substring(errorMessage.indexOf(':')+1).trim();
+			}
+
+			function addFollower(followerFullName) {
+				if (followerFullName.length > 0) {
+					$("#addFollowerErrors").hide();
+					$('#FollowerTable').prepend('<div class="FollowerRow FollowerRowLoading"><div class="FollowerImage"><img src="{!$Resource.ajaxloadersmall}"></div><div class="FollowerName">Loading...</div><div class="FollowerRemove"></div></div>');
+					Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_ChatterFollowersComponentController.addFollower}', followerFullName, '{!parentId}', function(result, event) {
+					    if(event.type == 'exception') {
+				    		$("#addFollowerErrors").text(trimErrorMessage(event.message)).show().delay(5000).fadeOut(300);
+				    		$('.FollowerRowLoading').remove();
+						} else {
+				          	$(".entityFollowerName").val('');
+				          	refreshFollowers();
+						}
+					  },{escape: true});
+				}
+			}
+
+			function removeFollower(followerId,userId) {
+				if ('{!$User.Id}' == userId) {
+					$('div[data-chatter-widget=subscribeBtn] a[data-chatter-subscribe=0]').click();
+					return false;
+				}
+
+				$("#addFollowerErrors").hide();
+				$("#deleteFollowerIcon-" + followerId).closest('.FollowerRow').fadeOut(300);
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_ChatterFollowersComponentController.removeFollower}', followerId, function(result, event) {
+				    if(event.type == 'exception') {
+				    	$("#addFollowerErrors").text(trimErrorMessage(event.message)).show().delay(5000).fadeOut(300);
+						$("#deleteFollowerIcon-" + followerId).parent('.FollowerRow').show();
+			    		$('.FollowerRowLoading').remove();
+					} else {
+						$("#deleteFollowerIcon-" + followerId).closest('.FollowerRow').remove();
+						refreshFollowers();
+					}
+				});
+			}
+		</script>
+</apex:component>

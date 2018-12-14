@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Details_must_be_provided_open_RCAtodos</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(RCA_To_Do_s_1_Month_Closed__c, &quot;No&quot;), ISBLANK(Provide_details_on_open_RCA_ToDos__c))</errorConditionFormula>
+    <errorDisplayField>Provide_details_on_open_RCA_ToDos__c</errorDisplayField>
+    <errorMessage>Details must be provided when reporting open RCA To Do that are older than one month.</errorMessage>
+</ValidationRule>

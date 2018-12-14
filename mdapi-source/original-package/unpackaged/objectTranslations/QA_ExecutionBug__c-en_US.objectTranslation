@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Execution-Bug</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Execution-Bugs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Execution --></label>
+        <name>Execution__c</name>
+        <relationshipLabel><!-- Execution-Bugs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Execution-Bugs --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Execution cannot be null --></errorMessage>
+        <name>Execution_cannot_be_null</name>
+    </validationRules>
+</CustomObjectTranslation>

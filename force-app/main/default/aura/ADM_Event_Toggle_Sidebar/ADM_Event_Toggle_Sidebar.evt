@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Toggle sidebar visibility">
+    <aura:attribute name="sidebar" type="String"/>
+</aura:event>

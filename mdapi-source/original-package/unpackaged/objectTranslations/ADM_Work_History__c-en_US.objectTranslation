@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work History</value>
+    </caseValues>
+    <fields>
+        <label><!-- Sprint (Old) --></label>
+        <name>Sprint_Old__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <name>Sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Work History --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

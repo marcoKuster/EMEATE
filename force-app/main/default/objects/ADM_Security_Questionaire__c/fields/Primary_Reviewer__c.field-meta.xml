@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Reviewer__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Member of the Product Security Team to which this review is assigned.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Member of the Product Security Team to which this review is assigned.</inlineHelpText>
+    <label>Primary Reviewer</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>SecQ_Primary_Reviewer</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

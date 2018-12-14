@@ -1,0 +1,43 @@
+<apex:component id="formRowUserInput" layout="none">
+    <apex:attribute name="object" description="The object" type="sObject" required="true" />
+    <apex:attribute name="field" description="This name of the field in the Object." type="String" required="true" />
+    <apex:attribute name="type" description="" type="String" required="true" />
+    <apex:attribute name="value" description="" type="Object" required="false" />
+    <apex:attribute name="required" description="Is this field required?" type="Boolean" required="false" />
+    <apex:attribute name="info" description="Provide custom Help Hover text" type="String" required="false" />
+    <apex:attribute name="readonly" description="" type="Boolean" required="false" />
+    <apex:attribute name="cssclass" description="CSS class that will be applied to the input field" type="String" required="false" />
+    <apex:attribute name="smallPhotoUrl" description="Thumbnail of the user" type="String" required="false" />
+    
+    <div class="gusFormRow gusRow_{!type}_{!field}">
+        <!-- NOT read only -->
+        <apex:outputPanel rendered="{!NOT(readonly)}" layout="none">
+            <div class="gusFormField gusFormFieldLeft {!IF(required,'gusFieldRequired','')}">
+                <label for="{!$Component.input.richAutoComplete.input}">
+                    {!$ObjectType[type].fields[field].Label}
+                    <c:ADM_HelpHover2 id="helpHover" type="{!type}" field="{!field}" />
+                    <apex:outputPanel layout="none" rendered="{!required == true}">
+                        <apex:outputText value="*" styleClass="assistiveText"/>
+                    </apex:outputPanel>
+                </label>
+            </div>
+            <div class="gusFormField gusFormFieldRight">
+                <c:ADM_RichAutoComplete id="input" object="{!object}" field="{!field}" styleClass="{!cssclass}" />
+            </div>
+        </apex:outputPanel>
+        
+        <!-- read only -->
+        <apex:outputPanel rendered="{!readonly}" layout="none">
+            <div class="gusFormField gusFormFieldLeft">
+                <label for="{!$Component.input}">
+                    <apex:outputText value="{!$ObjectType[type].fields[field].Label}" />
+                </label>
+            </div>
+            <div class="gusFormField gusFormFieldRight">
+                <apex:outputPanel layout="block" styleClass="gusFormFieldUserInputLeft" rendered="{!NOT(ISBLANK(smallPhotoUrl))}"><a href="/{!object[field]}"><apex:image value="{!smallPhotoUrl}" /></a></apex:outputPanel>
+                <div class="gusFormFieldUserInputRight"><apex:outputField value="{!object[field]}" /></div>
+                <apex:outputPanel layout="block" styleClass="gusBlankValue" rendered="{!ISBLANK(object[field])}">&ndash;</apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+    </div>
+</apex:component>

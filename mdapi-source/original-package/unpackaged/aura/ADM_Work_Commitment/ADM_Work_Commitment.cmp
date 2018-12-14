@@ -1,0 +1,163 @@
+<aura:component controller="ADM_ScopeChangeController" extends="c:ADM_Work_Shared" implements="flexipage:availableForAllPageTypes" access="global">
+    <ltng:require scripts="{!$Resource.ADM_Util}"/>
+    
+    <aura:attribute name="sprintId" type="String"/>
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="sprintCommitment" type="Object"/>
+    <aura:attribute name="committedWork" type="Object"/>
+    <aura:attribute name="addedWork" type="Object"/>
+    <aura:attribute name="removedWork" type="Object"/>
+    <aura:attribute name="committedColumns" type="List"/>
+    <aura:attribute name="addedColumns" type="List"/>
+    <aura:attribute name="removedColumns" type="List"/>
+    <aura:attribute name="sidebarOptions" type="Object"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+    
+    <div class="slds-theme_default fadeIn">
+        <div aura:id="headerWrapperContainer" class="slds-theme_shade">
+            <div class="slds-anchor slds-border--bottom">
+                <div class="slds-grid slds-p-around_medium slds-theme--shade">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media media--rec-home">
+                            <div class="slds-media__figure">
+                                <lightning:icon iconName="custom:custom101" size="large" alternativeText="Sprint Wall"/>
+                            </div>
+                            <div>
+                                <p class="slds-text-heading--label">Commitment Details</p>
+                                <div class="slds-grid slds-grid--vertical-align-end">
+                                    <h1 class="slds-text-heading_medium slds-media--rec-home__title slds-truncate"><a href="{!'/' + v.sprintData.sprintInfo.Id}">{!v.sprintData.sprintInfo.Name}</a></h1>
+                                    <span class="{! not(and(v.sprintData.sprintInfo, v.sprintData.sprintInfo.Name)) ? 'sprint-preload-placeholder sprint-preload-name slds-m-top_medium' : 'slds-hide'}" tabindex="-1"></span>
+                                </div>
+                                <div class="slds-col slds-shrink-none slds-align-bottom slds-m-left--small">
+                                    <lightning:buttonMenu alternativeText="Settings" iconName="utility:settings" onselect="{!c.navigateToCommitment}" class="slds-m-top_x-small adm-commitment-navigate-menu">
+                                        <lightning:menuItem label="Previous Commitment" value="{!v.sprintData.previousSprintId}" disabled="{!empty(v.sprintData.previousSprintId)}" class="slds-border--bottom" iconName="utility:back"/>
+                                        <lightning:menuItem label="Next Commitment" value="{!v.sprintData.nextSprintId}" disabled="{!empty(v.sprintData.nextSprintId)}" class="slds-border--bottom" iconName="utility:forward"/>
+                                    </lightning:buttonMenu>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-grid--align-spread adm-header-data">
+                                <aura:if isTrue="{!and(v.sprintData.sprintInfo, v.sprintData.sprintInfo.Scrum_Team__r.Velocity_Type__c != 'Record Count')}">
+                                    <div class="slds-box slds-m-left_x-small adm-data-box">
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The total number of points committed to in this sprint">Committed<br/>Points</p>
+                                            <aura:if isTrue="{!and(v.sprintCommitment, v.sprintCommitment.storyPoints)}"> 
+                                                <p class="slds-text-heading_medium">{!v.sprintCommitment.storyPoints || 0}</p>
+                                            </aura:if>
+                                            <div class="{! not(and(v.sprintCommitment, v.sprintCommitment.storyPoints)) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0</div>
+                                        </div>
+                                    
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The number of points that were committed to that have been closed in this sprint">Committed<br/>Points Closed</p>
+                                            <aura:if isTrue="{!and(v.sprintData.sprintInfo, v.sprintData.sprintInfo.Committed_Story_Points_Completed__c)}"> 
+                                                <p class="slds-text-heading_medium">{!v.sprintData.sprintInfo.Committed_Story_Points_Completed__c || 0}</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Committed_Story_Points_Completed__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0</div>
+                                        </div>
+
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The percentage of committed story points closed in this sprint">Committed<br/>Points Closed (%)</p>
+                                            <aura:if isTrue="{!and(v.sprintData.sprintInfo, v.sprintData.sprintInfo.Completion_Committed_Story_Points__c)}">
+                                                <p class="slds-text-heading_medium"><ui:outputNumber value="{!v.sprintData.sprintInfo.Completion_Committed_Story_Points__c || 0}" format="0"/>%</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Completion_Committed_Story_Points__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0%</div>
+                                        </div>
+
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The total number of points closed in this sprint">Total<br/>Points Closed</p>
+                                            <aura:if isTrue="{!and(v.sprintData.sprintInfo, v.sprintData.sprintInfo.Completed_Story_Points__c)}"> 
+                                                <p class="slds-text-heading_medium">{!v.sprintData.sprintInfo.Completed_Story_Points__c || 0}</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Completed_Story_Points__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0</div>
+                                        </div>
+                                    
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The percentage of total story points closed to committed story points">Total<br/>Points Closed (%)</p>
+                                            <aura:if isTrue="{!and(v.sprintData.sprintInfo, v.sprintData.sprintInfo.Completion_Story_Points__c)}">
+                                                <p class="slds-text-heading_medium"><ui:outputNumber value="{!v.sprintData.sprintInfo.Completion_Story_Points__c || 0}" format="0"/>%</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Completion_Story_Points__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0%</div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                
+                                <div class="slds-box slds-m-left_x-small adm-data-box">
+                                    <aura:if isTrue="{!and(v.sprintCommitment, v.sprintCommitment.numOfItems)}">
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The total number of work items committed to in this sprint">Committed<br/>Items</p>
+                                            <aura:if isTrue="{!v.sprintCommitment.numOfItems > 0}"> 
+                                                <p class="slds-text-heading_medium">{!v.sprintCommitment.numOfItems || 0}</p>
+                                            </aura:if>
+                                            <div class="{! not(and(v.sprintCommitment, v.sprintCommitment.numOfItems)) ? 'sprint-preload-placeholder sprint-preload-remaining slds-m-top_medium' : 'slds-hide'}" tabindex="-1"></div>
+                                        </div>
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!v.sprintData.sprintInfo}">
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The number of work items that were committed to that have been closed in this sprint">Committed<br/>Items Closed</p>
+                                            <aura:if isTrue="{!v.sprintData.sprintInfo.Committed_Items_Completed__c}"> 
+                                                <p class="slds-text-heading_medium">{!v.sprintData.sprintInfo.Committed_Items_Completed__c || 0}</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Committed_Items_Completed__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0</div>
+                                        </div>
+
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The percentage of committed work items closed in this sprint">Committed<br/>Items Closed (%)</p>
+                                            <aura:if isTrue="{!v.sprintData.sprintInfo.Completion_Committed_Items__c}">
+                                                <p class="slds-text-heading_medium"><ui:outputNumber value="{!v.sprintData.sprintInfo.Completion_Committed_Items__c || 0}" format="0"/>%</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Completion_Committed_Items__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0%</div>
+                                        </div>
+
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The total number of work items closed in this sprint">Total<br/>Items Closed</p>
+                                            <aura:if isTrue="{!v.sprintData.sprintInfo.Completed_Items__c}"> 
+                                                <p class="slds-text-heading_medium">{!v.sprintData.sprintInfo.Completed_Items__c || 0}</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Completed_Items__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0</div>
+                                        </div>
+                                    
+                                        <div class="slds-m-right_medium slds-text-align_center">
+                                            <p class="slds-text-title slds-m-bottom_x-small slds-truncate" title="The percentage of total work items closed to committed work items">Total<br/>Items Closed (%)</p>
+                                            <aura:if isTrue="{!v.sprintData.sprintInfo.Completion_Items__c}">
+                                                <p class="slds-text-heading_medium"><ui:outputNumber value="{!v.sprintData.sprintInfo.Completion_Items__c || 0}" format="0"/>%</p>
+                                            </aura:if>
+                                            <div class="{! not(v.sprintData.sprintInfo.Completion_Items__c) ? 'slds-text-heading_medium' : 'slds-hide'}" tabindex="-1">0%</div>
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-grid">
+            <div class="slds-col slds-size_2-of-3 slds-p-left_medium">
+                <aura:if isTrue="{!v.committedWork}">
+                    <c:ADM_Data_Table title="{!'Committed (' + v.committedWork.length + ')'}" data="{!v.committedWork}" columns="{!v.committedColumns}"/>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.removedWork}">
+                    <c:ADM_Data_Table title="{!'Removed (' + v.removedWork.length + ')'}" data="{!v.removedWork}" columns="{!v.removedColumns}"/>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.addedWork}">
+                    <c:ADM_Data_Table title="{!'Added (' + v.addedWork.length + ')'}" data="{!v.addedWork}" columns="{!v.addedColumns}"/>
+                </aura:if>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-p-around_medium">
+                <div class="slds-box slds-box_xx-small adm-sidebar-button-box slds-theme_shade slds-clearfix">
+                    <div class="slds-float_right">
+                        <c:ADM_SidebarButtons sprintData="{!v.sprintData}" showFilter="false" sidebar="charts"/>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.sprintData}">
+                    <c:ADM_Sidebar sprintData="{!v.sprintData}" height="1000px" minWidth="100%" component="charts" sidebarOptions="{!v.sidebarOptions}"/>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

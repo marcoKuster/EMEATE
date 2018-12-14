@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Locking Record</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Locking Records</value>
+    </caseValues>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Resolved Lock Time --></label>
+        <name>End_Time__c</name>
+    </fields>
+    <fields>
+        <help><!-- Locked duration (in Hours) is the difference between now and the record&apos;s start lock time if the record has not been resolved; otherwise, Locked duration is the difference between when the record was resolved and record&apos;s start lock time. --></help>
+        <label><!-- Locked Duration --></label>
+        <name>Locked_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>Reason__c</name>
+        <picklistValues>
+            <masterLabel>Basic exceed age</masterLabel>
+            <translation><!-- Basic exceed age --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Basic exceed limit</masterLabel>
+            <translation><!-- Basic exceed limit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Basic&amp;Full exceed limit</masterLabel>
+            <translation><!-- Basic&amp;Full exceed limit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Full exceed age</masterLabel>
+            <translation><!-- Full exceed age --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Response duration (in Hours) is the difference between when the record was resolved and when the record was created if the record has been resolved; otherwise, Response duration is removed. --></help>
+        <label><!-- Response Duration --></label>
+        <name>Response_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Lock Time --></label>
+        <name>Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Locked</masterLabel>
+            <translation><!-- Locked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ToBe</masterLabel>
+            <translation><!-- ToBe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unlock Override</masterLabel>
+            <translation><!-- Unlock Override --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Team --></label>
+        <name>Team__c</name>
+        <relationshipLabel><!-- Locking Records --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Locking Record Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Why does this lock exist? --></label>
+            <section>Why does this lock exist?</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Lock start time set for more than 7 days in the future. --></errorMessage>
+        <name>StartTimeLimit</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provide_details_on_open_RCA_Stories__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>FF Criteria: All User Stories from RCAs older than 1 month CLOSED or SCHEDULED</inlineHelpText>
+    <label>Provide details on open RCA Stories</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

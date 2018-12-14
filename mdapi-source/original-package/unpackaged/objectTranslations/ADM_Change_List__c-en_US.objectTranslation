@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Change List</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Change Lists</value>
+    </caseValues>
+    <fields>
+        <label><!-- Changelist Link --></label>
+        <name>Changelist__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check-in By --></label>
+        <name>Check_In_By__c</name>
+        <relationshipLabel><!-- Change Lists --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Check-in Date --></label>
+        <name>Check_In_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Check-in Date --></label>
+        <name>Local_Check_in_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Changelist # --></label>
+        <name>Perforce_Changelist__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Name --></label>
+        <name>Release_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+        <picklistValues>
+            <masterLabel>GitHub</masterLabel>
+            <translation><!-- GitHub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Git</masterLabel>
+            <translation><!-- Internal Git --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Perforce</masterLabel>
+            <translation><!-- Perforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stash</masterLabel>
+            <translation><!-- Stash --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Task --></label>
+        <name>Task__c</name>
+        <relationshipLabel><!-- Change Lists --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Username --></label>
+        <name>Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Number --></label>
+        <name>Work_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Change Lists --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Change List Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,125 @@
+<!-- This component is designed to one be included in the page once.  Including
+it multiple times may not work. -->
+<apex:component controller="ADM_ProductTagInputController" id="productTagInput" layout="none">
+    <apex:attribute name="work" description="Reference to the work object" type="ADM_Work__c" required="true" />  
+    <apex:attribute name="recordType" description="Record type of the work object" type="RecordType" required="true" />  
+    <apex:attribute name="onchange" description="javascript that is invoked when the value changes" type="String" required="false" /> 
+    <apex:attribute name="oninit" description="javascript that is invoked when the product tag is initialized" type="String" required="false" /> 
+    <apex:attribute name="jquery" description="jQuery instance to use" type="String" required="false" default="this.jQueryPage" />
+    <apex:attribute name="missingProductTagInstructions" description="Instruction for when existing Work Record doesn't have a Product Tag" type="String" required="false" />
+
+
+    <div id="productTagContainer">
+        <input id="productTagInput" name="productTagInput" type="text" value="" autocomplete="off" autocorrect="off" autocapitalize="off" class="hidden productTagInput slds-input" />
+        <div id="productTagFound" style="display:none;">&#10004;</div>
+        <div id="productTagNotFound" style="display:none;">&#10008;</div>
+        <img id="tagStatusImage" src="{!$Resource.ajaxloadersmall}" class="hidden productTagStatus" />
+    </div>
+    <span id="missingProductTagInstructions" name="missingProductTagInstructions" class="errorMsg">{!missingProductTagInstructions}</span>
+        
+    <apex:inputHidden id="productTagSave" value="{!work.Product_Tag__c}" />
+    
+    <script type="text/javascript">
+    (function($, root){
+        
+        function _invokeOnInit() {
+            console.debug('invoking on init');
+            {!oninit}
+        }
+        
+        var productTagDataStore = new ProductTagDataStore();
+        var productTag = window.productTag = new ProductTag({el: $('#productTagContainer'), dataStore: productTagDataStore});
+        window.showProductTagStatus = productTag.showStatus;
+        window.hideProductTagStatus = productTag.hideStatus;
+        
+        productTag.render();
+        
+        function showException(exc) {
+            $('<div title="Fatal Exception Occurred"></div>')
+                .append($('<p></p>').text('The following error occurred while trying to retrieve the product tags:'))
+                .append($('<p></p>').text(exc.message))
+                .appendTo(document.body)
+                .dialog({modal:true});
+        }
+        
+        //fetch all of the product tags
+        {!nameSpace}ADM_ProductTagInputController.getTags('{!recordType.Name}', '{!work.Product_Tag__c}', function(result, event){
+            if(event.status) {
+                
+                //reset the datastore
+                productTagDataStore.reset(result);
+                console.debug('product tags loaded');
+                
+                //update the product tag input
+                productTag.hideStatus();
+                
+                //load the product tag input with the value specified
+                var loadedTagValue = $(document.getElementById('{!$Component.productTagSave}')).val();
+                if(loadedTagValue) {
+                    console.debug('load the product tag from the value in the hidden input');
+                    var loadedTag = productTagDataStore.getTagById(loadedTagValue);
+                    if(loadedTag) {
+                        productTag.selectTag(loadedTag, {silent:true});
+                    } else {
+                        console.error('ID in Product Tag field does not reference a valid product tag.');
+                        productTag.showInput();
+                    }
+                } else {
+                    productTag.showInput();
+                }
+                
+                _invokeOnInit();
+                
+            } else {
+                showException({message:event.message});
+            }
+        });
+        
+        $(function(){
+            //productTag.showStatus(); // TC: Taking out because it should always show input field, downloading of tags not a factor
+            
+            //on product tag change, change the input field
+            $(productTag).bind('change:tag', function() {
+                var $productTagSaveNode = $(document.getElementById('{!$Component.productTagSave}'));
+                $productTagSaveNode.val(productTag.getValue());
+            });
+            
+            if(root.setTeam) {
+                $(productTag).bind('change:tag', function() {
+                    var selectedTeam = productTag.tag ? productTag.tag.Team__r : void 0;
+                    if(selectedTeam) {
+                        setTeam(selectedTeam);
+                    }
+                });
+            }
+            
+	        //invoke the onchange string that is passed in as an argument to the component
+	        $(productTag).bind('change:tag', function() {
+	            console.debug('invoking on change');
+	            var event = {
+	               newValue: productTag.getValue() || ''
+	            };
+	            {!onchange}
+                console.log('Printing value : '+productTag.getValue());
+                var prodId = productTag.getValue();
+				getAdditionalFields(prodId);
+	        });
+	        
+	        //hide/show the missing message
+	        $(productTag).bind('change:tag', function() {
+	           if(productTag.getValue()) {
+	               $('#missingProductTagInstructions').hide();
+	           } else {
+	               $('#missingProductTagInstructions').show();
+	           }
+	        });
+            
+        });
+    })({!jquery} || this.$, this);
+
+    function getAdditionalFields(productTag){
+        callgetAdditionalFields(productTag);
+        console.log('Called getAdditionalFields');
+    }
+    </script>
+</apex:component>

@@ -1,0 +1,2 @@
+<apex:page standardController="ADM_Work__c" extensions="ADM_WorkDirectorExtension" action="{!redirectDeepClone}">
+</apex:page>

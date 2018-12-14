@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Log_Bug_From_Template__c</fullName>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&quot;/&quot; + Id + &quot;/e?clone=1&amp;RecordTypeLogicalName=Bug&quot;, &quot;Log Bug From Template&quot;, &quot;_self&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Log Bug From Template</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

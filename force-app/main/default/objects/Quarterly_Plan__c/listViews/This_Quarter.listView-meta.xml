@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>This_Quarter</fullName>
+    <columns>NAME</columns>
+    <columns>Partner_Time__c</columns>
+    <columns>Total_TR_Done__c</columns>
+    <columns>Total_TR_Planned__c</columns>
+    <columns>Average_Ad_Hoc_Enablement__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Quarter__c</field>
+        <operation>equals</operation>
+        <value>Q4 FY19</value>
+    </filters>
+    <label>This Quarter</label>
+</ListView>

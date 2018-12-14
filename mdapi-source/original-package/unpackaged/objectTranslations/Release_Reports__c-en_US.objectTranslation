@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release Reports</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Release Reports</value>
+    </caseValues>
+    <fields>
+        <label><!-- Release Burndown Report ID --></label>
+        <name>Release_Burndown_Report_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Burnup Report ID --></label>
+        <name>Release_Burnup_Report_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Progress by Theme --></label>
+        <name>Release_Progress_by_Theme__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint Completed Points Report ID --></label>
+        <name>Sprint_Completed_Points_Report_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stories In Release By Theme --></label>
+        <name>Stories_In_Release_By_Theme__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stories in Release By Sprint --></label>
+        <name>Stories_in_Release_By_Sprint__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

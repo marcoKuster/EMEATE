@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release__c</fullName>
+    <description>Release to which this Release Event is associated.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Release to which this Release Event is associated.</inlineHelpText>
+    <label>Release</label>
+    <referenceTo>ADM_Release__c</referenceTo>
+    <relationshipLabel>Release Events</relationshipLabel>
+    <relationshipName>Release_Events</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

@@ -1,0 +1,102 @@
+<aura:component controller="ADM_SprintVirtualWallController">
+	<ltng:require scripts="{!$Resource.ADM_SprintShared_Resource}"/>
+
+	<aura:attribute name="assignees" type="Object"/>
+	<aura:attribute name="qaAssignees" type="Object"/>
+	<aura:attribute name="recordTypes" type="Object"/>
+    <aura:attribute name="sprintData" type="Object"/>
+	<aura:attribute name="statuses" type="Object"/>
+	<aura:attribute name="themes" type="Object"/>
+	<aura:attribute name="newCustomerFacingFeatureOptions" type="Object"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.updateFilterOptions}" />
+	<aura:handler event="c:ADM_Event_Filter_Work" action="{!c.updateFilterOptions}"/>
+
+	<aura:registerEvent name="filterWork" type="c:ADM_Event_Filter_Work"/>
+
+	<div>
+
+		<div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-border_bottom slds-m-bottom_small">
+			<h2 class="slds-text-title--caps">Filters</h2>
+			<lightning:button variant="bare" label="Clear All" onclick="{!c.clearFilters}" />
+		</div>
+
+		<aura:if isTrue="{!and(v.statuses, v.statuses.length, v.statuses.length > 0)}">
+			<fieldset class="slds-form-element">
+		    	<legend class="slds-form-element__legend slds-form-element__label slds-text-title--caps">Status</legend>
+				<div class="slds-box slds-box--small">
+		  			<aura:iteration items="{!v.statuses}" var="status">
+						<div class="slds-form-element__control filter-checkbox-container">
+							<ui:inputCheckbox aura:id="filterCheckbox" name="Status__c" label="{!status.label}" text="{!status.value}" change="{!c.toggleFilter}" value="{!status.checked}" class="testClass" labelClass="slds-truncate"/>
+						</div>
+					</aura:iteration>
+				</div>
+		  	</fieldset>
+		</aura:if>
+
+		<aura:if isTrue="{!and(v.recordTypes, v.recordTypes.length, v.recordTypes.length > 0)}">
+		  	<fieldset class="slds-form-element slds-m-top--x-small">
+		    	<legend class="slds-form-element__legend slds-form-element__label slds-text-title--caps">Type</legend>
+				<div class="slds-box slds-box--small">
+		  			<aura:iteration items="{!v.recordTypes}" var="type">
+						<div class="slds-form-element__control filter-checkbox-container">
+		  					<ui:inputCheckbox aura:id="filterCheckbox" name="RecordType.Name" label="{!type.label}" text="{!type.value}" change="{!c.toggleFilter}" value="{!type.checked}"/>
+						</div>
+					</aura:iteration>
+				</div>
+		  	</fieldset>
+	  	</aura:if>
+
+	  	<aura:if isTrue="{!and(v.assignees, v.assignees.length, v.assignees.length > 0)}">
+			<fieldset class="slds-form-element slds-m-top--x-small">
+		    	<legend class="slds-form-element__legend slds-form-element__label slds-text-title--caps">Assignee</legend>
+				<div class="slds-box slds-box--small">
+		  			<aura:iteration items="{!v.assignees}" var="assignee">
+						<div class="slds-form-element__control filter-checkbox-container">
+		  					<ui:inputCheckbox aura:id="filterCheckbox" name="Assignee__r.Id" label="{!assignee.label}" text="{!assignee.value}" change="{!c.toggleFilter}" value="{!assignee.checked}"/>
+						</div>
+					</aura:iteration>
+				</div>
+		  	</fieldset>
+		</aura:if>
+
+		<aura:if isTrue="{!and(v.qaAssignees, v.qaAssignees.length, v.qaAssignees.length > 0)}">
+			<fieldset class="slds-form-element slds-m-top--x-small">
+		    	<legend class="slds-form-element__legend slds-form-element__label slds-text-title--caps">QE Assignee</legend>
+				<div class="slds-box slds-box--small">
+		  			<aura:iteration items="{!v.qaAssignees}" var="qaAssignee">
+						<div class="slds-form-element__control filter-checkbox-container">
+							<ui:inputCheckbox aura:id="filterCheckbox" name="QA_Engineer__r.Id" label="{!qaAssignee.label}" text="{!qaAssignee.value}" change="{!c.toggleFilter}" value="{!qaAssignee.checked}"/>
+						</div>
+					</aura:iteration>
+				</div>
+		  	</fieldset>
+		</aura:if>
+
+		<aura:if isTrue="{!and(v.themes, v.themes.length, v.themes.length > 0)}">
+			<fieldset class="slds-form-element slds-m-top--x-small">
+		    	<legend class="slds-form-element__legend slds-form-element__label slds-text-title--caps">Themes</legend>
+				<div class="slds-box slds-box--small">
+		  			<aura:iteration items="{!v.themes}" var="theme">
+						<div class="slds-form-element__control filter-checkbox-container">
+							<ui:inputCheckbox aura:id="filterCheckbox" name="theme" label="{!theme.label}" text="{!theme.value}" change="{!c.toggleFilter}" value="{!theme.checked}"/>
+						</div>
+					</aura:iteration>
+				</div>
+		  	</fieldset>
+		</aura:if>
+
+		<aura:if isTrue="{! and(v.newCustomerFacingFeatureOptions, v.newCustomerFacingFeatureOptions.length, v.newCustomerFacingFeatureOptions.length > 0) }">
+			<fieldset class="slds-form-element slds-m-top--x-small">
+				<legend class="slds-form-element__legend slds-form-element__label slds-text-title--caps">New Customer Facing Feature</legend>
+				<div class="slds-box slds-box--small">
+		  			<aura:iteration items="{!v.newCustomerFacingFeatureOptions}" var="newCustomerFacingFeature">
+						<div class="slds-form-element__control filter-checkbox-container">
+							<ui:inputCheckbox aura:id="filterCheckbox" name="Capex_Enabled__c" label="{!newCustomerFacingFeature.label}" text="{!newCustomerFacingFeature.value}" change="{!c.toggleFilter}" value="{!newCustomerFacingFeature.checked}"/>
+						</div>
+					</aura:iteration>
+				</div>
+			</fieldset>
+		</aura:if>
+	</div>
+</aura:component>

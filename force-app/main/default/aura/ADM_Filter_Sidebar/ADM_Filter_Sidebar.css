@@ -1,0 +1,22 @@
+.THIS .uiInput--checkbox input {
+    float: left;
+    margin: 0 1em;
+}
+
+.THIS .uiInput--checkbox {
+    margin-bottom: 5px;
+}
+
+.THIS .uiInput--checkbox:last-child {
+    margin-bottom: 0px;
+}
+
+.THIS .slds-box--small {
+	background: #f5f5f5;
+}
+
+.THIS .filter-checkbox-container div {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}

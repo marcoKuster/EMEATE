@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:attribute name="sprintInfo" type="Object"/>
+    
+    <aura:handler event="c:ADM_Open_Modal" action="{!c.openModal}"/>
+</aura:component>

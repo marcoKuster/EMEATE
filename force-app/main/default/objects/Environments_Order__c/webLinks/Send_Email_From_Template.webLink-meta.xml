@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Email_From_Template</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Send Email From Template</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>var envId = &quot;{!Environments_Order__c.Id}&quot;
+
+
+var envSubject = &quot;{!Environments_Order__c.Environment__c}&quot;
+document.location = &quot;/_ui/core/email/author/EmailAuthor?p3_lkid=&quot; + envId + &quot;&amp;p6=&quot; + envSubject + &quot;&amp;retURL=/&quot; + envId</url>
+</WebLink>

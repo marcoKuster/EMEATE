@@ -1,0 +1,44 @@
+<aura:component >
+    <style>
+    .divClass{
+   		display:inline-block;
+	}
+    .divButton{
+        float:right;
+    }
+    </style>
+    <ltng:require styles="/resource/fbk__SLDS202/assets/styles/salesforce-lightning-design-system.css"/>
+	<aura:attribute name="isError" type="Boolean" default="false" />
+    <aura:attribute name="isSuccess" type="Boolean" default="false" />
+    <aura:attribute name="toastMessage" type="String" />
+    <aura:handler name="change" value="{!v.toastMessage}" action="{!c.showToast}"/>
+    
+        <div class="slds-grid slds-wrap">
+            <div class="slds-notify_container slds-hide" aura:id="toggleId">
+                <aura:renderIf isTrue="{!v.isSuccess}">
+                <div class="slds-notify slds-notify--toast slds-theme--success fbk-toast margin-toast" role="alert">
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading--small" tabindex="0">{!v.toastMessage}</h2>
+                    </div>
+                    
+               </div>
+          
+  
+        	<aura:set attribute="else">
+           
+                    <div class="slds-notify slds-notify--toast slds-theme--error fbk-toast margin-toast buttonDiv" role="alert">
+                       
+                        <div class="slds-notify__content divClass">
+                            <h2 class="slds-text-heading--small" tabindex="0">{!v.toastMessage}</h2>
+                        </div>
+                        <div class="divClass divButton">
+                         <lightning:buttonIcon iconName="utility:close" size="x-small" alternativeText="Close" onclick="{! c.closeToast }"/>
+                       </div>
+                    </div>
+       		</aura:set>
+                  
+   			</aura:renderIf>
+                      
+      		</div>
+ 		 </div>
+</aura:component>

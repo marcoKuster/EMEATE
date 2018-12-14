@@ -1,0 +1,1154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A Solution Overview is a presentation created for a release to provide an overview of a designated set of features. This object tracks the location, status, and user story &amp; branding cross references for all solution overviews.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Big_Marketing_Push__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>These Solution Overviews are planned for empahsis in release and launch Marketing efforts</description>
+        <externalId>false</externalId>
+        <label>Big Marketing Push</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Communication_Requirement__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Will this product enhancement or feature enablement require proactive communication from SFDC to customer Sys Admin&apos;s informing them of a behavior change or action they will be required to take?</inlineHelpText>
+        <label>Customer Communication Required</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Customer_communication_required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Select this field if this feature or product enhancement will require proactive communication from Salesforce.com to customer System Administrators informing them of a behavior change or action they need to take.</inlineHelpText>
+        <label>Customer communication required</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter specific details of your features or feature enhancements which are customer impacting.</inlineHelpText>
+        <label>Description</label>
+        <length>3200</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Editions__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Which editions will your feature be enabled for?  Select all that apply.</inlineHelpText>
+        <label>Editions</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Personal Edition</fullName>
+                    <default>false</default>
+                    <label>Personal Edition</label>
+                </value>
+                <value>
+                    <fullName>Group Edition</fullName>
+                    <default>false</default>
+                    <label>Group Edition</label>
+                </value>
+                <value>
+                    <fullName>Professional Edition</fullName>
+                    <default>false</default>
+                    <label>Professional Edition</label>
+                </value>
+                <value>
+                    <fullName>Enterprise Edition</fullName>
+                    <default>false</default>
+                    <label>Enterprise Edition</label>
+                </value>
+                <value>
+                    <fullName>Unlimited Edition</fullName>
+                    <default>false</default>
+                    <label>Unlimited Edition</label>
+                </value>
+                <value>
+                    <fullName>Developer Edition</fullName>
+                    <default>false</default>
+                    <label>Developer Edition</label>
+                </value>
+                <value>
+                    <fullName>database.com</fullName>
+                    <default>false</default>
+                    <label>database.com</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Enter_Idea_Exchange_URL__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If feature is associated to an Idea(s) on the Idea Exchange - enter URL(s) here and update the Ideas  themselves with comments &amp; status changes.</inlineHelpText>
+        <label>Enter Idea Exchange URL(s)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Exception_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Exception Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Exec_Approval_Receved_WRoR__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Off Cycle releases resulting in features being enabled outside of 24hrs of the release require Executive approval.
+This approval is requested during the Weekly Review of Releases (WRoR) Meeting</inlineHelpText>
+        <label>Exec Approval Received @ WRoR</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Explain_License_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If feature requires additional license, please list license requirements, pricing here.</inlineHelpText>
+        <label>If  &quot;YES&quot; - Explain License Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Explain_if_no_customer_comm_required__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Provide explicit details why no customer communication is required</inlineHelpText>
+        <label>Explain if &quot;NO&quot; Customer Comm Required</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>External_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>External ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Feature_Enablement_Timeline__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>All features must be enabled with the release or within 24 hrs of the release.
+*No exceptions*</inlineHelpText>
+        <label>Feature Enablement Timing</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>With Release</fullName>
+                    <default>false</default>
+                    <label>With Release</label>
+                </value>
+                <value>
+                    <fullName>Post Scripts (within 24hrs)</fullName>
+                    <default>false</default>
+                    <label>Post Scripts (within 24hrs)</label>
+                </value>
+                <value>
+                    <fullName>BT Perm (within 24hrs)</fullName>
+                    <default>false</default>
+                    <label>BT Perm (within 24hrs)</label>
+                </value>
+                <value>
+                    <fullName>Off Cycle (Requires Exec Approval)</fullName>
+                    <default>false</default>
+                    <label>Off Cycle (Requires Exec Approval)</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Feature_Enablement__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Identify how this feature will be enabled for customers.  Note: Customers on the &quot;Do Not Auto Enable Features&quot; list will never have features automatically turned on unless they request it.</inlineHelpText>
+        <label>Feature Availability</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Enabled for organization and end users -- Respects DNAE</fullName>
+                    <default>false</default>
+                    <label>Enabled for organization and end users -- Respects DNAE</label>
+                </value>
+                <value>
+                    <fullName>Enabled for organization and end users -- Does not respect DNAE</fullName>
+                    <default>false</default>
+                    <label>Enabled for organization and end users -- Does not respect DNAE</label>
+                </value>
+                <value>
+                    <fullName>Enabled for organization -- Requires system admin configuration</fullName>
+                    <default>false</default>
+                    <label>Enabled for organization -- Requires system admin configuration</label>
+                </value>
+                <value>
+                    <fullName>Not auto enabled -- BT perm must be enabled by Customer Support or PM</fullName>
+                    <default>false</default>
+                    <label>Not auto enabled -- BT perm must be enabled by Customer Support or PM</label>
+                </value>
+                <value>
+                    <fullName>Multiple features embedded in SO - See SO for enablement information</fullName>
+                    <default>false</default>
+                    <label>Multiple features embedded in SO - See SO for enablement information</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Feature_Requires_Licence__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please indicate if feature requires additional license.</inlineHelpText>
+        <label>Feature Requires License</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>If_Other_Please_Explain__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If you chose &apos;OTHER&apos; for your feature enablement timing, please provide specific details here.</inlineHelpText>
+        <label>If Enablement Timing=OTHER, Explain:</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Include_in_Admin_Preview__c</fullName>
+        <externalId>false</externalId>
+        <label>Include in Admin Preview</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Internal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>This field should be checked when a feature(s) is not customer facing, but useful and/or valuable knowledge for internal audiences.</inlineHelpText>
+        <label>Internal</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Internal_feature_only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Internal feature only</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Level__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Temporary Field for William Gradin</inlineHelpText>
+        <label>Level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>B</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>D</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Major_Minor_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Major-Minor Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Major Feature</fullName>
+                    <default>false</default>
+                    <label>Major Feature</label>
+                </value>
+                <value>
+                    <fullName>Minor Feature</fullName>
+                    <default>false</default>
+                    <label>Minor Feature</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Marketing_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Marketing description for the release preview document</inlineHelpText>
+        <label>Marketing Description</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>20</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Marketing_Key_Benefits__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>2 - 4 bullet points of key business benefits.  If feature can&apos;t easily be tied to business benefits then put 2 - 4 key technical benefits</inlineHelpText>
+        <label>Marketing Key Benefits</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Marketing_Name_2__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Temporary field for William Gradin to use</inlineHelpText>
+        <label>Marketing Name 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Marketing_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Marketing Name for Release Preview document.  This field is audited.</inlineHelpText>
+        <label>Marketing Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Marketing_Tag_Line__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sentence fragment to briefly describe the feature.</inlineHelpText>
+        <label>Marketing Tag Line</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Off_Cycle_Release__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box if the feature will not be released with R1 or R2 releases.</inlineHelpText>
+        <label>Off Cycle Release</label>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Planned_Release_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>What is the plan for the marketed availability of this product/feature?</inlineHelpText>
+        <label>Planned Release Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Generally Available</fullName>
+                    <default>true</default>
+                    <label>Generally Available</label>
+                </value>
+                <value>
+                    <fullName>Limited Release</fullName>
+                    <default>false</default>
+                    <label>Limited Release</label>
+                </value>
+                <value>
+                    <fullName>Pilot</fullName>
+                    <default>false</default>
+                    <label>Pilot</label>
+                </value>
+                <value>
+                    <fullName>Beta</fullName>
+                    <default>false</default>
+                    <label>Beta</label>
+                </value>
+                <value>
+                    <fullName>Developer Preview</fullName>
+                    <default>false</default>
+                    <label>Developer Preview</label>
+                </value>
+                <value>
+                    <fullName>Developer Toolkit</fullName>
+                    <default>false</default>
+                    <label>Developer Toolkit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Product_Division__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Division</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Analytics</fullName>
+                    <default>false</default>
+                    <label>Analytics</label>
+                </value>
+                <value>
+                    <fullName>Core - Architecture</fullName>
+                    <default>false</default>
+                    <label>Core - Architecture</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - Content</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - Content</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - Google Apps</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - Google Apps</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - Ideas</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - Ideas</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - Marketing/SFGA</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - Marketing/SFGA</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - PRM</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - PRM</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - SFA</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - SFA</label>
+                </value>
+                <value>
+                    <fullName>CRM Apps - SSS</fullName>
+                    <default>false</default>
+                    <label>CRM Apps - SSS</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Platform - Admin</fullName>
+                    <default>false</default>
+                    <label>Platform - Admin</label>
+                </value>
+                <value>
+                    <fullName>Platform - API/Integration/Security</fullName>
+                    <default>false</default>
+                    <label>Platform - API/Integration/Security</label>
+                </value>
+                <value>
+                    <fullName>Platform - Application Development</fullName>
+                    <default>false</default>
+                    <label>Platform - Application Development</label>
+                </value>
+                <value>
+                    <fullName>Platform - Appstore</fullName>
+                    <default>false</default>
+                    <label>Platform - Appstore</label>
+                </value>
+                <value>
+                    <fullName>Platform - Desktop Clients</fullName>
+                    <default>false</default>
+                    <label>Platform - Desktop Clients</label>
+                </value>
+                <value>
+                    <fullName>Platform - Mobile</fullName>
+                    <default>false</default>
+                    <label>Platform - Mobile</label>
+                </value>
+                <value>
+                    <fullName>Platform - Other</fullName>
+                    <default>false</default>
+                    <label>Platform - Other</label>
+                </value>
+                <value>
+                    <fullName>SFA - Verticals Marketing</fullName>
+                    <default>false</default>
+                    <label>SFA - Verticals Marketing</label>
+                </value>
+                <value>
+                    <fullName>SFA - Verticals Product</fullName>
+                    <default>false</default>
+                    <label>SFA - Verticals Product</label>
+                </value>
+                <value>
+                    <fullName>Web</fullName>
+                    <default>false</default>
+                    <label>Web</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Product_Leader__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Leader</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Chuck Dietrich</fullName>
+                    <default>false</default>
+                    <label>Chuck Dietrich</label>
+                </value>
+                <value>
+                    <fullName>Clara Shih</fullName>
+                    <default>false</default>
+                    <label>Clara Shih</label>
+                </value>
+                <value>
+                    <fullName>David Brooks</fullName>
+                    <default>false</default>
+                    <label>David Brooks</label>
+                </value>
+                <value>
+                    <fullName>Elay Cohen</fullName>
+                    <default>false</default>
+                    <label>Elay Cohen</label>
+                </value>
+                <value>
+                    <fullName>Eric Bezar</fullName>
+                    <default>false</default>
+                    <label>Eric Bezar</label>
+                </value>
+                <value>
+                    <fullName>Jamie Grenney</fullName>
+                    <default>false</default>
+                    <label>Jamie Grenney</label>
+                </value>
+                <value>
+                    <fullName>Jim Rivera</fullName>
+                    <default>false</default>
+                    <label>Jim Rivera</label>
+                </value>
+                <value>
+                    <fullName>John Ball</fullName>
+                    <default>false</default>
+                    <label>John Ball</label>
+                </value>
+                <value>
+                    <fullName>Kraig Swensrud</fullName>
+                    <default>false</default>
+                    <label>Kraig Swensrud</label>
+                </value>
+                <value>
+                    <fullName>Mark Abramowitz</fullName>
+                    <default>false</default>
+                    <label>Mark Abramowitz</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Product_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Feature_Set</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Application Exchange</fullName>
+                    <default>false</default>
+                    <label>Application Exchange</label>
+                </value>
+                <value>
+                    <fullName>User Interface</fullName>
+                    <default>false</default>
+                    <label>User Interface</label>
+                </value>
+                <value>
+                    <fullName>Logic</fullName>
+                    <default>false</default>
+                    <label>Logic</label>
+                </value>
+                <value>
+                    <fullName>Integration</fullName>
+                    <default>false</default>
+                    <label>Integration</label>
+                </value>
+                <value>
+                    <fullName>Database</fullName>
+                    <default>false</default>
+                    <label>Database</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Infrastructure</label>
+                </value>
+                <value>
+                    <fullName>Admin &amp; Tools</fullName>
+                    <default>false</default>
+                    <label>Admin &amp; Tools</label>
+                </value>
+                <value>
+                    <fullName>Sales</fullName>
+                    <default>false</default>
+                    <label>Sales</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>Call Center</fullName>
+                    <default>false</default>
+                    <label>Call Center</label>
+                </value>
+                <value>
+                    <fullName>Customer Portal</fullName>
+                    <default>false</default>
+                    <label>Customer Portal</label>
+                </value>
+                <value>
+                    <fullName>Partners</fullName>
+                    <default>false</default>
+                    <label>Partners</label>
+                </value>
+                <value>
+                    <fullName>Mobile</fullName>
+                    <default>false</default>
+                    <label>Mobile</label>
+                </value>
+                <value>
+                    <fullName>Content</fullName>
+                    <default>false</default>
+                    <label>Content</label>
+                </value>
+                <value>
+                    <fullName>Ideas</fullName>
+                    <default>false</default>
+                    <label>Ideas</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Release_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>What is the plan for the marketed availability of this product / feature?</inlineHelpText>
+        <label>Release Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GA</fullName>
+                    <color>#E27001</color>
+                    <default>false</default>
+                    <label>GA</label>
+                </value>
+                <value>
+                    <fullName>Beta</fullName>
+                    <color>#78C953</color>
+                    <default>false</default>
+                    <label>Beta</label>
+                </value>
+                <value>
+                    <fullName>Pilot</fullName>
+                    <color>#0B6FCE</color>
+                    <default>false</default>
+                    <label>Pilot</label>
+                </value>
+                <value>
+                    <fullName>Developer Preview</fullName>
+                    <color>#F3D904</color>
+                    <default>false</default>
+                    <label>Developer Preview</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Build__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Scheduled Build</label>
+        <referenceTo>ADM_Build__c</referenceTo>
+        <relationshipLabel>Solution Overviews</relationshipLabel>
+        <relationshipName>Solution_Overviews</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Solution_Overview_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>Solution Overview Link</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Solution_Overview_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Solution Overview Status</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Final</fullName>
+                    <default>false</default>
+                    <label>Final</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Target_Audience__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select all that apply.  Who will be the primary users of this product/feature?</inlineHelpText>
+        <label>Target Audience</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>System Administrator</fullName>
+                    <default>false</default>
+                    <label>System Administrator</label>
+                </value>
+                <value>
+                    <fullName>Developer</fullName>
+                    <default>false</default>
+                    <label>Developer</label>
+                </value>
+                <value>
+                    <fullName>Partner</fullName>
+                    <default>false</default>
+                    <label>Partner</label>
+                </value>
+                <value>
+                    <fullName>End User</fullName>
+                    <default>false</default>
+                    <label>End User</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Target_Off_Cycle_Release_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If you chose &quot;Off Cycle&quot;, please enter the target date of this enablement/release.
+This requires Exec Approval. You should have received an automated email with instructions on how to obtain this Exec Approval.</inlineHelpText>
+        <label>Target Off Cycle Release Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Target_Release_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If you chose &apos;Off-Cycle&apos; for your feature enablement timing, please provide the TARGET date of this enablement/release.
+&apos;Off Cycle&apos; requires Exec Approval. You should have received an automated email with instructions on how to obtain this Exec Approval.</inlineHelpText>
+        <label>Off Cycle Target Release Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>WRoR_Approval_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If you chose &quot;Off Cycle&quot;, please list the release date which the Exec Team have now approved.
+You would have received this approved date from attending the Weekly Review of Releases meeting.</inlineHelpText>
+        <label>Exec Approved Release Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Solution Overview</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>X162_Solution_Overviews1</fullName>
+        <columns>NAME</columns>
+        <columns>Solution_Overview_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>162 Solution Overviews</label>
+    </listViews>
+    <listViews>
+        <fullName>x148SolutionOverviews</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <columns>Big_Marketing_Push__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>148 Solution Overviews</label>
+    </listViews>
+    <listViews>
+        <fullName>x150SolutionOverviews</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <columns>Big_Marketing_Push__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>150 Solution Overviews</label>
+    </listViews>
+    <listViews>
+        <fullName>x152SolutionOverviews</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <columns>Big_Marketing_Push__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>152 Solution Overviews</label>
+    </listViews>
+    <listViews>
+        <fullName>x152SolutionOverviewsPlatform</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <columns>Product_Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Target_Audience__c</columns>
+        <columns>Include_in_Admin_Preview__c</columns>
+        <columns>Solution_Overview_Status__c</columns>
+        <columns>Solution_Overview_Link__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Division__c</field>
+            <operation>startsWith</operation>
+            <value>Platform</value>
+        </filters>
+        <label>152 Solution Overviews - Platform</label>
+    </listViews>
+    <listViews>
+        <fullName>x154SolutionOverviews_d_3</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <columns>Solution_Overview_Status__c</columns>
+        <columns>Big_Marketing_Push__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>154 Solution Overviews</label>
+    </listViews>
+    <listViews>
+        <fullName>x156SolutionOverviewsPlatform</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Manager__c</columns>
+        <columns>Product_Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Target_Audience__c</columns>
+        <columns>Include_in_Admin_Preview__c</columns>
+        <columns>Solution_Overview_Status__c</columns>
+        <columns>Solution_Overview_Link__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Division__c</field>
+            <operation>startsWith</operation>
+            <value>Platform</value>
+        </filters>
+        <label>156 Solution Overviews - Platform</label>
+    </listViews>
+    <listViews>
+        <fullName>x158SolutionOverviews</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>158 Solution Overviews</label>
+    </listViews>
+    <listViews>
+        <fullName>x160SolutionOverviews</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>160 Solution Overviews</label>
+    </listViews>
+    <nameField>
+        <label>Solution Overview Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Solution Overviews</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Scheduled_Build__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Scheduled_Build__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Product_Division__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Product_Leader__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Product_Manager__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Solution_Overview_Link__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Editions__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Feature_Enablement__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Solution_Overview_Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

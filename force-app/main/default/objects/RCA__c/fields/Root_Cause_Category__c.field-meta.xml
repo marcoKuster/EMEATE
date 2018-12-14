@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Root_Cause_Category__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Many more options are provided here to categorize the incident at a more granular level.</inlineHelpText>
+    <label>Root Cause Category</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>RCA_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>3rd Party Variable</fullName>
+                <default>false</default>
+                <label>3rd Party Variable</label>
+            </value>
+            <value>
+                <fullName>Environment Disparity</fullName>
+                <default>false</default>
+                <label>Environment Disparity</label>
+            </value>
+            <value>
+                <fullName>Customer-Specific Environment Issue</fullName>
+                <default>false</default>
+                <label>Customer-Specific Environment Issue</label>
+            </value>
+            <value>
+                <fullName>Impact from Another Team</fullName>
+                <default>false</default>
+                <label>Impact from Another Team</label>
+            </value>
+            <value>
+                <fullName>Insufficient Automation</fullName>
+                <default>false</default>
+                <label>Insufficient Automation</label>
+            </value>
+            <value>
+                <fullName>Inadequate Test Coverage</fullName>
+                <default>false</default>
+                <label>Inadequate Test Coverage</label>
+            </value>
+            <value>
+                <fullName>Inadequate Functional Design</fullName>
+                <default>false</default>
+                <label>Inadequate Functional Design</label>
+            </value>
+            <value>
+                <fullName>Misunderstood Dependencies</fullName>
+                <default>false</default>
+                <label>Misunderstood Dependencies</label>
+            </value>
+            <value>
+                <fullName>Corner Case</fullName>
+                <default>false</default>
+                <label>Corner Case</label>
+            </value>
+            <value>
+                <fullName>Known Issue that was Deprioritized</fullName>
+                <default>false</default>
+                <label>Known Issue that was Deprioritized</label>
+            </value>
+            <value>
+                <fullName>Deficient Usability</fullName>
+                <default>false</default>
+                <label>Deficient Usability</label>
+            </value>
+            <value>
+                <fullName>Documentation Issue</fullName>
+                <default>false</default>
+                <label>Documentation Issue</label>
+            </value>
+            <value>
+                <fullName>Translation Issue</fullName>
+                <default>false</default>
+                <label>Translation Issue</label>
+            </value>
+            <value>
+                <fullName>Hardware/Network Issues</fullName>
+                <default>false</default>
+                <label>Hardware/Network Issues</label>
+            </value>
+            <value>
+                <fullName>Regression</fullName>
+                <default>false</default>
+                <label>Regression</label>
+            </value>
+            <value>
+                <fullName>Autobuild Issue</fullName>
+                <default>false</default>
+                <label>Autobuild Issue</label>
+            </value>
+            <value>
+                <fullName>Code Checked into Incorrect Branch</fullName>
+                <default>false</default>
+                <label>Code Checked into Incorrect Branch</label>
+            </value>
+            <value>
+                <fullName>Staging/Promotion Issue</fullName>
+                <default>false</default>
+                <label>Staging/Promotion Issue</label>
+            </value>
+            <value>
+                <fullName>Incorrect/Incomplete Code Released</fullName>
+                <default>false</default>
+                <label>Incorrect/Incomplete Code Released</label>
+            </value>
+            <value>
+                <fullName>Release Runner Issues</fullName>
+                <default>false</default>
+                <label>Release Runner Issues</label>
+            </value>
+            <value>
+                <fullName>DICE Issues</fullName>
+                <default>false</default>
+                <label>DICE Issues</label>
+            </value>
+            <value>
+                <fullName>Application</fullName>
+                <default>false</default>
+                <label>Application</label>
+            </value>
+            <value>
+                <fullName>Configuration</fullName>
+                <default>false</default>
+                <label>Configuration</label>
+            </value>
+            <value>
+                <fullName>Database</fullName>
+                <default>false</default>
+                <label>Database</label>
+            </value>
+            <value>
+                <fullName>Hardware</fullName>
+                <default>false</default>
+                <label>Hardware</label>
+            </value>
+            <value>
+                <fullName>Network</fullName>
+                <default>false</default>
+                <label>Network</label>
+            </value>
+            <value>
+                <fullName>Operator Error</fullName>
+                <default>false</default>
+                <label>Operator Error</label>
+            </value>
+            <value>
+                <fullName>Release</fullName>
+                <default>false</default>
+                <label>Release</label>
+            </value>
+            <value>
+                <fullName>Software</fullName>
+                <default>false</default>
+                <label>Software</label>
+            </value>
+            <value>
+                <fullName>Storage</fullName>
+                <default>false</default>
+                <label>Storage</label>
+            </value>
+            <value>
+                <fullName>System</fullName>
+                <default>false</default>
+                <label>System</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>3rd Party Variable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <valueName>Environment Disparity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Customer-Specific Environment Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Impact from Another Team</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <valueName>Insufficient Automation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <valueName>Inadequate Test Coverage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Inadequate Functional Design</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <valueName>Misunderstood Dependencies</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Corner Case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Known Issue that was Deprioritized</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Deficient Usability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Documentation Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Translation Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Regression</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <valueName>Code Checked into Incorrect Branch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>Incorrect/Incomplete Code Released</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Operator Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>E-Release/Break-Fix Request</controllingFieldValue>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <valueName>Hardware/Network Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <valueName>Autobuild Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <valueName>Staging/Promotion Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Code Release</controllingFieldValue>
+            <controllingFieldValue>Incorrect/Incomplete Deployment</controllingFieldValue>
+            <valueName>Release Runner Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deployment Delayed</controllingFieldValue>
+            <controllingFieldValue>Rollback</controllingFieldValue>
+            <valueName>DICE Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Application</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Configuration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Database</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Hardware</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Network</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Release</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Software</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>Storage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Performance Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Degradation</controllingFieldValue>
+            <controllingFieldValue>Service Disruption</controllingFieldValue>
+            <valueName>System</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>10</visibleLines>
+</CustomField>

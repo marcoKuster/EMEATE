@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_if_Code_Line_is_not_Releasable__c</fullName>
+    <description>Provide explanation if the Code Line is not Releasable</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Provide explanation if the Code Line is not Releasable</inlineHelpText>
+    <label>Explain if Code Line is not Releasable</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

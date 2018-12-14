@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Counts the number of automated executions that are not done --></help>
+    <label><!-- Count Automation To Complete --></label>
+    <name>Count_Automation_To_Complete__c</name>
+</CustomFieldTranslation>

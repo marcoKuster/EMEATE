@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CSS_UI_Dependencies</fullName>
+    <columns>Deliverable__c</columns>
+    <columns>NAME</columns>
+    <columns>Provider_Team__c</columns>
+    <columns>Dependency_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Dependent_Team__c</field>
+        <operation>equals</operation>
+        <value>CSS UI</value>
+    </filters>
+    <label>CSS UI Dependencies</label>
+</ListView>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Perforce_Checkin_Request</fullName>
+    <availability>online</availability>
+    <description>Used to send an email to request perforce status</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Perforce Checkin Request</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>function perforceCheckinRequest(){
+
+    document.location = &quot;mailto:PerforceCheckins@salesforce.com?Subject=&quot; + getSubject() + &quot;&amp;Body=&quot; + getBody();
+}
+
+function getSubject(){
+       var subject = &quot;Perforce Checkin Request - Work record: {!ADM_Work__c.Name} &quot;;
+       return subject;
+}
+
+function getBody(){
+
+    var build = &quot;{!ADM_Work__c.Scheduled_Build__c}&quot;;
+    var body = escapeUTF ( window.location.href );
+    if ( build != null &amp;&amp; build != &#39;&#39; ){
+
+                body += &quot;%0D%0A%0D%0A- Describe the customer experience that triggered this fix.&quot;;
+                body += &quot;%0D%0A%0D%0A- Describe the fix and how it resolves the customer issue.&quot;;
+                body += &quot;%0D%0A%0D%0A- What needs to be tested?&quot;;
+                body += &quot;%0D%0A%0D%0A- Why is this a low-risk fix?&quot;;
+               body += &quot;%0D%0A%0D%0A- How does this meet the Patch or e-Release criteria?&quot;;
+               
+    }
+
+    return body;
+
+
+}
+
+perforceCheckinRequest();</url>
+</WebLink>

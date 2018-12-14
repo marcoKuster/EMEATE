@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OutofOffice</fullName>
+    <active>true</active>
+    <description>Time out of the office away from the Scrum Team.</description>
+    <label>Out of Office</label>
+</RecordType>

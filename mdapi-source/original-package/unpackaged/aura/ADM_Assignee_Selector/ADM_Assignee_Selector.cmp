@@ -1,0 +1,45 @@
+<aura:component extends="c:ADM_Work_Shared">
+    <aura:attribute name="assignee" type="Object"/>
+    <aura:attribute name="assigneeField" type="String"/>
+    <aura:attribute name="dropdownPosition" type="String"/>
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="recordType" type="String"/>
+    <aura:attribute name="team" type="Object[]"/>
+    <aura:attribute name="open" type="Boolean"/>
+
+    <aura:registerEvent name="showSpinnerEvent" type="c:ADM_Event_Show_Spinner"/>
+
+    <div aura:id="assignee-selector-container" class="slds-dropdown-trigger slds-dropdown-trigger--click" tabindex="0" onfocus="{!c.showAssigneeSelect}" onblur="{!c.hideAssigneeSelect}">
+        <button aura:id="assignee_button" class="slds-button" onclick="{!c.toggleAssigneeSelect}">
+            <span class="slds-avatar slds-avatar--circle slds-avatar--medium">
+                <img src="{!v.assignee.SmallPhotoUrl}" alt="{!v.assignee.Name}"/>
+                <aura:if isTrue="{!empty(v.assignee)}">
+                    <lightning:icon iconName="utility:adduser" size="small" alternativeText="Add Assignee"/>
+                </aura:if>
+            </span>
+            <span class="slds-assistive-text">{!v.assignee.Name}</span>
+        </button>
+
+        <aura:if isTrue="{!v.open}">
+            <div class="{! v.dropdownPosition == 'right' ?
+                'slds-dropdown slds-dropdown--right slds-dropdown--small' :
+                'slds-dropdown slds-dropdown--left slds-dropdown--small'
+            }">
+                <ul class="slds-dropdown__list slds-dropdown--length-5" role="menu">
+                    <aura:iteration items="{!v.team}" var="teamMember">
+                        <li class="slds-dropdown__item" role="presentation">
+                            <lightning:button value="{!teamMember.Member_Name__r.Id}" class="slds-p-horizontal--x-small slds-p-vertical--xx-small" onclick="{!c.setAssignee}" variant="base">
+                                <span class="slds-truncate">
+                                    <span class="slds-avatar slds-avatar--circle slds-avatar--medium">
+                                        <img src="{!teamMember.Member_Name__r.SmallPhotoUrl}" alt="{!teamMember.Member_Name__r.Name}" />
+                                    </span>
+                                    <span class="{!v.assignee.Id == teamMember.Member_Name__r.Id ? 'slds-truncate slds-p-left--x-small selected' : 'slds-truncate slds-p-left--x-small'}" title="{!teamMember.Member_Name__r.Name}">{!teamMember.Member_Name__r.Name}</span>
+                                </span>
+                            </lightning:button>
+                        </li>
+                    </aura:iteration>
+                </ul>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

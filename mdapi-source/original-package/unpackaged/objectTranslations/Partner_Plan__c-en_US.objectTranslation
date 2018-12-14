@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Partner Plan</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Partner Plans</value>
+    </caseValues>
+    <fields>
+        <label><!-- Technical Account Plan --></label>
+        <name>Account_Plan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Partner Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Ad-Hoc Technical Enablement --></label>
+        <name>Ad_Hoc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Admin --></label>
+        <name>Admin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cadence Minutes --></label>
+        <name>Cadence_Minutes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- DP &amp; Contract Done --></label>
+        <name>DP_Contract_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- DP &amp; Contract --></label>
+        <name>DP_Contract__c</name>
+    </fields>
+    <fields>
+        <label><!-- Design Sprint Done --></label>
+        <name>Design_Sprint_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Design Sprint --></label>
+        <name>Design_Sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has a DP planned --></label>
+        <name>Has_a_DP_planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Investigation &amp; Escalation --></label>
+        <name>Investigation_Escalation__c</name>
+    </fields>
+    <fields>
+        <label><!-- DP &amp; Contract --></label>
+        <name>Needs_DP_Contract__c</name>
+    </fields>
+    <fields>
+        <help><!-- Design Sprint --></help>
+        <label><!-- Design Sprint --></label>
+        <name>Needs_Design_Sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product review --></label>
+        <name>Needs_Product_review__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR --></label>
+        <name>Needs_SR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selling the Platform --></label>
+        <name>Needs_Selling_the_Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR --></label>
+        <name>Needs_TR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workshop --></label>
+        <name>Needs_Workshop__c</name>
+    </fields>
+    <fields>
+        <label><!-- PAM --></label>
+        <name>PAM__c</name>
+    </fields>
+    <fields>
+        <label><!-- PM Activities --></label>
+        <name>PM_Activities__c</name>
+    </fields>
+    <fields>
+        <label><!-- Partner Type --></label>
+        <name>Partner_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- P2 are not considered by any calculation --></help>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>P1</masterLabel>
+            <translation><!-- P1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P2</masterLabel>
+            <translation><!-- P2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product review Done --></label>
+        <name>Product_review_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product review --></label>
+        <name>Product_review__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quarterly Plan --></label>
+        <name>Quarterly_Plan__c</name>
+        <relationshipLabel><!-- Partner Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SR Done --></label>
+        <name>SR_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Security Review --></label>
+        <name>Security_Review__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selling the Platform Done --></label>
+        <name>Selling_the_Platform_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selling the Platform --></label>
+        <name>Selling_the_Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR Done --></label>
+        <name>TR_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR --></label>
+        <name>TR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Time --></label>
+        <name>Total_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workshop Done --></label>
+        <name>Workshop_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workshop --></label>
+        <name>Workshop__c</name>
+    </fields>
+    <fields>
+        <label><!-- has SR planned --></label>
+        <name>has_SR_planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- to Delete --></label>
+        <name>to_Delete__c</name>
+    </fields>
+    <layouts>
+        <layout>Partner Plan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

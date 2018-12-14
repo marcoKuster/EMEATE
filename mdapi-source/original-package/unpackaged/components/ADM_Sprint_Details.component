@@ -1,0 +1,776 @@
+<apex:component controller="ADM_SprintDetailController" allowDML="true">
+<apex:attribute name="sprint" type="ADM_Sprint__c" description="Display the Sprint details." required="true" />
+
+	<style type="text/css">
+	  fieldset {
+	  	margin-top: 15px;
+	  	margin-bottom: 15px;
+	  	margin-right: 30px;
+	  	margin-left: 30px;
+	  	/*min-width: 1075px;*/
+	  }
+	  fieldset legend {
+	    padding: 0.3em 0.5em;
+        width: 150px;
+      }
+	  fieldset label {
+	  	margin-right: 0.4em;
+	    text-align: right;
+	    font-weight: bold;
+	    line-height: 2;
+	  }
+
+	  .field input {
+	    width:175px;
+        background-color: transparent;
+        border: 1px solid #FCFDFD;
+        color: #222;
+        padding-left: 1px;
+	  }
+	  .field input:focus {
+	    background-color: #FFC;
+	    border: 1px solid silver !important;
+	    outline: none;
+	  }
+      .field:hover > input {
+        border: 1px solid #D6EBFF;
+      }
+      .field.readOnly:hover > input {
+        border: 1px solid #FCFDFD;
+      }
+
+	  .field p.editable {
+	  	width: 70%;
+        border: 1px solid #FCFDFD;
+	  	display: inline-block;
+	  	padding-left: 1px;
+	  	padding-top: 4px;
+	  	margin: 0;
+	  	max-width: 900px;
+	  	min-height: 25px;
+	  }
+	  .field p.editable:focus {
+	    background-color: #FFC;
+	    border: 1px solid silver !important;
+	    outline: none;
+	  }
+	  .field:hover > p.editable {
+        border: 1px solid #D6EBFF;
+	  }
+      .field.readOnly:hover > p.editable {
+        border: 1px solid #FCFDFD;
+      }
+
+      .twoColumn,
+      .fourColumn {
+        display: table;
+        width: 100%;
+      }
+      .twoColumn .row,
+      .fourColumn .row {
+        display: table-row;
+      }
+      .twoColumn .col1,
+      .twoColumn .col2  {
+        display: table-cell;
+        vertical-align: top;
+        min-height: 30px;
+        padding: 0.5em;
+      }
+      .twoColumn .col1 {
+        width: 18%;
+      }
+      .twoColumn .col2 {
+        width: 82%;
+      }
+
+      .fourColumn .col1,
+      .fourColumn .col2,
+      .fourColumn .col3,
+      .fourColumn .col4 {
+        display: table-cell;
+        vertical-align: top;
+        min-height: 30px;
+        padding: 0.5em;
+      }
+      .fourColumn .col1,
+      .fourColumn .col3 {
+        width: 18%;
+      }
+      .fourColumn .col2,
+      .fourColumn .col4 {
+        width: 32%;
+        padding-top: 9px;
+        padding-left: 10px;
+      }
+
+	  .buttonsContainer {
+		width: 50%;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+	  }
+      .buttonsContainer button {
+        width: 60px
+      }
+
+	  .wordwrap {
+	    white-space: pre-wrap;
+   		white-space: -moz-pre-wrap;
+   		white-space: -pre-wrap;
+   		white-space: -o-pre-wrap;
+   		word-wrap: break-word;
+	  }
+
+      .editImg {
+      	float: right;
+      	margin-top: 5px;
+      	margin-right: 20px;
+      	visibility: hidden;
+      }
+      #sprintInfo .editImg {
+        margin-top: 10px;
+      }
+
+	  .subHeaderTheme {
+	  	background:#1797c0;
+	  }
+
+
+	</style>
+
+	<input type="hidden" id="sprintId" name="sprintId" value="{!sprint.Id}" />
+	<input type="hidden" id="currentPage" name="sprintId" value="{!$CurrentPage.Name}" />
+	<input type="hidden" id="scrumTeamId" name="sprintId" value="{!sprint.Scrum_Team__r.Id}" />
+
+	<div class="buttonsContainer">
+		<button name="editButton">Edit</button>
+		<button name="deleteButton">Delete</button>
+		<button name="cloneButton">Clone</button>
+	</div>
+
+	<div id="sprintDetails_form" data-type="sprint">
+		<fieldset id="sprintDetail" class="ui-widget ui-widget-content ui-corner-all">
+			<legend class="ui-widget-header ui-corner-all subHeaderTheme">Sprint Details</legend>
+
+			<div class="fourColumn">
+			  <apex:form >
+			  <div class="row">
+			      <label class="col1">Name</label>
+			      <div class="col2 field ui-corner-all"><input type="text" id="sprintname" name="sprint.name" value="{!sprint.Name}" class="ui-widget ui-corner-all"/><img class="editImg" src="{!URLFOR($Resource.IconEdit)}" /></div>
+
+                  <label class="col3">Start Date</label>
+                  <div class="col4 field readOnly">
+                    <input type="text" id="startDate" name="sprint.startdate" value="{!sprint.Start_Date__c}" disabled="disabled" class="readOnly"/>
+                    <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" styleClass="targetStartDateFormatted" style="display:none"><apex:param value="{!sprint.Start_Date__c}" /></apex:outputText>
+                  </div>
+              </div>
+
+              <div class="row">
+			      <label class="col1">Scrum Team</label>
+			      <div class="col2 field ui-corner-all" id="scrumTeamSpan">
+			        <a href="/{!sprint.Scrum_Team__r.Id}" id="scrumTeamLink">{!sprint.Scrum_Team__r.Name}</a>
+			        <input id="scrumTeamEditor" type="text" value="" data-scrumteamid="{!sprint.Scrum_Team__r.Id}" class="ui-widget ui-corner-all" style="display: none"/><img class="editImg" id="edit1" src="{!URLFOR($Resource.IconEdit)}" />
+			      </div>
+
+
+                  <label class="col3">End Date</label>
+                  <div class="col4 field readOnly">
+                    <input type="text" id="endDate" value="{!sprint.End_Date__c}" disabled="disabled" class="readOnly"/>
+                    <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" styleClass="targetEndDateFormatted" style="display:none"><apex:param value="{!sprint.End_Date__c}" /></apex:outputText>
+                  </div>
+              </div>
+
+              <div class="row">
+			      <label class="col1">Hours in a work day</label>
+			      <div class="col2 field ui-corner-all"><input id="hoursInWorkDay" name="sprint.hoursinworkday" type="text" value="{!sprint.Hours_in_a_work_day__c}" class="ui-widget ui-corner-all"/><img class="editImg" src="{!URLFOR($Resource.IconEdit)}" /></div>
+
+                  <label class="col3">Total workdays</label>
+                  <div class="col4 field readOnly">
+                    <input id="totalworkdays" type="text" value="{!sprint.Total_Workdays__c}" disabled="disabled" class="readOnly"/>
+                  </div>
+			  </div>
+			  <div class="row">
+			  	<label class="col1">Projected Velocity</label>
+			  	<div class="col2 field ui-corner-all">
+			  		<input id="projectedVelocity" name="sprint.Projected_Velocity__c" type="text" value="{!sprint.Projected_Velocity__c}" class="ui-widget ui-corner-all" /><img class="editImg" src="{!URLFOR($Resource.IconEdit)}" />
+			  	</div>
+                
+                <label class="col3">Definition of Ready Met</label>
+                <div class="col4 readOnly">
+                	<apex:inputCheckbox selected="{!sprint.Definition_of_Ready_Met__c}" value="{!sprint.Definition_of_Ready_Met__c}" disabled="true"/>
+                </div>
+			  </div>
+			  <div class="row">
+			  	<label class="col1"></label>
+			  	<div class="col2 field ui-corner-all readOnly">
+			  		
+			  	</div>
+                        
+                <label class="col3">Definition of Done Met</label>
+                <div class="col4 readOnly">
+                	<apex:inputCheckbox selected="{!sprint.Definition_of_Done_Met__c}" value="{!sprint.Definition_of_Done_Met__c}" disabled="true"/>
+                </div>
+			  </div>
+			  </apex:form>
+			</div>
+		</fieldset>
+
+		<fieldset id="sprintInfo" class="ui-widget ui-widget-content  ui-corner-all">
+			<legend class="ui-widget-header ui-corner-all subHeaderTheme">Other Information</legend>
+
+			<div class="twoColumn">
+			  <div class="row">
+			    <label class="col1">Goals</label>
+			    <div class="col2 field ui-corner-all"><p id="goals" class="editable ui-widget ui-corner-all wordwrap" name="sprint.goals" contenteditable="false">{!sprint.Goals__c}</p></div>
+			  </div>
+			  <div class="row">
+			    <label class="col1">Risks</label>
+			    <div class="col2 field ui-corner-all"><p id="risks" class="editable ui-widget ui-corner-all wordwrap" contenteditable="false">{!sprint.Risks__c}</p></div>
+			  </div>
+			  <div class="row">
+			    <label class="col1">Retrospective</label>
+			    <div class="col2 field ui-corner-all">
+                    <p id="retrospective" class="editable ui-widget ui-corner-all wordwrap" contenteditable="false">
+                        <apex:outputField value="{!sprint.Retrospective__c}"/>
+                    </p>
+               	</div>
+			  </div>
+			</div>
+
+		</fieldset>
+	</div>
+
+
+	<div class="buttonsContainer">
+		<button name="editButton">Edit</button>
+		<button name="deleteButton">Delete</button>
+		<button name="cloneButton">Clone</button>
+
+	</div>
+
+
+
+	<script type="text/javascript" src="{!URLFOR($Resource.form2js)}" />
+	<script type="text/javascript" src="{!URLFOR($Resource.form2JSON_Object)}" />
+	<script type="text/javascript" src="{!URLFOR($Resource.json2)}" />
+
+	<script>
+
+        var sprintDetail = {
+           scrumTeamNameList: jQuery.parseJSON("{!JSENCODE(ScrumTeamsNameList)}")
+        };
+
+        (function($) {
+
+        	//override the error notifications since the page does not
+        	//contain the activity button
+            window.errorNotification = function(error, message) {
+                var errorMsg = null;
+                if(typeof error === 'string') {
+                    errorMsg = error;
+                } else if(error.message) {
+                    errorMsg = error.message;
+                }
+
+                if(typeof message === 'undefined') {
+                    message = 'Error occurred:';
+                }
+
+                $('<div>')
+                    .attr({title: 'Error Occurred'})
+                    .append($('<div>').text(message))
+                    .append($('<div>').text(errorMsg))
+                    .appendTo(document.body)
+                    .dialog({
+                        modal: true,
+                        close: function(event, ui) {
+                            $(this).remove();
+                        },
+                        buttons: {
+                        	OK: function() {
+                                $(this).dialog('close')
+                            }
+                        }
+                    });
+
+            };
+
+
+		document.execCommand("styleWithCSS",false, false);
+		document.execCommand("insertBrOnReturn", false, false);
+
+	    	var sprintId = '{!JSENCODE(sprint.Id)}';
+
+	    	$("#endDate").val($(".targetEndDateFormatted").text());
+	    	$("#startDate").val($(".targetStartDateFormatted").text());
+
+
+			function saveSprint(sobject, options) {
+                var handleOptions = {
+                    success: function(data) {
+                        if(options && options.success) {
+                            options.success(data);
+                        }
+
+                        //the save sprint method will always send back a last modified date so save it in the dom
+                        var lastModifiedDateValue = (new Date(data.LastModifiedDate)).toString()
+                        $('[data-type="sprint"]').data('lastmodifieddate', lastModifiedDateValue).attr('data-lastmodifieddate', lastModifiedDateValue);
+                    }
+                };
+
+                if(options && options.fail) {
+                    handleOptions.fail = options.fail;
+                }
+
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_SprintDetailController.saveSprint}', sobject, handle(handleOptions));
+			}
+
+	    	//**button events**//
+	    	$("button[name=editButton]").click(function() {
+			   window.location = "https://" + location.hostname + "/" + sprintId + "/e?retURL=/apex/{!$CurrentPage.Name}?id=" + sprintId;
+			});
+
+			$("button[name=cloneButton]").click(function() {
+			   window.location = "https://" + location.hostname + "/" + sprintId + "/e?clone=1";
+			});
+
+			$("button[name=deleteButton]").click(function() {
+
+			   if (confirm("Are you sure?")) {
+			   		var msgId = startNotification('Deleting...');
+					Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_SprintDetailController.deleteSprint}', sprintId, function(result, event) {
+						if (event.status) {
+							//redirect
+							endNotification(msgId);
+							window.location = '{!ListViewLink}';
+						} else {
+							errorNotification(event, 'Error while trying to delete the sprint.');
+						}
+					});
+			   }
+			});
+
+
+			var originalSprintName = $("#sprintname").val();
+			var originalHoursinDay = $("#hoursInWorkDay").val();
+			var originalRisks = $("#risks").html();
+			var originalGoals = $("#goals").html();
+			var originalretrospective = $("#retrospective").html();
+			var originalworkdays = $("#totalworkdays").val();
+			var originalProjectedVelocity = $("#projectedVelocity").val();
+
+
+			//**make sure the hours in day is an integer**//
+			if(originalHoursinDay.indexOf(".") > 0) {
+				$("#hoursInWorkDay").val(originalHoursinDay.substring(0,originalHoursinDay.indexOf(".")));
+
+				originalHoursinDay = $("#hoursInWorkDay").val();
+
+			}
+
+			//**make sure the workdays is an integer**//
+			if(originalworkdays.indexOf(".") > 0) {
+				$("#totalworkdays").val(originalworkdays.substring(0,originalworkdays.indexOf(".")));
+
+				originalworkdays = $("#totalworkdays").val();
+
+			}
+
+			//**make sure projectedVelocity is an integer**//
+			if(originalProjectedVelocity.indexOf(".") > 0) {
+				$("#projectedVelocity").val(originalProjectedVelocity.substring(0,originalProjectedVelocity.indexOf(".")));
+
+				originalProjectedVelocity = $("#projectedVelocity").val();
+
+			}
+
+			//**field events**//
+
+            $("div.field").not('.readOnly')
+            .mouseenter(function() {
+				$(this).css("background-color","#D6EBFF");
+				$(this).children("img").css("visibility", "visible");
+			})
+            .mouseleave(function() {
+
+				$(this).css("background-color","inherit");
+				$(this).children("img").css("visibility", "hidden");
+
+			})
+            .click(function() {
+
+                //if the field is the scrum team field, we need to show the editor instead
+				if ($(this).children("a").attr("id") == "scrumTeamLink") {
+
+					$(this).children("a").css("display", "none");
+					$("#scrumTeamEditor").css("display", "inline");
+					$("#scrumTeamEditor").val($("#scrumTeamLink").text());
+					$("#scrumTeamEditor").focus();
+
+				} else {
+				    //inject a space in the paragraph if it is empty
+					if($(this).children("p.editable").html() == "") {
+						$(this).children("p.editable").html(" ");
+					}
+					$(this).children().focus();
+				}
+
+			});
+
+
+			//**Sprint Name**//
+
+			$("#sprintname").blur(function() {
+
+				var sprintName = $(this).val();
+
+				if (sprintName.length == 0) {
+					$(this).text(originalSprintName);
+				}
+				else if (originalSprintName != sprintName) {
+
+					startNotification('Saving...');
+
+					saveSprint({Id:sprintId, Name:$(this).val()},{
+				   		success: function(data) {
+
+							originalSprintName = sprintName;
+							endNotification();
+
+						},
+						fail: function(event){
+                            errorNotification(event, 'Error while saving new sprint name: ' + event.message);
+						}
+
+					});
+
+				}
+
+			});
+
+
+			//**Scrum Team**//
+            $("#scrumTeamLink").click(function(e) {
+                e.stopPropagation();
+                window.location = $(this).attr("href");
+            });
+
+			$("#scrumTeamEditor").blur(function() {
+
+				$("#scrumTeamLink").css("display", "inline-block");
+				$("#scrumTeamEditor").css("display", "none");
+
+			}).autocomplete({
+                source: sprintDetail.scrumTeamNameList,
+                select: function(event, ui) {
+                    var selectedTeam = ui.item;
+
+                    $("#scrumTeamLink")
+                        .text(selectedTeam.Name)
+                        .attr("href", "/" + selectedTeam.Id)
+                        .css("display", "inline-block")
+                        .focus();
+
+                    $("#scrumTeamEditor")
+                        .val(selectedTeam.Name)
+                        .data("scrumteamid", selectedTeam.Id)
+                        .css("display", "none");
+
+                    startNotification('Saving...');
+                    saveSprint({Id:sprintId, Scrum_Team__c:selectedTeam.Id},{
+                        success: function(data) {
+                            endNotification();
+                        },
+                        fail: function(event){
+                            //TODO: revert the change if fail
+                            errorNotification(event, 'Error while saving new scrum team: ' + event.message);
+                        }
+                    });
+                },
+                focus: function(event, ui) {
+                    return false;
+                }
+            });
+
+			//**Hours in Work Day**//
+
+			 $("#hoursInWorkDay").keypress(function(e) {
+	            if (e.which == 46 && $(this).val().indexOf('.') >= 0) { // prevent multiple decimals
+	                e.preventDefault();
+	                return false;
+	            }
+			   	return restrictInputToNumberOnly(e);
+			 })
+
+
+			$("#hoursInWorkDay").blur(function() {
+
+				var hoursInDay = $(this).val();
+
+				if (hoursInDay.length == 0) {
+					$(this).text(originalHoursinDay);
+				}
+				else if (originalHoursinDay != hoursInDay) {
+
+					startNotification('Saving...');
+
+					saveSprint({Id:sprintId, Hours_in_a_work_day__c:$(this).val()},{
+
+						success: function(data){
+
+							originalHoursinDay = hoursInDay;
+							endNotification();
+
+						},
+						fail: function(event){
+
+							$("#hoursInWorkDay").val(originalHoursinDay);
+							errorNotification(event, 'Error while saving new Hours in a work day');
+
+
+						}
+
+					});
+
+				}
+
+			});
+
+
+			//**Projected Velocity**//
+
+			 $("#projectedVelocity").keypress(function(e) {
+	            if (e.which == 46 && $(this).val().indexOf('.') >= 0) { // prevent multiple decimals
+	                e.preventDefault();
+	                return false;
+	            }
+			   	return restrictInputToNumberOnly(e);
+			 })
+
+
+			$("#projectedVelocity").blur(function() {
+
+				var projectedVelocity = $(this).val();
+
+				if (projectedVelocity.length == 0) {
+					$(this).text(originalProjectedVelocity);
+				}
+				else if (originalProjectedVelocity != projectedVelocity) {
+
+					startNotification('Saving...');
+
+					saveSprint({Id:sprintId, Projected_Velocity__c:$(this).val()},{
+
+						success: function(data){
+
+							originalProjectedVelocity = projectedVelocity;
+							endNotification();
+
+						},
+						fail: function(event){
+
+							$("#projectedVelocity").val(originalProjectedVelocity);
+							errorNotification(event, 'Error while saving new Projected Velocity');
+
+
+						}
+
+					});
+
+				}
+
+			});
+
+			//**risks**//
+			$("#risks").blur(function() {
+				var risks = $.trim($(this).text());
+				$(this).text(risks);
+
+				if (originalRisks != risks) {
+					startNotification('Saving...');
+					saveSprint({Id:sprintId, Risks__c:risks},{
+						success: function(data) {
+							originalRisks = risks;
+							endNotification();
+						},
+						fail: function(event){
+							$("#risks").text(originalRisks);
+							errorNotification(event, 'Error while saving Risks: ' + event.message);
+						}
+					});
+				}
+			});
+
+			//**goals**//
+			$("#goals").blur(function() {
+				var goals = $.trim($(this).text());
+				$(this).text(goals);
+
+				if (originalGoals != goals) {
+					startNotification('Saving...');
+					saveSprint({Id:sprintId, Goals__c:goals},{
+						success: function(data) {
+							originalGoals = goals;
+							endNotification();
+						},
+						fail: function(event) {
+							$("#goals").text(originalGoals);
+							errorNotification(event, 'Error while saving Goals: ' + event.message);
+						}
+					});
+				}
+			});
+
+			//**retrospective**//
+			$("#retrospective").blur(function() {
+				var retrospective = $.trim($(this).html());
+                //replace <br> with /n
+                retrospective = retrospective.replace(/<br>/g, '\n');
+                //replace all other markup
+				retrospective = retrospective.replace(/<(?:.|\n)*?>/gm, '');
+                
+                $(this).html(retrospective);
+
+				if (originalretrospective != retrospective) {
+					startNotification('Saving...');
+					saveSprint({Id:sprintId, Retrospective__c:retrospective},{
+						success: function(data) {
+							originalretrospective = retrospective;
+							endNotification();
+						},
+						fail: function(event){
+							$("#retrospective").text(originalretrospective);
+							errorNotification(event, 'Error while saving Retrospective: ' + event.message);
+						}
+					});
+				}
+			});
+
+	    })(jQuery);
+
+	    function getTeamById(id, options) {
+            var scrumTeamOption = null;
+
+            //try to get the team information from the cached list of teams
+            for(var i=0; i<sprintDetail.scrumTeamNameList.length; i++) {
+                var obj = sprintDetail.scrumTeamNameList[i];
+                if (obj.value == id) {
+                    scrumTeamOption = obj;
+                    break;
+                }
+            }
+
+            if(scrumTeamOption && options.success) {
+                //since scrum team option is not an sobject, we should convert it
+                var sobject = {};
+                sobject.Id = scrumTeamOption.value;
+                sobject.Name = scrumTeamOption.label;
+                options.success(sobject);
+            } else if(options.fail) {
+                options.fail();
+            }
+	    }
+
+	    /**
+	     * formats the date in MM/dd/yyyy format
+	     */
+	    function formatDate(value) {
+	       var pad = function(value) {
+	           if(value < 10) {
+	               return '0' + value;
+	           } else {
+	               return value.toString();
+	           }
+	       }
+
+	       return pad(value.getMonth() + 1) + '/' + pad(value.getDate()) + '/' + value.getFullYear();
+	    }
+
+        $(document).bind('cometd-init', function(event, cometd){
+             cometd.subscribe('/topic/SprintUpdates', function(msg){
+
+                var thisSprintId = '{!sprint.Id}';
+                var sprint = msg.data.sobject;
+
+                if (sprint && thisSprintId == sprint.Id) {
+					Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_SprintDetailController.getSprintById}', sprint.Id, function(sprint, event) {
+						if (event.status) {
+							//ignore updates when the state is the same
+                            var currentLastModifiedDate = ($('[data-type="sprint"]').data('lastmodifieddate'))? new Date($('[data-type="sprint"]').data('lastmodifieddate')) : null;
+                            if(currentLastModifiedDate && sprint.LastModifiedDate && new Date(sprint.LastModifiedDate).getTime() <= currentLastModifiedDate.getTime()) {
+                                console.log('Ignoring streamed sprint because the client is already at this version or newer');
+                                return;
+                            }
+
+                            //**update  Sprint Name**//
+                            if(sprint.Name) {
+                                $("div.content h2.pageDescription").html(sprint.Name);
+                                $("#sprintname").val(sprint.Name);
+                            }
+
+                            //get the team based on the ID that is passed in
+                            if(sprint.Scrum_Team__c) {
+                                getTeamById(sprint.Scrum_Team__c, {
+                                    success: function(scrumTeam) {
+                                        //**update the Scrum Team**//
+                                        $("#scrumTeamLink").text(scrumTeam.Name);
+                                        $("#scrumTeamLink").attr("href", "/" + scrumTeam.Id);
+                                        $("#scrumTeamEditor").val(scrumTeam.Name);
+                                        $("#scrumTeamEditor").data("scrumteamid", scrumTeam.Id);
+                                    },
+                                    fail: function(e) {
+                                        console.log('No scrum team found with the ID of ' + sprint.Scrum_Team__c);
+                                        errorNotification(e, 'Unable to find team associated to ID ' + sprint.Scrum_Team__c);
+                                    }
+                                });
+                            }
+
+                            //**update Hours in day**//
+                            if(sprint.Hours_in_a_work_day__c) {
+                                $("#hoursInWorkDay").val(sprint.Hours_in_a_work_day__c);
+                            }
+
+                            if(sprint.Start_Date__c) {
+                                var startDate = new Date(sprint.Start_Date__c);
+                                var formattedStartDate = formatDate(startDate);
+                                $('#startDate').val(formattedStartDate);
+                                $('.targetStartDateFormatted').text(formattedStartDate);
+                            }
+
+                            if(sprint.End_Date__c) {
+                                var endDate = new Date(sprint.End_Date__c);
+                                var formattedEndDate = formatDate(endDate);
+                                $('#endDate').val(formattedEndDate);
+                                $('.targetEndDateFormatted').text(formattedEndDate);
+                            }
+
+                            if(sprint.Total_Workdays__c) {
+                                $('#totalworkdays').val(sprint.Total_Workdays__c);
+                            }
+
+                            if(sprint.Goals__c) {
+                                $('#goals').text(sprint.Goals__c);
+                            }
+
+                            if(sprint.Risks__c) {
+                                $('#risks').text(sprint.Risks__c);
+                            }
+
+                            if(sprint.Retrospective__c) {
+                                $('#retrospective').text(sprint.Retrospective__c);
+                            }
+
+                            if(sprint.LastModifiedBy && sprint.LastModifiedBy.Id != '{!$User.Id}') {
+                                showNotification((sprint.LastModifiedBy.FirstName || sprint.LastModifiedBy.Name) + ' updated sprint ' + sprint.Name);
+                            }
+                            console.log('Sprint Updated: ' + sprint.Id);
+						}
+					},{ escape:false });
+                }
+
+            });
+        });
+	</script>
+
+</apex:component>

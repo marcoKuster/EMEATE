@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Toggle task visibility">
+    <aura:attribute name="state" type="String"/>
+    <aura:attribute name="workId" type="String"/>
+</aura:event>

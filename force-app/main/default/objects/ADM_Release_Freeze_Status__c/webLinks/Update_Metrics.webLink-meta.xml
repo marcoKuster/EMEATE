@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Metrics</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Update Metrics</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)}
+
+var chatterValue = sforce.apex.execute(&quot;ADM_ReleaseFreezeUtils&quot;,&quot;updateSingleDevelopmentCycleStatus&quot;, {rfrecord:&quot;{!ADM_Release_Freeze_Status__c.Id}&quot;});
+window.location.reload();</url>
+</WebLink>

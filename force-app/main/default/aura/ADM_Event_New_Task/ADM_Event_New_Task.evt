@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Create a new task">
+    <aura:attribute name="workId" type="String"/>
+    <aura:attribute name="taskStatus" type="String"/>
+</aura:event>

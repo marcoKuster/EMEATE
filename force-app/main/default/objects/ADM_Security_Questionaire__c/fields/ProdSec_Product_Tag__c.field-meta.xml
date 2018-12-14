@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProdSec_Product_Tag__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Product tag for the ProdSec team that this security questionnaire is related to</description>
+    <externalId>false</externalId>
+    <label>ProdSec Product Tag</label>
+    <referenceTo>ADM_Product_Tag__c</referenceTo>
+    <relationshipLabel>Security Questionnaires</relationshipLabel>
+    <relationshipName>Security_Questionnaires</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

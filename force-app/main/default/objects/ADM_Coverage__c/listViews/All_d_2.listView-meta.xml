@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_d_2</fullName>
+    <columns>NAME</columns>
+    <columns>Scrum_Team__c</columns>
+    <columns>Target_Coverage__c</columns>
+    <columns>Actual_Coverage__c</columns>
+    <columns>Coverage_Gap__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

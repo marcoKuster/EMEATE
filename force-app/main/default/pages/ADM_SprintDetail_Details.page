@@ -1,0 +1,5 @@
+<apex:page standardController="ADM_Sprint__c" extensions="ADM_SprintDetailExtension" showHeader="true" sidebar="false" id="sprintDetails" action="{!ensurePushTopics}" showChat="true" title="{!ADM_Sprint__c.Name}">
+<c:ADM_Sprint_Tabs sprint="{!ADM_Sprint__c}" selectedTabId="details">
+    <c:ADM_Sprint_Details sprint="{!ADM_Sprint__c}" />
+</c:ADM_Sprint_Tabs>
+</apex:page>

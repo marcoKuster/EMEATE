@@ -1,0 +1,39 @@
+<aura:component >
+    <aura:attribute name="workData" type="String"/>
+
+    <aura:handler event="c:ADM_Open_Modal" action="{!c.openModal}"/>
+    <aura:handler name="onSaveSuccess" event="force:recordSaveSuccess" action="{!c.handleSaveSuccess}"/>
+
+    <aura:registerEvent name="recordSave" type="force:recordSave"/>
+    
+  <div aura:id="slds-modal" aria-hidden="false" role="dialog" class="slds-modal">
+      <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">{!(v.workData != null ? 'Edit' : 'Create')} Work</h2>
+            <lightning:buttonIcon iconName="utility:close" class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.closeModal}" variant="bare" alternativeText="Close" size="medium"/>
+          </div>
+          <div class="slds-modal__content">
+            <!-- use v.body when dynamically loading force:recordEdit component -->
+            <!--{!v.body}-->
+            <div aura:id="recordEditWrapper" class="slds-hide">
+            	<force:recordEdit aura:id="recordEdit" recordId="{!v.workData}"/>
+            </div>
+
+            <div class="spinner-container">
+            	<div role="status" class="slds-spinner slds-spinner--medium slds-spinner--brand">
+                	<span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+        		</div>
+      		</div>
+          </div>
+          <div class="slds-modal__footer">
+            <div class="slds-x-small-buttons--horizontal">
+                <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeModal}">Cancel</lightning:button>
+                <lightning:button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.save}">Save</lightning:button>
+            </div>
+          </div>
+      </div>
+  </div>
+  <div aura:id="slds-backdrop" class="slds-backdrop"></div>
+</aura:component>

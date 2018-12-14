@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ScrumRolloutTeamThemes</fullName>
+    <columns>NAME</columns>
+    <columns>Description__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>startsWith</operation>
+        <value>SRT</value>
+    </filters>
+    <label>Scrum Rollout Team Themes</label>
+</ListView>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Use_Prioritizer__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to determine whether or not a work record should be shown on the Work Prioritizer page</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to determine whether or not a work record should be shown on the Work Prioritizer page</inlineHelpText>
+    <label>Include in Prioritize View</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

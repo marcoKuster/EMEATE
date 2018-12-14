@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>One_6Week_Response_Required</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT(EA_6Week_Risk_Response__c) &amp;&amp; NOT(EA_6Week_NotReady_Response__c) &amp;&amp; NOT(EA_6Week_Ready_Response__c)</errorConditionFormula>
+    <errorMessage>Choose one of the responses in the 6-8 Week Overall Assessment section.</errorMessage>
+</ValidationRule>

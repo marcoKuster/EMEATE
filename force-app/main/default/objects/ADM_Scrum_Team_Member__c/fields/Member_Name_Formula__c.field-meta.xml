@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Member_Name_Formula__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( OR ( $RecordType.Name = &#39;Internal&#39;, $RecordType.Name = &#39;&#39; ), Member_Name__r.FirstName &amp; &#39; &#39; &amp; Member_Name__r.LastName,
+IF ( $RecordType.Name = &#39;External&#39;, &#39;(External) &#39; , &#39;(Planned)&#39; ) &amp; Member_Name_Text__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

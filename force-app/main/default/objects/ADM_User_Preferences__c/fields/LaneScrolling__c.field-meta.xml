@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LaneScrolling__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Boolean value to set User&#39;s preference on Kanban Lane scrolling</description>
+    <externalId>false</externalId>
+    <label>LaneScrolling</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

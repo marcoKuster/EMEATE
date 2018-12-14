@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_Negative</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+Number_of_Executions__c  &lt;= 0 ,
+OR ( ISPICKVAL( Status__c , &quot;Passed&quot;) , ISPICKVAL( Status__c , &quot;Failed&quot;) )
+)</errorConditionFormula>
+    <errorDisplayField>Number_of_Executions__c</errorDisplayField>
+    <errorMessage>Number of Executions has to be &gt;= 1 for Passed or Failed status and &gt;= 0 for others!</errorMessage>
+</ValidationRule>

@@ -1,0 +1,179 @@
+<aura:component implements="force:appHostable" controller="ADM_SprintVirtualWallController">
+     <ltng:require scripts="{!$Resource.ADM_Util}"/>
+     <ltng:require scripts="{!$Resource.ADM_SprintShared_Resource}"/>
+
+    <aura:attribute name="sidebar" type="String" default=""/>
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="sprintCommitment" type="Object"/>
+    <aura:attribute name="actualVelocity" type="Integer" />
+    <aura:attribute name="plannedVelocity" type="Integer" />
+    <aura:attribute name="showSpinner" type="Boolean"/>
+    <aura:attribute name="numVisibleWork" type="Integer"/>
+    <aura:attribute name="filterString" type="String"/>
+    <aura:attribute name="users" type="Object[]"/>
+
+    <aura:registerEvent name="openModal" type="c:ADM_Open_Modal"/>
+    <aura:registerEvent name="toggleTasks" type="c:ADM_Toggle_TaskView"/>
+    <aura:registerEvent name="toggleSidebar" type="c:ADM_Event_Toggle_Sidebar"/>
+    <aura:registerEvent name="filterWork" type="c:ADM_Event_Filter_Work"/>
+    <aura:registerEvent name="navUrlEvent" type="force:navigateToURL"/>
+    <aura:registerEvent name="navCmpEvent" type="force:navigateToComponent"/>
+    <aura:registerEvent name="updateUserPref" type="c:ADM_Event_Update_User_Pref"/>
+
+    <aura:handler event="c:ADM_Event_Show_Spinner" action="{!c.handleShowSpinner}"/>
+    <aura:handler event="c:ADM_Event_Update_ActualVelocity" action="{!c.handleUpdateActualVelocity}"/>
+    <aura:handler event="c:ADM_Event_Update_PlannedVelocity" action="{!c.handleUpdatePlannedVelocity}"/>
+    <aura:handler event="c:ADM_Event_SprintData_Initialized" action="{!c.handleSprintDataInitialized}"/>
+    <aura:handler event="c:ADM_Event_Filter_Work" action="{!c.handleUpdatedFilters}"/>
+
+    <div class="slds-anchor slds-border--bottom">
+        <div class="slds-grid slds-p-around--medium slds-theme--shade">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media media--rec-home">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="custom:custom95" size="large" alternativeText="Sprint Wall"/>
+                    </div>
+                    <div>
+                        <p class="slds-text-heading--label">Sprint Wall</p>
+                        <div class="slds-grid slds-grid--vertical-align-end">
+                            <h1 class="slds-text-heading--medium slds-media--rec-home__title slds-truncate">{!v.sprintData.sprintInfo.Name}</h1>
+                            <span class="{! not(and(v.sprintData, v.sprintData.sprintInfo, v.sprintData.sprintInfo.Name)) ? 'sprint-preload-placeholder sprint-preload-name slds-m-top--medium' : 'slds-hide'}" tabindex="-1"></span>
+                            <div class="slds-col slds-shrink-none slds-align-bottom slds-m-left--small">
+                                <lightning:buttonMenu alternativeText="Settings" iconName="utility:settings" onselect="{!c.menuNavigation}">
+                                    <lightning:menuItem label="Sprint Detail" value="{!v.sprintData.sprintInfo.Id}" class="slds-border--bottom" iconName="utility:summarydetail"/>
+                                    <lightning:menuItem label="All Sprints" value="{!v.sprintData.sprintInfo.Id}" class="slds-border--bottom" iconName="utility:list"/>
+                                    <lightning:menuItem label="Previous Sprint" value="{!v.sprintData.previousSprintId}" disabled="{!empty(v.sprintData.previousSprintId)}" class="slds-border--bottom" iconName="utility:back"/>
+                                    <lightning:menuItem label="Next Sprint" value="{!v.sprintData.nextSprintId}" disabled="{!empty(v.sprintData.nextSprintId)}" class="slds-border--bottom" iconName="utility:forward"/>
+                                </lightning:buttonMenu>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-grid--align-spread slds-m-left--xx-large">
+                        <div class="slds-m-right--large">
+                            <p class="slds-text-title slds-truncate" title="# of closed points in this sprint">Actual Velocity</p>
+                            <p class="{!'slds-text-heading--small slds-text-align_center ' + (v.actualVelocity.length > 1 ? 'adm-data-len-2' : '')}">{!v.actualVelocity || 0}</p>
+                        </div>
+    
+                        <div class="slds-m-right--large">
+                            <p class="slds-text-title slds-truncate" title="Total # of points currently in this sprint">Planned Velocity</p>
+                            <p class="{!'slds-text-heading--small slds-text-align_center ' + (v.plannedVelocity.length > 1 ? 'adm-data-len-2' : '')}">{!v.plannedVelocity || 0}</p>
+                        </div>
+
+                        <aura:if isTrue="{!(v.sprintData.sprintWork.length > 0 &amp;&amp; ((v.sprintData.sprintInfo.Committed_Items__c > 0 || v.sprintCommitment.numOfItems > 0) || v.sprintData.sprintInfo.Days_Remaining__c != 'CLOSED'))}">
+                            <div class="slds-m-right--large">
+                                <p class="slds-text-title slds-truncate" title="# of points committed to in this sprint">Commitment</p>
+                                <p class="{!(v.sprintCommitment.numOfItems > 0 ? 'slds-text-heading--small slds-text-align_center' : 'adm-data-len-2')}">
+                                    <aura:if isTrue="{!v.sprintCommitment.numOfItems > 0}">
+                                        <aura:if isTrue="{!v.sprintData.sprintInfo.Scrum_Team__r.Velocity_Type__c == 'Record Count'}">
+                                            <ui:outputURL label="{!v.sprintCommitment.numOfItems || '0'}" click="{!c.goToScopeChangeReport}" class="slds-text-heading--small slds-text-align_center"/>
+                                            <aura:set attribute="else">
+                                                <ui:outputURL label="{!v.sprintCommitment.storyPoints || '0'}" click="{!c.goToScopeChangeReport}" class="slds-text-heading--small slds-text-align_center"/>
+                                            </aura:set>
+                                        </aura:if>
+
+                                        <aura:set attribute="else">
+                                            <ui:outputURL label="Commit" click="{!c.setSprintCommitment}" class="{!v.sprintCommitment ? 'slds-show' : 'slds-hide'}"/>
+                                        </aura:set>
+                                    </aura:if>
+                                </p>
+                            </div>
+                        </aura:if>
+
+                        <div class="{!'slds-m-right--large ' + (v.sprintData.sprintInfo.Days_Remaining__c.length > 2 ? 'adm-text-data' : '')}">
+                            <p class="slds-text-title slds-truncate">{!$Label.c.ADM_Sprint_VirtualWall_Header_Days_Left}</p>
+                            <p class="slds-text-heading--small slds-text-align_center">{!v.sprintData.sprintInfo.Days_Remaining__c}</p>
+                            <div class="{! not(and(v.sprintData, v.sprintData.sprintInfo, v.sprintData.sprintInfo.Days_Remaining__c)) ? 'sprint-preload-placeholder sprint-preload-remaining slds-m-top--medium' : 'slds-hide'}" tabindex="-1"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <aura:if isTrue="{!v.showSpinner}">
+                <div class="slds-col slds-no-flex slds-align-bottom slds-is-relative slds-m-right--large slds-m-bottom--medium">
+                    <div role="status" class="slds-spinner slds-spinner--brand slds-spinner--x-small">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+
+            <div class="slds-col slds-no-flex slds-align-bottom">
+                <div class="slds-button-group" role="group">
+                    <div id="createWorkDropDown" class="slds-dropdown-trigger slds-dropdown-trigger--click">
+                        <button id="btnCreateNewWork" class="slds-button slds-button--neutral" onclick="{!c.toggleNewWorkDropDown}" onblur="{!c.hideNewWorkDropDown}">New <lightning:icon iconName="utility:down" size="xx-small" alternativeText="Create new work"/>
+                        </button>
+
+                        <div class="slds-dropdown slds-dropdown--left new-work-dropdown">
+                            <ul class="slds-dropdown__list" role="menu">
+                                <li class="slds-dropdown__item slds-border--bottom" role="presentation">
+                                    <lightning:button value="Bug" label="Bug" onclick="{!c.createWork}" class="slds-p-horizontal--x-small"  variant="base" iconName="custom:custom34"/>
+                                </li>
+                                <li class="slds-dropdown__item slds-border--bottom" role="presentation">
+                                    <lightning:button value="User Story" label="User Story" onclick="{!c.createWork}" class="slds-p-horizontal--x-small"  variant="base" iconName="custom:custom55"/>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <lightning:button value="Investigation" label="Investigation" onclick="{!c.createWork}" class="slds-p-horizontal--x-small"  variant="base" iconName="custom:custom39"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="slds-col slds-no-flex slds-align-bottom slds-m-left--small">
+                <div id="toggleTaskGroup" class="slds-button-group" role="group">
+                    <button id="expanded" onclick="{!c.handleClick}" class="{!and(v.sprintData, and(v.sprintData.userPreferences, v.sprintData.userPreferences.ShowBacklogviewonVirtualWall__c == false)) ? 'slds-button slds-button--icon-border slds-is-selected' : 'slds-button slds-button--icon-border'}">
+                        <lightning:icon iconName="utility:snippet" size="x-small" alternativeText="Expanded View" class="slds-button__icon"/>
+                    </button>
+                    <button id="compact" onclick="{!c.handleClick}" class="{!and(v.sprintData, and(v.sprintData.userPreferences, v.sprintData.userPreferences.ShowBacklogviewonVirtualWall__c == true)) ? 'slds-button slds-button--icon-border slds-is-selected' : 'slds-button slds-button--icon-border'}">
+                        <lightning:icon iconName="utility:rows" size="x-small" alternativeText="Compact View" class="slds-button__icon"/>
+                    </button>
+                </div>
+                <!--
+                <lightning:buttonGroup aura:id="taskListGroup" class="taskListGroup">
+                    <lightning:buttonIcon name="taskListGroup" value="Expanded" iconName="utility:snippet" onclick="{!c.handleClick}" alternativeText="Tile View" />
+                    <lightning:buttonIcon name="taskListGroup" value="Compact" class="slds-is-selected" iconName="utility:rows" onclick="{!c.handleClick}" alternativeText="List View" />
+                </lightning:buttonGroup>
+                -->
+            </div>
+            <div class="slds-col slds-no-flex slds-align-bottom slds-m-left--small">
+                <!--
+                <lightning:buttonGroup >
+                    <lightning:buttonIcon value="filter" iconName="utility:filterList" onclick="{!c.handleClick}" alternativeText="Filters" />
+                    <lightning:buttonIcon value="chart" iconName="utility:chart" onclick="{!c.handleClick}" alternativeText="Charts" />
+                    <lightning:buttonIcon value="chat" iconName="utility:chat" onclick="{!c.handleClick}" alternativeText="Chat" />
+                </lightning:buttonGroup>
+                -->
+                <c:ADM_SidebarButtons sprintData="{!v.sprintData}"/>
+            </div>
+        </div>
+        <div class="slds-grid slds-theme--shade slds-p-left--medium">
+            <div class="{! not(v.sprintData) ? 'sprint-preload-placeholder sprint-preload-header-subtext slds-m-top--medium' : 'slds-hide'}" tabindex="-1"></div>
+            <p class="slds-text-body_small slds-truncate">
+                <aura:if isTrue="{!v.sprintData}"><span class="header-bold">Displaying </span>{!v.numVisibleWork} of {!v.sprintData.sprintWork.length}</aura:if>
+                <aura:if isTrue="{!v.filterString}"> <span class="header-bold"> • Filtered By: </span>{!v.filterString}</aura:if>
+            </p>
+        </div>
+        <div class="slds-grid slds-grid--vertical-align-center slds-theme--shade slds-p-left_medium slds-p-around_x-small slds-scrollable_x">
+            <div class="{! not(v.sprintData) ? 'sprint-preload-placeholder sprint-preload-header-subtext slds-m-top--medium' : 'slds-hide'}" tabindex="-1"></div>
+            <aura:if isTrue="{!v.users.length}">
+                <span class="fadeInDown">
+                    <aura:iteration items="{!v.users}" var="user">
+                        <c:ADM_Sprint_VirtualWall_Header_User 
+                            user="{!user}"
+                            sprintData="{!v.sprintData}"
+                        />
+                    </aura:iteration>
+                    <lightning:helptext content="Select a user to see work where they are Assignee, QE, or assigned tasks."/>
+                </span>
+            </aura:if>
+        </div>
+    </div>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+</aura:component>

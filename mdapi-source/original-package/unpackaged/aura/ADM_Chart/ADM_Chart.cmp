@@ -1,0 +1,16 @@
+<aura:component>
+    <ltng:require scripts="{!$Resource.chartjs_2_1_4_min_js}" afterScriptsLoaded="{!c.handleValueChange}"/>
+
+    <aura:attribute name="type" type="String" description="Potential values: Bar, Line, etc." />
+    <aura:attribute name="dataAndOptions" type="Object" description=""/>
+    <aura:attribute name="width" type="String" default="0" description="" />
+    <aura:attribute name="height" type="String" default="0" description=""/>
+    <aura:attribute name="chartInstance" type="Object" description=""/>
+
+    <aura:handler name="change" value="{!v.dataAndOptions}" action="{!c.handleValueChange}"/>
+
+    <div>
+        {! v.body }
+    </div>
+
+</aura:component>

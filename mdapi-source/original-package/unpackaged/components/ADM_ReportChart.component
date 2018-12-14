@@ -1,0 +1,16 @@
+<apex:component >
+    <apex:attribute name="reportID" description="This is the id of the report whose graph to display."
+                    type="String" required="true"/>
+    <apex:attribute name="chartHeight" description="The height of the chart in pixels"  type="String" required="true"/>
+    <apex:attribute name="chartWidth" description="The width of the chart in pixels"  type="String" required="true"/>
+    <apex:attribute name="params" description="Any additional parameters for the report, in format pv0=xxx&pv1=yyy"
+                    type="String" required="false"/>
+
+ <apex:includeScript value="{!$Resource.UpdateChartImageJS}"/>
+
+    
+    <div style="float:left;">
+        <iframe id="chart"
+        src="/{!reportID}?csize=1&{!params}&hideChat=1" width="0%"  frameborder="0" onload="updatechartimage(this,this.src, {!chartHeight}, {!chartWidth});" height="0%" scrolling="no"></iframe>
+    </div>
+</apex:component>

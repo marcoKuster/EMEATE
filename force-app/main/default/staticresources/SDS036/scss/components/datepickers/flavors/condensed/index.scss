@@ -1,0 +1,40 @@
+/* Salesforce Design System v0.3.6 */
+.#{$css-prefix}datepicker--condensed {
+
+  th {
+    padding: $spacing-x-small;
+  }
+
+  td {
+    padding: $spacing-xx-small;
+
+    &.#{$css-prefix}is-selected-multi + .#{$css-prefix}is-selected-multi > span:before {
+      width: $square-icon-medium-boundary + $spacing-x-small;
+      transform: translateX($spacing-x-small * -1);
+    }
+  }
+
+  .#{$css-prefix}has-multi-row-selection {
+
+    .#{$css-prefix}is-selected-multi:first-child > span:before,
+    .#{$css-prefix}is-selected-multi:last-child > span:after {
+      transform: translateX($spacing-x-small * -1);
+    }
+    // re-calculate for first child
+    .#{$css-prefix}is-selected-multi:first-child > span:before {
+      transform: translateX($spacing-xx-small * -1);
+    }
+    // re-calculate for last child
+    .#{$css-prefix}is-selected-multi:last-child > span:after {
+      transform: translateX($spacing-xx-small);
+    }
+  }
+
+  .#{$css-prefix}datepicker__filter {
+    padding: $spacing-xx-small;
+  }
+
+  .#{$css-prefix}datepicker__filter--month {
+    padding: 0 $spacing-xx-small 0 0;
+  }
+}

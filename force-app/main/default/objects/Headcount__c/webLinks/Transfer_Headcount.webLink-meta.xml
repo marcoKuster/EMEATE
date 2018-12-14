@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transfer_Headcount</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Transfer Position</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>//snippet taken straight from the &quot;sample button and links&quot; doc.  salesforce must have a var called idArray
+
+idArray = {!GETRECORDIDS($ObjectType.Headcount__c)};
+
+if(idArray != null &amp;&amp; idArray.length &gt; 0 ) {
+
+//page with button must implement desired behavior (list view buttons show up on all instances of the list view VF component)
+
+transferSelectedHeadcount(idArray);
+
+} else {
+
+  alert(&#39;Please select at least one Position record.&#39;);
+
+}</url>
+</WebLink>

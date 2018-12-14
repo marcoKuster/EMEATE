@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mail</fullName>
+    <availability>online</availability>
+    <description>javascript mailto to send the URL of the work item along with the subject</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Mail</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>var subject = &quot;Work record {!ADM_Work__c.Name} - {!SUBSTITUTE(ADM_Work__c.Subject__c,&#39;&quot;&#39;,&#39;\&#39;&#39;)}&quot;;
+
+var text2copy = unescape(subject);
+
+
+
+text2copy = text2copy.replace(&quot;&amp;amp;&quot;, &quot;&amp;&quot;);
+
+text2copy = text2copy.replace(&quot;&amp;gt;&quot;, &quot;&gt;&quot;);
+
+text2copy = text2copy.replace(&quot;&amp;lt;&quot;, &quot;&lt;&quot;);
+
+
+
+var body = escapeUTF ( window.location.href );
+
+document.location = &quot;mailto:{!User.Email}?subject=&quot; + text2copy + &quot;&amp;body=&quot; + body;</url>
+</WebLink>

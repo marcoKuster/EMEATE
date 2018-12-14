@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Manager_required_if_deployed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK( Release_Manager__c ), OR(ISPICKVAL( Status__c, &#39;Deployed - Other Issues&#39;) ,
+ISPICKVAL( Status__c, &#39;Deployed Successfully&#39;) ,
+ISPICKVAL( Status__c, &#39;Deployment Introduced Regression&#39;) ,
+ISPICKVAL( Status__c, &#39;Partial Deployment - Halted&#39;) ,
+ISPICKVAL( Status__c, &#39;Partial Deployment - Superseded&#39;) ,
+ISPICKVAL( Status__c, &#39;Partial Rollback&#39;) ,
+ISPICKVAL( Status__c, &#39;Redeployed After Rollback&#39;) ,
+ISPICKVAL( Status__c, &#39;Rollback&#39;) ,
+ISPICKVAL( Status__c, &#39;Deployed - Exceeded Release Window&#39;) ,
+ISPICKVAL( Status__c, &#39;Deployed - Date Changed&#39;) ))</errorConditionFormula>
+    <errorDisplayField>Release_Manager__c</errorDisplayField>
+    <errorMessage>Release Manager must be specified if the release has been fully or partially deployed.</errorMessage>
+</ValidationRule>

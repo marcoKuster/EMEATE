@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Burndown Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Burndown Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days Remaining --></label>
+        <name>Days_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Remaining --></label>
+        <name>Hours_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- Points_Remaining --></label>
+        <name>Points_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- Burndown Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <name>Sprint__c</name>
+        <relationshipLabel><!-- Burndown Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Task ID --></label>
+        <name>Task_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Task --></label>
+        <name>Task__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Actual</masterLabel>
+            <translation><!-- Actual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baseline</masterLabel>
+            <translation><!-- Baseline --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Upsert Key --></label>
+        <name>Upsert_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Burndown Items --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

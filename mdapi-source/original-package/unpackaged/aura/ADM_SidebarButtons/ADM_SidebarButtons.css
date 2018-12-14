@@ -1,0 +1,13 @@
+/*  had to create this instead of using slds-is-selected
+    because otherwise tristate was taking precedence over slds-is-selected
+    due to the fact that the slds-is-selected stylesheet comes before this one
+*/
+.THIS .sprint-button-selected {
+    background-color: rgb(0, 112, 210);
+    border-color: rgb(0, 112, 210);
+    color: rgb(255, 255, 255);
+}
+
+.THIS .sprint-button-selected svg {
+    fill: rgb(255,255,255);
+}

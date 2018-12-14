@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <content>ADM_AssignmentRuleEdit</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>ADM_AssignmentRuleEdit</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>ADM_AssignmentRuleEdit</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>ADM_AssignmentRuleList</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>ADM_AssignmentRuleDetail</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to populate the Assignment Rules on ADM_Work__c records</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Additional_Emails__c</fullName>
+        <externalId>false</externalId>
+        <label>Followers</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Assignee_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assignee</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules2</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Exception_Request_POC__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Person assigned to exception records created from investigation records</description>
+        <externalId>false</externalId>
+        <label>Exception Request POC</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Inactive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to designate if an assignment rule should be applied to work records.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to designate if an assignment rule should be applied to work records.</inlineHelpText>
+        <label>Inactive</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Product_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>If this field is empty it will be pre-populated with the Product Owner for the rule&apos;s scrum team.</inlineHelpText>
+        <label>Product Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QA_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>QA Engineer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>R00NT0000000lhZjMAI</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Scrum_Team_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Scrum Team</label>
+        <referenceTo>ADM_Scrum_Team__c</referenceTo>
+        <relationshipName>R00NT0000000lhZkMAI</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Senior_Management_POC_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Senior Management POC</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sev_1_Assignee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>This user is assigned to Investigations with Severity Level 1</inlineHelpText>
+        <label>Sev 1 Assignee</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules6</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sev_2_Assignee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>This user is assigned to Investigations with a Severity Level of 2.</inlineHelpText>
+        <label>Sev 2 Assignee</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules7</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sev_3_Assignee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>This user is assigned to Investigations with Severity Level 3</inlineHelpText>
+        <label>Sev 3 Assignee</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules8</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sev_4_Assignee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>This user is assigned to Investigations with Severity Level 4</inlineHelpText>
+        <label>Sev 4 Assignee</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules9</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Systest_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Performance Engineer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>R00NT0000000lhZlMAI</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tech_Writer_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Tech Writer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>R00NT0000000lhZmMAI</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>UE_Engineer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>UE Engineer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Assignment_Rules1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Assignment Rule</label>
+    <nameField>
+        <label>Assignment Rule</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Assignment Rules</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>ProductOwnerReq</fullName>
+        <active>true</active>
+        <errorConditionFormula>Product_Owner__c == null</errorConditionFormula>
+        <errorDisplayField>Product_Owner__c</errorDisplayField>
+        <errorMessage>Product Owner is a required field</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ScrumTeamIsActive</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISCHANGED( Inactive__c ), Inactive__c = false, Scrum_Team_Assignment__r.Active__c = false)</errorConditionFormula>
+        <errorDisplayField>Scrum_Team_Assignment__c</errorDisplayField>
+        <errorMessage>The scrum team you selected is not active.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ScrumTeamRequired</fullName>
+        <active>true</active>
+        <errorConditionFormula>Scrum_Team_Assignment__c == null</errorConditionFormula>
+        <errorDisplayField>Scrum_Team_Assignment__c</errorDisplayField>
+        <errorMessage>Scrum Team is a required field</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

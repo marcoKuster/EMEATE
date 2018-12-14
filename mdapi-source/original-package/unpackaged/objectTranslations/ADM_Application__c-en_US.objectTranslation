@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Application</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Applications</value>
+    </caseValues>
+    <fields>
+        <help><!-- Moratoriums that impact the application&apos;s release. --></help>
+        <label><!-- Applicable Moratoriums --></label>
+        <name>Applicable_Moratoriums__c</name>
+        <picklistValues>
+            <masterLabel>Dreamforce</masterLabel>
+            <translation><!-- Dreamforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EOM</masterLabel>
+            <translation><!-- EOM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EOY / Holidays</masterLabel>
+            <translation><!-- EOY / Holidays --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Major Release</masterLabel>
+            <translation><!-- Major Release --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Default Planned Duration --></label>
+        <name>Application_Planned_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Type --></label>
+        <name>Application_Type__c</name>
+        <picklistValues>
+            <masterLabel>Core Salesforce Application</masterLabel>
+            <translation><!-- Core Salesforce Application --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distributed Customer Facing Application</masterLabel>
+            <translation><!-- Distributed Customer Facing Application --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Documentation</masterLabel>
+            <translation><!-- Documentation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IT</masterLabel>
+            <translation><!-- IT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Independent R&amp;D</masterLabel>
+            <translation><!-- Independent R&amp;D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure</masterLabel>
+            <translation><!-- Infrastructure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Monitoring &amp; Management</masterLabel>
+            <translation><!-- Internal Monitoring &amp; Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moratorium</masterLabel>
+            <translation><!-- Moratorium --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the text to be appended to the bottom of the Description field of the Case created by Release Planning (if enabled). --></help>
+        <label><!-- Case Description Footer --></label>
+        <name>Case_Description_Footer__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the text to be appended to the top of the Description field of the Case created by Release Planning (if enabled). --></help>
+        <label><!-- Case Description Header --></label>
+        <name>Case_Description_Header__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the ID of the Scrum Team to be entered in Cases created by Run Case Generation. --></help>
+        <label><!-- Case Team --></label>
+        <name>Case_Team__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select &quot;Schedule&quot; if this Application object represents an activity that is to appear on the Release schedule (eg, Moratorium, Maintenance or Infrastructure), otherwise select the Application&apos;s life-cycle stage. --></help>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintenance</masterLabel>
+            <translation><!-- Maintenance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preproduction</masterLabel>
+            <translation><!-- Preproduction --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retired</masterLabel>
+            <translation><!-- Retired --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schedule</masterLabel>
+            <translation><!-- Schedule --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the 15 character ID for the Chatter group to which Release Alerts will be posted when the &quot;Post Release Alert&quot; button is selected. --></help>
+        <label><!-- Chatter Post Group --></label>
+        <name>Chatter_Post_Group__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the name of the initial Major Release record for the older of the two active Major Releases. --></help>
+        <label><!-- Current Major Release --></label>
+        <name>Current_Major_Release__c</name>
+        <relationshipLabel><!-- Applications --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Enter Release Alert header text for Daily Releases of the Next Major Release. --></help>
+        <label><!-- Daily Header Text [Next Major] --></label>
+        <name>Daily_Header_Text_Next_Major__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Release Alert header text for Daily Releases of the Current Major Release. --></help>
+        <label><!-- Daily Header Text [Current Major] --></label>
+        <name>Daily_Release_Stagger__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duplicate Application Name --></label>
+        <name>Duplicate_Application_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set this checkbox to enable notification emails for eRelease Requests. To avoid duplicate notifications, disable the corresponding eRelease Request notification workflow for this Application. --></help>
+        <label><!-- Enable ERR Notification Emails --></label>
+        <name>Enable_ERR_Notification_Emails__c</name>
+    </fields>
+    <fields>
+        <help><!-- When Release Planning is enabled, will generate Cases for generated Release Events. --></help>
+        <label><!-- Enable Release Planning Case Creation --></label>
+        <name>Enable_Release_Planning_Case_Creation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check to enable Release Planning for this Application. --></help>
+        <label><!-- Enable Release Planning --></label>
+        <name>Enable_Release_Planning__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter a space separated list of instances to be excluded from customer facing posts of Planned Release Schedule --></help>
+        <label><!-- Internal Instances --></label>
+        <name>Internal_Instances__c</name>
+    </fields>
+    <fields>
+        <help><!-- A check in this field indicates that the application is customer-facing, not internal-only. --></help>
+        <label><!-- Is Customer Facing --></label>
+        <name>Is_Customer_Facing__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the template for the Major Release Stagger --></help>
+        <label><!-- Major Release Stagger --></label>
+        <name>Major_Release_Stagger__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the name of the initial Major Release record for the newer of the two active Major Releases. --></help>
+        <label><!-- Next Major Release --></label>
+        <name>Next_Major_Release__c</name>
+        <relationshipLabel><!-- Applications (Next Major Release) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This contains the release stagger for any distributed apps or other releases that are not Major, Patches, or eReleases. --></help>
+        <label><!-- Other Release Stagger --></label>
+        <name>Other_Release_Stagger__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Release Alert header text for patch releases of the Next Major Release. --></help>
+        <label><!-- Patch Header Text [Next Major] --></label>
+        <name>Patch_Header_Text_Next_Major__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Release Alert header text for patch releases of the Current Major Release. --></help>
+        <label><!-- Patch Header Text [Current Major] --></label>
+        <name>Patch_Stagger__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the email address where the customer facing Planned Schedule for release should be sent. --></help>
+        <label><!-- Planned Schedule Email --></label>
+        <name>Planned_Schedule_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Primary Chatter group Release Alert footer text for Releases of the Current Major Release. --></help>
+        <label><!-- Primary Footer Text [Current Major] --></label>
+        <name>Primary_Chatter_Post_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Primary Chatter group Release Alert footer text for Releases of the Next Major Release. --></help>
+        <label><!-- Primary Footer Text [Next Major] --></label>
+        <name>Primary_Footer_Text_Next_Major__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the name of the Release Manager with primary responsibility for the releases of products supported by this Application. --></help>
+        <label><!-- Primary Release Manager --></label>
+        <name>Primary_Release_Manager__c</name>
+        <relationshipLabel><!-- Applications (Primary Release Manager) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Enter an email address to which Release Alerts will be posted when the &quot;Post Release Alert&quot; button is selected, for example, an external Chatter group. --></help>
+        <label><!-- External Post Email --></label>
+        <name>Second_Chatter_Post_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Secondary Chatter group Release Alert footer text for all Releases. --></help>
+        <label><!-- Secondary Footer Text --></label>
+        <name>Secondary_Chatter_Post_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the secondary or backup Release Manager for this Application. --></help>
+        <label><!-- Secondary Release Manager --></label>
+        <name>Secondary_Release_Manager__c</name>
+        <relationshipLabel><!-- Applications (Secondary Release Manager) --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Application Layout</layout>
+        <sections>
+            <label><!-- Application Information --></label>
+            <section>Application Information</section>
+        </sections>
+        <sections>
+            <label><!-- Controls --></label>
+            <section>Controls</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- Release Planning must be enabled to enable Case Creation. --></errorMessage>
+        <name>Release_Planning_Must_Be_Enabled_Case</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Instance list must be of the form: NA1 NA2 CS2 ...
+Use capital letters and only a space between instances.
+Allowed prefixes are NA, CS, EU, AP, GS or SR only. --></errorMessage>
+        <name>Space_Separated_Instances</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Application Type must be specified. --></errorMessage>
+        <name>Specify_Application_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Application&apos;s Category must be specified. --></errorMessage>
+        <name>Specify_Category</name>
+    </validationRules>
+</CustomObjectTranslation>

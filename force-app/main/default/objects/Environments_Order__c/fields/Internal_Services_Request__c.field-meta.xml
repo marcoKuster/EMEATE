@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Services_Request__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <inlineHelpText>Work request for the Internal Services DBAs.</inlineHelpText>
+    <label>Internal Services Request</label>
+    <referenceTo>ADM_Work__c</referenceTo>
+    <relationshipLabel>Environment Orders (Internal Services Request)</relationshipLabel>
+    <relationshipName>Environment_Orders2</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

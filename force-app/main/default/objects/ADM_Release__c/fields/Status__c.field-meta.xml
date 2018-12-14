@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Deployed - Other Issues</fullName>
+                <default>false</default>
+                <label>Deployed - Other Issues</label>
+            </value>
+            <value>
+                <fullName>Deployed Successfully</fullName>
+                <default>false</default>
+                <label>Deployed Successfully</label>
+            </value>
+            <value>
+                <fullName>Deployment in Progress</fullName>
+                <default>false</default>
+                <label>Deployment in Progress</label>
+            </value>
+            <value>
+                <fullName>Deployment Introduced Regression</fullName>
+                <default>false</default>
+                <label>Deployment Introduced Regression</label>
+            </value>
+            <value>
+                <fullName>In Development</fullName>
+                <default>true</default>
+                <label>In Development</label>
+            </value>
+            <value>
+                <fullName>Partial Deployment - Halted</fullName>
+                <default>false</default>
+                <label>Partial Deployment - Halted</label>
+            </value>
+            <value>
+                <fullName>Partial Deployment - Superseded</fullName>
+                <default>false</default>
+                <label>Partial Deployment - Superseded</label>
+            </value>
+            <value>
+                <fullName>Partial Rollback</fullName>
+                <default>false</default>
+                <label>Partial Rollback</label>
+            </value>
+            <value>
+                <fullName>Ready for Deployment</fullName>
+                <default>false</default>
+                <label>Ready for Deployment</label>
+            </value>
+            <value>
+                <fullName>Redeployed After Rollback</fullName>
+                <default>false</default>
+                <label>Redeployed After Rollback</label>
+            </value>
+            <value>
+                <fullName>Rollback</fullName>
+                <default>false</default>
+                <label>Rollback</label>
+            </value>
+            <value>
+                <fullName>Deployed - Exceeded Release Window</fullName>
+                <default>false</default>
+                <label>Deployed - Exceeded Release Window</label>
+            </value>
+            <value>
+                <fullName>Deployed - Date Changed</fullName>
+                <default>false</default>
+                <label>Deployed - Date Changed</label>
+            </value>
+            <value>
+                <fullName>Canceled or Never Released</fullName>
+                <default>false</default>
+                <label>Canceled or Never Released</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

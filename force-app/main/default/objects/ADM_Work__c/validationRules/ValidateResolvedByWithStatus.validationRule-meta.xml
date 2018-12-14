@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateResolvedByWithStatus</fullName>
+    <active>false</active>
+    <description>Resolved_By__c field should not be populated if the Status indicates the the work record is still unresolved</description>
+    <errorConditionFormula>AND(CASE( Status__c,
+&quot;New&quot;, 1,
+&quot;In Progress&quot;, 1,
+0) = 1, Resolved_By__c != &quot;&quot;)</errorConditionFormula>
+    <errorMessage>Please update the Status__c field to something other than New or In Progress before populating the Resolved_By__c field.</errorMessage>
+</ValidationRule>

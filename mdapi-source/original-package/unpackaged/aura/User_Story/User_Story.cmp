@@ -1,0 +1,32 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+                      fields="Name,Story_Points__c,Account__c "
+                      />
+    
+    <!-- Display a lightning card with details about the record -->
+    <div class="Record Details"> 
+        <lightning:card iconName="standard:account" title="{!v.simpleRecord.Name}" >
+            <div class="slds-p-horizontal--small">
+                 <lightning:input aura:id="storyPoints" name="storyPoints" label="Story Points"
+                     value="{!v.simpleRecord.Story_Points__c}" required="true"/>
+                <lightning:input aura:id="account" name="account" label="Partner"
+                     value="{!v.simpleRecord.Account__c}" required="true"/>
+            </div>
+        </lightning:card>
+    </div>
+    
+    <!-- Display Lightning Data Service errors, if any -->
+    <aura:if isTrue="{!not(empty(v.recordError))}">
+        <div class="recordError">
+            {!v.recordError}</div>
+    </aura:if>
+</aura:component>

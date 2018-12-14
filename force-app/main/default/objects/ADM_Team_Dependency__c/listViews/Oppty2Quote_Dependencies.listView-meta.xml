@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oppty2Quote_Dependencies</fullName>
+    <booleanFilter>1 OR 2</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Dependency_Status__c</columns>
+    <columns>Dependent_Team__c</columns>
+    <columns>Provider_Team__c</columns>
+    <columns>Deliverable__c</columns>
+    <columns>Notes__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Dependent_Team__c</field>
+        <operation>equals</operation>
+        <value>Opportunity to Quote</value>
+    </filters>
+    <filters>
+        <field>Provider_Team__c</field>
+        <operation>equals</operation>
+        <value>Opportunity to Quote</value>
+    </filters>
+    <label>Oppty2Quote Dependencies</label>
+</ListView>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Open Market Opportunity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Open Market Opportunities</value>
+    </caseValues>
+    <fields>
+        <label><!-- Additional Comments --></label>
+        <name>Additional_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Desired Skills --></label>
+        <name>Desired_Skills__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributed Team --></label>
+        <name>Distributed_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Function --></label>
+        <name>Function__c</name>
+        <picklistValues>
+            <masterLabel>Dev</masterLabel>
+            <translation><!-- Dev --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Doc</masterLabel>
+            <translation><!-- Doc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PerfEng</masterLabel>
+            <translation><!-- PerfEng --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Products</masterLabel>
+            <translation><!-- Products --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QE</masterLabel>
+            <translation><!-- QE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TPM</masterLabel>
+            <translation><!-- TPM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UE</masterLabel>
+            <translation><!-- UE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- V2MOM Top Priority --></label>
+        <name>Highlighted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hiring Manager --></label>
+        <name>Hiring_Manager__c</name>
+        <relationshipLabel><!-- Open Market Opportunities --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If there is an associated talentforce posting include a link to the job opening on the intranet. --></help>
+        <label><!-- Intranet Posting --></label>
+        <name>Intranet_Posting__c</name>
+    </fields>
+    <fields>
+        <help><!-- For example, &quot;Any Level&quot;, &quot;MTS and above&quot;, &quot;Director&quot;, etc. --></help>
+        <label><!-- Level --></label>
+        <name>Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity Description --></label>
+        <name>Opportunity_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>Release__c</name>
+        <relationshipLabel><!-- Open Market Opportunities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Required Skills --></label>
+        <name>Required_Skills__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed-Canceled</masterLabel>
+            <translation><!-- Closed-Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed-Filled</masterLabel>
+            <translation><!-- Closed-Filled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Interviewing</masterLabel>
+            <translation><!-- Interviewing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Team --></label>
+        <name>Team__c</name>
+        <relationshipLabel><!-- Open Market Opportunities --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Opportunity Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Known_Fix__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Please indicate whether a fix is known, and readiness for checkin.</inlineHelpText>
+    <label>Fix Known?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Fix Known - Ready for checkin</fullName>
+                <default>false</default>
+                <label>Fix Known - Ready for checkin</label>
+            </value>
+            <value>
+                <fullName>Fix Known - Not ready for checkin</fullName>
+                <default>false</default>
+                <label>Fix Known - Not ready for checkin</label>
+            </value>
+            <value>
+                <fullName>Fix Unknown - Under research</fullName>
+                <default>false</default>
+                <label>Fix Unknown - Under research</label>
+            </value>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+                <label>Not Applicable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

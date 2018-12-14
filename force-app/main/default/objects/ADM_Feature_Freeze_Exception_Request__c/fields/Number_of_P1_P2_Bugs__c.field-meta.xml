@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_P1_P2_Bugs__c</fullName>
+    <description>Number of P1 and P2 bugs for this feature that are not verified and closed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of P1 and P2 bugs for this feature older than one week that are not verified and closed.  FF criterion is 0.</inlineHelpText>
+    <label>Number of TF &gt; 1 Week</label>
+    <precision>2</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

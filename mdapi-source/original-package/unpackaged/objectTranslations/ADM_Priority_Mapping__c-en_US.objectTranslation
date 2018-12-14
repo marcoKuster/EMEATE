@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Priority Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Priority Mapping</value>
+    </caseValues>
+    <fields>
+        <label><!-- Frequency --></label>
+        <name>Frequency__c</name>
+        <relationshipLabel><!-- Priority Mapping --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Impact --></label>
+        <name>Impact__c</name>
+        <relationshipLabel><!-- Priority Mapping --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <relationshipLabel><!-- Priority Mapping --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Priority Matrix Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

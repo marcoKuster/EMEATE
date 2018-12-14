@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cloud_must_be_specified_for_Cloud_Leader</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Approver_Role__c, &quot;Cloud Leader&quot;) &amp;&amp; ISBLANK(Cloud__c)</errorConditionFormula>
+    <errorDisplayField>Cloud__c</errorDisplayField>
+    <errorMessage>Cloud must be specified when Approval Role is Cloud Leader</errorMessage>
+</ValidationRule>

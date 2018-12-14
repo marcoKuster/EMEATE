@@ -1,0 +1,109 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+  <title>Lightning Design System Tutorial</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+  <apex:stylesheet value="{!URLFOR($Resource.SDS, 'SDS/assets/styles/salesforce-design-system-vf.css')}" />
+</head>
+
+<body>
+
+  <div class="container container--large container--center">
+
+    <header role="banner">
+      <h1 class="text-heading--label m-bottom--small">Lightning Design System Tutorial</h1>
+    </header>
+
+    <div class="main" role="main">
+
+      <section aria-labelledby="anchor-component">
+        <h2 id="anchor-component" class="text-heading--large p-top--medium p-bottom--medium">Anchor</h2>
+
+        <div class="anchor anchor--rec-home">
+          <div class="grid grid--align-spread">
+            <div class="media col media--rec-home">
+              <div class="media__figure">
+                <svg aria-hidden="true" class="icon icon--large icon-standard-user">
+                  <use xlink:href="{!URLFOR($Resource.SDS, 'SDS/assets/icons/standard-sprite/svg/symbols.svg#user')}" />
+                </svg>
+              </div>
+              <div class="media__body">
+                <p class="text-heading--label">Record Type</p>
+                <div class="grid">
+                  <div class="col">
+                    <h1 class="text-heading--medium media--rec-home__title truncate">Record Title</h1>
+                  </div>
+                  <div class="col shrink-none align-bottom">
+                    <button class="button button--neutral not-selected" aria-live="assertive">
+                      <span class="text-not-selected">
+                        <svg aria-hidden="true" class="button__icon--stateful button__icon--left">
+                          <use xlink:href="{!URLFOR($Resource.SDS, 'SDS/assets/icons/utility-sprite/svg/symbols.svg#add')}" />
+                        </svg>Follow</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col shrink-none align-bottom">
+              <div class="button-group" role="group">
+                <button class="button button--neutral">Action 1</button>
+                <button class="button button--neutral">Action 2</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="tabs-component">
+        <h2 id="tabs-component" class="text-heading--large p-top--medium p-bottom--medium">Tabs</h2>
+
+        <div class="tabs tabs--default" role="tablist">
+          <ul class="tabs__nav" role="presentation">
+            <li class="tabs__item active" title="Item One">
+              <a href="#" role="tab" aria-selected="true" tabindex="0">Tab 1</a>
+            </li>
+            <li class="tabs__item" title="Item Two">
+              <a href="#" role="tab" aria-selected="false" tabindex="0">Tab 2</a>
+            </li>
+            <li class="tabs__item" title="Item Three">
+              <a href="#" role="tab" aria-selected="false" tabindex="0">Tab 3</a>
+            </li>
+          </ul>
+          <div class="tabs__content show" role="tabpanel" aria-labelledby="one">
+            <h2>Tab 1 content</h2>
+          </div>
+          <div class="tabs__content hide" role="tabpanel" aria-labelledby="one">
+            <h2>Tab 2 content</h2>
+          </div>
+          <div class="tabs__content hide" role="tabpanel" aria-labelledby="one">
+            <h2>Tab 3 content</h2>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="labels">
+        <h2 id="labels" class="text-heading--large p-top--x-large p-bottom--medium">Text/Labels</h2>
+        <div>
+          <span class="label">Label</span>
+          <span class="label label--error">Label</span>
+        </div>
+      </section>
+
+    </div>
+
+    <footer role="contentinfo" class="p-top--x-large p-bottom--x-large">
+      <h2 id="labels" class="text-heading--large p-top--x-large p-bottom--medium">Grid</h2>
+      <div class="grid grid--align-spread">
+        <p class="col">Footer Col 1: Lightning Design System tutorial</p>
+        <p class="col">Footer Col 2: Lightning Design System tutorial</p>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+
+</html>
+</apex:page>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approver_must_be_specified_for_Coverage</fullName>
+    <active>true</active>
+    <description>An Approver must be specified for Role &quot;Release Coverage&quot;.</description>
+    <errorConditionFormula>ISBLANK(Approver__c) &amp;&amp; ISPICKVAL(Approver_Role__c, &quot;Release Coverage&quot;)</errorConditionFormula>
+    <errorDisplayField>Approver__c</errorDisplayField>
+    <errorMessage>You must specify an Approver for Approver Role &quot;Release Coverage&quot;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Work_Manager_SFX_Button</fullName>
+    <availability>online</availability>
+    <description>Button on Team page to link to Work Manager</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Work Manager</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/apex/adm_WorkManager?teamid={!ADM_Scrum_Team__c.Id}</url>
+</WebLink>

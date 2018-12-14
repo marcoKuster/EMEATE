@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TF_Found_the_Week_of_Feature_Freeze__c</fullName>
+    <description># of TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks)</description>
+    <externalId>false</externalId>
+    <inlineHelpText># of TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks)</inlineHelpText>
+    <label>TF Found the Week of Feature Freeze</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- If you leave it empty on save it will automatically assign the value from the TE activity selected. --></help>
+    <label><!-- Story Points --></label>
+    <name>Story_Points__c</name>
+</CustomFieldTranslation>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Third Party Software</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Third Party Software</value>
+    </caseValues>
+    <fields>
+        <label><!-- Approval Status --></label>
+        <name>Approval_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Submitted</masterLabel>
+            <translation><!-- Not Submitted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cloud --></label>
+        <name>Cloud__c</name>
+    </fields>
+    <fields>
+        <help><!-- Link to the Coupa record for this product (for commercial products only). --></help>
+        <label><!-- Coupa Record --></label>
+        <name>Coupa_Record__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date equivalent to your teams feature freeze date. Please account for 3PP SLA time frames referenced on site --></help>
+        <label><!-- Date Approval Needed By --></label>
+        <name>Date_Approval_Needed_By__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does this contain JS or similar code articulated in a client browser? Do portions of the package run in the user’s browser? --></help>
+        <label><!-- Old does this contain JavaScript? --></label>
+        <name>Does_this_contain_JavaScript__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does this project contain JavaScript or similar code articulated in a client browser? Do portions of the package run in the user’s browser? --></help>
+        <label><!-- Is there any client-side code? --></label>
+        <name>Does_this_contain_client_side_code__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jar Name --></label>
+        <name>Jar_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- License Type --></label>
+        <name>License_Type__c</name>
+        <picklistValues>
+            <masterLabel>Commercial</masterLabel>
+            <translation><!-- Commercial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open Source</masterLabel>
+            <translation><!-- Open Source --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Please provide a link that demonstrates what license governs this particular 3PP request. It should not be a link to a generic copy of an open source license. --></help>
+        <label><!-- License URL --></label>
+        <name>License_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Module --></label>
+        <name>Module__c</name>
+        <picklistValues>
+            <masterLabel>apex-parser</masterLabel>
+            <translation><!-- apex-parser --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>platform</masterLabel>
+            <translation><!-- platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>resin</masterLabel>
+            <translation><!-- resin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>sfdc</masterLabel>
+            <translation><!-- sfdc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>sfdc-test/func</masterLabel>
+            <translation><!-- sfdc-test/func --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>sfdc-test/unit</masterLabel>
+            <translation><!-- sfdc-test/unit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>shared</masterLabel>
+            <translation><!-- shared --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>shared/endorsed</masterLabel>
+            <translation><!-- shared/endorsed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>udd</masterLabel>
+            <translation><!-- udd --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- WIll you distribute the code to anyone outside of our data centers? --></help>
+        <label><!-- Use Cases/Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Link to Perforce Path or Direct Download Link --></help>
+        <label><!-- Source Code Path or URL --></label>
+        <name>Perforce_Path__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please describe what this Third Party Property does and why you want to use it. --></help>
+        <label><!-- Purpose --></label>
+        <name>Purpose__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Sub Type --></label>
+        <name>Request_Sub_Type__c</name>
+        <picklistValues>
+            <masterLabel>Clients</masterLabel>
+            <translation><!-- Clients --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Compiler</masterLabel>
+            <translation><!-- Compiler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Framework</masterLabel>
+            <translation><!-- Framework --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IDE</masterLabel>
+            <translation><!-- IDE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Software</masterLabel>
+            <translation><!-- Other Software --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plug-In</masterLabel>
+            <translation><!-- Plug-In --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDK</masterLabel>
+            <translation><!-- SDK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tool</masterLabel>
+            <translation><!-- Tool --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Request Type Other --></label>
+        <name>Request_Type_Other__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Type --></label>
+        <name>Request_Type__c</name>
+        <picklistValues>
+            <masterLabel>Fonts</masterLabel>
+            <translation><!-- Fonts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Software</masterLabel>
+            <translation><!-- Software --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trademarks, Logos and Icons</masterLabel>
+            <translation><!-- Trademarks, Logos and Icons --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Scheduled Build or Release --></label>
+        <name>Scheduled_Build__c</name>
+        <relationshipLabel><!-- Third Party Software --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team (Owner) --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- Third Party Software --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Please provide the URL containing information about the Third Party Property. --></help>
+        <label><!-- Third Party Property product info URL --></label>
+        <name>URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Used By --></label>
+        <name>Used_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>Vendor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Version --></label>
+        <name>Version__c</name>
+    </fields>
+    <fields>
+        <help><!-- Will this code be distributed outside of Salesforce? --></help>
+        <label><!-- Will this code be distributed? --></label>
+        <name>Will_this_code_be_distributed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Will you modify the code, or simply use it as-is? --></help>
+        <label><!-- Will you modify the code? --></label>
+        <name>Will_you_actually_modify_the_code__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Will you use the code as-is or will you modify it? --></help>
+        <label><!-- Old will you modify the code? --></label>
+        <name>Will_you_modify_the_code__c</name>
+    </fields>
+    <layouts>
+        <layout>Third Party Software Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Date Approval Needed By can not be less than 28 days from today. --></errorMessage>
+        <name>DateApprovalNeeded</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Offset_must_be_specified</fullName>
+    <active>true</active>
+    <description>Either Hours/Minutes Offset must be specified or Start Time must be specified.</description>
+    <errorConditionFormula>ISBLANK(Hour_Offset__c) &amp;&amp; ISBLANK(Minute_Offset__c) &amp;&amp; ISBLANK(Day_Offset__c)</errorConditionFormula>
+    <errorDisplayField>Day_Offset__c</errorDisplayField>
+    <errorMessage>An Offset must be specified. If the Release Event is to occur at the Release&#39;s Schedule Release Date, set the Day Offset field to 0 (zero).</errorMessage>
+</ValidationRule>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal</fullName>
+    <active>true</active>
+    <description>SFDC Employee</description>
+    <label>Internal</label>
+    <picklistValues>
+        <picklist>Role__c</picklist>
+        <values>
+            <fullName>Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Architect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capacity Planner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DBA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Center Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dev Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Developer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doc Editor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doc Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engineering Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Network Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provisioning Specialist %2F Asset Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Release Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Release Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scrum Master</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Site Reliability Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Software Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SysAdmin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SysAdmin Linux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SysAdmin Storage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SysAdmin Win</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TechOps Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technical Writer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trust Engineer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UE Manager</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

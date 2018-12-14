@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dec_Explanation_Empty_With_Status_Reject</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(CASE( Status__c,
+&quot;Rejected&quot;, 1,
+0) = 1, Decision_Explanation__c = &quot;&quot;)</errorConditionFormula>
+    <errorDisplayField>Decision_Explanation__c</errorDisplayField>
+    <errorMessage>Please provide a decision explanation when setting the status to &#39;Rejected&#39;.</errorMessage>
+</ValidationRule>

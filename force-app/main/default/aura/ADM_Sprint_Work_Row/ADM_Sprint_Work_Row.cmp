@@ -1,0 +1,140 @@
+<aura:component extends="c:ADM_Work_Shared">
+    <aura:attribute name="work" type="Object" />
+    <aura:attribute name="storyPointOptions" type="Object[]" />
+    <aura:attribute name="selectOptionsPopulated" type="Boolean" default="false" />
+    <aura:attribute name="tasksVisible" type="Boolean" default="false" />
+    <aura:attribute name="toggleState" type="String"/>
+    <aura:attribute name="nextSprintId" type="String"/>
+    <aura:attribute name="sprintId" type="String"/>
+    <aura:attribute name="scrumTeamMembers" type="String[]"/>
+    <aura:attribute name="userPreferences" type="Object"/>
+    <aura:attribute name="userPermSets" type="Object"/>
+    <aura:attribute name="wallPreferences" type="Object"/>
+    <aura:attribute name="statusTypes" type="String[]"/>
+    <aura:attribute name="teamIsCapex" type="Boolean"/>
+    <aura:attribute name="teamId" type="String"/>
+    <aura:attribute name="storyPointScale" type="String[]"/>
+    <aura:attribute name="nameSpace" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.work.m_story.Story_Points__c}" action="{!c.updateStoryPointOptions}" />
+    <aura:handler event="c:ADM_Event_Filter_Work" action="{!c.filterWork}"/>
+    <aura:handler event="c:ADM_Event_Update_SprintData" action="{!c.updateWork}"/>
+
+    <aura:registerEvent name="toggleTasks" type="c:ADM_Toggle_TaskView"/>
+    <aura:registerEvent name="newTask" type="c:ADM_Event_New_Task"/>
+
+    <aura:handler event="c:ADM_Toggle_TaskView" action="{!c.toggleTaskLayout}"/>
+
+    <div aura:id="workRowWrapper" id="{!v.work.m_story.Id}" class="{!'slds-border--bottom slds-grid slds-container--fluid ' + (v.work.visible == false ? 'slds-hide' : 'slds-show') + (v.tasksVisible == true ? ' adm-task-layout' : '')}" data-work-id="{!v.work.m_story.Id}">
+        <div aura:id="workRowContainer" class="{!'slds-p-around--xx-small adm-work-container slds-is-relative ' + (v.tasksVisible == false ? ' slds-grid slds-align--absolute-center' : '')}">
+            <aura:if isTrue="{!v.tasksVisible}">
+                <c:ADM_Work_Tasks plannedTasks="{!v.work.m_plannedTasks.tasks}" inProgressTasks="{!v.work.m_inProgressTasks.tasks}" nameSpace="{!v.nameSpace}" completedTasks="{!v.work.m_completedTasks.tasks}" workId="{!v.work.m_story.Id}" scrumTeamMembers="{!v.scrumTeamMembers}" userPrefs="{!v.userPreferences}" workIsCapex="{!v.work.m_story.Capex_Enabled__c}"/>
+            </aura:if>
+            <div class="slds-p-horizontal--small sprint-gripper slds-truncate draggable" title="GRIPPER">
+                <div class="slds-truncate slds-grid slds-grid--align-center undraggable" title="{!v.work.m_story.Name}">
+                    <lightning:icon iconName="utility:rows" size="x-small" />
+                </div>
+            </div>
+            <div class="adm-work-id slds-p-horizontal--small slds-size--1-of-12 slds-truncate" title="ID">
+                <div class="slds-truncate" title="{!v.work.m_story.Name}">
+                    <a id="{!v.work.m_story.Id}" href="{!'/' + v.work.m_story.Id}" onclick="{!c.viewWorkInTab}" class="slds-truncate">{!v.work.m_story.Name}</a>
+                </div>
+            </div>
+        <div class="slds-p-horizontal--small sprint-work-type slds-truncate" title="{!v.work.m_story.RecordType.Name}">
+            <button ondblclick="{!c.toggleTasks}" data-work-id="{!v.work.m_story.Id}" class="slds-button">
+                <aura:if isTrue="{!v.work.recordType.Name == 'Bug'}">
+                    <lightning:icon iconName="custom:custom34" size="small" alternativeText="{!v.work.recordType.Name}" title="{!v.work.recordType.Name}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.work.recordType.Name == 'User Story'}">
+                    <lightning:icon iconName="custom:custom55" size="small" alternativeText="{!v.work.recordType.Name}" title="{!v.work.recordType.Name}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.work.recordType.Name == 'Investigation'}">
+                    <lightning:icon iconName="custom:custom39" size="small" alternativeText="{!v.work.recordType.Name}" title="{!v.work.recordType.Name}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.work.recordType.Name == 'ToDo'}">
+                    <lightning:icon iconName="custom:custom44" size="small" alternativeText="{!v.work.recordType.Name}" title="{!v.work.recordType.Name}"/>
+                </aura:if>
+            </button>
+            </div>
+        <div aura:id="sprint-work-subject" class="slds-p-horizontal--small sprint-work-subject" title="SUBJECT">
+            <div title="{!v.work.m_story.Subject__c}">
+                <div aura:id="subject" id="{!'subject' + v.work.m_story.Id}" onclick="{!c.editSubject}" class="adm-subject-col">
+                    <a id="{!v.work.m_story.Id}" onclick="{!c.openWorkModal}">{!v.work.m_story.Subject__c}</a>
+                </div>
+                <div aura:id="subject-input-container" class="slds-form-element slds-hide">
+                    <label class="slds-form-element__label slds-assistive-text" for="subjectInput">Subject</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" aura:id="subjectInput" id="subjectInput" class="slds-input" value="{!v.work.m_story.Subject__c}" onblur="{!c.saveSubject}" onkeydown="{!c.saveSubjectOnEnter}" data-work-id="{!v.work.m_story.Id}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div aura:id="subjectEditIcon" class="subjectEditIcon" onclick="{!c.editSubjectFromIcon}">
+            <lightning:icon iconName="utility:edit" size="x-small" class="slds-icon-text-light slds-hidden" alternativeText="edit" title="edit"/>
+        </div>
+        <div class="slds-p-horizontal--small sprint-work-status slds-truncate" title="STATUS">
+            <div class="slds-form-element status-select">
+                <label class="slds-form-element__label slds-assistive-text" for="status-select">Status</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select id="status-select" class="slds-select" onchange="{!c.setSelectValue}" data-field-name="Status__c" data-work-id="{!v.work.m_story.Id}" onfocus="{!c.populateSelectOptions}">
+                            <aura:if isTrue="{!v.selectOptionsPopulated}">
+                                <aura:iteration items="{!v.statusTypes}" var="status">
+                                    <aura:if isTrue="{!status.recordTypes[0].Name == v.work.recordType.Name}">
+                                        <option value="{!status.value}" selected="{!v.work.m_story.Status__c == status.value}">{!status.label}</option>
+                                    </aura:if>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <option value="{!v.work.m_story.Status__c}" selected="true">{!v.work.m_story.Status__c}</option>
+                                </aura:set>
+                            </aura:if>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal--small sprint-work-assignee" title="{!v.work.m_story.Assignee__r.Name}">
+                <c:ADM_Assignee_Selector assignee="{!v.work.m_story.Assignee__r}" assigneeField="Assignee__c" record="{!v.work.m_story}" recordType="Work" team="{!v.scrumTeamMembers}"/>
+            </div>
+        <div class="slds-p-horizontal--small sprint-work-qa" title="{!v.work.m_story.QA_Engineer__r.Name}">
+                <c:ADM_Assignee_Selector assignee="{!v.work.m_story.QA_Engineer__r}" assigneeField="QA_Engineer__c" record="{!v.work.m_story}" recordType="Work" team="{!v.scrumTeamMembers}"/>
+            </div>
+            <div class="adm-work-theme slds-p-horizontal--small slds-size--1-of-12 slds-truncate" title="THEMES">
+                <div class="slds-truncate" title="{!v.work.themeCsv}">{!v.work.themeCsv}</div>
+            </div>
+            <div class="adm-work-build slds-p-horizontal--small slds-size--1-of-12 slds-truncate" title="BUILD">
+                <div class="slds-truncate" title="{!v.work.m_story.Scheduled_Build__r.Name}">{!v.work.m_story.Scheduled_Build__r.Name}</div>
+            </div>
+            <div class="slds-p-horizontal--small slds-size--1-of-12 slds-truncate adm-work-pts" title="PTS">
+                <div class="slds-form-element points-select">
+                    <label class="slds-form-element__label slds-assistive-text" for="points-select">Points</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="points-select" class="slds-select" onchange="{!c.setSelectValue}" data-field-name="Story_Points__c" data-work-id="{!v.work.m_story.Id}">
+                                <aura:iteration items="{!v.storyPointOptions}" var="story_point">
+                                    <option value="{!story_point.value}" selected="{!story_point.selected}">{!story_point.label}</option>
+                                </aura:iteration>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="slds-p-horizontal--small sprint-actions" title="Work Actions">
+                <div title="Work Actions">
+                    <lightning:buttonMenu alternativeText="Work Actions" onselect="{!c.workAction}" menuAlignment="right" iconSize="x-small">
+                        <lightning:menuItem label="Edit work" value="{!v.work.m_story.Id}" class="slds-border--bottom" iconName="utility:edit"/>
+                        <lightning:menuItem label="View work" value="{!v.work.m_story.Id}" class="slds-border--bottom" iconName="utility:new_window"/>
+                        <lightning:menuItem label="Move to Next Sprint" value="{!v.work.m_story.Id}" disabled="{!empty(v.nextSprintId)}" class="slds-border--bottom" iconName="utility:breadcrumbs"/>
+                        <lightning:menuItem label="Remove from Sprint" value="{!v.work.m_story.Id}" class="slds-border--bottom" iconName="utility:clear"/>
+                        <aura:if isTrue="{!and(v.teamIsCapex == true, or(v.work.recordType.Name == 'User Story', v.work.recordType.Name == 'Bug'))}">
+                            <lightning:menuItem label="{!(v.work.m_story.Capex_Enabled__c == true ? 'Unflag' : 'Flag') + ' New Customer Facing Feature'}" value="{!not(v.work.m_story.Capex_Enabled__c)}" iconName="utility:priority" class="slds-border--bottom"/>
+                        </aura:if>
+                        <lightning:menuItem label="Add Task" value="{!v.work.m_story.Id}" iconName="utility:add" disabled="{! not(v.tasksVisible) }"/>
+                    </lightning:buttonMenu>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

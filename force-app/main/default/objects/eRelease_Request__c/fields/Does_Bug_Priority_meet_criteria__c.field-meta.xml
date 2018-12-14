@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Does_Bug_Priority_meet_criteria__c</fullName>
+    <description>Evaluates the referenced Bug&#39;s Priority and displays whether it meets eRelease Request criteria.</description>
+    <externalId>false</externalId>
+    <formula>CASE(Request_Type__c , 
+&quot;Planned eRelease&quot;, &quot;Priority is not part of the Planned eRelease justification criteria.&quot;, 
+&quot;Emergency Late Checkin&quot;, 
+IF(ISPICKVAL(Bug_ID__r.Priority__c, &quot;P0&quot;), &quot;P0: MEETS Emergency Late Checkin Criteria&quot;, 
+IF(ISPICKVAL(Bug_ID__r.Priority__c, &quot;P1&quot;), &quot;P1: MAY MEET Emergency Late Checkin criteria if issue has a Sev1 or Sev2 Investigation or Sev3 Red Account Investigation&quot;, 
+TEXT(Bug_ID__r.Priority__c) + &quot;: DOES NOT MEET Emergency Late Checkin criteria&quot;)), 
+&quot;Emergency Release&quot;, 
+IF(ISPICKVAL(Bug_ID__r.Priority__c, &quot;P0&quot;), &quot;P0: MEETS Emergency Release criteria&quot;, 
+IF(ISPICKVAL(Bug_ID__r.Priority__c, &quot;P1&quot;), &quot;P1: MAY MEET Emergency Release criteria if issue has a Sev1 or Sev2 Investigation or Sev3 Red Account Investigation&quot;, 
+TEXT(Bug_ID__r.Priority__c) + &quot;: DOES NOT MEET Emergency Release criteria&quot;)), 
+&quot;Unrecognized Request Type&quot;)</formula>
+    <inlineHelpText>Displays whether the referenced Bug&#39;s Priority meets the eRelease Request criteria.</inlineHelpText>
+    <label>Does Bug Priority meet criteria?</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

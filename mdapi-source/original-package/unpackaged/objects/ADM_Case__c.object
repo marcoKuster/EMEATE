@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Account ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( &quot;https://org62.my.salesforce.com/&quot; &amp; Account_Id__c , Account_Name__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Stage__c</fullName>
+        <externalId>false</externalId>
+        <label>Red Account Stage</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Support_SBR_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Support SBR Category</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>ROUND(DATETIMEVALUE (TODAY()) - Case_Created_Date__c,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Age (Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Created_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Created</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Case_ID_Set__c</fullName>
+        <externalId>false</externalId>
+        <label>Case ID Set</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Case_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Case ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Owner_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Owner ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Owner_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( &quot;https://org62.my.salesforce.com/&quot; &amp; Case_Owner_ID__c , Case_Owner__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Owner</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Owner__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Subject_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( &quot;https://org62.my.salesforce.com/&quot; &amp; Case_ID__c , Case_Subject__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subject</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Subject</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cases_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( &quot;https://org62.my.salesforce.com/&quot; &amp;  Case_ID__c , Case_Number__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cases Link</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Closed__c</fullName>
+        <description>Formula designed as per request in the story https://gus.my.salesforce.com/apex/adm_userstorydetail?id=a07B00000011BKiIAM&amp;sfdc.override=1</description>
+        <externalId>false</externalId>
+        <formula>OR(Case_Status__c  = &apos;Closed - Resolved&apos;,Case_Status__c = &apos;Closed - Feature Req/Bug&apos;,Case_Status__c = &apos;Closed - No response from customer&apos;, Case_Status__c = &apos;Closed - Cust Credit&apos;, Case_Status__c = &apos;Closed - Write Off&apos;, Case_Status__c = &apos;Closed - WO/Collect&apos;,
+Case_Status__c = &apos;Closed - Future Consideration&apos;,Case_Status__c = &apos;Closed - Rejected&apos;,
+Case_Status__c = &apos;Closed - Duplicate&apos;,Case_Status__c = &apos;Closed - Request Submitted&apos;,
+Case_Status__c = &apos;Closed - Completed&apos;,Case_Status__c = &apos;Closed - Reviewed&apos;,
+Case_Status__c = &apos;Closed - Request Received&apos;,Case_Status__c = &apos;Complete/Closed&apos;,
+Case_Status__c = &apos;Closed - Feature Request Submitted&apos;,Case_Status__c = &apos;Bug Fix Submitted&apos;,
+Case_Status__c = &apos;Fulfilled&apos;, Case_Status__c = &apos;Approved&apos;,
+Case_Status__c = &apos;Rejected&apos;, Case_Status__c = &apos;Closed-Sent to Feature Roadmap Owner&apos;, Case_Status__c = &apos;Closed-Workaround provided&apos;,
+Case_Status__c = &apos;Closed-Feature Implemented/Exists&apos;,Case_Status__c = &apos;Closed - Directed to IdeaExchange&apos;,
+Case_Status__c = &apos;Closed - No response from Sales (Closed)&apos;, Case_Status__c = &apos;Implemented&apos;,
+Case_Status__c = &apos;Closed - Routed to Internal Helpdesk&apos;, Case_Status__c = &apos;Closed&apos;,
+Case_Status__c = &apos;Closed – Delivered&apos;, Case_Status__c = &apos;Closed – Withdrawn&apos;, Case_Status__c = &apos;Closed – Feature Exists&apos;,
+Case_Status__c = &apos;Closed – Workaround&apos;, Case_Status__c = &apos;Closed – IdeaExchange&apos;, Case_Status__c = &apos;Closed - Implemented&apos;,
+Case_Status__c = &apos;Closed - Request out of Scope&apos;, Case_Status__c = &apos;Closed - Cust. Invoiced (Sales Ops only)&apos;, Case_Status__c = &apos;Closed - Never&apos;,
+Case_Status__c = &apos;Auto-response&apos;, Case_Status__c = &apos;Closed - No response from Partner&apos;, Case_Status__c = &apos;Closed - Support Issue&apos;,
+Case_Status__c = &apos;Closed - Services/Sales Issue&apos;, Case_Status__c = &apos;Closed - Product Issue&apos;, Case_Status__c = &apos;Closed - Forward to Partner&apos;,
+Case_Status__c = &apos;Closed - Edition Upgrade Needed&apos;, Case_Status__c = &apos;Closed - Self Service&apos;, Case_Status__c = &apos;Closed - Customer Closed&apos;,
+Case_Status__c = &apos;Closed - Partner Resolved&apos;, Case_Status__c = &apos;No Action Needed&apos;, Case_Status__c = &apos;Closed - No CSAT&apos;)</formula>
+        <label>Closed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Date_Time_Closed__c</fullName>
+        <externalId>false</externalId>
+        <label>Date/Time Closed</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Escalated_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Escalated Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_ID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>External ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>FunctionalArea__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Area</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>General_Application_Area__c</fullName>
+        <externalId>false</externalId>
+        <label>General Application Area</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geo__c</fullName>
+        <externalId>false</externalId>
+        <label>Geo</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Feature_Release_Related__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>New Feature or Release Related</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Account_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Account ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Account_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( &quot;https://org62.my.salesforce.com/&quot; &amp; Parent_Account_Id__c , Parent_Account_Name__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Parent Account</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Account Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Support_Skill_Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Support_Skill_Group</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Support_Tier_3_Owner_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK( &quot;https://org62.my.salesforce.com/&quot; &amp; Support_Tier_3_Owner__c , Support_Tier_3_Owner_Name__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Support Tier 3 Owner</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Support_Tier_3_Owner_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Support Tier 3 Owner Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Support_Tier_3_Owner__c</fullName>
+        <externalId>false</externalId>
+        <label>Support Tier 3 Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Work</label>
+        <referenceTo>ADM_Work__c</referenceTo>
+        <relationshipName>Work62OrgCases</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>62 Org Case</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Case_Number__c</columns>
+        <columns>Work__c</columns>
+        <columns>NAME</columns>
+        <columns>External_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Account_Id__c</columns>
+        <columns>Parent_Account_Id__c</columns>
+        <columns>Case_Owner_ID__c</columns>
+        <columns>Case_Owner_Link__c</columns>
+        <columns>Cases_Link__c</columns>
+        <columns>Case_Subject_Link__c</columns>
+        <columns>Account_Link__c</columns>
+        <columns>Parent_Account_Link__c</columns>
+        <columns>Case_Created_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>R-{000000}</displayFormat>
+        <label>Related Case ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>62 Org Cases</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Cases_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Work__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Case_Subject_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Account_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Parent_Account_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Case_Created_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Case_Owner_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Cases_Link__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Subject__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Parent_Account_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Created_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Owner__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

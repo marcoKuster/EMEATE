@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_needed_when_Sched_date_specified</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT( ISNULL( Release_Date__c))</errorConditionFormula>
+    <errorDisplayField>Scheduled_End_Date__c</errorDisplayField>
+    <errorMessage>Scheduled End Date must be set when Scheduled Date is specified.</errorMessage>
+</ValidationRule>

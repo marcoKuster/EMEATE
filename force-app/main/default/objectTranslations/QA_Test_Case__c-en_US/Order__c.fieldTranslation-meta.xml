@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Order of this test case in the hierarchy --></help>
+    <label><!-- Order --></label>
+    <name>Order__c</name>
+</CustomFieldTranslation>

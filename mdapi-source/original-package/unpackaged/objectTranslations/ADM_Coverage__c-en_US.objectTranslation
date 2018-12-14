@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Coverage</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Coverage</value>
+    </caseValues>
+    <fields>
+        <label><!-- Actual Coverage (%) --></label>
+        <name>Actual_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Coverage Goal Met --></label>
+        <name>Code_Coverage_Goal_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Coverage Gap --></label>
+        <name>Coverage_Gap__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link to actual report --></label>
+        <name>Link_to_actual_report__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min Package Coverage Met --></label>
+        <name>Min_Package_Coverage_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Module Name --></label>
+        <name>Module_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- NCLOC --></label>
+        <name>NCLOC__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Name --></label>
+        <name>Package_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report ID --></label>
+        <name>Report_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scheduled Build --></label>
+        <name>Scheduled_Build__c</name>
+        <relationshipLabel><!-- Coverage --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- Coverage --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Coverage (%) --></label>
+        <name>Target_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- # of statement --></label>
+        <name>statement__c</name>
+    </fields>
+    <layouts>
+        <layout>Feature code coverage layout for standard users</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Package coverage layout for standard users</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Used to track feature specific coverage info --></description>
+        <label><!-- Feature --></label>
+        <name>Feature</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to track PLSQL package coverage --></description>
+        <label><!-- PLSQL Package --></label>
+        <name>PLSQL_Package</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to track coverage info of each java package --></description>
+        <label><!-- Package --></label>
+        <name>Package</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

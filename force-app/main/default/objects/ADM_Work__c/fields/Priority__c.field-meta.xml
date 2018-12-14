@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>For bugs, priority is automatically determined based upon the combination of Impact and Frequency.
+
+For user stories, P0 represents the highest priority, P4 the lowest.</inlineHelpText>
+    <label>Priority</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>P0</fullName>
+                <color>#0B6FCE</color>
+                <default>false</default>
+                <label>P0</label>
+            </value>
+            <value>
+                <fullName>P1</fullName>
+                <color>#FF0000</color>
+                <default>false</default>
+                <label>P1</label>
+            </value>
+            <value>
+                <fullName>P2</fullName>
+                <color>#E27001</color>
+                <default>false</default>
+                <label>P2</label>
+            </value>
+            <value>
+                <fullName>P3</fullName>
+                <color>#FFFF66</color>
+                <default>false</default>
+                <label>P3</label>
+            </value>
+            <value>
+                <fullName>P4</fullName>
+                <color>#78C953</color>
+                <default>false</default>
+                <label>P4</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

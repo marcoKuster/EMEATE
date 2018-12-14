@@ -1,0 +1,41 @@
+<aura:component controller="ADM_SprintChartsController2" extends="c:ADM_Chart_Shared" >
+    <aura:attribute name="dataAndOptions" type="Object"/>
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="totalSprints" type="Integer"/>
+    <aura:attribute name="currSprints" type="Object"/>
+    <aura:attribute name="sprintOptionSelected" type="String" />
+    <aura:attribute name="sprintOptions" type="Object"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <p class="slds-m-bottom--small slds-grid slds-grid--align-center slds-grid--vertical-align-center">
+        Team Velocity for last
+        &nbsp;
+        <lightning:select value="{!v.sprintOptionSelected}" label="Number of sprints to show" onchange="{!c.updateChart}" class="select-num-sprints">
+            <aura:iteration items="{!v.sprintOptions}" var="item">
+                <option text="{!item.label}" value="{!item.value}"/>
+             </aura:iteration>
+        </lightning:select>
+        &nbsp;
+        sprints
+        &nbsp;
+        <c:ADM_Tooltip_Icon
+            tooltipText="The x-axis labels represent end dates for recent sprints."
+            nubbinClass="slds-nubbin--bottom-right"
+        />
+    </p>
+    <p aura:id="error-message" class="slds-grid slds-grid--align-center slds-text-color--error slds-is-collapsed">
+        There was an error displaying this chart.
+    </p>
+    <div class="slds-grid slds-grid--align-center">
+        <span aura:id="chart" class="slds-show">
+            <c:ADM_Chart
+                type="line"
+                height="250"
+                width="350"
+                dataAndOptions="{! v.dataAndOptions }"
+            />
+        </span>
+    </div>
+
+</aura:component>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>User Preferences</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>User Preferences</value>
+    </caseValues>
+    <fields>
+        <label><!-- BacklogHideWorkWithSprintToggle --></label>
+        <name>BacklogHideWorkWithSprintToggle__c</name>
+    </fields>
+    <fields>
+        <label><!-- LaneScrolling --></label>
+        <name>LaneScrolling__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Backlog view on Virtual Wall --></label>
+        <name>ShowBacklogviewonVirtualWall__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Chatter on Virtual Wall --></label>
+        <name>ShowChatteronVirtualWall__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowColoredSubjects --></label>
+        <name>ShowColoredSubjects__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Delete Task Dialog --></label>
+        <name>ShowDeleteTaskDialog__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Move Task To Completed Dialog --></label>
+        <name>ShowMoveTaskToCompletedDialog__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Move Task To In Progress Dialog --></label>
+        <name>ShowMoveTaskToInProgressDialog__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Move Uncompleted Tasks Dialog --></label>
+        <name>ShowMoveUncompletedTasksDialog__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Move Work To Other Sprint Warning --></label>
+        <name>ShowMoveWorkToOtherSprintDialog__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowNumberOfDaysInColumn --></label>
+        <name>ShowNumberOfDaysInColumn__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowNumberOfPosts --></label>
+        <name>ShowNumberOfPosts__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowNumberOfTasks --></label>
+        <name>ShowNumberOfTasks__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowPriority --></label>
+        <name>ShowPriority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Product Tag Assignment Guided Tour --></label>
+        <name>ShowProductTagAssignmentGuidedTour__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Product Tag Guided Tour --></label>
+        <name>ShowProductTagGuidedTour__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowQE --></label>
+        <name>ShowQE__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowRecordTypeIcon --></label>
+        <name>ShowRecordTypeIcon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Remove Work From Sprint Warning --></label>
+        <name>ShowRemoveWorkFromSprintDialog__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowScheduledBuild --></label>
+        <name>ShowScheduledBuild__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowStoryPoints --></label>
+        <name>ShowStoryPoints__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Virtual Wall Guided Tour --></label>
+        <name>ShowVirtualWallGuidedTour__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowWorkID --></label>
+        <name>ShowWorkID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tab Panel View Preference --></label>
+        <name>TabPanelViewPreference__c</name>
+    </fields>
+    <fields>
+        <label><!-- UseColorCoding --></label>
+        <name>UseColorCoding__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Work Panel --></label>
+        <name>WorkPanelViewPreference__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

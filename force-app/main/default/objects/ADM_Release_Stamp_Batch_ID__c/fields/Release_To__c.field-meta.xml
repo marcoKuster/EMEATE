@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_To__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Release To</label>
+    <referenceTo>ADM_Release__c</referenceTo>
+    <relationshipLabel>Release Stamp Batch IDs (Release To)</relationshipLabel>
+    <relationshipName>Release_Stamp_Batch_IDs_To</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

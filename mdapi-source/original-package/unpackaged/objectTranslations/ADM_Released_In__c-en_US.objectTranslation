@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Released In</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Released In</value>
+    </caseValues>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Name --></label>
+        <name>Release_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>Release__c</name>
+        <relationshipLabel><!-- Released In --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reverted --></label>
+        <name>Reverted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Date --></label>
+        <name>Scheduled_Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selected --></label>
+        <name>Selected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stamped On --></label>
+        <name>Stamped_On__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work ID --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Released In --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Released In Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information --></label>
+            <section>Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approver_Email_must_match_users_email</fullName>
+    <active>true</active>
+    <description>When a Approver user is specified, if an Email is also specified it much match the system&#39;s Email for that user.</description>
+    <errorConditionFormula>NOT(ISBLANK(Approver__c)) &amp;&amp; NOT(ISBLANK(Approver_Email__c )) &amp;&amp; Approver_Email__c &lt;&gt; Approver__r.Email</errorConditionFormula>
+    <errorDisplayField>Approver_Email__c</errorDisplayField>
+    <errorMessage>When an Approver is specified, Approver Email must be blank or match the user&#39;s system-defined email.</errorMessage>
+</ValidationRule>

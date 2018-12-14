@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Update the task data">
+    <aura:attribute name="taskId" type="String"/>
+    <aura:attribute name="task" type="Object"/>
+</aura:event>

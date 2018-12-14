@@ -1,0 +1,89 @@
+<apex:component controller="ADM_ParentWorkRelatedListController" allowDML="true">
+    <apex:attribute name="AWorkID" description="Reference to the ID of the object" type="Id" required="required" assignTo="{!workid}"/>  
+    <apex:outputPanel id="parentWorkListWrapper" >
+
+    <table width="100%" class="list" border="0" id="childWorkRecordTree" cellspacing="0"> 
+            <tr class="headerRow">
+                <th width="10%">Work ID</th>
+                <th width="10%">Assignee</th>
+                <th width="40%">Subject</th>
+                <!-- <th>Status</th> -->
+                <th width="8%">Type</th>
+                <th width="5%">Priority</th>
+                <!-- <th>Severity</th>  -->
+                <th width="5%">Build</th>
+                <th width="5%">Resolved</th>
+                <th width="5%">Closed</th> 
+            </tr> 
+            <apex:repeat value="{!RelatedParentWorkList}" var="worklink" id="workParentTree">
+                <tr>
+                    <td>
+                        <apex:outputField value="{!worklink.Parent_Work__c}" />
+                    
+                    </td>
+                    <td>
+                        <apex:outputField value="{!worklink.Parent_Work__r.Assignee__c}" />
+                    </td>
+                    
+                    <td>
+                        <apex:outputLink value="/{!worklink.Parent_Work__r.id}" target="_parent"  >
+                          	 {!LEFT(worklink.Parent_Work__r.Subject__c,30)} <apex:outputPanel rendered="{!LEN(worklink.Parent_Work__r.Subject__c) >=30}">...</apex:outputPanel>
+                        </apex:outputLink>
+                    </td>
+                    
+                    <td>
+                        <apex:outputField value="{!worklink.Parent_Work__r.Type__c}" />
+                    </td>
+                    
+                    <td>
+                        <apex:outputField value="{!worklink.Parent_Work__r.Priority__c}" />
+                    </td>
+                    
+                    <td>
+                        <apex:outputField value="{!worklink.Parent_Work__r.Scheduled_Build__c}" />
+                    </td>
+                    
+                    <td>
+                        <apex:outputText rendered="{!worklink.Parent_Work__r.Resolved__c == 0.0}" >
+                                 <apex:image url="{!$Resource.cross}" alt="The item remains unresolved" title="The item remains unresolved"  />
+                        </apex:outputText>
+                        <apex:outputText rendered="{!worklink.Parent_Work__r.Resolved__c == 1.0}" >
+                                 <apex:image url="{!$Resource.tick}"  />
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText rendered="{!worklink.Parent_Work__r.Closed__c == 0.0}" >
+                                 <apex:image url="{!$Resource.cross}" />
+                        </apex:outputText>
+                        <apex:outputText rendered="{!worklink.Parent_Work__r.Closed__c == 1.0}" >
+                                 <apex:image url="{!$Resource.tick}" />
+                        </apex:outputText>
+                    </td>
+                
+                </tr> 
+           </apex:repeat>
+        </table>
+        
+        <apex:outputText rendered="{!AND(relatedParentWorkListSize > 5, ParentWorkLimit == true)}" >
+            <apex:commandLink action="{!disableParentWorkLimit}" rerender="parentWorkListWrapper" onclick="document.getElementById('parentWorkListSizeProgress').className=''">
+                <br/>1 to 5 of &nbsp;<apex:outputText value="{!relatedParentWorkListSize}" /> - Show All
+            </apex:commandLink>
+        </apex:outputText>
+        <apex:outputText rendered="{!AND(relatedParentWorkListSize > 5, ParentWorkLimit == false)}" >
+            <apex:commandLink action="{!enableParentWorkLimit}" rerender="parentWorkListWrapper" onclick="document.getElementById('parentWorkListSizeProgress').className=''">
+                <br/>1 to&nbsp;<apex:outputText value="{!relatedParentWorkListSize}" /> of &nbsp;<apex:outputText value="{!relatedParentWorkListSize}" /> - Show Less
+            </apex:commandLink>
+        </apex:outputText>
+         <img src="{!$Resource.ajaxloadersmall}" id="parentWorkListSizeProgress" class="hidden" />
+        
+        <apex:outputText rendered="{!relatedParentWorkListSize == 0}">
+                <br/>No records to display.   
+        </apex:outputText>
+        
+        <apex:outputText rendered="{!AND(relatedParentWorkListSize < 6, relatedParentWorkListSize > 0)}">
+                <br/>1&nbsp;to&nbsp;<apex:outputText value="{!relatedParentWorkListSize}" />&nbsp;of&nbsp;<apex:outputText value="{!relatedParentWorkListSize}" />
+        </apex:outputText>
+
+    </apex:outputPanel>
+
+</apex:component>

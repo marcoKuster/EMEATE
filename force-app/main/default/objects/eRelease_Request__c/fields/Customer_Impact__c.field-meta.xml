@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Impact__c</fullName>
+    <description>Describes the customer impact of the eRelease</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Describe the customer impact of the defect driving this request, including the impact that will result based on when and whether this eRelease is deployed.</inlineHelpText>
+    <label>Customer Impact</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Your test strategy should at a minimum cover what you will be testing, what you won&apos;t be testing, and what you understand the major risk areas to be. --></help>
+    <label><!-- Test Strategy --></label>
+    <name>Test_Strategy__c</name>
+</CustomFieldTranslation>

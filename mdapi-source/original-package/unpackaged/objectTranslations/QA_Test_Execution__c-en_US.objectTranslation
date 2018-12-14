@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Test Execution</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Test Executions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assignee --></label>
+        <name>Assignee__c</name>
+        <relationshipLabel><!-- Test Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Comma separated list of bugs associated to this test execution --></help>
+        <label><!-- Bugs --></label>
+        <name>Bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Build # of Last Execution --></label>
+        <name>Build_of_Last_Execution__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Last Execution --></label>
+        <name>Date_of_Last_Execution__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ftest Id --></label>
+        <name>Ftest_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Executions --></label>
+        <name>Number_of_Executions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Blocked</masterLabel>
+            <translation><!-- Blocked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed</masterLabel>
+            <translation><!-- Passed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Case --></label>
+        <name>Test_Case__c</name>
+        <relationshipLabel><!-- Test Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>.Net</masterLabel>
+            <translation><!-- .Net --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CTI - script</masterLabel>
+            <translation><!-- CTI - script --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Automation</masterLabel>
+            <translation><!-- Client Automation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ftest</masterLabel>
+            <translation><!-- Ftest --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual</masterLabel>
+            <translation><!-- Manual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ProdTest - API</masterLabel>
+            <translation><!-- ProdTest - API --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ProdTest - Extended</masterLabel>
+            <translation><!-- ProdTest - Extended --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ProdTest - Selenium</masterLabel>
+            <translation><!-- ProdTest - Selenium --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selenium</masterLabel>
+            <translation><!-- Selenium --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Silktest</masterLabel>
+            <translation><!-- Silktest --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Systest</masterLabel>
+            <translation><!-- Systest --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Utest</masterLabel>
+            <translation><!-- Utest --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>User_Story__c</name>
+        <relationshipLabel><!-- Test Executions (User Story) --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Test Execution Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Test Case Information --></label>
+            <section>Test Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- User Story Information --></label>
+            <section>User Story Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Test Execution Insert|Update Error: Assignee is mandatory to insert|update a test execution record. --></errorMessage>
+        <name>Assignee_cannot_be_null</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Status has to be: Planned, In progress, Passed, Failed, or Blocked --></errorMessage>
+        <name>Correct_status_value</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Value needed for Date when Executed, since Status is Passed / Failed --></errorMessage>
+        <name>Needed_if_Status_is_passed_or_failed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Number of Executions has to be &gt;= 1 for Passed or Failed status and &gt;= 0 for others! --></errorMessage>
+        <name>Not_Negative</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Incorrect Type Value. Must be picked from the list --></errorMessage>
+        <name>Type_Must_Be_Valid</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Test Execution Insert|Update Error: User Story is mandatory to insert|update a test execution record. --></errorMessage>
+        <name>User_story_cannot_be_null</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date of Last Execution should be less than the current date! --></errorMessage>
+        <name>dateCheck</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Attach_a_Bug --></label>
+        <name>Attach_a_Bug</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mark_as_Blocked --></label>
+        <name>Mark_as_Blocked</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mark_as_Failed --></label>
+        <name>Mark_as_Failed</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mark_as_In_Progress --></label>
+        <name>Mark_as_In_Progress</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mark_as_Passed --></label>
+        <name>Mark_as_Passed</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mark_as_Planned --></label>
+        <name>Mark_as_Planned</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upsert_Key__c</fullName>
+    <description>This field value will uniquely identify a burndown item using the following format: &lt;SPRINT_ID&gt;&lt;YYYYMMDD&gt;&lt;A/B&gt; Where &lt;A/B&gt; indicates whether it&#39;s the Actual or the Baseline figure</description>
+    <externalId>true</externalId>
+    <label>Upsert Key</label>
+    <length>27</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

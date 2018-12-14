@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Bugs__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText># of Work records that were released during the deployment of this release.</inlineHelpText>
+    <label>Number of Work Records</label>
+    <summaryForeignKey>ADM_Released_In__c.Release__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

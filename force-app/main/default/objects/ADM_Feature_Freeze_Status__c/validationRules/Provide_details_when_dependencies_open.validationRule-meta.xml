@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provide_details_when_dependencies_open</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(ISBLANK( Provide_other_team_dependencies_details__c ), 
+    OR(
+      AND(ISPICKVAL( Features_Complete_and_DoD_Achieved__c , &quot;No&quot;),
+       NOT(ISPICKVAL( Dependencies_on_other_teams_closed__c , &quot;Yes&quot;))
+      ),
+      ISPICKVAL( Dependencies_on_other_teams_closed__c , &quot;No&quot;)
+    ),
+    false)</errorConditionFormula>
+    <errorDisplayField>Provide_other_team_dependencies_details__c</errorDisplayField>
+    <errorMessage>Details must be provided when dependencies on other teams are not closed.</errorMessage>
+</ValidationRule>

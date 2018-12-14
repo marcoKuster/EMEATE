@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Backfill_Headcount_must_have_BF_name</fullName>
+    <active>false</active>
+    <description>When marking a Headcount as &quot;Backfill,&quot; the Backfill Name field must be filled.</description>
+    <errorConditionFormula>AND(ISPICKVAL(Status__c, &quot;Open - Backfill&quot;), ISBLANK(Headcount_Name__c) )</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>When moving a Headcount to status &quot;Open - Backfill,&quot; there must be a name in the Headcount Name field, which will be moved into the Backfill Name field automatically.</errorMessage>
+</ValidationRule>

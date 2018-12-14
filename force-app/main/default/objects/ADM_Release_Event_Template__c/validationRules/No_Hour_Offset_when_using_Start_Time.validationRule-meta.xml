@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Hour_Offset_when_using_Start_Time</fullName>
+    <active>true</active>
+    <description>When Start Time is being used, Hour Offset cannot be specified.</description>
+    <errorConditionFormula>NOT(ISBLANK(Hour_Offset__c)) &amp;&amp; NOT(ISBLANK(Start_Time__c))</errorConditionFormula>
+    <errorDisplayField>Hour_Offset__c</errorDisplayField>
+    <errorMessage>When Start Time is being used, Hour Offset cannot be specified. Either clear Start Time or set  Hours Offset  to blank.</errorMessage>
+</ValidationRule>

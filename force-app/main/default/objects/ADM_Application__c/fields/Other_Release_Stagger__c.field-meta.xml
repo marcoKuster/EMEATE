@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_Release_Stagger__c</fullName>
+    <description>This contains the release stagger for any distributed apps or other releases that are not Major, Patches, or eReleases.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This contains the release stagger for any distributed apps or other releases that are not Major, Patches, or eReleases.</inlineHelpText>
+    <label>Other Release Stagger</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

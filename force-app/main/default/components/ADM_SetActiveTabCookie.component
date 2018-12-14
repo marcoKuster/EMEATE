@@ -1,0 +1,99 @@
+<apex:component >
+	<apex:attribute name="tabs" type="ADM_FieldWrapper[]" description="todo" required="true" />
+	<apex:attribute name="acTab" type="String" description="todo" required="true" />
+	<apex:attribute name="setActiveTab" type="Boolean" description="todo" required="false" default="false" />
+	<apex:attribute name="sprintId" type="String" description="todo" required="false" />
+	<apex:attribute name="cookieName" type="String" description="todo" required="true" />
+	
+	<script type="text/javascript" language="javascript">
+	    <apex:variable value="{!1}" var="rowNum" />
+	    var tabs = {
+	    	<apex:repeat value="{!tabs}" var="tab" id="tabRepeat">	    			    
+	    		"{!tab.fieldName}": { "name" : "{!tab.fieldLabel}"}<apex:outputText value="," rendered="{!rowNum < tabs.size}" />
+	    		<apex:variable value="{!rowNum + 1}" var="rowNum" />
+	    	</apex:repeat>
+	    }
+	    
+	    var compName = 'ADM_SetActiveTabCookie component: ';
+	    var tabActiveClass = "rich-tab-active";
+	    var richTabHeadersClass = "rich-tabhdr-cell";
+	   	
+		function locateAcTab(tabs, nodeName, acTab) {
+			var acObj = new Object();
+			acObj.found = false;
+		
+			for(var key in tabs) { 
+				var obj = tabs[key];
+				for(var prop in obj) {
+					if(nodeName === obj[prop] || nodeName.indexOf('>' + obj[prop] + '<') > 0) {
+						if((acTab != null && acTab === key) || acTab == null) {
+							acObj.found = true;
+							acObj.key = key;
+						}	
+					}
+				}
+			}
+			
+			return acObj;
+		}
+		
+		function getTagsByClass(tagName, className) {
+			var tags = parent.document.getElementsByTagName(tagName);
+			var arrTags = new Array();
+				
+            for(i = 0; i < tags.length; i++) {
+            	tag = tags[i];
+            	if(tag.className.indexOf(className) > -1) {
+            		arrTags.push(tag);
+            	}
+            }
+            
+            return arrTags;
+		}
+		
+		function createCookie(name,value,days) {
+			if(days) {
+				var date = new Date();
+				date.setTime(date.getTime()+(days*24*60*60*1000));
+				var expires = "; expires="+date.toGMTString();
+			} else {
+				var expires = "";
+			}
+			document.cookie = name+"="+value+expires+"; path=/";
+		}
+		
+		
+	    function setActiveTab(tabClass, acTab) {	    
+			var tabCells = getTagsByClass('td', tabClass);
+			for(var index = 0; index < tabCells.length; index++) {			
+		    	var nodeName = tabCells[index].innerHTML;
+		    	var acObj = locateAcTab(tabs, nodeName, acTab);
+		    	var teReport = 'QA_SprintDetail_TEReport';
+	    		if(acObj.found) {
+	    			if(acTab != null) {	    				
+	    				if('{!sprintId}' != '') {
+			    			if(acTab === 'details') {
+			    				try {
+				    				rerenderChartsTasks();
+				    			} catch(e) {
+				    				console.debug(compName + 'not able to launch rerenderChartsTasks Java script function');
+				    			}    			
+			    			} else if(acTab === 'wall') {
+				    			reRenderIframe('vwall', '/apex/ADM_VirtualWallForIFrame?id={!sprintId}');
+			    			} else if(acTab === 'teReport') {		    				
+			    				reRenderIframe(teReport, '/apex/' + teReport + '?id={!sprintId}');
+			    			}
+				    		RichFaces.switchTab('sprintDetailPage:SprintForm:tabs','sprintDetailPage:SprintForm:tab' + index, acTab);
+				    	}
+	    			} else {
+	    				createCookie("apex__{!cookieName}", acObj.key, 1);
+	    			}	    		
+	    		}
+	    	}  	
+	    }
+	     
+	    if({!setActiveTab}) {	    	
+	    	setActiveTab(richTabHeadersClass, '{!acTab}');
+	    }
+	</script>
+</apex:component>

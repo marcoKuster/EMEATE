@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EA_6Week_Ready_Response__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>Check if: &quot;At Feature Freeze, we’ll be ready to release to GS0 and provide a great experience for internal and external users. If necessary, we will disable incomplete features at Feature Freeze.&quot;</inlineHelpText>
+    <label>A</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

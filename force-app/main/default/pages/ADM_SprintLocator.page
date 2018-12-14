@@ -1,0 +1,2 @@
+<apex:page controller="ADM_SprintLocatorController" action="{!goToCurrentSprint}">
+</apex:page>

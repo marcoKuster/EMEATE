@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ADMThemes</fullName>
+    <columns>NAME</columns>
+    <columns>Scrum_Team__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>startsWith</operation>
+        <value>ADM</value>
+    </filters>
+    <filters>
+        <field>Scrum_Team__c</field>
+        <operation>equals</operation>
+        <value>ADM Team</value>
+    </filters>
+    <label>ADM Themes</label>
+</ListView>

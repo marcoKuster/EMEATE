@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SFA_Core_Coverage</fullName>
+    <columns>NAME</columns>
+    <columns>Module_Name__c</columns>
+    <columns>Min_Package_Coverage_Met__c</columns>
+    <columns>Actual_Coverage__c</columns>
+    <columns>Target_Coverage__c</columns>
+    <columns>Coverage_Gap__c</columns>
+    <columns>Code_Coverage_Goal_Met__c</columns>
+    <columns>Scrum_Team__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Scrum_Team__c</field>
+        <operation>contains</operation>
+        <value>SFA Core</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>notEqual</operation>
+        <value>ADM_Coverage__c.PLSQL_Package</value>
+    </filters>
+    <label>SFA Core Java Coverage</label>
+</ListView>

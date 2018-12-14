@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Teams_Cannot_Be_The_Same</fullName>
+    <active>true</active>
+    <errorConditionFormula>Provider_Team__c = Dependent_Team__c</errorConditionFormula>
+    <errorMessage>Team Providing Deliverable and Team With Dependency cannot be the same!</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X0_TF_on_basicftest_basicselem_test__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Zero TF on the basicftest, basicselenium and utest at time of FF</description>
+    <externalId>false</externalId>
+    <inlineHelpText>New Criteria for 172: 
+
+Zero TF on these test suites at time of FF.</inlineHelpText>
+    <label>Zero TF:basicftest, basicselenium, utest</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

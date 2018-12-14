@@ -1,0 +1,33 @@
+/* Salesforce Design System v0.3.6 */
+.#{$css-prefix}datepicker--time {
+  padding: $spacing-small 0;
+  font-size: $font-size-medium;
+
+  @include mq-large-min {
+    // hard coded for now. Need to point to desktop form factor token here.
+    font-size: .875rem;
+  }
+
+  &__list {
+    max-height: (($line-height-text + ($spacing-x-small * 2)) * 6) - ($spacing-small * 2);
+    overflow-y: auto;
+
+    @include mq-large-min {
+      // hard coded for now. Need to point to desktop form factor token here.
+       max-height: ((1.5 + ($spacing-x-small * 2)) * 6) - ($spacing-small * 2);
+    }
+
+    > li {
+      padding: $spacing-x-small {
+        left: $spacing-x-large;
+      }
+
+      &:hover,
+      &:focus {
+        background: $color-background-button-brand-hover;
+        color: $color-text-button-brand-hover;
+        text-decoration: none;
+      }
+    }
+  }
+}

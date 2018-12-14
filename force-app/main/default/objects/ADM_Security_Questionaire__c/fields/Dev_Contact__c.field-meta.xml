@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dev_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Dev contact for this feature.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Dev contact for this feature.</inlineHelpText>
+    <label>Dev Contact</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>SecQ_Dev_Contact</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

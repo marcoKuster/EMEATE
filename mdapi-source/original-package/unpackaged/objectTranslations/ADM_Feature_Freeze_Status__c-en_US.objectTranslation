@@ -1,0 +1,1728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Freeze Team Status</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Freeze Team Status</value>
+    </caseValues>
+    <fields>
+        <help><!-- Are all Accessibility bugs closed? --></help>
+        <label><!-- Accessibility Bugs Closed --></label>
+        <name>Accessibility_Bugs_Closed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Applicable UI</masterLabel>
+            <translation><!-- No Applicable UI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Accessibility Dashboard link --></label>
+        <name>Accessibility_Dashboard_link__c</name>
+    </fields>
+    <fields>
+        <help><!-- All new product development meets the Definition Of Done:  https://sites.google.com/a/salesforce.com/adm/definition-of-done?AuthEventSource=SSO --></help>
+        <label><!-- Features Meet Definition of Done --></label>
+        <name>All_New_Features_DONE__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- All New or Upgraded 3rd Party Software Products have Approval through the 3PP Process.  Feature Freeze requirement is that all are APPROVED. --></help>
+        <label><!-- All New/Upgraded 3PP are Approved --></label>
+        <name>All_New_Upgraded_3PP_are_Approved__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- P012 Security Bugs are closed or approved by ProdSec in the release that is open at the time of their discovery. --></help>
+        <label><!-- All Security Bugs Closed? --></label>
+        <name>All_Security_Bugs_Closed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- All Security Stories Closed? --></label>
+        <name>All_Security_Stories_Closed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- All Sprint DOD criteria must be met --></help>
+        <label><!-- All Sprint DOD Criteria Met --></label>
+        <name>All_Sprint_DOD_Criteria_Met__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Has the team tested their functionality on one.app for all the supported browsers as per the current S1 Support Matrix? --></help>
+        <label><!-- Release Tested on all one.app Browsers --></label>
+        <name>All_Supported_one_app_Browsers_Tested__c</name>
+        <picklistValues>
+            <masterLabel>N/A for this team</masterLabel>
+            <translation><!-- N/A for this team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Please provide details on why the team is in Yellow or Red status in  terms of meeting FF --></help>
+        <label><!-- Assessment Details --></label>
+        <name>Assessment_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Percent of existing automated tests that have been annotated.  FF criterion is at least 60%. --></help>
+        <label><!-- % Automated Tests Annotated (&gt;=80%) --></label>
+        <name>Automated_Tests_Annotated__c</name>
+    </fields>
+    <fields>
+        <help><!-- Legal, tax, regulatory, regional, Business SOX compliance met.  Business SOX narratives have been updated or plan to be updated as appropriate. --></help>
+        <label><!-- Biz SOX Compliance Met --></label>
+        <name>Biz_SOX_Compliance_Met__c</name>
+    </fields>
+    <fields>
+        <help><!-- Bugs Fixed the Week of Feature Freeze (explain if count is high relative to previous 2-3 weeks) --></help>
+        <label><!-- Bugs Fixed the Week of Feature Freeze --></label>
+        <name>Bugs_Fixed_the_Week_of_Feature_Freeze__c</name>
+    </fields>
+    <fields>
+        <help><!-- Bugs/TF Fixed the Week of Feature Freeze (explain if count is high relative to previous 2-3 weeks) --></help>
+        <label><!-- Bugs/TF Fixed the Week of Feature Freeze --></label>
+        <name>Bugs_TF_Fixed_the_Week_of_Feature_Freeze__c</name>
+    </fields>
+    <fields>
+        <label><!-- Build --></label>
+        <name>Build__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any changes to the Hub &amp; Agent? --></help>
+        <label><!-- Changes to Hub &amp; Agent --></label>
+        <name>Changes_to_Hub_Agent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any changes to the way things are logged? --></help>
+        <label><!-- Changes to Logging --></label>
+        <name>Changes_to_Logging__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any changes to ping.jsp? --></help>
+        <label><!-- Changes to ping.jsp --></label>
+        <name>Changes_to_ping_jsp__c</name>
+    </fields>
+    <fields>
+        <help><!-- Code Line is Potentially Releasable – All New Features and Enhancements meet the Definition of Done and Code Line meets Bug/TF Criteria below (Yes/No) --></help>
+        <label><!-- Code Line is Potentially Releasable --></label>
+        <name>Code_Line_is_Potentially_Releasable__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- Has team confirmed that it is not on the Buildmaster&apos;s Top 10 list? --></help>
+        <label><!-- Confirmed not on BM Top 10 List? --></label>
+        <name>Confirmed_not_on_BM_Top_10_List__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Has the team certified the Core Major Release candidate against all versions of the supported Hybrid Containers that are in development to be part of the S1 Major Release as per the current S1 Support Matrix?  (e.g. iOS, Android, Windows) --></help>
+        <label><!-- Release Tested on in-dev S1 Hybrid Apps --></label>
+        <name>Core_Release_against_Hybrid_Apps_in_Dev__c</name>
+        <picklistValues>
+            <masterLabel>N/A for this team</masterLabel>
+            <translation><!-- N/A for this team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Has the team certified the Core Major Release candidate against all &apos;Production&apos; versions of the supported Hybrid Containers as per the current S1 Support Matrix?  (e.g. iOS, Android, Windows) --></help>
+        <label><!-- Release Tested on Prod S1 Hybrid Apps --></label>
+        <name>Core_Release_against_Prod_Hybrid_Apps__c</name>
+        <picklistValues>
+            <masterLabel>N/A for this team</masterLabel>
+            <translation><!-- N/A for this team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- DB Upgrade Scripts Complete and Verified (Yes/No) --></help>
+        <label><!-- DB Upgrade Scripts Complete and Verified --></label>
+        <name>DB_Upgrade_Scripts_Complete_and_Verified__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This is work that has been moved to next release that has been placed behind a perm. --></help>
+        <label><!-- Deferred Work --></label>
+        <name>Deferred_Work__c</name>
+    </fields>
+    <fields>
+        <help><!-- Dependencies from other teams = Closed --></help>
+        <label><!-- Dependencies from other teams closed --></label>
+        <name>Dependencies_on_other_teams_closed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For the Engineering Cloud Lead (or their delegate) to optionally leave details regarding the Team Signoff Status. --></help>
+        <label><!-- Cloud Leadership Confirmation Details --></label>
+        <name>Dev_Leadership_Confirmation_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used by the Engineering Cloud Lead (or their delegate) to confirm the Team Signoff Status. --></help>
+        <label><!-- Cloud Leadership Sign Off Confirmed --></label>
+        <name>Dev_Leadership_Sign_Off_Confirmed__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the name of the Cloud Lead or delegate who is confirming signoff. --></help>
+        <label><!-- Cloud Lead Name --></label>
+        <name>Dev_Signoff_By__c</name>
+        <relationshipLabel><!-- Freeze Team Status (Cloud Lead Name) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Explain what your next steps are and what assistance you need. --></help>
+        <label><!-- Next steps or assistance needed --></label>
+        <name>EA_2Week_NotReady_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- C --></label>
+        <name>EA_2Week_NotReady_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if: &quot;We may be the team that causes the release to be delayed.&quot; --></help>
+        <label><!-- C --></label>
+        <name>EA_2Week_NotReady_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- A --></label>
+        <name>EA_2Week_Ready_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if: &quot;At Feature Freeze, we’ll be ready to release to GS0 and provide a great experience for internal and external users. If necessary, we will disable incomplete features at Feature Freeze.&quot; --></help>
+        <label><!-- A --></label>
+        <name>EA_2Week_Ready_Response__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain your proposed alternative solution and any assistance you need. --></help>
+        <label><!-- Comments or assistance needed --></label>
+        <name>EA_2Week_Risk_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- B --></label>
+        <name>EA_2Week_Risk_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if: &quot;Excluding hammer tests, we probably won&apos;t be done at Feature Freeze but we can release if we can come up with an alternative solution.&quot; --></help>
+        <label><!-- B --></label>
+        <name>EA_2Week_Risk_Response__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain what your next steps are and what assistance you need. --></help>
+        <label><!-- Next steps or assistance needed --></label>
+        <name>EA_6Week_NotReady_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- C --></label>
+        <name>EA_6Week_NotReady_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if: &quot;We may be the team that causes the release to be delayed.&quot; --></help>
+        <label><!-- C --></label>
+        <name>EA_6Week_NotReady_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- A --></label>
+        <name>EA_6Week_Ready_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if: &quot;At Feature Freeze, we’ll be ready to release to GS0 and provide a great experience for internal and external users. If necessary, we will disable incomplete features at Feature Freeze.&quot; --></help>
+        <label><!-- A --></label>
+        <name>EA_6Week_Ready_Response__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain your proposed alternative solution and any assistance you need. --></help>
+        <label><!-- Comments or assistance needed --></label>
+        <name>EA_6Week_Risk_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- B --></label>
+        <name>EA_6Week_Risk_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if: &quot;Excluding hammer tests, we probably won&apos;t be done at Feature Freeze but we can release if we can come up with an alternative solution.&quot; --></help>
+        <label><!-- B --></label>
+        <name>EA_6Week_Risk_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- 5 --></label>
+        <name>EA_Concerns_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter response for: &quot;What are your team&apos;s biggest concerns or risks? Do you want to provide any additional comments?&quot; --></help>
+        <label><!-- Concerns Response --></label>
+        <name>EA_Concerns_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- 3 --></label>
+        <name>EA_Perm_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter response for: &quot;Does your team have changes which are NOT being developed behind a perm OR are part of a Dark Launch? If yes, explain what are these changes?&quot; --></help>
+        <label><!-- Perm Response --></label>
+        <name>EA_Perm_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- 4 --></label>
+        <name>EA_Split_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- If team owns a Split Script, have you reviewed it for the next release?  If your team is in the Split Risk Group, have you verified that your feature set will continue to work after the next split? Has your team completed the required BUTC/Maven work? --></help>
+        <label><!-- Split Response --></label>
+        <name>EA_Split_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2 --></label>
+        <name>EA_Test_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter your response for: &quot;Does your team have adequate test coverage for any re-factoring work that is being done? If not, what is your plan to add test coverage?&quot; --></help>
+        <label><!-- Test Response --></label>
+        <name>EA_Test_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- 1 --></label>
+        <name>EA_Trust_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter response for question: &quot;Is your team on course to complete the TRUST work for which you planned? If not, explain why you changed course.&quot; --></help>
+        <label><!-- Trust Response --></label>
+        <name>EA_Trust_Response__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please provide details on why the team is in Yellow or Red status in  terms of meeting FF --></help>
+        <label><!-- Explain if Team is Yellow or Red --></label>
+        <name>Expalin_if_Team_is_Yellow_Red__c</name>
+    </fields>
+    <fields>
+        <help><!-- If the Answer is NO then provide an explanation and the plan. --></help>
+        <label><!-- Explain Unapproved 3rd Party Product --></label>
+        <name>Explain_3rd_Party_Product__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if the %Automated Tests Annotated is less than 80% --></help>
+        <label><!-- Explain % Automated Tests Annotated --></label>
+        <name>Explain_Automated_Tests_Annotated__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Bugs/TF to Fix exceeds maximum 2 per Full-Time Developer --></help>
+        <label><!-- Explain Bugs/TF to Fix --></label>
+        <name>Explain_Bugs_TF_to_Fix__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Fixed Bugs/TF to Verify exceeds maximum 2 per Full-Time QE --></help>
+        <label><!-- Explain Bugs/TF to Verify --></label>
+        <name>Explain_Bugs_TF_to_Verify__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Closed P0/P1/P2 Bugs and Closed Bugs-with-Cases that do not have automation is &gt; 0 --></help>
+        <label><!-- Explain Bugs missing Automation --></label>
+        <name>Explain_Bugs_missing_Automation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Bugs to Fix exceeds maximum 1 per Full-Time Developer --></help>
+        <label><!-- Explain Bugs to Fix --></label>
+        <name>Explain_Bugs_to_Fix__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Fixed Bugs to Verify exceeds maximum 1 per Full-Time QE --></help>
+        <label><!-- Explain Bugs to Verify --></label>
+        <name>Explain_Bugs_to_Verify__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain Code Line is Potentially Releasable – All New Features and Enhancements meet the Definition of Done and Code Line meets Bug/TF Criteria below (Yes/No) --></help>
+        <label><!-- Explain if not Potentially Releasable --></label>
+        <name>Explain_Code_Line_is_Potentially_Releasa__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if DB Upgrade Scripts are not Complete and Verified. --></help>
+        <label><!-- Explain DB Upgrade Scripts Incomplete --></label>
+        <name>Explain_DB_Upgrade_Scripts_Incomplete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Extended ftest Test Failures --></label>
+        <name>Explain_Extended_ftest_Test_Failures__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High TF Fix Rate --></label>
+        <name>Explain_High_TF_Fix_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain High Risk Perf Features --></label>
+        <name>Explain_High__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to explain any legal, tax, regulatory, regional, business or IT SOX compliance not met or N/A. --></help>
+        <label><!-- Explain IT Compliance Not Met --></label>
+        <name>Explain_IT_Compliance_Not_Met__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to explain if data conversion plan has not been automated, tested, reviewed, validated or potentially performance tuned. --></help>
+        <label><!-- Explain IT Conversion Plan Incomplete --></label>
+        <name>Explain_IT_Conversion_Plan_Incomplete__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to explain if a production support model has not been documented, reviewed or signed off (Tier 1, Tier 2, etc.). --></help>
+        <label><!-- Explain IT Prod Support Model Incomplete --></label>
+        <name>Explain_IT_Prod_Support_Model_Incomplete__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze to explain if rollback and contingency plans are not documented, tested or ready for IT VAT and CAB review. --></help>
+        <label><!-- Explain IT Rollback Plan Incomplete --></label>
+        <name>Explain_IT_Rollback_Plan_Incomplete__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Freature Freeze Criteria to explain any Security Reviews, testing or fixes complete. --></help>
+        <label><!-- Explain IT Security Reviews Incomplete --></label>
+        <name>Explain_IT_Security_Reviews_Incomplete__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to explain if the stage environment is not prepared for the Release Sprint/UAT. --></help>
+        <label><!-- Explain IT Stage Environment not ready --></label>
+        <name>Explain_IT_Stage_Environment_not_ready__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to explain any IT VAT architecture reviews, requirements or exceptions that have not been performed and noted. --></help>
+        <label><!-- Explain IT VAT Review Incomplete --></label>
+        <name>Explain_IT_VAT_Review_Incomplete__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if the Java Package or PL/SQL Coverage is &lt; 20% --></help>
+        <label><!-- Explain Java Package and PL/SQL Coverage --></label>
+        <name>Explain_Java_Package_and_PL_SQL_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Num P1 Bugs/TF to Fix/Verify --></label>
+        <name>Explain_Num_P1_Bugs_TF_to_Fix_Verify__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Num P2 Bugs/TF to Fix/Verify --></label>
+        <name>Explain_Num_P2_Bugs_TF_to_Fix_Verify__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain Open P0, P1 &amp; P2 Bugs --></help>
+        <label><!-- Explain Open Bugs --></label>
+        <name>Explain_Open_Bugs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Open Feature Requests --></label>
+        <name>Explain_Open_Feature_Requests__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain Open Non Deterministic Test (NDT) Not Required for Sign-off --></help>
+        <label><!-- Explain Open Non Deterministic Test --></label>
+        <name>Explain_Open_Non_Deterministic_Test_NDT__c</name>
+    </fields>
+    <fields>
+        <help><!-- P012 Bugs = Zero --></help>
+        <label><!-- Explain Open P012 Bugs --></label>
+        <name>Explain_Open_P012_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- All P0,1,2 Bugs from RCAs older than 1 month, *including* previous or current releases should be closed. --></help>
+        <label><!-- Explain Open RCA Bugs --></label>
+        <name>Explain_Open_RCA_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- All User-stories from RCAs older than 1 month, must be closed or scheduled for a release or sprint --></help>
+        <label><!-- Explain Open RCA Stories --></label>
+        <name>Explain_Open_RCA_Stories__c</name>
+    </fields>
+    <fields>
+        <help><!-- All ToDos (all priorities) from RCAs older than 1 month, *including* previous or current releases should be closed. --></help>
+        <label><!-- Explain Open RCA To Do&apos;s --></label>
+        <name>Explain_Open_RCA_To_D__c</name>
+    </fields>
+    <fields>
+        <help><!-- Regressions = Zero --></help>
+        <label><!-- Explain Open Regression --></label>
+        <name>Explain_Open_Regression__c</name>
+    </fields>
+    <fields>
+        <help><!-- P012 Security Bugs are closed or approved by ProdSec in the release that is open at the time of their discovery. --></help>
+        <label><!-- Explain Open Security bugs --></label>
+        <name>Explain_Open_Security_bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- TF &gt; 1 Week = Zero {Inc Flappers} --></help>
+        <label><!-- Explain Open TF &gt; 1 Week {Inc Flappers} --></label>
+        <name>Explain_Open_TF_1_Week__c</name>
+    </fields>
+    <fields>
+        <help><!-- TF on basic ftest, basic selenium &amp; utest = Zero
+(Does not inc Flappers) --></help>
+        <label><!-- Explain Open TF&apos;s --></label>
+        <name>Explain_Open_TF__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of Open User Stories – excluding “Release Sprint Theme” stories (0) --></help>
+        <label><!-- Explain Open User Stories --></label>
+        <name>Explain_Open_User_Stories__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if P0/Blocking Bugs are &gt; 0 --></help>
+        <label><!-- Explain Your P0/Blocking Bugs --></label>
+        <name>Explain_P0_Blocking_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide an explanation for any open P0 bugs at FF. --></help>
+        <label><!-- Explain P0 Bugs at FF --></label>
+        <name>Explain_P0_Bugs_at_FF__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain P1/P2 Bugs/TF &gt;1 wk old --></label>
+        <name>Explain_P1_P2_Bugs_TF_1_wk_old__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain Pending Auto Integrations --></label>
+        <name>Explain_Pending_Auto_Integrations__c</name>
+    </fields>
+    <fields>
+        <help><!-- If not met, please explain --></help>
+        <label><!-- Explain Sprint DOD Criteria --></label>
+        <name>Explain_Sprint_DOD_Criteria__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain the number of Test Failures to Fix. --></help>
+        <label><!-- Explain Test Failures to Fix --></label>
+        <name>Explain_TF_to_Fix__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if Total Number of Test Failures to Fix or Verify more than 1 week old is &gt; 0 --></help>
+        <label><!-- Explain Test Failures  &gt;1 week --></label>
+        <name>Explain_TF_to_Fix_or_Verify_1_week_0__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if Biz SOX Not Met --></label>
+        <name>Explain_if_Biz_Sox_Not_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if Blocking Bugs Exist on Freeze --></label>
+        <name>Explain_if_Blocking_Bugs_Exist_on_Freeze__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to explain if IT Infrastructure required is not setup, configured, tested or documented (if required for Apps). --></help>
+        <label><!-- Explain IT Infra not Met --></label>
+        <name>Explain_if_IT_Infra_not_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if Not Complete --></label>
+        <name>Explain_if_Not_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if PerfEng Requirements not Met --></label>
+        <name>Explain_if_PerfEng_Requirements_not_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if Regressions Exist on Freeze --></label>
+        <name>Explain_if_Regressions_Exist_on_Freeze__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if Scripts not Verified --></label>
+        <name>Explain_if_Scripts_not_Verified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if Solution Swimlanes not Built --></label>
+        <name>Explain_if_Solution_Swimlanes_not_Built__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain if TF Count is High --></label>
+        <name>Explain_if_TF_Count_is_High__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if your team has TF on basic ftest, basic selenium or utest. --></help>
+        <label><!-- Explain if TF Exist --></label>
+        <name>Explain_if_TF_Exist__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain if the Test Failure rate is not trending downward. --></help>
+        <label><!-- Explain if TF not Trending Down --></label>
+        <name>Explain_if_TF_not_Trending_Down__c</name>
+    </fields>
+    <fields>
+        <help><!-- By signing Off Teams are confirming:
+Work for Pre, Post, Retired scripts are done.   
+Identified Features to be enabled with Retired Scripts
+Completed all action items assigned to them by ZD Team --></help>
+        <label><!-- Explain if Unable to Sign off for ZD --></label>
+        <name>Explain_if_Unable_to_Sign_off_for_ZD__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT VAT architecture reviews, requirements and exceptions have been performed and noted. --></help>
+        <label><!-- Explain if VAT review not Complete --></label>
+        <name>Explain_if_VAT_review_not_Complete__c</name>
+    </fields>
+    <fields>
+        <help><!-- Bugs Fixed the Week of Feature Freeze (explain if count is high relative to previous 2-3 weeks) --></help>
+        <label><!-- Explain if Bug Count is High --></label>
+        <name>Explain_if_bug_count_is_high__c</name>
+    </fields>
+    <fields>
+        <help><!-- P0/P1/P2 Bugs Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks) --></help>
+        <label><!-- Explain if Bugs not Trending Down --></label>
+        <name>Explain_if_bugs_not_trending_down__c</name>
+    </fields>
+    <fields>
+        <help><!-- Bugs/TF Fixed the Week of Feature Freeze (explain if count is high relative to previous 2-3 weeks) --></help>
+        <label><!-- Explain if Count is High --></label>
+        <name>Explain_if_count_is_high__c</name>
+    </fields>
+    <fields>
+        <help><!-- No team should put the release at risk – Any Feature or change that is large enough or invasive enough to risk the release is behind a permission or equivalent safety valve (Yes/No) --></help>
+        <label><!-- Explain if not Behind a Perm or Equiv --></label>
+        <name>Explain_if_not_Behind_a_Perm_or_Equiv__c</name>
+    </fields>
+    <fields>
+        <help><!-- P0/P1/P2 Bugs/TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks) --></help>
+        <label><!-- Explain if not Trending Downward --></label>
+        <name>Explain_if_not_trending_downward__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Are all features complete and meeting the criteria of the Definition of Done? --></help>
+        <label><!-- Feature Complete and DoD Achieved --></label>
+        <name>Features_Complete_and_DoD_Achieved__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Teams are required to confirm that all features will be enabled within 24 hrs of the Release --></help>
+        <label><!-- Features Enabled Within 24hrs of Release --></label>
+        <name>Features_Enabled_Within_24hrs_of_Relea__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Call out any features that will be enabled when the retired scripts are run in the new zero downtime process. --></help>
+        <label><!-- Features Enabled by Retirement Scripts --></label>
+        <name>Features_Enabled_by_Retirement_Scripts__c</name>
+    </fields>
+    <fields>
+        <help><!-- Teams are required to confirm that all features will be enabled within 24 hrs of the Release --></help>
+        <label><!-- Features Enabled within 24hrs of Release --></label>
+        <name>Features_Enabled_within_24hrs__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Are incomplete features behind a perm and disabled? --></help>
+        <label><!-- Feature behind perm / disabled --></label>
+        <name>Features_behind_perm_disabled__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- What does it mean to be ready?
+
+•	Test plans are finalized &amp; reviewed.
+
+•	Features with known performance risk are disabled by default (behind perm, config switch) --></help>
+        <label><!-- Features with Perf Test Outstanding --></label>
+        <name>Features_with_Perf_Test_Outstanding__c</name>
+    </fields>
+    <fields>
+        <label><!-- Freeze Type --></label>
+        <name>Freeze_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- GUS Signoff Confirmed --></label>
+        <name>GUS_Signoff_Confirmed__c</name>
+    </fields>
+    <fields>
+        <label><!-- GUS Signoff Date --></label>
+        <name>GUS_Signoff_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Confirm that all legal, tax, regulatory, regional, business and IT SOX compliance has been met for the features being released. --></help>
+        <label><!-- IT Compliance Met --></label>
+        <name>IT_Compliance_Met__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to ensure a data conversion plan has been automated, tested, reviewed, validated and potentially performance tuned. --></help>
+        <label><!-- IT Data Conversion Plan Complete --></label>
+        <name>IT_Data_Conversion_Plan_Complete__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Infrastructure is setup, configured, tested and documented (if required). --></help>
+        <label><!-- IT Infra Requirements Met --></label>
+        <name>IT_Infra__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to ensure a Production Support model has been documented, reviewed and signed off (Tier 1, Tier 2, etc.) --></help>
+        <label><!-- IT Prod Support Model Complete --></label>
+        <name>IT_Prod_Support_Model_Complete__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- IT Feature Freeze Criteria to ensure rollback and contingency plans have been documented, tested and are ready for IT VAT and CAB review. --></help>
+        <label><!-- IT Rollback Plan Complete --></label>
+        <name>IT_Rollback_Plan_Complete__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Security reviews, testing and fixes complete. --></help>
+        <label><!-- IT Security Reviews Complete --></label>
+        <name>IT_Security_Reviews_Complete__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- All 4 swimlanes for the solution are built and utilized (dev, test, stage, prod).  Dev/Test must be part of Sprint.  Stage must be used for UAT. --></help>
+        <label><!-- IT Stage Environment Ready --></label>
+        <name>IT_Stage_Environment_Ready__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- IT VAT has performed a vendor assessment or waived --></help>
+        <label><!-- IT VAT Questionnaire Complete --></label>
+        <name>IT_VATQuestionnaire_Complete__c</name>
+    </fields>
+    <fields>
+        <help><!-- IT VAT architecture reviews, requirements and exceptions have been performed and noted --></help>
+        <label><!-- IT VAT Review Complete --></label>
+        <name>IT_VAT_Review_Complete__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- IT VAT architecture reviews, requirements and exceptions must be performed and noted. --></help>
+        <label><!-- IT  VAT Architecture Review Completed --></label>
+        <name>IT_VAT_architecture_reviews_requirement__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is the work behind a perm? --></label>
+        <name>Is_the_work_behind_a_perm__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA</masterLabel>
+            <translation><!-- NA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Percent code coverage for Java Packages and PL/SQL modules.  FF criterion is at least 20%. --></help>
+        <label><!-- # of Java Pkgs and PLSQL Pkgs &lt; 20% --></label>
+        <name>Java_Package_PLSQL_Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Links you to the best place to ask questions or find important information, like the S1 Support Matrix for the current release. --></help>
+        <label><!-- LINK to S1 Chatter Group --></label>
+        <name>LINK_to_S1_Chatter_Group__c</name>
+    </fields>
+    <fields>
+        <help><!-- No team should put the release at risk – Any Feature or change that is large enough or invasive enough to risk the release is behind a permission or equivalent safety valve (Yes/No) --></help>
+        <label><!-- Large/Invasive changes are behind a perm --></label>
+        <name>Large_Invasive_changes_are_behind_a_perm__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- List NEW services which require monitoring ON &amp;/OR Existing services being DISABLED --></help>
+        <label><!-- List Monitoring Requirements --></label>
+        <name>List_Monitoring_Requirements__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check the box if you are filing an exception request. PLEASE FILL OUT EXCEPTION RECORD AT THE BOTTOM OF THIS PAGE. --></help>
+        <label><!-- Exception --></label>
+        <name>Minor_Exception__c</name>
+    </fields>
+    <fields>
+        <help><!-- Any new services that need monitoring turned on? --></help>
+        <label><!-- New Services Requiring Monitoring --></label>
+        <name>New_Services_Requiring_Monitoring__c</name>
+    </fields>
+    <fields>
+        <help><!-- There are no Blocking Bugs on the Freeze Branch. --></help>
+        <label><!-- No Blocking Bugs on the Freeze Branch --></label>
+        <name>No_Blocking_Bugs_on_the_Freeze_Branch__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- P1/P2&apos;s must be noted as exceptions and explained at WRoR. --></help>
+        <label><!-- No Open P0 Bugs at FF --></label>
+        <name>No_Open_P0_Bugs_at_FF__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- IT RM standard FF criteria. --></help>
+        <label><!-- No Open User Stories --></label>
+        <name>No_Open_User_Stories__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- There are no Regressions on the Freeze Branch. --></help>
+        <label><!-- No Regressions on the Freeze Branch --></label>
+        <name>No_Regressions_on_the_Freeze_Branch__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Number of P1 bugs or test failures to fix or verify.  FF criterion is no more than 1. --></help>
+        <label><!-- Num P1 Bugs/TF to Fix/Verify (&lt;=1) --></label>
+        <name>Num_P1_Bugs_Test_Failures_to_Fix_Verify__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P1/P2 Bugs or Test Failures &gt; 1 week old.  FF criterion is 0. --></help>
+        <label><!-- Num P1/P2 Bugs/TF &gt;1 wk old (0) --></label>
+        <name>Num_P1_P2_Bugs_Test_Failures_1_week_old__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P1/P2 Bugs and Test Failures to Fix. --></help>
+        <label><!-- Num P1/P2 Bugs/Test Failures to Fix --></label>
+        <name>Num_P1_P2_Bugs_Test_Failures_to_Fix__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P1/P2 Bugs and Test Failures to Verify --></help>
+        <label><!-- Num P1/P2 Bugs/Test Failures to Verify --></label>
+        <name>Num_P1_P2_Bugs_Test_Failures_to_Verify__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of automated Complex Business Scenarios.  FF criterion is at least 5. --></help>
+        <label><!-- Number of Automated CBS (&gt;=5) --></label>
+        <name>Number_of_Automated_CBS_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P0, BLOCKING, RELEASE BLOCKING, or FEATURE BLOCKING bugs that are not Verified and Closed.  FF criterion is 0. --></help>
+        <label><!-- Number of P0/Blocking Bugs (0) --></label>
+        <name>Number_of_Blocking_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Bugs/TF to Fix (maximum 2 per Full-Time Developer) --></help>
+        <label><!-- Number of Bugs/TF to Fix (max 2/Dev) --></label>
+        <name>Number_of_Bugs_TF_to_Fix_max_2_Dev__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Fixed Bugs/TF to Verify (maximum 2 per Full-Time QE) --></help>
+        <label><!-- Number of Bugs/TF to Verify (max 2/QE) --></label>
+        <name>Number_of_Bugs_TF_to_Verify_max_2_QE__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Closed P0/P1/P2 Bugs and Closed Bugs-with-Cases that do not have automation (0) --></help>
+        <label><!-- Number of Bugs missing Automation (0) --></label>
+        <name>Number_of_Bugs_missing_Automation_0__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Bugs to Fix (maximum 1 per Full-Time Developer) --></help>
+        <label><!-- Number of Bugs to Fix (max 1/Dev) --></label>
+        <name>Number_of_Bugs_to_Fix_max_1_Dev__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Fixed Bugs to Verify (maximum 1 per Full-Time QE) --></help>
+        <label><!-- Number of Bugs to Verify (max 1/QE) --></label>
+        <name>Number_of_Bugs_to_Verify_max_1_QE__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of open feature requests scheduled for this release.  FF criterion is 0. --></help>
+        <label><!-- Number of Open Feature Requests (0) --></label>
+        <name>Number_of_Open_Feature_Requests__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of Open User Stories – excluding “Release Sprint Theme” stories (0) --></help>
+        <label><!-- Number of Open User Stories (0) --></label>
+        <name>Number_of_Open_User_Stories_0__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of P2 bugs and test failures to fix or verify.  FF criterion is no more than 10. --></help>
+        <label><!-- Num P2 Bugs/TF to Fix/Verify (&lt;=10) --></label>
+        <name>Number_of_P2_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of TF to Fix &gt;1 week old (0) --></help>
+        <label><!-- Number of TF to Fix &gt;1week (0) --></label>
+        <name>Number_of_TF_to_Fix_1week_0__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of TF to Fix (max 1/Dev) --></label>
+        <name>Number_of_TF_to_Fix_max_1_Dev__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of TF to Fix or Verify &gt;1 week old (0) --></help>
+        <label><!-- Number of TF to Fix or Verify &gt;1week (0) --></label>
+        <name>Number_of_TF_to_Fix_or_Verify_1week_0__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of open Ftest failures. --></help>
+        <label><!-- Number of Ftest Failures --></label>
+        <name>Number_of_Test_Failures__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does your team have any open Accessibility bugs? --></help>
+        <label><!-- Open Accessibility Bugs --></label>
+        <name>Open_Accessibility_Bugs__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Applicable UI</masterLabel>
+            <translation><!-- No Applicable UI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Anything of interest that Release Engineering should be aware of? --></help>
+        <label><!-- Other Changes for RelEng --></label>
+        <name>Other_Changes_for_RelEng__c</name>
+    </fields>
+    <fields>
+        <help><!-- Anything of interest that Tech Ops should be aware of? --></help>
+        <label><!-- Other Changes for Tech Ops --></label>
+        <name>Other_Changes_for_Tech_Ops__c</name>
+    </fields>
+    <fields>
+        <help><!-- P012 Security Bugs are closed or approved by ProdSec in the release that is open at the time of their discovery. --></help>
+        <label><!-- P012 Security Bugs Closed --></label>
+        <name>P012_Security_Bugs_Closed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- All P,0,1,2 Bugs from RCAs older than 1 month are closed, *including* previous or current releases --></help>
+        <label><!-- P012 Bugs from RCA&apos;s &gt; 1 Month: Closed --></label>
+        <name>P0_1_2_Bugs_from_RCA_1_Month_Closed__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- P0/P1/P2 Bugs Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks) --></help>
+        <label><!-- P0/P1/P2 Bugs Found the Week of FF --></label>
+        <name>P0_P1_P2_Bugs_Found_the_Week_of_FF__c</name>
+    </fields>
+    <fields>
+        <help><!-- P0/P1/P2 Bugs/TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks) --></help>
+        <label><!-- P0/P1/P2 Bugs/TF Found the Week of FF --></label>
+        <name>P0_P1_P2_Bugs_TF_Found_the_Week_of_FF__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Number of Pending Auto-Integrations from 164 -&gt; /main.  Feature Freeze Requirement is 0. --></help>
+        <label><!-- Total # of Pending Auto-Integrations (0) --></label>
+        <name>Pending_Auto_Integrations_0__c</name>
+    </fields>
+    <fields>
+        <help><!-- Performance risk assessment completed for all features.   All high risk performance impacting features have been adequately tested and/or disabled by default (e.g. behind perm, or config) --></help>
+        <label><!-- High Risk Performance:Tested/Behind Perm --></label>
+        <name>Perf_Impact_Features_Tested_Behind_Perm__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Performance Engineering requirements have been met. --></help>
+        <label><!-- Performance Engineering Requirements Met --></label>
+        <name>Performance_Engineering_Requirements_Met__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- What does it mean to be ready?
+
+Test plans are finalized &amp; reviewed.
+
+Features with known performance risk are disabled by default (behind perm, config switch) --></help>
+        <label><!-- Performance Self Assessment --></label>
+        <name>Performance_Self_Assessment__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Use this for updates on status after Feature Freeze. --></help>
+        <label><!-- Post Feature Freeze Updates --></label>
+        <name>Post_Feature_Freeze_Updates__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide details if &quot;No&quot; is selected for the &quot;Core Release against Hybrid Apps in Dev&quot; field. --></help>
+        <label><!-- Provide Details for Core/In-dev Hybrid --></label>
+        <name>Provide_Details_for_Core_Hybrid_in_Dev__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide details if Scale Impact is not documented. --></help>
+        <label><!-- Provide Details for Scale Impact --></label>
+        <name>Provide_Details_for_Scale_Impact__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide details if &quot;No&quot; is selected for the &quot;All supported one.app browsers tested&quot; field. --></help>
+        <label><!-- Provide Details for one.app Testing --></label>
+        <name>Provide_Details_for_one_app_Testing__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide details explaining how a perm is used to disable incomplete features. --></help>
+        <label><!-- Provide details on your features perm --></label>
+        <name>Provide_behind_perm_details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide details if &quot;No&quot; is selected for the &quot;Core Release against Prod Hybrid Apps&quot; field. --></help>
+        <label><!-- Provide Details for Core/Prod Hybrid --></label>
+        <name>Provide_details_for_Core_Prod_Hybrid__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: Feature Enablement must be detailed in Solutions Overview (SO) --></help>
+        <label><!-- Provide details if SO not created --></label>
+        <name>Provide_details_if_SO_not_created__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All P012 bugs CLOSED --></help>
+        <label><!-- Provide details on open P012 Bugs --></label>
+        <name>Provide_details_on_open_P012_Bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All User Stories from RCAs older than 1 month CLOSED or SCHEDULED --></help>
+        <label><!-- Provide details on open RCA Stories --></label>
+        <name>Provide_details_on_open_RCA_Stories__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All ToDos (any priority) from RCAs older than 1 month CLOSED, including previous or current release --></help>
+        <label><!-- Provide details on open RCA ToDos --></label>
+        <name>Provide_details_on_open_RCA_ToDos__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All P012 bugs from RCAs older than 1 month CLOSED, including previous or current release --></help>
+        <label><!-- Provide details on open RCA bugs --></label>
+        <name>Provide_details_on_open_RCA_bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All Regressions CLOSED --></help>
+        <label><!-- Provide details on open Regressions --></label>
+        <name>Provide_details_on_open_Regressions__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All P01 Security bugs and P2 Security bugs that are &gt; 120 days old CLOSED --></help>
+        <label><!-- Provide details on open Security bugs --></label>
+        <name>Provide_details_on_open_Security_bugs__c</name>
+    </fields>
+    <fields>
+        <help><!-- FF Criteria: All bugs &gt; 45 days closed; RF Criteria: All bugs closed --></help>
+        <label><!-- Provide open Accessibility bug details --></label>
+        <name>Provide_open_Accessibility_bug_details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide details on the status of dependencies on other teams. --></help>
+        <label><!-- Provide details on open dependencies --></label>
+        <name>Provide_other_team_dependencies_details__c</name>
+    </fields>
+    <fields>
+        <label><!-- QE Leadership Confirmation Details --></label>
+        <name>QE_Leadership_Confirmation_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used by QE Leader responsible for confirming team signoff. --></help>
+        <label><!-- QE Leadership Sign Off Confirmed --></label>
+        <name>QE_Leadership_Sign_Off_Confirmed__c</name>
+    </fields>
+    <fields>
+        <label><!-- QE Signoff By --></label>
+        <name>QE_Signoff_By__c</name>
+        <relationshipLabel><!-- Freeze Team Status (QE Signoff By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RCA Dashboard link --></label>
+        <name>RCA_Dashboard_link__c</name>
+    </fields>
+    <fields>
+        <help><!-- All User-stories from RCAs older than 1 month, must be closed or scheduled for a release or sprint --></help>
+        <label><!-- RCA Stories &gt;1 Month Closed or Scheduled --></label>
+        <name>RCA_Stories_1_Month_Closed_Scheduled__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- All ToDos (*ALL Priorities**) from RCAs older than 1 month, *including* previous or current releases are closed. --></help>
+        <label><!-- To Do&apos;s from RCA&apos;s &gt; 1 Month: Closed --></label>
+        <name>RCA_To_Do_s_1_Month_Closed__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Link to Collaborative Meta-process record for  Build to Scale. --></help>
+        <label><!-- Scale Impact CMP --></label>
+        <name>Scale_Impact_CMP__c</name>
+    </fields>
+    <fields>
+        <help><!-- Has the Team reviewed and documented scale limitations for all new/updated features? --></help>
+        <label><!-- Scale Impact Documented? --></label>
+        <name>Scale_Impact_Documented__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Security Dashboard link --></label>
+        <name>Security_Dashboard_link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signoff Date --></label>
+        <name>Signoff_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enablement slide in the Solution Overview is complete and delivered to Product Ops and Feature Enablement field is updated in Solution Overview in Scrumforce. --></help>
+        <label><!-- Solution Overview Complete --></label>
+        <name>Solution_Overview_Complete__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Feature Enablement details are documented in the Solution Overview object --></help>
+        <label><!-- Solution Overview Created --></label>
+        <name>Solutions_Overview_Complete__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Any existing services being disabled and need monitoring turned off? --></help>
+        <label><!-- Stop Monitoring Disabled Services --></label>
+        <name>Stop_Monitoring_Disabled_Services__c</name>
+    </fields>
+    <fields>
+        <help><!-- All 4 swimlanes for the solution are built and utilized (dev, test, stage, prod).  
+
+Dev/Test must be part of Sprint.  Stage must be used for UAT. --></help>
+        <label><!-- Swimlane Solutions Built &amp; Utilized --></label>
+        <name>Swimlane_Solutions_Built_Utilized__c</name>
+    </fields>
+    <fields>
+        <label><!-- TF Fixed the Week of Feature Freeze --></label>
+        <name>TF_Fixed_the_Week_of_Feature_Freeze__c</name>
+    </fields>
+    <fields>
+        <help><!-- # of TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks) --></help>
+        <label><!-- TF Found the Week of Feature Freeze --></label>
+        <name>TF_Found_the_Week_of_Feature_Freeze__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team Comments --></label>
+        <name>Team_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team Release --></label>
+        <name>Team_Release__c</name>
+        <relationshipLabel><!-- Freeze Team Status --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Team Signoff Confirmed --></label>
+        <name>Team_Signoff_Confirmed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team Signoff Status Details --></label>
+        <name>Team_Signoff_Status_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team Signoff Status --></label>
+        <name>Team_Signoff_Status__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes / does not meet criteria</masterLabel>
+            <translation><!-- Yes / does not meet criteria --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes / meets criteria</masterLabel>
+            <translation><!-- Yes / meets criteria --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Team signs off by checking the box. --></help>
+        <label><!-- Team Signoff --></label>
+        <name>Team_Signoff__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date the Scrum Team signed off on Feature Freeze. --></help>
+        <label><!-- Team Signed Off --></label>
+        <name>Team_Signs_Off__c</name>
+    </fields>
+    <fields>
+        <help><!-- If your team is at risk of not meeting any of the Feature Freeze Criteria listed on this record, you should mark your status as Red or Yellow and explain reasons why. --></help>
+        <label><!-- Assess Teams Risk of meeting FF --></label>
+        <name>Teams_Self_Assessment__c</name>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Upgrade scripts have been verified in GUS upgrade environment. --></help>
+        <label><!-- Upgrade Scripts Verified in Upgrade Env --></label>
+        <name>Upgrade_Scripts_Verified_in_Upgrade_Env__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Database scripts are complete and incorporated into database upgrade process. --></help>
+        <label><!-- DB Upgrade Scripts Complete --></label>
+        <name>Upgrade__c</name>
+        <picklistValues>
+            <masterLabel>False</masterLabel>
+            <translation><!-- False --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True</masterLabel>
+            <translation><!-- True --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- New Criteria for 172: 
+
+Zero TF on these test suites at time of FF. --></help>
+        <label><!-- Zero TF:basicftest, basicselenium, utest --></label>
+        <name>X0_TF_on_basicftest_basicselem_test__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sign Off confirms:
+1. All work for Pre, Post, Retired scripts is done
+2. Features to be enabled with Retired Scripts have been identified
+3. Confirm sub-systems schedule in Zero Downtime runlist
+4. Action items assigned by Zero Downtime Team are done --></help>
+        <label><!-- Team Sign Off for Zero Downtime --></label>
+        <name>Zero_Downtime_Sign_Off__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Number of Fixed Bugs to Verify (0) --></label>
+        <name>of_Fixed_Bugs_to_Verify_Zero__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Open P0, P1 , P2 Bugs (0) --></label>
+        <name>of_Open_P0_P1_P2_Bugs_ZERO__c</name>
+    </fields>
+    <layouts>
+        <layout>Feature Freeze Team Status Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Plan --></label>
+            <section>Deployment Plan</section>
+        </sections>
+        <sections>
+            <label><!-- FF Criteria Comments: --></label>
+            <section>FF Criteria Comments:</section>
+        </sections>
+        <sections>
+            <label><!-- FF Criteria Status Dashboard: --></label>
+            <section>FF Criteria Status Dashboard:</section>
+        </sections>
+        <sections>
+            <label><!-- GUS Release Signoff --></label>
+            <section>GUS Release Signoff</section>
+        </sections>
+        <sections>
+            <label><!-- RCA and Security FF Criteria: --></label>
+            <section>RCA and Security FF Criteria:</section>
+        </sections>
+        <sections>
+            <label><!-- Remaining FF Criteria: --></label>
+            <section>Remaining FF Criteria:</section>
+        </sections>
+        <sections>
+            <label><!-- Team Self Assessment --></label>
+            <section>Team Self Assessment</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Streamlined FF Team Status Layout</layout>
+        <sections>
+            <label><!-- Accessibility Criteria --></label>
+            <section>Accessibility Criteria</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Feature Freeze Comments ~ Feature Complete --></label>
+            <section>Feature Freeze Comments ~ Feature Complete</section>
+        </sections>
+        <sections>
+            <label><!-- Feature Freeze Comments ~ Feature Incomplete --></label>
+            <section>Feature Freeze Comments ~ Feature Incomplete</section>
+        </sections>
+        <sections>
+            <label><!-- SIGN OFF STATUS: --></label>
+            <section>SIGN OFF STATUS:</section>
+        </sections>
+        <sections>
+            <label><!-- Salesforce1 Certifications: --></label>
+            <section>Salesforce1 Certifications:</section>
+        </sections>
+        <sections>
+            <label><!-- Scale Impact --></label>
+            <section>Scale Impact</section>
+        </sections>
+        <sections>
+            <label><!-- Security Criteria: --></label>
+            <section>Security Criteria:</section>
+        </sections>
+        <sections>
+            <label><!-- Team Self Assessment --></label>
+            <section>Team Self Assessment</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Streamlined RF Team Status Layout</layout>
+        <sections>
+            <label><!-- Accessibility Criteria --></label>
+            <section>Accessibility Criteria</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Release Freeze Comments ~ Feature Complete --></label>
+            <section>Release Freeze Comments ~ Feature Complete</section>
+        </sections>
+        <sections>
+            <label><!-- Release Freeze Comments ~ Feature Incomplete --></label>
+            <section>Release Freeze Comments ~ Feature Incomplete</section>
+        </sections>
+        <sections>
+            <label><!-- SIGN OFF STATUS: --></label>
+            <section>SIGN OFF STATUS:</section>
+        </sections>
+        <sections>
+            <label><!-- Salesforce1 Certifications: --></label>
+            <section>Salesforce1 Certifications:</section>
+        </sections>
+        <sections>
+            <label><!-- Scale Impact --></label>
+            <section>Scale Impact</section>
+        </sections>
+        <sections>
+            <label><!-- Security Criteria: --></label>
+            <section>Security Criteria:</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Assessment of Team&apos;s Status before Feature Freeze assessment --></description>
+        <label><!-- Early Assessment Record --></label>
+        <name>Early_Assessment_Record</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Feature Freeze team Sign off record --></description>
+        <label><!-- FF Sign Off Record --></label>
+        <name>FF_Sign_Off_Record</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Release Freeze team Sign off record --></description>
+        <label><!-- RF Sign Off Record --></label>
+        <name>RF_Sign_Off_Record</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You must provide details when reporting open Accessibility bugs. --></errorMessage>
+        <name>Accessibility_details_required_bugs_open</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Details must be provided when reporting open RCA bugs that are older than one month. --></errorMessage>
+        <name>Details_must_be_provided_open_RCA_bugs</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Details must be provided when reporting RCA stories that are older than one month that are not Closed or Scheduled. --></errorMessage>
+        <name>Details_must_be_provided_open_RCAstories</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Details must be provided when reporting open RCA To Do that are older than one month. --></errorMessage>
+        <name>Details_must_be_provided_open_RCAtodos</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Details must be provided when reporting open P0, P1 or P2 Security bugs. --></errorMessage>
+        <name>Details_must_be_provided_open_Secur_bugs</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must provide details if signing off without meeting criteria or when setting Signoff Status to &quot;No&quot;. --></errorMessage>
+        <name>Must_Explain_If_Not_Meeting_Criteria</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must provide details if Team status is Yellow or Red. --></errorMessage>
+        <name>Must_Explain_if_Yellow_or_Red</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Choose only one of the responses in the 2 Week Overall Assessment section. --></errorMessage>
+        <name>One_2Week_Response_Only</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Choose only one of the responses in the 6-8 Week Overall Assessment section. --></errorMessage>
+        <name>One_6Week_Response_Only</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Choose one of the responses in the 6-8 Week Overall Assessment section. --></errorMessage>
+        <name>One_6Week_Response_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Details must be provided when dependencies on other teams are not closed. --></errorMessage>
+        <name>Provide_details_when_dependencies_open</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Details must be provided when feature is not behind perm and disabled when feature is not complete. --></errorMessage>
+        <name>Provide_details_when_not_behind_perm</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must provide details if scale impact has not been reviewed and documented. --></errorMessage>
+        <name>Scale_details_required_if_not_documented</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter next steps or assistance that is required. --></errorMessage>
+        <name>Week2_NotReady_Comments_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter comments or assistance that is required. --></errorMessage>
+        <name>Week2_Risk_Comments_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter next steps or assistance that is required. --></errorMessage>
+        <name>Week6_NotReady_Comments_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter comments or assistance that is required. --></errorMessage>
+        <name>Week6_Risk_Comments_Required</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Update_Metrics --></label>
+        <name>Update_Metrics</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,15 @@
+<aura:component>
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="chartOptions" type="Object"/>
+
+    <aura:if isTrue="{!and(v.chartOptions, v.chartOptions.showSprintCommitmentChart)}">
+        <c:ADM_Chart_Sprint_Commitment sprintData="{!v.sprintData}"/>
+        <div class="slds-has-divider--bottom slds-m-vertical--large"></div>
+    </aura:if>
+    <c:ADM_Chart_Sprint_Burndown  sprintData="{!v.sprintData}"/>
+    <div class="slds-has-divider--bottom slds-m-vertical--large"></div>
+    <c:ADM_Chart_Sprint_Allocation  sprintData="{!v.sprintData}"/>
+    <div class="slds-has-divider--bottom slds-m-vertical--large"></div>
+    <c:ADM_Chart_Sprint_Velocity  sprintData="{!v.sprintData}"/>
+
+</aura:component>

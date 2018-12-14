@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PTOn</fullName>
+    <active>true</active>
+    <description>PTOn (Paid Time ON) time spent working on a project external to the Scrum Team.</description>
+    <label>PTOn (Paid Time On)</label>
+</RecordType>

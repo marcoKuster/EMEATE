@@ -1,0 +1,179 @@
+<apex:component >
+    <apex:attribute name="rec" description="records to loop over" required="required" type="ADM_Work__c" />
+    <apex:attribute name="statusValsInv" description="values for status of the record" required="required" type="List" />
+    <apex:attribute name="statusValsTodo" description="values for status of the record" required="required" type="List" />
+    <apex:attribute name="statusValsUs" description="values for status of the record" required="required" type="List" />
+    <apex:attribute name="statusValsBug" description="values for status of the record" required="required" type="List" />
+    
+    <apex:variable var="recType" value="{!SUBSTITUTE(rec.RecordType.Name,' ' ,'')}" />
+    
+    <div class="portlet ui-widget ui-widget-content ui-helper-clearfix">
+        
+        <div class="portlet-header ui-widget-header {!rec.Id}_portletHeader"> 
+            
+            <span class="portlet-handle {!recType}">
+                <table class="portlet-table" border="0" style="width:100%; table-layout:fixed;">
+                    <tr>
+                        <td style="width:16px;"><span class='ui-icon expand ui-icon-triangle-1-e {!rec.Id}_expand'></span></td>
+                        <!-- we always output 1 for the rank and change it at runtime with Javascript. see W-1553002 -->
+                        <td class="priorityRank backlogRank {!rec.Id}_rank">1</td>
+                        <td class="iconCell">
+                            <apex:image styleClass="recTypeIcon" value="{!$Resource.bugiconsmall}" rendered="{!recType == 'Bug'}" title="Bug" />
+                            <apex:image styleClass="recTypeIcon" value="{!$Resource.todoiconsmall}" rendered="{!recType == 'ToDo'}" title="ToDo" />
+                            <apex:image styleClass="recTypeIcon" value="{!$Resource.storyiconsmall}" rendered="{!recType == 'UserStory'}" title="User Story"  />
+                        </td>
+                        <td class="subjectCell" style="padding-left: 12px">
+                            <div class="subjectLine {!rec.Id}_sub"> 
+                                {!rec.Subject__c} 
+                            </div>
+                        </td>
+                        <td class="buildNameCell">
+                            <div class="{!rec.Id}_build summaryMData" style="overflow:hidden !important;height:1.2em;padding-left:5px;">{!rec.Scheduled_Build__r.Name}</div> 
+                        </td>
+                        <td class="sprintNameCell">
+                            <div class="{!rec.Id}_sprint summaryMData" style="overflow:hidden !important;height:1.2em;padding-left:5px;">{!rec.Sprint__r.Name}</div>
+                        </td>
+                        <td class="themeCell">
+                            <div class="{!rec.Id}_theme themeNames summaryMData" >
+                                <apex:repeat value="{!rec.Theme_Assignments__r}" id="themeRepeat" var="themeAssignment">
+                                    <span class="themeItem" data-theme-id="{!themeAssignment.Theme__r.Id}">{!themeAssignment.Theme__r.Name}</span>
+                                </apex:repeat>
+                            </div>
+                            <input type="hidden" class="{!rec.Id}_sb" value="{!rec.Scheduled_Build__r.Name}" />
+                            <input type="hidden" class="{!rec.Id}_pts" value="{!rec.Story_Points__c}" />
+                        </td>
+                        <td class="storyPointCell"><select class="{!rec.Id}_selectPts selectPts"><option value="--">--</option></select></td>
+                        <td class="toggleCell"><input type="checkbox" class="toggle checkMe" /></td>
+                    </tr>
+                </table>
+            </span>
+        </div>
+        <div class="portlet-content {!rec.Id}_portletContent">
+            <input type="button" class="savePortlet btn" value="Save" alt="Save"/>
+            <input type="button" class="cancelPortlet btn" value="Cancel" alt="Cancel" />
+            <table class="detailList {!recType}" style="table-layout:fixed; width:95%; padding:0; margin:0;" cellpadding="3" cellspacing="3">
+                <tbody>
+                    <tr> 
+                        <td class="labelCol">
+                            Name                                    
+                        </td>
+                        <td class="dataCol">
+                            <a class="{!rec.Id}_nameLink" href="/{!rec.Id}" target="_blank">{!rec.Name}</a>
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td class="labelCol">
+                            Subject                                     
+                        </td>
+                        <td class="dataCol"> 
+                            <div style="text-wrap:normal; word-wrap: break-word;">
+                                <input type="text" maxlength="255" value="{!rec.Subject__c}" style="width:95%" name="subject" class="{!rec.Id}_subject" />
+                                <input type="hidden" value="{!rec.Subject__c}"   name="oSubject" class="{!rec.Id}_oSubject" />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr class="UserStoryOnly" id="{!rec.Id}detailsrow"> 
+                        <td class="labelCol">
+                            Description                                 
+                        </td>
+                        <td class="dataCol">
+                            <div  style="text-wrap:normal; word-wrap: break-word;">
+                                <textarea rows="3" cols="18" style="width:95%" class="{!rec.Id}_details" name="details">{!rec.Details__c}</textarea>
+                                <input type="hidden" value="{!rec.Details__c}" name="oDetails" class="{!rec.Id}_oDetails" />
+                            </div>
+                        </td>
+                    </tr>
+		            
+		            <script>
+                           /* Dont like the way visibility settings have to be declared twice.  Once in component and again in calling setupDuplicate()
+                           JS method.  This is not only repeitive but tightly couples the component with the consumer  */
+                           var currentRecType = '{!rec.RecordType.Name}';
+                           if(currentRecType != 'User Story') {
+                           		$('#{!rec.Id}detailsrow').hide();
+                           }
+                                
+                    </script>            
+		                  
+                    <tr> 
+                        <td class="labelCol">
+                            Status                                  
+                        </td>
+                        <td class="dataCol">     
+                            <input type="hidden" value="{!rec.Status__c}" name="oStatus" class="{!rec.Id}_oStatus" />
+                            <select name="status" class="{!rec.Id}_status" id="{!rec.Id}_statusSelect">
+                            </select>
+                            <script>
+                                var selEl = document.getElementById('{!rec.Id}_statusSelect');
+                                var selected = false;
+                                var i = 0;
+                                <apex:repeat value="{!statusValsInv}" var="status" rendered="{!recType == 'Investigation'}">
+                                    if('{!HTMLENCODE(rec.Status__c)}' == '<apex:outputText value="{!status}" escape="true" />') {
+                                        selected = true;
+                                    } else {
+                                        selected = false;
+                                    }
+                                    selEl.options[i] = new Option('{!status}', '{!status}', false, selected);
+                                    i++;                                            
+                                </apex:repeat>
+                                <apex:repeat value="{!statusValsTodo}" var="status" rendered="{!recType == 'ToDo'}">
+                                    if('{!HTMLENCODE(rec.Status__c)}' == '<apex:outputText value="{!status}" escape="true" />') {
+                                        selected = true;
+                                    } else {
+                                        selected = false;
+                                    } 
+                                    selEl.options[i] = new Option('{!status}', '{!status}', false, selected);
+                                    i++;
+                                </apex:repeat>
+                                <apex:repeat value="{!statusValsUs}" var="status" rendered="{!recType == 'UserStory'}">
+                                    if('{!HTMLENCODE(rec.Status__c)}' == '<apex:outputText value="{!status}" escape="true" />') {
+                                        selected = true;
+                                    } else {
+                                        selected = false;
+                                    }
+                                    selEl.options[i] = new Option('{!status}', '{!status}', false, selected);
+                                    i++;
+                                </apex:repeat>
+                                <apex:repeat value="{!statusValsBug}" var="status" rendered="{!recType == 'Bug'}">
+                                    if('{!HTMLENCODE(rec.Status__c)}' == '<apex:outputText value="{!status}" escape="true" />') {
+                                        selected = true;
+                                    } else {
+                                        selected = false;
+                                    }
+                                    selEl.options[i] = new Option('{!status}', '{!status}', false, selected);
+                                    i++;
+                                </apex:repeat>
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="labelCol">
+                            Theme
+                        </td>
+                        <td class="dataCol {!rec.Id}_theme themeNames">
+                            <apex:repeat value="{!rec.Theme_Assignments__r}" id="themeRepeat2" var="themeAssignment">
+                                <span class="themeItem" data-theme-id="{!themeAssignment.Theme__r.Id}">{!themeAssignment.Theme__r.Name}</span>
+                            </apex:repeat>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="labelCol">
+                            Scheduled Build
+                        </td>
+                        <td class="dataCol {!rec.Id}_build">
+                            {!rec.Scheduled_Build__r.Name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="last">
+                            Sprint
+                        </td>
+                        <td class="last {!rec.Id}_sprint">
+                            {!rec.Sprint__r.Name}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</apex:component>

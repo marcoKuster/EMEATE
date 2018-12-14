@@ -1,0 +1,47 @@
+.THIS {
+    width: 100%;
+}
+
+.THIS .points-select {
+    max-width: 60px;
+}
+
+.THIS .sprint-work-subject {
+	width: 46%;
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-inline-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.THIS .sprint-work-status {
+	width: 13%;
+}
+
+.THIS .sprint-work-assignee, .THIS .sprint-work-qa, .THIS .sprint-work-type {
+	width: 5%;
+}
+
+.THIS .sprint-gripper {
+	width: 4%;
+}
+
+.THIS .sprint-actions {
+	width: 3%;
+}
+
+.THIS .sprint-header-row {
+    z-index: 1;
+}
+
+.THIS .adm-task-work-col {
+	min-width: 300px;
+}
+
+.THIS .adm-task-card-col {
+	width: 100%;
+	min-width: 290px;
+	margin: auto;
+}

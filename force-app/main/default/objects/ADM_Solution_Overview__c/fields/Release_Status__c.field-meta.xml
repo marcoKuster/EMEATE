@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Status__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>What is the plan for the marketed availability of this product / feature?</inlineHelpText>
+    <label>Release Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GA</fullName>
+                <color>#E27001</color>
+                <default>false</default>
+                <label>GA</label>
+            </value>
+            <value>
+                <fullName>Beta</fullName>
+                <color>#78C953</color>
+                <default>false</default>
+                <label>Beta</label>
+            </value>
+            <value>
+                <fullName>Pilot</fullName>
+                <color>#0B6FCE</color>
+                <default>false</default>
+                <label>Pilot</label>
+            </value>
+            <value>
+                <fullName>Developer Preview</fullName>
+                <color>#F3D904</color>
+                <default>false</default>
+                <label>Developer Preview</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

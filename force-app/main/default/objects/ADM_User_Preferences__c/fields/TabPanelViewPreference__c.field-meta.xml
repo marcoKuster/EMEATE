@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TabPanelViewPreference__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Unchecked (default) = Shows the tab panels with tabs. Checked = Show tab panels stacked on top of each other.</description>
+    <externalId>false</externalId>
+    <label>Tab Panel View Preference</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

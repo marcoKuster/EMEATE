@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Environment Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Environment Orders</value>
+    </caseValues>
+    <fields>
+        <help><!-- When was the environment handed off? --></help>
+        <label><!-- Actual Delivery Date --></label>
+        <name>Actual_Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is there additional information that is relevant to TechExec?  
+This will be displayed in the regular status reports for Environment Delivery. --></help>
+        <label><!-- Additional Comments --></label>
+        <name>Additional_Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- Additional details related to the database portion of the environment request. --></help>
+        <label><!-- Additional Database Details --></label>
+        <name>Additional_Database_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- What type of action are we asking the DBAs to take? --></help>
+        <label><!-- Change Action --></label>
+        <name>Change_Action__c</name>
+        <picklistValues>
+            <masterLabel>clone</masterLabel>
+            <translation><!-- clone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>new</masterLabel>
+            <translation><!-- new --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>refresh</masterLabel>
+            <translation><!-- refresh --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>rename</masterLabel>
+            <translation><!-- rename --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Location for the URL to any and all change requests logged against this environment order.
+URLs should be entered one per line. --></help>
+        <label><!-- Change Request(s) --></label>
+        <name>Change_Request_s__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date upon which the Environments Office agrees to fill the request. --></help>
+        <label><!-- Committed Delivery Date --></label>
+        <name>Committed_Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the complete list of PLSQL users needed for this request if we are NOT opting for the standard list of users.  The DBAs will ensure this list of users is created and available for use. --></help>
+        <label><!-- Custom PLSQL Users --></label>
+        <name>Custom_PLSQL_Users__c</name>
+    </fields>
+    <fields>
+        <help><!-- Work request for the DB schema team. --></help>
+        <label><!-- DB Schema Request --></label>
+        <name>DB_Schema_Request__c</name>
+        <relationshipLabel><!-- Environment Orders (DB Schema Request) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- What instance is the database being refreshed as?
+Release Engineering may have configuration implications based on the instance. --></help>
+        <label><!-- Database Instance --></label>
+        <name>Database_Instance__c</name>
+        <picklistValues>
+            <masterLabel>AP0</masterLabel>
+            <translation><!-- AP0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AP1</masterLabel>
+            <translation><!-- AP1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS0</masterLabel>
+            <translation><!-- CS0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS1</masterLabel>
+            <translation><!-- CS1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS2</masterLabel>
+            <translation><!-- CS2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS3</masterLabel>
+            <translation><!-- CS3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS4</masterLabel>
+            <translation><!-- CS4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EU0</masterLabel>
+            <translation><!-- EU0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA0</masterLabel>
+            <translation><!-- NA0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA1</masterLabel>
+            <translation><!-- NA1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA2</masterLabel>
+            <translation><!-- NA2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA3</masterLabel>
+            <translation><!-- NA3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA4</masterLabel>
+            <translation><!-- NA4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA5</masterLabel>
+            <translation><!-- NA5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA6</masterLabel>
+            <translation><!-- NA6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA7</masterLabel>
+            <translation><!-- NA7 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Database Refresh Requested --></label>
+        <name>Database_Refresh_Requested__c</name>
+    </fields>
+    <fields>
+        <label><!-- Database Refresh Source --></label>
+        <name>Database_Refresh_Source__c</name>
+        <picklistValues>
+            <masterLabel>something</masterLabel>
+            <translation><!-- something --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>something else</masterLabel>
+            <translation><!-- something else --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>something else NA5</masterLabel>
+            <translation><!-- something else NA5 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This is the sprint of the team that will be performing the final handoff to the customer. --></help>
+        <label><!-- Delivery Sprint --></label>
+        <name>Delivery_Sprint__c</name>
+        <relationshipLabel><!-- Environment Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- What is the primary use of the environment? --></help>
+        <label><!-- Environment Purpose --></label>
+        <name>Environment_Purpose__c</name>
+        <picklistValues>
+            <masterLabel>Capacity expansion</masterLabel>
+            <translation><!-- Capacity expansion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Functional Testing</masterLabel>
+            <translation><!-- Functional Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stagger Testing</masterLabel>
+            <translation><!-- Stagger Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Upgrade Testing</masterLabel>
+            <translation><!-- Upgrade Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Workloads</masterLabel>
+            <translation><!-- Workloads --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>Environment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Particular measurable impact if this environment does not meet key delivery dates
+ex:  delay in release, delay in feature delivery, etc. --></help>
+        <label><!-- Impact --></label>
+        <name>Impact__c</name>
+    </fields>
+    <fields>
+        <help><!-- Work request for the Internal Services DBAs. --></help>
+        <label><!-- Internal Services Request --></label>
+        <name>Internal_Services_Request__c</name>
+        <relationshipLabel><!-- Environment Orders (Internal Services Request) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Supportforce case for any network changes needed for this request --></help>
+        <label><!-- Network Case --></label>
+        <name>Network_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Network Request --></label>
+        <name>Network_Request__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please enter the email address that should be used to announce environment details.
+This should be provided by the customer. --></help>
+        <label><!-- Notification Email List --></label>
+        <name>Notification_Email_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Organizational Priority Methods --></label>
+        <name>Organizational_Priority_Methods__c</name>
+        <picklistValues>
+            <masterLabel>Accelerate Service Cloud</masterLabel>
+            <translation><!-- Accelerate Service Cloud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deliver Chatter</masterLabel>
+            <translation><!-- Deliver Chatter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery</masterLabel>
+            <translation><!-- Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dominate the Sales Cloud</masterLabel>
+            <translation><!-- Dominate the Sales Cloud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Drive The Platform</masterLabel>
+            <translation><!-- Drive The Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovate to Scale</masterLabel>
+            <translation><!-- Innovate to Scale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Leadership,Communication, Culture</masterLabel>
+            <translation><!-- Leadership,Communication, Culture --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Productivity of our company</masterLabel>
+            <translation><!-- Productivity of our company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Productivity of our team</masterLabel>
+            <translation><!-- Productivity of our team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality &amp; Performance</masterLabel>
+            <translation><!-- Quality &amp; Performance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- FY11 Technology &amp; Products Organizational Values --></help>
+        <label><!-- Organizational Priority Values --></label>
+        <name>Organizational_Priority_Value__c</name>
+        <picklistValues>
+            <masterLabel>Innovation</masterLabel>
+            <translation><!-- Innovation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Productivity</masterLabel>
+            <translation><!-- Productivity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust</masterLabel>
+            <translation><!-- Trust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the point-of-contact for this request as identified by the customer. --></help>
+        <label><!-- POC --></label>
+        <name>POC__c</name>
+        <relationshipLabel><!-- Environment Orders (POC) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The RelEng work object supporting this environment order that will be attached to the corresponding
+Release Engineering sprint. --></help>
+        <label><!-- RelEng Work --></label>
+        <name>RelEng_Work__c</name>
+        <relationshipLabel><!-- Environment Orders (RelEng Work) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Who is the Release Engineer delivering this order? --></help>
+        <label><!-- Release Engineer --></label>
+        <name>Release_Engineer__c</name>
+        <relationshipLabel><!-- Environment Orders (Release Engineer) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Requested Delivery Date --></label>
+        <name>Requested_Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- What is the risk to the release given the chance the environment will be delivered on time? --></help>
+        <label><!-- Risk To The Release --></label>
+        <name>Risk_To_The_Release__c</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medium</masterLabel>
+            <translation><!-- Medium --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Expected conclusion of work on the environment during which time it would not be usable by the customer. --></help>
+        <label><!-- Scheduled Maintenance End --></label>
+        <name>Scheduled_Maintenance_End__c</name>
+    </fields>
+    <fields>
+        <help><!-- Expected start of work on the environment during which time it would not be usable by the customer. --></help>
+        <label><!-- Scheduled Maintenance Start --></label>
+        <name>Scheduled_Maintenance_Start__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the current schema version of the database as well as the desired version.
+This allows DB schema to be aware of exactly what upgrades to execute upon. --></help>
+        <label><!-- Schema Upgrade Path --></label>
+        <name>Schema_Upgrade_Path__c</name>
+        <picklistValues>
+            <masterLabel>164</masterLabel>
+            <translation><!-- 164 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>166</masterLabel>
+            <translation><!-- 166 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>168</masterLabel>
+            <translation><!-- 168 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>170</masterLabel>
+            <translation><!-- 170 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>172</masterLabel>
+            <translation><!-- 172 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>174</masterLabel>
+            <translation><!-- 174 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>176</masterLabel>
+            <translation><!-- 176 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>178</masterLabel>
+            <translation><!-- 178 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>180</masterLabel>
+            <translation><!-- 180 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Schema Upgrade Required? --></label>
+        <name>Schema_Upgrade_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Database --></label>
+        <name>Source_Database__c</name>
+    </fields>
+    <fields>
+        <help><!-- The user story against the Environments Office that provides the requirements of this environment order --></help>
+        <label><!-- Source Request --></label>
+        <name>Source_Request__c</name>
+        <relationshipLabel><!-- Environment Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Special Instructions --></label>
+        <name>Special_Instructions__c</name>
+    </fields>
+    <fields>
+        <help><!-- bashful
+dopey
+doc
+grumpy
+happy
+sleepy
+sneezy --></help>
+        <label><!-- Standard PLSQL Users? --></label>
+        <name>Standard_PLSQL_Users__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Blocked</masterLabel>
+            <translation><!-- Blocked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivered</masterLabel>
+            <translation><!-- Delivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>More Information Needed</masterLabel>
+            <translation><!-- More Information Needed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting on Requestor</masterLabel>
+            <translation><!-- Waiting on Requestor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting on Requirements</masterLabel>
+            <translation><!-- Waiting on Requirements --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- What release will this environment be supporting? --></help>
+        <label><!-- Supporting Release --></label>
+        <name>Supporting_Release__c</name>
+        <relationshipLabel><!-- Environment Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Supportforce case for any system/hardware changes required for this environment request --></help>
+        <label><!-- System Case --></label>
+        <name>System_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- System Request --></label>
+        <name>System_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Database --></label>
+        <name>Target_Database__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- The request is logged by the customer to the Environments Office.  From the request, the order can be generated. --></description>
+        <label><!-- Environment Request --></label>
+        <name>Environment_Request</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+    <webLinks>
+        <label><!-- Send_Email_From_Template --></label>
+        <name>Send_Email_From_Template</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verify_length_of_sprint</fullName>
+    <active>true</active>
+    <description>make sure sprint length is &lt;= 31</description>
+    <errorConditionFormula>(End_Date__c - Start_Date__c) &gt; 31</errorConditionFormula>
+    <errorDisplayField>End_Date__c</errorDisplayField>
+    <errorMessage>A sprint can&#39;t be longer than one month (31 days). Please correct your end date and click &#39;Save&#39;.</errorMessage>
+</ValidationRule>

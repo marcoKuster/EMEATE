@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority_Override_Explanation_Copy__c</fullName>
+    <description>used to temporarily store the contents of the priority override explanation to create a new record</description>
+    <externalId>false</externalId>
+    <label>Priority Override Explanation Copy</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

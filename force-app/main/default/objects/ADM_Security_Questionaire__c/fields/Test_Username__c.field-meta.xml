@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Username__c</fullName>
+    <description>Username to be used for testing. (Optional)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Username to be used for testing. (Optional)</inlineHelpText>
+    <label>Test Username</label>
+    <length>150</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

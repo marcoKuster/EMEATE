@@ -1,0 +1,33 @@
+<aura:component controller="ADM_ProductTagFieldsController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:attribute name="fieldList" type="List"/>
+  
+  <style>
+    .forceActionsDropDownMenuList .actionMenu ul > li.uiMenuItem a[title="Update Work"] {
+        display: none;
+    }
+  </style>
+
+
+
+
+<lightning:card >
+        <aura:set attribute="title">
+          Product Tag Fields
+        </aura:set>
+      <p class="slds-p-horizontal--small">
+    <aura:iteration items="{!v.fieldList}" var="field">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" >{!field.fieldLabel}</label>
+            <div class="slds-form-element__control" style="padding-bottom:12px;padding-right:5px;">
+                {!field.fieldValue}
+            </div>
+        </div>
+    </aura:iteration>  
+      <aura:if isTrue="{!v.fieldList.length == 0}">
+          No custom fields have been defined for this Product Tag. 
+      </aura:if>  
+      </p>
+    </lightning:card>
+    
+</aura:component>

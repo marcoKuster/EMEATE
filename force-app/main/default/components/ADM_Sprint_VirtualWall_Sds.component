@@ -1,0 +1,3609 @@
+<apex:component controller="ADM_SprintVirtualWallController" allowDML="true" layout="none">
+
+<apex:attribute name="sprintId" type="Id" description="The ID of the sprint to show the virtual wall for" required="true" assignTo="{!sprintId}" />
+<apex:attribute name="teamId" type="Id" description="The ID of the team" required="true" assignTo="{!teamId}" />
+<apex:styleSheet value="{!$Resource.extended}" />
+
+<c:ADM_WorkDialogSds kanban="false" teamid="{!teamId}" />
+
+<style type="text/css">
+body.slds{cursor:default;overflow:hidden;}
+body.slds td{font-family:'Salesforce Sans', Arial, sans-serif;}
+body.slds .slds-table td{white-space:normal;}
+body.slds .slds-dropdown{font-size:0.7rem;min-width:96px;display:none;}
+body.slds .slds-dropdown ul li{margin:0;}
+
+#virtualwall{visibility:hidden;height:1px;overflow-y:auto;-webkit-transition-duration:0.1s;-moz-transition-duration:0.1s;-o-transition-duration:0.1s;transition-duration:0.1s;}
+#vw_loading{padding-top:30px;text-align:center;padding-bottom:20px;font-size:13px;color:#9FAAB5;}
+#vw_loading .slds-spinner--medium{margin:10px auto;}
+
+/* override jquery ui stylesheet */
+.dropdown span.ui-icon{display:inline-block !important;vertical-align:top;margin-top:-1px;margin-right:3px;}
+.dropdown span.ui-icon-blank{background:none;}
+.ui-menu .ui-menu-item{float:none;clear:none;display:block;}
+.ui-menu .ui-menu-item a{outline:0;}
+.ui-accordion .ui-accordion-content {padding:1em 1em 6em 1em;}
+.ui-tabs .ui-tabs-panel{padding:0em 0em;}
+.ui-dialog-buttonset{float:none !important;text-align:center !important;}
+.ui-dialog-buttonset > button{border-width:2px !important;}
+.ui-dialog-buttonset > button:focus,.ui-dialog-buttonset > button:hover{outline:0;border-width:2px;}
+.ui-dialog-buttonset > button > .ui-button-text{font-size:11px !important;}
+.ui-dialog-titlebar-close{outline:0;}
+
+.dropdown{position:absolute;z-index:1999;display:none;padding:7px !important;box-sizing:border-box;-moz-box-sizing:border-box;font-size:11px !important;box-shadow:1px 1px 20px #c0c0c0;max-height:150px;overflow-y:auto;overflow-x:hidden;border:1px #79B7E7 solid !important;}
+#menu_statuses.dropdown,
+#menu_assignee.dropdown,
+#menu_qe.dropdown{border-top-right-radius:0 !important;max-height:450px;}
+#menu_activity.dropdown{max-width:245px;border-top-right-radius:0 !important;}
+#menu_filter.dropdown{max-height:400px;border-top-right-radius:0 !important;}
+#menu_storypoints.dropdown{max-height:400px;border-top-right-radius:0 !important;}
+#menu_work{border-top-left-radius:0 !important;border-top-right-radius:0 !important;}
+#menu_new{border-top-left-radius:0 !important;border-top-right-radius:0 !important;}
+
+#sortable{margin:0;padding:0;/*-moz-user-select:none;*/-khtml-user-select:none;-o-user-select:none;user-select:none;-webkit-user-select:none;}
+#sortable{margin-top:4px;cursor:default;}
+#sortable > tr > td{cursor:move;}
+#menu_assignee_users,
+#menu_qe_users{max-height:150px;}
+#menu_assignee_users .slds-dropdown__list,
+#menu_qe_users .slds-dropdown__list{max-height:140px;overflow-x:auto;}
+
+.slds .slds-dropdown--nubbin-right {
+	margin-right: 8px;
+}
+.slds .slds-dropdown--nubbin-right:before {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	content: "";
+	background-color: white;
+	right: -8px;
+	top: 50%;
+	margin-top: -8px;
+}
+.slds .slds-dropdown--nubbin-right:after {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	content: "";
+	background-color: white;
+	right: -8px;
+	top: 50%;
+	margin-top: -8px;
+}
+.slds .slds-dropdown--nubbin-right:before {
+	background: white;
+}
+.slds .slds-dropdown--nubbin-right:after {
+    background: white;
+    box-shadow: 1px -1px 0 0px rgba(0, 0, 0, 0.16);
+    z-index: -1;
+}
+
+
+
+
+.headliner_columns_tasks,
+.headliner_columns_work{display:none;}
+.column-themes > div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:130px;}
+/*.column-themes > div > span.theme{white-space:nowrap;}*/
+
+
+/* work: normal view */
+#sortable>tr .column-subject{display:table-cell;}
+#sortable>tr .column-status{display:table-cell;}
+#sortable>tr .column-assignee{display:table-cell;}
+#sortable>tr .column-assignee img{cursor:pointer;}
+#sortable>tr .column-qa{display:none;}
+#sortable>tr .column-qa img{cursor:pointer;}
+#sortable>tr .column-themes{display:none;}
+#sortable>tr .column-build{display:none;}
+#sortable>tr .column-storypoints{display:none;}
+#sortable>tr .column-tasks{display:table-cell;}
+#sortable>tr >td{vertical-align:top;}
+
+.work_columns{position:relative;display:table;height:100%;width:100%;}
+.work_columns > .drag_bounds{position:absolute;left:-10px;top:-10px;right:-4px;bottom:-76px;padding:10px;}
+.work_column{display:table-cell;position:relative;vertical-align:top;width:33.3%;height:100%;padding:0px 0px 0px 0px;cursor:default;}
+.work_tasks{display:block;position:relative;height:100%;width:100%;}
+
+/* work: tiny view */
+#sortable>tr.min_work .column-subject{display:table-cell;}
+#sortable>tr.min_work .column-status{display:table-cell;}
+#sortable>tr.min_work .column-assignee{display:table-cell;}
+#sortable>tr.min_work .column-qa{display:table-cell;}
+#sortable>tr.min_work .column-themes{display:table-cell;}
+#sortable>tr.min_work .column-build{display:table-cell;}
+#sortable>tr.min_work .column-storypoints{display:table-cell;}
+#sortable>tr.min_work .column-tasks{display:none;}
+#sortable>tr.min_work >td{vertical-align:middle;}
+
+
+#sortable>li.min_work{padding:0px 0px 0px 6px;margin-bottom:-1px;}
+#sortable>li.work_highlight{margin:0px;}
+.min_work .work_columns{display:none;}
+.min_work .work_desc_container{min-width:0;max-width:none;width:100%;border-top-right-radius:5px;border-bottom-right-radius:5px;}
+
+.min_work .work_desc{display:table;width:100%;padding:3px 1px 3px 1px;box-sizing:border-box;-moz-box-sizing:border-box;border-top-left-radius:0px;border-bottom-left-radius:0px;border-top-right-radius:10px;border-bottom-right-radius:10px;}
+
+.min_work .work_desc .wall_icon div.work_desc_text textarea{max-height:24px;padding-top:4px;white-space:nowrap;}
+.min_work .work_desc .wall_icon div.work_desc_text textarea:focus{max-height:24px;padding-top:4px;}
+.min_work .work_desc .wall_icon{display:table-cell;border:0;height:auto;border-radius:0;width:100%;vertical-align:middle;background-position:9px 6px;padding-left:31px;moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;user-select:none;}
+.min_work .work_desc .wall_icon div.wall_icon_recordtype{display:none;}
+.min_work .work_desc .work_desc_status{display:table-cell;min-width:170px;width:170px;padding-left:10px;vertical-align:middle;}
+.min_work .work_desc .work_desc_assignee{display:table-cell;min-width:110px;padding-left:10px;vertical-align:middle;}
+.min_work .work_desc .work_desc_assignee img{width:25px;height:25px;vertical-align:middle;border-radius:5px;cursor:pointer;}
+.min_work .work_desc .work_desc_assignee div.work_desc_assignee_name{display:inline-block;vertical-align:middle;margin-left:7px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:77px;}
+.min_work .work_desc .work_desc_qe{display:table-cell;min-width:110px;padding-left:10px;vertical-align:middle;}
+.min_work .work_desc .work_desc_qe img{width:25px;height:25px;vertical-align:middle;border-radius:5px;cursor:pointer;}
+.min_work .work_desc .work_desc_qe div.work_desc_qe_name{display:inline-block;vertical-align:middle;margin-left:7px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:77px;}
+.min_work .work_desc .work_desc_theme{display:table-cell;min-width:100px;padding-left:10px;vertical-align:middle;}
+.min_work .work_desc .work_desc_theme div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100px;}
+.min_work .work_desc .work_desc_build{display:table-cell;min-width:100px;padding-left:10px;vertical-align:middle;}
+.min_work .work_desc .work_desc_build div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100px;}
+.min_work .work_desc .work_desc_points{display:table-cell;min-width:50px;padding-left:10px;vertical-align:middle;}
+.min_work .work_desc .work_desc_points div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:50px;text-align:center;}
+.min_work .work_desc .work_desc_next_sprint{display:table-cell;vertical-align:top;padding-left:5px;}
+.min_work .work_desc .work_desc_next_sprint button{outline:0;width:20px;height:25px;}
+.min_work .work_desc .work_desc_next_sprint button.button-active{border-bottom:1px #79b7e7 solid !important;}
+
+/* tasks: normal view */
+.work_column .work_tasks>ul{display:block;position:relative;list-style:none;width:100%;height:100%;padding:5px 5px 10px 5px;border-left:1px #D8DDE6 solid;outline:0;}
+.work_column .work_tasks>ul>li{margin:0px 0px 10px 0px;}
+.work_column .work_tasks>ul>li.task_card{/*display:table;*/position:relative;margin:0px 0px 10px 0px;margin-bottom:6px;border-radius:5px;border:1px #8795AE solid;padding:0px;background:#fff;width:100%;font-size:11px;}
+/*#sortable > tr:hover .work_column .work_tasks>ul>li.task_card{background:#fff;}*/
+
+
+.work_column .work_tasks>ul>li.blankTask{position:relative;border:1px #C0C0C0 solid;border-radius:5px;background:#fff;height:62px;margin:0;margin-top:-55px;}
+.work_column .work_tasks>ul>li.blankTask:first-child  {margin-top:0px !important;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(1) {z-index:0;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(2) {z-index:0;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(3) {z-index:0;}
+.work_column .work_tasks>ul>li.blankTask:nth-child(4) {z-index:0;}
+.work_column .work_tasks>ul.stacked>li.task_highlight{position:absolute !important;top:40px !important;z-index:25 !important;}
+.work_column .work_tasks>ul.stacked>li.task_card{margin-top:-55px !important;}
+.work_column .work_tasks>ul.stacked>li.task_card[data-type=new]{margin-top:0px !important;}
+.slds .showAllTasks{display:block;text-align:center;margin-top:-20px;}
+.slds .showAllTasks a{display:inline-block;padding:4px;font-size:9px;font-weight:bold;text-align:center;color:#8ba9bf;}
+.slds .showAllTasks a:hover{color:#8ba9bf;/*#1D5987*/}
+.task_highlight{background:#d0e1f0 !important;border:1px #d0e1f0 solid !important;border-radius:5px;}
+.work_column .work_tasks>ul>li:last-child{margin-bottom:0px;}
+.task_row1{display:table;}
+.task_row1_holder{display:table-cell;vertical-align:top;width:100%;}
+.task_desc{width:100%;padding:5px 0px;}
+.task_desc textarea{width:100%;padding:0px 5px;outline:0;max-height:33px;border:0;background:transparent;resize:none;box-sizing:border-box;-moz-box-sizing:border-box;margin:0;overflow:auto;}
+.task_desc textarea::selection,.task_desc textarea::-moz-selection{background:#dcdcad;}
+.task_img{display:table-cell;vertical-align:top;padding:6px 4px 0px 4px;height:25px;}
+.task_img img{width:25px;height:25px;border-radius:5px;outline:0;}
+.task_img img.img_clickable{cursor:pointer;}
+.task_row2{display:table;background:#8795AE;padding:3px 6px;border-bottom-left-radius:3px;border-bottom-right-radius:3px;font-size:9px;font-weight:bold;cursor:move;}
+.task_grippy,.task_grippy_static{display:none;background:url({!$Resource.grippy_sideways}) 0px 2px no-repeat;width:13px;min-width:13px;cursor:move;padding-right:5px;}
+.task_row2_holder{display:table-cell;vertical-align:middle;width:100%;}
+.task_rh{display:table-cell;color:#fff;white-space:nowrap;padding-right:2px;padding-left:7px;}
+.task_hours{display:table-cell;}
+.delete-task-button{cursor:pointer;}
+.slds .task_link .slds-icon--tiny,
+.slds .task_dd .slds-icon--tiny{width:11px;height:11px;}
+.task_hours input{background:transparent;color:#fff;font-weight:bold;outline:0;cursor:text;min-width:15px;border-radius:5px;border:1px transparent solid;padding:2px 2px 4px 2px;text-align:center;}
+.task_hours input:focus{border:1px #C5C5C5 solid;color:#000;background:#fff;padding:2px 11px 4px 11px;}
+.task_hours input:hover{border:1px #C5C5C5 solid;}
+.task_hours input::selection,.task_hours input::-moz-selection{background:#dcdcad;}
+.task_hint{display:table-cell;width:100%;text-align:right;color:#fff;}
+.slds .task_hint{display:none;}
+.task_hint img{vertical-align:-3px;margin-right:5px;}
+.task_assignee_name{display:table-cell;width:100%;text-align:right;color:#848484;padding-right:5px;}
+.slds .task_assignee_name a{color:#fff;text-decoration: none;}
+.slds .task_assignee_name a:hover{text-decoration: underline;}
+.task_dd{display:table-cell;vertical-align:middle;width:100%;text-align:right;}
+.task_dd .ui-icon {background-image: url({!$Resource.ui_icons_acacac_256x240});}
+.task_dd .ui-state-hover .ui-icon {background-image: url({!URLFOR($Resource.jquery_ui_1813_redmond, '/css/redmond/images/ui-icons_217bc0_256x240.png')});}
+.task_link .ui-icon {background-image: url({!$Resource.ui_icons_acacac_256x240});}
+.task_link .ui-icon:hover {background-image: url({!URLFOR($Resource.jquery_ui_1813_redmond, '/css/redmond/images/ui-icons_217bc0_256x240.png')});}
+.task_button_grey{border:1px #C5C5C5 solid;background:url({!$Resource.arrow_small}) 50% 50% no-repeat;}
+.task_button_grey_arrow{background:url({!$Resource.arrow_small} no-repeat);width:16px;height:16px;position:absolute;top:50%;left:50%;margin-left:-8px;margin-top:-8px;}
+
+/* task: tiny view */
+.min_tasks .work_tasks>ul>li{margin-bottom:-1px;}
+.min_tasks .task_row2{display:none;}
+#activity.working{background:#215C89;color:#fff;}
+#subnav{padding:10px 0px 0px 0px;font-size:10px;}
+#subnav li.zen-active{background-color:#1797C0;}
+#subnavline{border-top-width:1px;border-top-style:solid;margin-bottom:20px;border-top-color:#1797C0;}
+
+.ui-work-icon {width: 16px;height: 16px;background-image: url({!$Resource.ADM_workViewIconsBlue});background-repeat: no-repeat;display: inline-block !important;}
+.ui-state-active .ui-work-icon{background-image: url({!$Resource.ADM_workViewIconsWhite});}
+.ui-work-icon-full{background-position: 0px 0px;}
+.ui-work-icon-compact{background-position: 0px -16px;}
+
+/* filter dialog */
+.sideContainer{background:#fff;position:fixed;top:0px;opacity:0;right:-220px;padding:10px;z-index:2;display:inline-block;width:200px;font-size:80%;-webkit-transition-duration:0.1s;-moz-transition-duration:0.1s;-o-transition-duration:0.1s;transition-duration:0.1s;height:830px;overflow:auto;/*border-left:1px #D4D8E1 solid;*/box-shadow:-1px 2px 4px 0px rgba(0,0,0,.4);}
+#chartDialog.sideContainer,
+#chatterDialog.sideContainer{width:400px;right:-420px;}
+.itemList{display:table;width:100%;overflow-y:auto;border-radius:5px;margin:5px 0px 15px 0px;user-select:none;-webkit-user-select:none;-moz-user-select:none;}
+.itemList:last-child{margin-bottom:0;}
+.itemList .spacer{padding-top:5px;text-align:center;}
+.itemRow{display:table-row;}
+.itemRow:hover > div{background-color:#eee;}
+.itemRow:hover > div:first-child{border-top-left-radius:5px;border-bottom-left-radius:5px;}
+.itemRow:hover > div:last-child{border-top-right-radius:5px;border-bottom-right-radius:5px;}
+.itemRow > div{display:table-cell;padding:2px 5px;}
+.itemRow > div.itemTitle{width:100%;}
+.itemRow > div.itemTitle label{display:block;}
+.itemRow > div.itemTitle label div{width:9px;height:9px;display:inline-block;border-radius:2px;vertical-align:middle;margin-right:5px;margin-top:-2px;border:1px rgba(0,0,0,0.13) solid;}
+#filterDialog input[type=text]{margin:5px 0px 15px 0px;display:block;background:#fff;border:1px #C0C0C0 solid;border-radius:5px;padding:5px;outline:0;width:100%;}
+#filterDialog input[type=text]:focus{background-color:#FFE;border-color:#AAA;}
+#filterDialog #filterResults{margin-bottom:15px;}
+#filterDialog .filterTopic{margin-bottom:15px;display:none;}
+</style>
+
+<apex:outputPanel layout="none" rendered="{!BacklogViewPreference != true}">
+	<style>
+	.headliner_columns_tasks{display:table-cell;}
+	</style>
+	<script>
+	$(function() {
+		$('#fullWorkView').addClass('slds-is-selected');
+	});
+	</script>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!BacklogViewPreference == true}">
+	<style>
+	.headliner_columns_work{display:table-cell;}
+	</style>
+	<script>
+	$(function() {
+		$('#compactWorkView').addClass('slds-is-selected');
+	});
+	</script>
+</apex:outputPanel>
+
+<div id="vw_loading">
+	<div class="slds-spinner--medium">
+	  <img src="{!URLFOR($Resource.SLDS042, '/assets/images/spinners/slds_spinner.gif')}" alt="Loading..." />
+	</div>
+</div>
+<div id="chartDialog" class="sideContainer">
+	<c:ADM_Sprint_Charts_Sds sprintId="{!sprintId}" />
+</div>
+<div id="chatterDialog" class="sideContainer">
+	<!--chatter:feed entityId="{!sprint.Id}" rendered="{!currentUserLightningDesktopPreference}" /-->
+</div>
+<div id="filterDialog" class="sideContainer">
+	<div id="filterResults"></div>
+
+	<!--Search:
+	<input id="filterSearch" type="text" name="text" value="" autocomplete="off" onkeyup="updateFilter();" /-->
+
+	<div class="filterTopic" id="filterRecordTypes">
+		Record Type:
+		<div id="filterBoxRecordTypes" class="itemList"></div>
+	</div>
+	
+	<div class="filterTopic" id="filterStatuses">
+		Status:
+		<div id="filterBoxStatuses" class="itemList"></div>
+	</div>
+	
+	<div class="filterTopic" id="filterBuilds">
+		Scheduled Build:
+		<div id="filterBoxBuilds" class="itemList"></div>
+	</div>
+
+	<div class="filterTopic" id="filterAssignees">
+		Work Assignee:
+		<div id="filterBoxAssignees" class="itemList"></div>
+	</div>
+
+	<div class="filterTopic" id="filterQEs">
+		Work QE:
+		<div id="filterBoxQEs" class="itemList"></div>
+	</div>
+
+	<div class="filterTopic" id="filterTaskAssignee">
+		Task Assignee:
+		<div id="filterBoxTaskAssignee" class="itemList"></div>
+	</div>
+
+	<!--div class="filterTopic" id="filterThemes">
+		Theme:
+		<div id="filterBoxThemes" class="itemList"></div>
+	</div-->
+	
+	<!--div class="filterTopic" id="filterEpics">
+		Epic:
+		<div id="filterBoxEpics" class="itemList"></div>
+	</div-->
+</div>
+<div id="virtualwall" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<table class="slds-table slds-table--bordered">
+		<thead>
+			<tr class="slds-no-hover">
+				<!--th class="slds-row-select">&nbsp;</th-->
+				<th class="slds-is-interactive">
+					<span class="slds-truncate">Type</span>
+				</th>
+				<th class="slds-is-interactive" width="100%">
+					<span class="slds-truncate">Subject</span>
+				</th>
+				<th class="slds-is-interactive">
+					<span class="slds-truncate">Status</span>
+				</th>
+				<th class="slds-is-interactive">
+					<span class="slds-truncate">Assignee</span>
+				</th>
+				<th class="slds-is-interactive headliner_columns_work">
+					<span class="slds-truncate">QA Engineer</span>
+				</th>
+				<th class="slds-is-interactive headliner_columns_work">
+					<span class="slds-truncate">Themes</span>
+				</th>
+				<th class="slds-is-interactive headliner_columns_work">
+					<span class="slds-truncate">Build</span>
+				</th>
+				<th class="slds-is-interactive headliner_columns_work">
+					<span class="slds-truncate">Points</span>
+				</th>
+				<th colspan="4" class="slds-is-interactive headliner_columns_tasks">
+					<span class="slds-truncate">Tasks</span>
+				</th>
+				<th class="slds-row-action"></th>
+			</tr>
+		</thead>
+		<tbody id="sortable">
+			<apex:repeat value="{!Stories}" var="storyAndTasks" id="tabledetail">
+				<tr data-closed="{!SUBSTITUTE(TEXT(storyAndTasks.Story.Closed__c), '.0', '')}" data-workid="{!storyAndTasks.Story.Id}" data-userid="{!storyAndTasks.Story.Assignee__r.Id}" data-qeid="{!storyAndTasks.Story.QA_Engineer__r.Id}" data-rt="{!LOWER(SUBSTITUTE(storyAndTasks.Story.RecordType.Name,' ',''))}" data-lastmodifieddate="{!storyAndTasks.LastModifiedDate}" data-status="{!storyAndTasks.Story.Status__c}" style="{!IF(NOT(storyAndTasks.isVisible), 'display:none', '')}" class="slds-hint-parent work row{!storyAndTasks.Story.Id} row-{!LOWER(SUBSTITUTE(storyAndTasks.Story.RecordType.Name,' ',''))} row-status-{!LOWER(SUBSTITUTE(storyAndTasks.Story.Status__c,' ',''))} row-assignee-{!storyAndTasks.Story.Assignee__r.Id} row-qe-{!storyAndTasks.Story.QA_Engineer__r.Id} {!IF(BacklogViewPreference, 'min_work', '')}"><!-- '" -->
+					<!--td class="slds-row-select">
+						<svg aria-hidden="true" class="work_mover_grip slds-icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#rows')}"></use>
+						</svg>
+					</td-->
+	
+					<td class="slds-text-body--small slds-truncate column-record-type" style="white-space:nowrap;">
+						{!storyAndTasks.Story.RecordType.Name}
+					</td>
+	
+					<td class="slds-text-body--small slds-truncate column-subject">
+						<a href="javascript:void(0);">{!storyAndTasks.Story.Subject__c}</a>
+					</td>
+	
+					<td class="slds-text-body--small column-status" style="white-space:nowrap;">
+						{!storyAndTasks.Story.Status__c}
+					</td>
+	
+					<td class="slds-text-body--small column-assignee" style="white-space:nowrap;">
+						<span class="slds-avatar slds-avatar--circle slds-avatar--x-small">
+							<apex:image value="{!NULLVALUE(storyAndTasks.Story.Assignee__r.SmallPhotoUrl,'/img/userprofile/default_profile_45.png')}" />
+						</span>
+						<span class="column-assignee-name">{!NULLVALUE(storyAndTasks.Story.Assignee__r.FirstName,'-')}</span>
+					</td>
+	
+					<td class="slds-text-body--small column-qa" style="white-space:nowrap;">
+						<span class="slds-avatar slds-avatar--circle slds-avatar--x-small">
+							<apex:image value="{!NULLVALUE(storyAndTasks.Story.QA_Engineer__r.SmallPhotoUrl,'/img/userprofile/default_profile_45.png')}" />
+						</span>
+						<span class="column-qa-name">{!NULLVALUE(storyAndTasks.Story.QA_Engineer__r.FirstName,'-')}</span>
+					</td>
+	
+					<td class="slds-text-body--small column-themes">
+						<div title="{!storyAndTasks.themeNameCsv}">
+							<apex:outputText rendered="{!storyAndTasks.Story.Theme_Assignments__r.size == 0}">-</apex:outputText>
+							<apex:repeat value="{!storyAndTasks.Story.Theme_Assignments__r}" var="themeAssignment">
+								<span class="theme" data-themeid="{!themeAssignment.Theme__c}">{!themeAssignment.Theme__r.Name}</span>
+							</apex:repeat>
+	                    </div>
+					</td>
+	
+					<td class="slds-text-body--small column-build">
+	                    {!storyAndTasks.Story.Scheduled_Build__r.Name}
+					</td>
+	
+					<td class="slds-text-body--small column-storypoints">
+	                        {!SUBSTITUTE(TEXT(storyAndTasks.Story.Story_Points__c), '.0', '')}
+	                        <apex:outputText rendered="{!TEXT(storyAndTasks.Story.Story_Points__c) == ''}">-</apex:outputText>
+					</td>
+	
+					<td class="slds-text-body--small column-tasks" colspan="4" style="min-width:600px;">
+						<div class="work_columns">
+							<div class="drag_bounds"></div>
+		                
+			                <div class="work_column work_column1">
+			                    <apex:variable var="plannedStackLength" value="{!9}" />
+			                    <!--apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!storyAndTasks.PlannedTasks.size < plannedStackLength}"-->
+			                        <div class="work_tasks">
+				                        <ul data-type="Not Started" data-stacklength="{!TEXT(plannedStackLength)}">
+				                            <apex:repeat value="{!storyAndTasks.PlannedTasks}" var="plannedTask" id="plannedRepeaterLess">
+				                            <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!plannedTask}" />
+				                            </apex:repeat>
+				                            <li class="showAllTasks" style="display:none;"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!storyAndTasks.PlannedTasks.size} tasks</a></li>
+				                        </ul>
+			                        </div>
+			                    <!--/apex:outputPanel-->
+			                    <!--apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!storyAndTasks.PlannedTasks.size >= plannedStackLength}">
+			                        <ul data-type="Not Started" class="stacked" data-stacklength="{!TEXT(plannedStackLength)}">
+			                            <li class="blankTask freeze"></li>
+			                            <li class="blankTask freeze"></li>
+			                            <li class="blankTask freeze"></li>
+			                            <apex:variable var="plannedCounter" value="{!1}" />
+			                            <apex:repeat value="{!storyAndTasks.PlannedTasks}" var="plannedTask" id="plannedRepeaterMore">
+			                                <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!plannedTask}" rendered="{!plannedCounter != storyAndTasks.PlannedTasks.size}" style="display:none;" cssclass="freeze" />
+			                                <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!plannedTask}" rendered="{!plannedCounter == storyAndTasks.PlannedTasks.size}" />
+			                                <apex:variable var="plannedCounter" value="{!plannedCounter+1}" />
+			                            </apex:repeat>
+			                            <li class="showAllTasks"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!storyAndTasks.PlannedTasks.size} tasks</a></li>
+			                        </ul>
+			                    </apex:outputPanel-->
+			                </div>
+			                
+			                <div class="work_column work_column2">
+			                    <apex:variable var="inProgressStackLength" value="{!9}" />
+			                    <!--apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!storyAndTasks.InProgressTasks.size < inProgressStackLength}"-->
+			                        <div class="work_tasks">
+				                        <ul data-type="In Progress" data-stacklength="{!TEXT(inProgressStackLength)}">
+				                            <apex:repeat value="{!storyAndTasks.InProgressTasks}" var="progTask" id="inProgRepeaterLess">
+				                            <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!progTask}" />
+				                            </apex:repeat>
+				                            <li class="showAllTasks" style="display:none;"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!storyAndTasks.InProgressTasks.size} tasks</a></li>
+				                        </ul>
+			                        </div>
+			                    <!--/apex:outputPanel-->
+			                    <!--apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!storyAndTasks.InProgressTasks.size >= inProgressStackLength}">
+			                        <ul data-type="In Progress" class="stacked" data-stacklength="{!TEXT(inProgressStackLength)}">
+			                            <li class="blankTask freeze"></li>
+			                            <li class="blankTask freeze"></li>
+			                            <li class="blankTask freeze"></li>
+			                            <apex:variable var="inProgressCounter" value="{!1}" />
+			                            <apex:repeat value="{!storyAndTasks.InProgressTasks}" var="progTask" id="inProgRepeaterMore">
+			                                <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!progTask}" rendered="{!inProgressCounter != storyAndTasks.InProgressTasks.size}" style="display:none;" cssclass="freeze" />
+			                                <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!progTask}" rendered="{!inProgressCounter == storyAndTasks.InProgressTasks.size}" />
+			                                <apex:variable var="inProgressCounter" value="{!inProgressCounter+1}" />
+			                            </apex:repeat>
+			                            <li class="showAllTasks"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!storyAndTasks.InProgressTasks.size} tasks</a></li>
+			                        </ul>
+			                    </apex:outputPanel-->
+			                </div>
+			
+			                <div class="work_column work_column3">
+			                    <apex:variable var="completedStackLength" value="{!4}" />
+			                    <!--apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!storyAndTasks.CompletedTasks.size < completedStackLength}"-->
+			                        <div class="work_tasks">
+					                    <ul data-type="Completed" data-stacklength="{!TEXT(completedStackLength)}">
+					                        <apex:repeat value="{!storyAndTasks.CompletedTasks}" var="completedTask" id="completedRepeaterLess">
+					                        <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!completedTask}" />
+					                        </apex:repeat>
+					                        <li class="showAllTasks" style="display:none;"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!storyAndTasks.CompletedTasks.size} tasks</a></li>
+					                    </ul>
+			                        </div>
+			                    <!--/apex:outputPanel-->
+			                    <!--apex:outputPanel layout="block" styleClass="work_tasks" rendered="{!storyAndTasks.CompletedTasks.size >= completedStackLength}">
+			                        <ul data-type="Completed" class="stacked" data-stacklength="{!TEXT(completedStackLength)}">
+			                            <li class="blankTask freeze"></li>
+			                            <li class="blankTask freeze"></li>
+			                            <li class="blankTask freeze"></li>
+			                            <apex:variable var="completedCounter" value="{!1}" />
+			                            <apex:repeat value="{!storyAndTasks.CompletedTasks}" var="completedTask" id="completedRepeaterMore">
+			                                <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!completedTask}" rendered="{!completedCounter != storyAndTasks.CompletedTasks.size}" style="display:none;" cssclass="freeze" />
+			                                <c:ADM_Sprint_VirtualWall_TaskCard_Sds task="{!completedTask}" rendered="{!completedCounter == storyAndTasks.CompletedTasks.size}" />
+			                                <apex:variable var="completedCounter" value="{!completedCounter+1}" />
+			                            </apex:repeat>
+			                            <li class="showAllTasks"><a href="#" onClick="toggleTasks($(this).closest('ul'));return false">Expand {!storyAndTasks.CompletedTasks.size} tasks</a></li>
+			                        </ul>
+			                    </apex:outputPanel-->
+			                </div>
+	
+						</div>
+					</td>
+	
+					<td class="slds-row-action">
+						<button class="slds-button slds-button--icon-border-filled slds-button--icon-border-small">
+							<svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+							</svg>
+							<span class="slds-assistive-text">Show More</span>
+						</button>
+					</td>
+				</tr>
+			</apex:repeat>
+		</tbody>
+	</table>
+	
+	<ul id="menu_new" class="dropdown">
+	    <li data-action="bug"><a href="/apex/adm_bugedit?RecordType={!bugRecordTypeId}&retURL=/{!sprintId}&Sprint__c={!sprintId}">Bug</a></li>
+	    <li data-action="userstory"><a href="/apex/adm_userstoryedit?RecordType={!userStoryRecordTypeId}&retURL=/{!sprintId}&Sprint__c={!sprintId}">User Story</a></li>
+	</ul>
+	
+	<ul id="menu_work" class="dropdown">
+	    <apex:repeat value="{!statusTypes}" var="statusType">
+	    <li data-recordtypes="{!statusType.RecordTypesAsAliasCSV}"><a href="#"><span class="ui-icon ui-icon-blank"></span>{!statusType.Label}</a></li>
+	    </apex:repeat>
+	</ul>
+
+
+
+	<ul id="menu_work_options_old" class="dropdown">
+	    <li data-action="add"><a href="#"><span class="ui-icon ui-icon-plus"></span>Add task...</a></li>
+	    <li data-action="view"><a href="#"><span class="ui-icon ui-icon-newwin"></span>View work</a></li>
+	    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(theNextSprint))}"><li data-action="next"><a href="#"><span class="ui-icon ui-icon-seek-end"></span>Move to next Sprint</a></li></apex:outputPanel>
+	    <li data-action="remove"><a href="#"><span class="ui-icon ui-icon-close"></span>Remove from Sprint</a></li>
+	</ul>
+	<div id="menu_work_options" class="slds-dropdown slds-dropdown--actions slds-dropdown--menu">
+		<ul class="slds-dropdown__list" role="menu">
+			<li data-action="add" href="#" class="slds-dropdown__item" role="menuitem option"><a href="#">Add task...</a></li>
+			<!--li data-action="view" href="#" class="slds-dropdown__item" role="menuitem option"><a href="#">View work</a></li-->
+			<apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(theNextSprint))}"><li data-action="next" class="slds-dropdown__item" role="menuitem option"><a href="#">Move to next Sprint</a></li></apex:outputPanel>
+			<li data-action="remove" href="#" class="slds-dropdown__item" role="menuitem option"><a href="#">Remove from Sprint</a></li>
+		</ul>
+	</div>
+
+
+
+
+	<ul id="menu_statuses" class="dropdown"></ul>
+	<ul id="menu_assignee" class="dropdown"></ul>
+	<ul id="menu_qe" class="dropdown"></ul>
+	
+	<div id="menu_assignee_users" class="slds-dropdown slds-dropdown--nubbin-right slds-dropdown--small slds-dropdown--menu">
+		<ul class="slds-dropdown__list" role="menu">
+		    <apex:repeat value="{!teamMembers}" var="teamMember">
+				<li data-userid="{!teamMember.Member_Name__r.Id}" class="slds-dropdown__item slds-has-icon--left" role="menuitem option">
+					<a href="#">
+						<svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon--left"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/standard-sprite/svg/symbols.svg#task2')}"></use></svg>
+						<span class="slds-avatar slds-avatar--circle slds-avatar--x-small"><img src="{!teamMember.Member_Name__r.SmallPhotoUrl}" /></span>
+						{!BLANKVALUE(teamMember.Member_Name__r.FirstName, teamMember.Member_Name__r.Name)}
+					</a>
+				</li>
+			</apex:repeat>
+		</ul>
+	</div>
+
+	<div id="menu_qe_users" class="slds-dropdown slds-dropdown--nubbin-right slds-dropdown--small slds-dropdown--menu">
+		<ul class="slds-dropdown__list" role="menu">
+		    <apex:repeat value="{!teamMembers}" var="teamMember">
+				<li data-qeid="{!teamMember.Member_Name__r.Id}" class="slds-dropdown__item slds-has-icon--left" role="menuitem option">
+					<a href="#">
+						<svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon--left"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/standard-sprite/svg/symbols.svg#task2')}"></use></svg>
+						<span class="slds-avatar slds-avatar--circle slds-avatar--x-small"><img src="{!teamMember.Member_Name__r.SmallPhotoUrl}" /></span>
+						{!BLANKVALUE(teamMember.Member_Name__r.FirstName, teamMember.Member_Name__r.Name)}
+					</a>
+				</li>
+			</apex:repeat>
+		</ul>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+/**
+ * Given a task sobject, a new task card will be appended to the proper column 
+ * of the associated work card. If the work card is not found, then no new task
+ * card is created.  
+ */
+ var qualifiedName='{!$ObjectType.ADM_Work__c.Name}';
+ var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Work__c'));
+ 
+function resizeContainer() {
+	if ($('.sideContainer').hasClass('opened')) {
+		$('#virtualwall').width($(window).width() - 200).css('margin-right','200px');
+	} else {
+		$('#virtualwall').width($(window).width());
+	}
+	$('#virtualwall,.sideContainer').height($(window).height() - $('.slds-anchor').outerHeight());
+	$('.sideContainer').css('top', $('#virtualwall').offset().top + 'px');
+}
+
+function appendTaskCard(sobject, type) {
+    var columnName = type || $.taskCard.getExpectedColumnName(sobject);
+    //var $container = $('[data-workid="' + sobject.Work__c + '"] .work_tasks [data-type="' + columnName + '"]'); // not used now
+    var $placement = $('[data-workid="' + sobject.Work__c + '"] .work_tasks [data-type="' + columnName + '"] li.showAllTasks');
+    //return $('<li></li>').taskCard({sobject:sobject}).appendTo($container);
+    return $('<li></li>').taskCard({sobject:sobject}).hide().insertBefore($placement);
+}
+
+function workDescTextResize($dom) {
+    $dom.find('.work_desc_text textarea').height( $dom.find('.work_desc_statictext').outerHeight() ).css('position','relative');
+}
+
+function modifyList(el) {
+    /*if (el.children('li.task_card').length >= el.data('stacklength')) {
+        stackTasks(el);
+    } else {
+        unstackTasks(el);
+    }*/
+}
+
+function stackTasks(el) {
+    if (el.data('stayopen') != true) {
+        el.addClass('stacked');
+        el.children('li.blankTask').remove();
+        el.prepend('<li class="blankTask freeze"></li><li class="blankTask freeze"></li><li class="blankTask freeze"></li>');
+        el.children('li.task_card:not(li.task_card:last)').css('display','none').addClass('freeze');
+        //el.children('li.task_card:not(li.task_card[data-type=new]):last').css('display','table').removeClass('freeze');
+        el.children('li.task_card:not(li.task_card[data-type=new]):last').removeClass('freeze');
+        el.children('li.showAllTasks').children('a').text('Expand ' + $(el).children('li.task_card:not(li.task_card[data-type=new])').length + ' tasks');
+    } else {
+        el.children('li.showAllTasks').children('a').text('Collapse ' + $(el).children('li.task_card:not(li.task_card[data-type=new])').length + ' tasks');
+    }
+
+    el.append( el.children('li.showAllTasks') );
+    if (el.children('li.task_card').length >= el.data('stacklength')) {
+        el.children('li.showAllTasks').css('display','block');
+    }
+    recalcRow(el);
+}
+
+function unstackTasks(el) {
+    el.removeClass('stacked');
+    el.children('li.blankTask').remove();
+	//el.children('li.task_card').css('display','table').removeClass('freeze');
+	el.children('li.task_card').removeClass('freeze');
+    el.children('li.showAllTasks').children('a').text('Collapse ' + $(el).children('li.task_card:not(li.task_card[data-type=new])').length + ' tasks');
+    el.children('li.showAllTasks').css('display','none');
+    el.append( el.children('li.showAllTasks') );
+    recalcRow(el);
+}
+
+function toggleTasks(el) {
+    if (el.hasClass('stacked') && el.children('li.task_card').length >= el.data('stacklength')) {
+        unstackTasks(el);
+        el.children('li.showAllTasks').css('display','block');
+        el.attr('stayopen',true).data('stayopen',true);
+    } else {
+        el.removeAttr('stayopen').removeData('stayopen');
+        stackTasks(el);
+    }
+}
+
+function asc_sort(a, b){
+    return ($(b).find('label').text()) < ($(a).find('label').text()) ? 1 : -1;    
+}
+
+function updateFilter() {
+	$('#sortable > tr').hide();
+	var workClassName = '';
+	var taskClassName = '';
+
+	$('#filterDialog input[type=checkbox]').not('#filterDialog #filterBoxTaskAssignee input[type=checkbox]').each(function(index) {
+		if ($(this).is(':checked')) {
+			workClassName += '.row-' + $(this).val();
+		}
+	});
+	
+	if ($('#filterDialog #filterBoxTaskAssignee input[type=checkbox]').is(':checked')) {
+		$('.task_card').hide();
+		$('#filterDialog #filterBoxTaskAssignee input[type=checkbox]').each(function(index) {
+			if ($(this).is(':checked')) {
+				$('.task_card[data-userid=' + $(this).val() + ']').show();
+			}
+		});
+	} else {
+		$('.task_card').show();
+	}
+	
+	// Search:
+	//if ($('#filterSearch').val().length > 0) {
+	//	workClassName += '.card:icontains("' + $('#filterSearch').val() + '")'
+	//}
+	
+	if (workClassName.length === 0) {
+		var numAllRows = $('#sortable > tr').length;
+		$('#filterResults').text('Showing all ' + numAllRows + ' rows');
+		$('#sortable > tr').show();
+	} else {
+		var numAllRows = $('#sortable > tr').length;
+		var numSelectedRows = $(workClassName).length;
+		$('#filterResults').text('Showing ' + numSelectedRows + ' of ' + numAllRows + ' rows');
+		console.log(workClassName);
+		$(workClassName).show();
+	}
+}
+
+$('.work_tasks ul').live('dblclick',function(e) {
+    if (e.target === this) {
+        if($(this).find('li[data-type="new"]').length === 0) {
+            $('<li></li>').taskCard().appendTo($(this)).find('.task_desc textarea').focus();
+            recalcRow($(this));
+        }
+    }
+});
+
+// double click in showalltasks li to add task
+$('li.showAllTasks').live('dblclick',function(e) {
+    if($(this).closest('ul').find('li[data-type="new"]').length === 0) {
+        $('<li></li>').taskCard().appendTo($(this).closest('ul')).find('.task_desc textarea').focus();
+        recalcRow($(this));
+    }
+});
+
+
+$('#sortable>li').live('workCard-changed', function() {
+    workDescTextResize($(this));
+});
+$('#sortable>li').live('workCard-show', function() {
+    workDescTextResize($(this));
+});
+$('#sortable>li').live('workCard-hide', function() {
+});
+
+function recalcRow(row) {
+    var isIE = !!navigator.userAgent.match(/Trident.*rv\:11\./)  || $.browser.msie;
+    if (isIE) {
+        console.log('Resizing row for Internet Explorer');
+        var row = $(row).closest('li[data-workid]');
+        row.css('height','auto');
+        row.height(row.height())
+    }
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+WORKCARD PLUGIN
+/----------------------------------------------------------------------------------------------------------------------------------*/
+(function($){
+    /**
+     * Given a work card, it adds capabilities to make tasks sortable
+     */
+    function initializeTaskSortable($dom) {
+        var storyId = $dom.data('workid')
+        
+        $dom.find(".work_tasks>ul").sortable({
+	        opacity: 0.5,
+	        distance: 10,
+	        cancel: '.task_desc,.task_hours input,.task_dd,.task_link', /*handle:".task_mover_grip_on",*/
+	        forcePlaceholderSize: true,
+	        placeholder: "task_highlight",
+	        items: "li:not(.freeze)",
+	        tolerance: 'pointer',
+	        connectWith: ".row" + storyId + " ul",
+	        /*containment: ".row" + storyId + " .drag_bounds",*/
+            over: function(event, ui) {
+
+            },
+            stop: function(event, ui) {
+                recalcRow($(this));
+            
+                // OLD LIST
+                modifyList($(this));
+                modifyList(ui.item.closest('ul'));
+                $(this).closest('.work_columns').find('li').css('z-index','');
+                endNotification($dom.data('last_message_id'));
+            },
+            activate: function(event, ui) {
+
+            },
+            over: function(event, ui) {
+                recalcRow($(this));
+            },
+            
+            start:function(event, ui) {
+                $(ui.placeholder).height($(ui.item).outerHeight()); // hack for Chrome Windows
+                hide_dd();
+            },
+            update:function(event, ui) {
+                console.log('sortable event: update');
+
+                //this update is invoked twice if dropped from on list to another list, so we want to block the 
+                //second sorting call 
+                if(typeof $dom.data('sorting-state') !== 'undefined' && $dom.data('sorting-state').indexOf(event.timeStamp) != -1) {
+                    return;
+                }
+                
+                //add the current event time to the sorting state
+                if(typeof $dom.data('sorting-state') == 'undefined') {
+                    $dom.data('sorting-state', [event.timeStamp]);
+                } else {
+                    $dom.data('sorting-state').push(event.timeStamp);
+                }
+                function popState() {
+                    $dom.data('sorting-state').splice($dom.data('sorting-state').indexOf(event.timeStamp));
+                }
+                
+                startNotification('Saving...');
+                
+                var request = {
+                    workId: storyId,
+                    plannedTasks: [],
+                    inProgressTasks: [],
+                    completedTasks: []
+                };
+                $dom.find('ul[data-type="Not Started"] li[data-taskid]').each(function(index, item){
+                    request.plannedTasks.push($(item).data('taskid'));
+                });
+                $dom.find('ul[data-type="In Progress"] li[data-taskid]').each(function(index, item){
+                    request.inProgressTasks.push($(item).data('taskid'));
+                });
+                $dom.find('ul[data-type="Completed"] li[data-taskid]').each(function(index, item){
+                    request.completedTasks.push($(item).data('taskid'));
+                });
+                
+                $dom.find('.work_column3 li .task_hours input').val(0); // set hours to completed in third column
+                
+                 {!$RemoteAction.ADM_SprintVirtualWallController.updateTaskOrder}(request, handle({
+                    success: function(data){
+                        popState();
+                        var work = data;
+                        
+                        //update the returned work item
+                        $('[data-workid="' + work.Id + '"]').workCard('sobject', work);
+                        
+                        //update the returned task items
+                        var tasks = [].concat(data.notStartedTasks, data.inProgressTasks, data.completedTasks);
+                        for(var index = 0; index < tasks.length; index++) {
+                            $('[data-taskid="' + tasks[index].Id + '"]').taskCard('sobject', tasks[index]);
+                        }
+                        
+                        endNotification();
+                    }, 
+                    fail: function(event) {
+                        popState();
+                        errorNotification('<div>Error during task order:</div>' + event.message);
+                    }
+                }), {escape:false});
+            }
+        });
+
+        workDescTextResize($dom);
+
+    }
+    
+    var setLastModifiedDate = function(value) {
+        var serializedValue = null;
+        
+        if(typeof value === 'object' && value.getTime) {
+            serializedValue = value.getTime();
+        } else if(typeof value === 'number') {
+            serializedValue = value;
+        }
+        
+        return this.each(function() {
+            $(this).attr('data-lastmodifieddate', serializedValue).data('lastmodifieddate', serializedValue);
+        });
+    };
+    
+    var setClosed = function(value) {
+        return this.each(function() {
+            var $dom = $(this);
+            $dom
+                .data('closed',value)
+                .attr('data-closed',value)
+                .trigger('workCard-changed');
+        });
+    };
+    
+    var setStatus = function(value) {
+        return this.each(function() {
+            var $dom = $(this);
+            $dom.data('status',value).attr('data-status',value);
+            
+            if($dom.find('.work_desc_status_dropdown button').hasClass('ui-button')) {
+                $dom.find('.work_desc_status_dropdown button .ui-button-text').text(value);
+            } else {
+                $dom.find('.work_desc_status_dropdown button').text(value);
+            }
+            $dom.trigger('workCard-changed');
+        });
+    };
+    
+    /**
+     * Sets the themes
+     */
+    var setThemes = function(values) {
+        return this.each(function() {
+            var $dom = $(this);
+            var $themeContainer = $dom.find('.column-themes div').empty();
+            if(values.length == 0) {
+                $themeContainer.attr('title', '').text('-');
+            } else {
+                var themeNames = [];
+                $.each(values, function(index, themeAssignment) {
+                    if(themeAssignment.Theme__r) {
+                        themeNames.push(themeAssignment.Theme__r.Name);
+                        $('<span>').addClass('theme').attr('data-themeid', themeAssignment.Theme__r.Id).text(themeAssignment.Theme__r.Name).appendTo($themeContainer);
+                    }
+                });
+                $themeContainer.attr('title', themeNames.join(', '));
+            }
+            $dom.trigger('workCard-changed');
+        });
+    };
+    
+    function init($dom) {
+        //$dom.find('button.storypoints').button({text:true, icons: {secondary: "ui-icon-triangle-1-s"}});
+        //$dom.find('.work_desc .work_desc_status .work_desc_status_dropdown button').button({text:true, icons: {secondary: "ui-icon-triangle-1-s"}});
+        //$dom.find('.work_desc .work_desc_status .work_desc_status_view button').button({text: false, icons: {secondary: "ui-icon-triangle-1-s"}});
+        initializeTaskSortable($dom);
+        recalcRow($dom);
+    }
+    
+    updateWorkCard = (function(){
+
+        //create a map that can only be accessed by the inner function
+        var iconMap = {};
+        iconMap['Bug'] = 'bug';
+        iconMap['User Story'] = 'story';
+        iconMap['Investigation'] = 'investigation';
+        iconMap['ToDo'] = 'todo';
+    
+        return function($dom, sobject) {
+            if(typeof sobject === 'undefined' || sobject == null) {
+                return;
+            } 
+            
+            $dom.attr('data-workid', sobject.Id).addClass('slds-hint-parent work row' + sobject.Id);
+            
+            if(typeof sobject.LastModifiedDate !== 'undefined') {
+               setLastModifiedDate.call($dom, sobject.LastModifiedDate);
+            }
+    
+            if(typeof sobject.Closed__c !== 'undefined') {
+                setClosed.call($dom, sobject.Closed__c);
+            }
+
+            if(sobject.Theme_Assignments__r) {
+                setThemes.call($dom, sobject.Theme_Assignments__r);
+            } else {
+                $dom.find('.column-themes div').empty().attr('title', '').text('-');
+            }
+            
+            if(sobject.Assignee__r) {
+                $dom.attr('data-userid', sobject.Assignee__r.Id).data('userid', sobject.Assignee__r.Id);
+                $dom.find('.column-assignee img').attr('src', sobject.Assignee__r.SmallPhotoUrl);
+                $dom.find('.column-assignee-name').text(sobject.Assignee__r.FirstName);
+                $dom.addClass('row-assignee-' + sobject.Assignee__r.Id);
+            }
+            
+            if(sobject.QA_Engineer__r) {
+                $dom.attr('data-qeid', sobject.QA_Engineer__r.Id).data('qeid', sobject.QA_Engineer__r.Id);
+                $dom.find('.column-qa img').attr('src', sobject.QA_Engineer__r.SmallPhotoUrl);
+                $dom.find('.column-qa-name').text(sobject.QA_Engineer__r.FirstName);
+                $dom.addClass('row-qe-' + sobject.QA_Engineer__r.Id);
+            } else {
+                $dom.find('.column-qa img').attr('src', '/img/userprofile/default_profile_45.png');
+                $dom.find('.column-qa-name').text('-');
+            }
+
+            if(sobject.RecordType) {
+                var recordTypeName = sobject.RecordType.Name.replace(/\s+/g, '').toLowerCase();
+                $dom.attr('data-rt', recordTypeName).data('rt', recordTypeName);
+                $dom.addClass('row-' + recordTypeName);
+                $dom.find('.wall_icon_recordtype').text(sobject.RecordType.Name);
+                
+                var icon = 'unknown';
+                if(iconMap[sobject.RecordType.Name]) {
+                    icon = iconMap[sobject.RecordType.Name];
+                }
+                
+                $dom.find('.work_desc .wall_icon').addClass('wall_icon_' + icon);
+            }
+            
+            if(sobject.Subject__c) {
+                $dom.find('.column-subject a').text(sobject.Subject__c); //.attr('href',sobject.Id);
+            }
+            
+            if(sobject.Status__c) {
+                var statusName = sobject.Status__c.replace(/\s+/g, '').toLowerCase();
+                $dom.find('.column-status').text(sobject.Status__c);
+                $dom.addClass('row-status-' + statusName);
+                //setStatus.call($dom, sobject.Status__c);
+            }
+            
+            if(sobject.RecordType.Name) {
+                $dom.find('.record-type').text(sobject.RecordType.Name);
+            }
+
+            if(sobject.Scheduled_Build__r) {
+                $dom.find('.column-build div').text(sobject.Scheduled_Build__r.Name);
+            }
+            
+            var storyPointsLabel = '-';
+            if (typeof(sobject.Story_Points__c) != 'undefined' && sobject.Story_Points__c >= 0) {
+                storyPointsLabel = sobject.Story_Points__c;
+            }
+
+            $dom.find('.column-storypoints div').text(storyPointsLabel);
+
+            /*if($dom.find('button.storypoints').hasClass('ui-button')) {
+                $dom.find('button.storypoints .ui-button-text').text(storyPointsLabel);
+            } else {
+                $dom.find('button.storypoints').text(storyPointsLabel);
+            }*/
+            
+            if ({!ISBLANK(theNextSprint)} == false && $dom.find('.work_desc_next_sprint').length == 0){
+                    $dom.find('.work_desc').prepend('<div class="work_desc_next_sprint"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" tabindex="-1" title="Move to next Sprint"><span class="ui-button-icon-secondary ui-icon ui-icon-seek-end"></span></button></div>');
+            }
+        };
+    })();
+    
+    var methods = {
+        init : function() {
+            return this.each(function(){
+                init($(this));
+            });
+        },
+        create : function(options) {
+            var settings = $.extend({}, options);
+            var html =  '<td class="slds-text-body--small column-record-type" style="white-space:nowrap;"></td>' + 
+						'<td class="slds-text-body--small slds-truncate column-subject"><a href="javascript:void(0);"></a></td>' + 
+                        '<td class="slds-text-body--small column-status" style="white-space:nowrap;"></td>' + 
+                        '<td class="slds-text-body--small column-assignee" style="white-space:nowrap;"><span class="slds-avatar slds-avatar--circle slds-avatar--x-small"><img /></span> <span class="column-assignee-name"></span></td>' + 
+                        '<td class="slds-text-body--small column-qa" style="white-space:nowrap;"><span class="slds-avatar slds-avatar--circle slds-avatar--x-small"><img /></span> <span class="column-qa-name"></span></td>' +
+                        '<td class="slds-text-body--small column-themes"><div></div></td>' + 
+                        '<td class="slds-text-body--small column-build"></td>' + 
+                        '<td class="slds-text-body--small column-storypoints"></td>' + 
+                        '<td class="slds-text-body--small column-tasks" colspan="4" style="min-width:600px;">' +
+                        '<div class="work_columns">' +  
+                            '<div class="work_column work_column1"><div class="work_tasks"><ul data-type="Not Started"></ul></div></div>' + 
+                            '<div class="work_column work_column2"><div class="work_tasks"><ul data-type="In Progress"></ul></div></div>' + 
+                            '<div class="work_column work_column3"><div class="work_tasks"><ul data-type="Completed"></ul></div></div>' + 
+                        '</div>' +
+                        '</td>' +
+						'<td class="slds-row-action">' +
+						'	<button class="slds-button slds-button--icon-border-filled slds-button--icon-border-small">' +
+						'		<svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+						'			<use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>' +
+						'		</svg>' +
+						'		<span class="slds-assistive-text">Show More</span>' +
+						'	</button>' +
+						'</td>';
+            
+            return this.each(function(){
+                var $this = $(this);
+                
+                $(html).appendTo($this);
+                
+                //if there is at least one work collapsed, then create the new item as collapsed
+                //we assume that the work item is created in the expanded form
+                if ($('#sortable>tr').hasClass("min_work")) {
+                    methods.collapse.call($(this));
+                }
+                
+                updateWorkCard($this, settings.sobject);
+                init($this);
+            });
+        },
+        collapse : function() {
+            return this.each(function(){
+                $(this).addClass('min_work');
+                //if ($.browser.webkit) { 
+                //    $(this).find('.work_desc').css('display','table');
+                //}
+                //$(this).find('.work_desc_status_storypoints button').appendTo( $(this).find('.work_desc_points div') );
+                //workDescTextResize($(this));
+            });
+        },
+        sobject : function(sobject) {
+            if(sobject) {
+                return this.each(function() {
+                    updateWorkCard($(this), sobject);
+                });
+            } else {
+                var $first = this.first();
+                if($first.data('workid')) {
+                    return {Id : $first.data('workid')};
+                } else {
+                    return undefined;
+                } 
+            }
+        },
+        lastModifiedDate : function(date) {
+            if(date) {
+                return setLastModifiedDate.call(this, date);
+            } else {
+                var value = this.first().data('lastmodifieddate');
+                return (value)? new Date(value) : undefined;
+            }
+        },
+        status : function(value) {
+            if(typeof value !== 'undefined') {
+                return setStatus.call(this, value);
+            } else {
+                return this.first().data('status');
+            }
+        },
+        closed : function(value) {
+            if(typeof value !== 'undefined') {
+                return setClosed.call(this, value);
+            } else {
+                return this.first().data('closed');
+            }
+        },
+        
+        startEditing : function() {
+            return this.each(function(){
+                $(this).attr('data-state', 'editing').data('state', 'editing');
+                $(this).trigger('workCardediting');
+            });
+        },
+        
+        stopEditing : function() {
+            return this.each(function(){
+                $(this).removeAttr('data-state').removeData('state', 'editing');
+                $(this).trigger('workCardedited');
+            });
+        },
+        
+        isEditing : function() {
+            return this.first().data('state') === 'editing' || this.first().attr('data-state') === 'editing';
+        },
+        
+        show : function() {
+            return this.each(function() {
+                $(this).show();
+                $(this).trigger('workCard-show');
+            });
+        },
+        
+        hide : function() {
+            return this.each(function() {
+                $(this).hide();
+                $(this).trigger('workCard-hide');
+            });
+        }
+    };
+
+    $.fn.workCard = function(method) {
+        if ( methods[method] ) {
+            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof method === 'object' || ! method ) {
+            return methods.create.apply( this, arguments );
+        } else {
+            $.error( 'Method ' +  method + ' does not exist on jQuery.workCard' );
+        }
+    };
+
+}(jQuery));
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+TASKCARD PLUGIN
+/----------------------------------------------------------------------------------------------------------------------------------*/
+(function($){
+    var setLastModifiedDate = function(value) {
+        var serializedValue = null;
+        
+        if(typeof value === 'object' && value.getTime) {
+            serializedValue = value.getTime();
+        } else if(typeof value === 'number') {
+            serializedValue = value;
+        }
+        
+        return this.each(function() {
+            $(this).attr('data-lastmodifieddate', serializedValue).data('lastmodifieddate', serializedValue);
+        });
+    };
+    
+    var updateTaskCard = function($dom, sobject) {
+        //store the name space vs hard-coding it
+        var qualifiedName='{!$ObjectType.ADM_Task__c.Name}';
+        var nameSpace = qualifiedName.substring(0,qualifiedName.indexOf('ADM_Task__c'));
+        if(typeof sobject === 'undefined' || sobject == null) {
+            return;
+        }
+        
+        $dom.attr('data-taskid', sobject.Id).data('taskid', sobject.Id);
+        
+        $dom.find('.task_link a').attr('href','/' + sobject.Id);
+
+        
+        if(typeof sobject.LastModifiedDate !== 'undefined') {
+            setLastModifiedDate.call($dom, sobject.LastModifiedDate);
+        }
+        
+        if(typeof sobject.Subject__c !== 'undefined') {
+            $dom.find('.task_desc textarea').val(sobject.Subject__c);
+        }
+        
+        if(typeof sobject[nameSpace + 'Assigned_To__r'] !== 'undefined') {
+            $dom.attr('data-userid', sobject[nameSpace + 'Assigned_To__r'].Id).data('userid', sobject[nameSpace + 'Assigned_To__r'].Id);
+            
+            //add the img element if it does not exist
+            var $img = $dom.find('.task_img img');
+            if($img.length == 0) {
+                $img = $('<img />').addClass('img_clickable').appendTo($dom.find('.task_img').empty());
+            }
+            
+            $img.attr({'src': sobject[nameSpace + 'Assigned_To__r'].SmallPhotoUrl, 'title': sobject[nameSpace + 'Assigned_To__r'].Name, 'alt': sobject[nameSpace + 'Assigned_To__r'].Name});
+            
+            if($dom.find('.task_assignee_name a').length == 0) {
+                $dom.find('.task_assignee_name').append($('<a target="_blank"></a>'))
+            }
+            $dom.find('.task_assignee_name a')
+                .attr('href', '/' + sobject[nameSpace + 'Assigned_To__r'].Id)
+                .text(sobject[nameSpace + 'Assigned_To__r'].FirstName || sobject[nameSpace + 'Assigned_To__r'].Name);
+        }
+        
+        if(typeof sobject.Hours_Remaining__c !== 'undefined') {
+            $dom.find('.task_hours input').val(sobject.Hours_Remaining__c.toString().replace(/\.0/, ''));
+        }
+        
+        //determine if the task needs to be moved to another column
+        var currentColumn = $dom.closest('[data-type]').data('type');
+        var expectedColumn = $.taskCard.getExpectedColumnName(sobject);
+        if(currentColumn != expectedColumn) {
+           $dom.closest('[data-workid]').find('[data-type="' + expectedColumn + '"]').append($dom);
+        }
+    };
+
+    var methods = {
+        init : function(options) {
+            var settings = $.extend({}, options);
+            
+            return this.each(function() {
+                var $this = $(this);
+                var html = '<div class="task_row1">' + 
+                        '<div class="task_row1_holder"><div class="task_desc"><textarea maxlength="255"></textarea></div></div>' + 
+                        '<div class="task_img"><img /></div>' + 
+                    '</div>' + 
+                    '<div class="task_row2">' + 
+                        '<div class="task_grippy"></div>' + 
+                        '<div class="task_rh">Hours:</div>' + 
+                        '<div class="task_hours"><input type="text" id="" name="" value="0" size="3" maxlength="3" spellcheck="false" /></div>' + 
+                        '<div class="task_hint"></div>' + 
+                        '<div class="task_assignee_name"></div>' + 
+                        '<div class="task_link"><a target="_blank" href=""><span class="slds-icon__container"><svg aria-hidden="true" class="slds-icon slds-icon--tiny"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#new_window')}"></use></svg><span class="slds-assistive-text">Remove Task</span></span></a></div>' + 
+                        '<div class="task_dd">' + 
+                            '<div class="delete-task-button"><span class="slds-icon__container"><svg aria-hidden="true" class="slds-icon slds-icon--tiny"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#delete')}"></use></svg><span class="slds-assistive-text">Remove Task</span></span></div>' + 
+                        '</div>' + 
+                    '</div>';
+                
+                $this.addClass('task_card').append($(html));
+                
+                if(settings.sobject && settings.sobject != null) {
+                    updateTaskCard($this, settings.sobject);
+                } else {
+                    $this.data('type', 'new').attr('data-type', 'new');
+                    $this.find('.task_dd,.task_link,.task_assignee_name,.task_grippy').hide();
+                    $this.find('.task_img img').attr({src: '{!JSINHTMLENCODE(defaultAssignee.SmallPhotoUrl)}', title: '{!JSINHTMLENCODE(defaultAssignee.Name)}'}); 
+                    $this.find('.task_hint').text('<Enter> to Create Task, <Tab> to Input Hours');
+                }
+            });
+        },
+        
+        sobject : function(sobject) {
+            if(sobject) {
+                return this.each(function(){
+                    updateTaskCard($(this), sobject);
+                });
+            } else {
+                var $first = this.first();
+                if($first.data('taskid')) {
+                    return {Id:$first.data('taskid')};
+                } else {
+                    return undefined;
+                }
+            }
+        },
+        
+        lastModifiedDate : function(date) {
+            if(date) {
+                return setLastModifiedDate.call(this, date);
+            } else {
+                var value = this.first().data('lastmodifieddate');
+                return (value)? new Date(value) : undefined;
+            }
+        },
+        
+        startEditing : function() {
+            return this.each(function(){
+                $(this).attr('data-state', 'editing').data('state', 'editing');
+                $(this).trigger('taskCardediting');
+            });
+        },
+        
+        stopEditing : function() {
+            return this.each(function(){
+                $(this).removeAttr('data-state').removeData('state', 'editing');
+                $(this).trigger('taskCardedited');
+            });
+        },
+        
+        isEditing : function() {
+            return this.first().data('state') === 'editing' || this.first().attr('data-state') === 'editing';
+        }
+    };
+    
+    $.fn.taskCard = function(method) {
+        if ( methods[method] ) {
+            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof method === 'object' || ! method ) {
+            return methods.init.apply( this, arguments );
+        } else {
+            $.error( 'Method ' +  method + ' does not exist on jQuery.taskCard' );
+        }
+    };
+    
+    /** 
+     * Returns the expected column name for given a task sobject.
+     */
+    $.taskCard = {
+        getExpectedColumnName : function(sobject) {
+            var expectedColumn = 'Not Started';
+            if(sobject[nameSpace+'Status__c'] === 'Completed') {
+               expectedColumn = 'Completed';
+            } else if(sobject[nameSpace+'Status__c'] === 'In Progress') {
+               expectedColumn = 'In Progress';
+            }
+            return expectedColumn;
+        }
+    };
+})(jQuery);
+
+$(function() {
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+/* !Work Functions                                                                                                                  */
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+
+	/* OPEN WORK DIALOG */
+	$(document).on('click','.column-subject a', function(e) {
+		e.preventDefault();
+	    selectedWork = $(this).closest('tr').attr('data-workid');
+	    workModalOpen();
+    });
+
+    /* WORK: EDIT WORK SUBJECT */
+    var originalWorkText = '';
+    $('.work_desc .wall_icon div.work_desc_text textarea').live('focus',function() {
+        originalWorkText = $(this).val();
+        $(this).closest('li[data-workid]').workCard('startEditing');
+    }).live('blur',function() {
+            
+         $(this).closest('li[data-workid]').workCard('stopEditing');
+         
+         if ($(this).val().length == 0) {
+            $(this).val(originalWorkText);
+         } else if (originalWorkText != $(this).val()) {
+
+            /* custom resizing of field */
+            $(this).siblings('.work_desc_statictext').show().text( $(this).val() );
+            $(this).height( $(this).siblings('.work_desc_statictext').outerHeight() );
+            $(this).siblings('.work_desc_statictext').hide();
+
+            startNotification('Saving...');
+            var $workCard = $(this).closest('li[data-workid]');
+            
+            var workId = $workCard.data('workid') || null;
+            var lastModifiedDate = $workCard.workCard('lastModifiedDate').toUTCString();
+            
+            {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({Id:workId, Subject__c:$(this).val()}, lastModifiedDate, handle({
+                success: function(data) {
+                    $('[data-workid="' + data.Id + '"]').workCard('lastModifiedDate', data.LastModifiedDate);
+                    endNotification();
+                },
+                fail: function(event){
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }
+            }));
+         }
+    }).live('keydown focus paste', function(e) {
+            if ($(this).val().length >= 255) {
+                $(this).val( $(this).val().substring(0,255) );
+            }
+    }).live('keydown', function(e) {
+        if ($(this).val().length == 0 && e.which == 9 && !e.shiftKey) { // don't allow TAB on a new item with no text (unless it's SHIFT+TAB which goes to previous tab index)
+             e.preventDefault();
+        } else if (e.which == 13 && !e.shiftKey) { // hit enter (except SHIFT + ENTER), blur, focus to new task item (for rapid entry)
+             e.preventDefault();
+            if ($(this).val().length > 0) {
+                $(this).blur();
+                }
+         } else if (e.which == 27) { // hitting ESCAPE on item with text will reset text (undo)
+             $(this).val(originalWorkText);
+         }
+    });
+    
+
+    // WORK: STORY POINTS
+    var workStoryPointsDropdown = $('<ul id="menu_storypoints" class="dropdown"><li data-value=""><a href="#"><span class="ui-icon ui-icon-blank"></span>-</a></li></ul>').appendTo(document.body);
+    var storyPointScale = {!storyPointScaleAsJson};
+    for(var index = 0; index < storyPointScale.length; index++) {
+        var storyPointScaleItem = storyPointScale[index];
+        var $newItem = $('<li><a href="#"></a></li>')
+            .data('value', storyPointScaleItem)
+            .attr('data-value', storyPointScaleItem)
+            .appendTo(workStoryPointsDropdown)
+            .find('a')
+                .text(storyPointScaleItem)
+                .prepend($('<span class="ui-icon ui-icon-blank"></span>'));
+    }
+    workStoryPointsDropdown.menu().hide();
+    
+    $('button.storypoints').live('click', function(event) {
+        var button = $(this);
+        var workid = $(this).closest('li').data('workid');
+        if (workStoryPointsDropdown.is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        workStoryPointsDropdown.find('span.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+        if ($(this).find('span.ui-button-text').text() == '-') {
+            workStoryPointsDropdown.find('li[data-value=""] span.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+        } else {
+            workStoryPointsDropdown.find('li[data-value=' + $(this).find('span.ui-button-text').text() + '] span.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+        }
+        workStoryPointsDropdown.data('active-button', this);
+        workStoryPointsDropdown.data('workid', workid);
+        workStoryPointsDropdown.menu('deactivate').show();
+        workStoryPointsDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px -1px"});
+        $(document).click(hide_dd);     
+        return false;
+    }).live('mouseleave', function(e){
+        var workid = $(this).closest('li').data('workid');
+        if (workStoryPointsDropdown.is(':visible') && workStoryPointsDropdown.data('workid') == workid){
+            $(this).addClass('ui-state-active');
+        } else {
+            $(this).removeClass('ui-state-active');
+        }
+    });
+
+    // WORK: CHANGE STORY POINTS
+    workStoryPointsDropdown.find("li a").on('click', function(event) {
+            var newStoryPoint = $(this).closest('li').data('value');
+            var originalButtonText = $(workStoryPointsDropdown.data('active-button')).find('span.ui-button-text').text();
+            startNotification('Saving...');
+            if (newStoryPoint === '') {
+                $(workStoryPointsDropdown.data('active-button')).find('span.ui-button-text').text('-');
+            } else {
+                $(workStoryPointsDropdown.data('active-button')).find('span.ui-button-text').text(newStoryPoint);
+            }
+            
+             {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({Id:workStoryPointsDropdown.data('workid'), Story_Points__c: newStoryPoint}, $('li[data-workid="' + workStoryPointsDropdown.data('workid') +'"]').workCard('lastModifiedDate').toUTCString(), handle({
+                success: function(data){
+                    $('[data-workid="' + data.Id + '"]').workCard('lastModifiedDate', data.LastModifiedDate);
+                    endNotification();
+                    reCalculatePlannedVelocity(); 
+                },
+                fail: function(event){
+                    $(workStoryPointsDropdown.data('active-button')).find('span.ui-button-text').text(originalButtonText);
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }   
+            }));
+        
+    });
+
+    // WORK: STATUS DROPDOWN
+    var workStatusDropdown = $('#menu_work').menu().hide();
+    $('.work_desc .work_desc_status .work_desc_status_dropdown button').live('click', function(event) {
+        var button = $(this);
+        var workid = $(this).closest('li').data('workid');
+        var workRecordType = $(this).closest('li').data('rt');
+        if (workStatusDropdown.is(':visible') && workStatusDropdown.data('workid') == workid) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        workStatusDropdown.width($(this).width()+2);
+        workStatusDropdown.data('active-button', this);
+        workStatusDropdown.data('workid', workid);
+        workStatusDropdown.find('span.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+        workStatusDropdown.find('li').show().each(function(index,item){
+            var found = false;
+            var itemTypes = $(item).data('recordtypes').split(',');
+
+            if ( $('li[data-workid="' + $(workStatusDropdown).data('workid') + '"]').find('.work_desc_status_dropdown span.ui-button-text').text() == $(item).find('a').text() ) {
+                $(item).find('span').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            }
+
+            $.each(itemTypes,function(index,statusRecordType){
+                if (statusRecordType == workRecordType) {
+                    found = true;
+                    return false;
+                };
+            });
+            if (!found) { $(item).hide(); }
+        });
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right').addClass('button-active-grey');
+        workStatusDropdown.menu('deactivate').show();
+        workStatusDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        return false;
+    }).live('mouseenter', function(e){
+       //$(this).css('z-index','10').find('.ui-button-icon-secondary').addClass('ui-icon').addClass('ui-icon-triangle-1-s');
+
+    }).live('mouseleave', function(e){
+        //$(this).css('z-index','').find('.ui-button-icon-secondary').removeClass('ui-icon').removeClass('ui-icon-triangle-1-s');
+
+        var button = $(this);
+        var workid = $(this).closest('li').data('workid');
+        if (workStatusDropdown.is(':visible') && workStatusDropdown.data('workid') == workid ){
+            button.addClass('ui-state-active');
+        } else {
+            button.removeClass('ui-state-active');
+        }
+    });
+
+    // WORK: CHANGE STATUS
+    var originalWorkStatus = '';
+    var showMoveUncompletedTasksDialog = {!showMoveUncompletedTasksDialog};
+    workStatusDropdown.find('a').on('click', function(event) {
+        var originalButtonText = $(workStatusDropdown.data('active-button')).find('span.ui-button-text').text();
+        var newButtonText = $(this).text();
+        $(workStatusDropdown.data('active-button')).find('span.ui-button-text').text( newButtonText );
+        var workid = $(workStatusDropdown.data('active-button')).closest('[data-workid]').data('workid');
+        var $workCard = $('li[data-workid=' + workid + ']');
+        var tasksPlanned = $workCard.find('ul[data-type="Not Started"] li[data-taskid]').length;
+        var tasksInProgress = $workCard.find('ul[data-type="In Progress"] li[data-taskid]').length;
+        var revertStatus = function() {
+            $(workStatusDropdown.data('active-button')).find('span.ui-button-text').text(originalButtonText);
+        };
+        
+        if ((newButtonText == 'Closed' || newButtonText == 'Completed') && (tasksPlanned > 0 || tasksInProgress > 0)) {
+            var onApprove = function() {
+                startNotification('Saving...');
+                        
+                $('li[data-workid="' + workid + '"] ul[data-type="Not Started"] li.task_card,li[data-workid="' + workid + '"] ul[data-type="In Progress"] li.task_card').each(function() {
+                    $(this).attr('data-oldtype', $(this).closest('ul').data('type') ).data('oldtype', $(this).closest('ul').data('type') );
+                    $(this).attr('data-oldhours', $(this).find('.task_hours input').val() ).data('oldhours', $(this).find('.task_hours input').val() );
+                    $(this).find('.task_hours input').val(0);
+                    $(this).appendTo('li[data-workid="' + workid + '"] ul[data-type="Completed"]');
+                });
+                modifyList( $('li[data-workid="' + workid + '"] ul[data-type="Not Started"]') );
+                modifyList( $('li[data-workid="' + workid + '"] ul[data-type="In Progress"]') );
+                modifyList( $('li[data-workid="' + workid + '"] ul[data-type="Completed"]') );
+                
+                 {!$RemoteAction.ADM_SprintVirtualWallController.closeWorkAndTasks}(workid, handle({
+                    success: function(data){
+                        $('[data-workid="' + data.Id + '"]')
+                            .workCard('lastModifiedDate', data.LastModifiedDate)
+                            .workCard('closed', data.item.work[nameSpace+'Closed__c'])      //data.item.work.agf1__Closed__c)
+                            .workCard('status', newButtonText);
+                        $('li[data-workid="' + workid + '"] ul[data-type="Completed"] li').each(function() {
+                            $(this).removeAttr('data-oldtype').data('oldtype','');
+                            $(this).removeAttr('data-oldhours').data('oldhours','');
+                        });
+                        
+                        //make sure the last modified date of each task is updated
+                        $.each([].concat(data.item.inProgressTasks, data.item.notStartedTasks, data.item.completedTasks), function(){
+                            $('[data-taskid="' + this.Id + '"]').taskCard('lastModifiedDate', this.LastModifiedDate);
+                        });
+                        
+                        endNotification();
+                    },
+                    fail: function(event){
+                        revertStatus();
+                        errorNotification('<div>Error during save:</div>' + event.message);
+                        $('li[data-workid="' + workid + '"] ul[data-type="Completed"] li[data-oldtype="Not Started"],li[data-workid="' + workid + '"] ul[data-type="Completed"] li[data-oldtype="In Progress"]').each(function() {
+                            $(this).appendTo('li[data-workid="' + workid + '"] ul[data-type="' + $(this).data('oldtype') + '"]');
+                            $(this).find('.task_hours input').val( $(this).data('oldhours') );
+                            $(this).removeAttr('data-oldtype').data('oldtype','');
+                            $(this).removeAttr('data-oldhours').data('oldhours','');
+                        });
+
+                    }   
+                }));
+            };
+            
+            //if they don't want to see the dialog, then just run the success
+            if(!showMoveUncompletedTasksDialog) {
+                onApprove();
+            } else {
+                var dialogApproved = false;
+                $('<div id="dialogMoveTasks" title="Are you sure?"><p>You have uncompleted tasks. If you continue, they will be moved into the &quot;Completed&quot; column.</p><div><input id="dialogMoveTasksNeverAgain" type="checkbox" /> Don\'t ask me again</div></div>').dialog({resizable:false,modal:true,draggable:false,
+                    buttons:{
+                        "Sounds Good!": function() {
+                            dialogApproved = true;
+                            $(this).dialog("close");
+                            
+                            //if the never show again is checked
+                            if($(this).find('#dialogMoveTasksNeverAgain').is(':checked')) {
+                                showMoveUncompletedTasksDialog = false;
+                                {!$RemoteAction.ADM_SprintVirtualWallController.neverShowMoveUncompletedTasksDialog}(handle({
+                                    fail: function(event) {
+                                        console.warn('Failed to save ShowMoveUncompletedTasksDialog preference');
+                                        console.log(event);
+                                    }
+                                }));
+                            }
+                            
+                            onApprove();
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }, close: function(event,ui) {
+                        if (!dialogApproved) {
+                            revertStatus();
+                        }
+                    
+                    
+                    $(this).remove();
+                }});
+            }
+        } else {
+            startNotification('Saving...');
+            var lastModifiedDate = $workCard.workCard('lastModifiedDate').toUTCString();
+             {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({Id:workid, Status__c: newButtonText}, lastModifiedDate, handle({
+                success: function(data){
+                    $('[data-workid="' + data.Id + '"]')
+                       .workCard('lastModifiedDate', data.LastModifiedDate)
+                       .workCard('closed', data.item.work[nameSpace+'Closed__c'])
+                       .workCard('status', newButtonText);
+                    endNotification();
+                },
+                fail: function(event){
+                    revertStatus();
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }
+            }));
+        }
+    });
+    
+    // WORK: SMALL OPTIONS DROPDOWN
+    var workOptionsDropdown = $('#menu_work_options').hide();
+    $('.slds-row-action button').live('click', function(event) {
+        var button = $(this);
+        var workid = $(this).closest('tr').data('workid');
+
+        if (workOptionsDropdown.is(':visible') && workOptionsDropdown.data('workid') == workid) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        
+        //$(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        workOptionsDropdown.data('active-button', this);
+        workOptionsDropdown.data('workid', workid);
+        if($(this).closest('tr').hasClass('min_work')) {
+            workOptionsDropdown.find('li[data-action=add]').hide();
+        } else {
+            workOptionsDropdown.find('li[data-action=add]').show();
+        }
+        //workOptionsDropdown.menu('deactivate').show();
+        workOptionsDropdown.show();
+        workOptionsDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px 0px", collision:"fit"});
+        $(document).click(hide_dd);     
+        return false;
+    }).live('mouseleave', function(e){
+        var workid = $(this).closest('li').data('workid');
+        if (workOptionsDropdown.is(':visible') && workOptionsDropdown.data('workid') == workid){
+            //$(this).addClass('ui-state-active');
+        } else {
+            //$(this).removeClass('ui-state-active');
+        }
+    });
+
+    // NEW DROPDOWN
+    var newDropdown = $('#menu_new').menu().hide();
+    $('button#newButton').button({text: true,icons: {primary: "ui-icon-plus", secondary: "ui-icon-triangle-1-s"}}).live('click', function(event) {
+        var button = $(this);
+        var workid = $(this).closest('tr').data('workid');
+        if (newDropdown.is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        newDropdown.appendTo($('#sprint_buttons'));
+        newDropdown.width($(this).width()+1);
+        newDropdown.data('active-button', this);
+        newDropdown.menu('deactivate').show();
+        newDropdown.position({my:"right top",at:"right bottom",of:this,offset:"-1px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        
+        return false;
+    }).live('mouseleave', function(e){
+        var button = $(this);
+        if (newDropdown.is(':visible')){
+            button.addClass('ui-state-active');
+        } else {
+            button.removeClass('ui-state-active');
+        }
+    });
+    
+    // NEW DROPDOWN: BUG/USER STORY ITEMS
+    newDropdown.find("li a").on('click', function(event) {
+		if( (typeof sforce != 'undefined') && sforce && (!!sforce.one)) {
+			sforce.one.navigateToURL($(this).attr('href'));
+		} else {
+			location.href=$(this).attr('href');
+		}
+    });
+
+    // WORK: ADD TASK MENU ITEM
+    workOptionsDropdown.find("li[data-action=add] a").on('click', function(event) {
+        var newTask = $('<li></li>').taskCard().appendTo( $('tr[data-workid=' + $(workOptionsDropdown).data('workid') + '] ul[data-type="Not Started"]') );
+        newTask.find('.task_desc textarea').focus();
+    });
+
+    // WORK: VIEW IN NEW WINDOW MENU ITEM
+    workOptionsDropdown.find("li[data-action=view] a").on('click', function(event) {
+		if( (typeof sforce != 'undefined') && sforce && (!!sforce.one)) {
+			sforce.one.navigateToURL('/' + workOptionsDropdown.data('workid'));
+		} else {
+			window.open( '/' + workOptionsDropdown.data('workid'),'_blank');
+		}
+    });
+    
+    // WORK: MOVE TO NEXT SPRINT MENU ITEM
+    workOptionsDropdown.find("li[data-action=next] a").on('click', function(event) {
+        var workid = $(workOptionsDropdown).data('workid');
+        moveToNextSprintConfirmation(workid);
+    });
+    
+    
+    // WORK: MOVE TO NEXT SPRINT BUTTON
+    $('div.work_desc_next_sprint button').button({text: false,icons: {primary: "ui-icon-seek-end"}}).live('click', function(event) {
+        var button = $(this);
+        var workid = $(this).closest('li').data('workid');
+        moveToNextSprintConfirmation(workid);  
+        return false;
+    }).live('mouseleave', function(e){
+        var workid = $(this).closest('li').data('workid');
+        $(this).removeClass('ui-state-active ui-state-focus button-active');
+    });
+
+    // WORK: MOVE TO NEXT SPRINT FUNCTION
+    function moveToNextSprint(workid) {
+        recalcGaps();
+        startNotification('Moving...');
+        var $workCard = $('tr[data-workid=' + workid + ']').fadeOut(500, function() { $(this).hide(); });
+        var lastModifiedDate = $workCard.workCard('lastModifiedDate').toUTCString();
+        // replace next line NULL with the next sprint
+        {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({ Id:workid,Sprint__c:'{!theNextSprint}' }, lastModifiedDate, handle({
+            success: function(data) {
+                endNotification();
+                reCalculatePlannedVelocity();
+                $workCard.workCard('lastModifiedDate', data.LastModifiedDate).remove();
+            },
+            fail: function(event) {
+                errorNotification('<div>Error during save:</div>' + event.message);
+                $workCard.show();
+                recalcGaps();
+            }
+        }));
+    }
+    
+    var showMoveWorkToOtherSprintDialog = {!showMoveWorkToOtherSprintDialog};
+    // WORK: MOVE TO NEXT SPRINT DIALOG BOX CONFIRMATION
+    function moveToNextSprintConfirmation(workid){
+        if(!showMoveWorkToOtherSprintDialog) {
+            moveToNextSprint(workid);
+        }
+        else{
+            $('<div id="dialogMoveToSprint" title="Are you sure?"><p>This will move the Work record to the next Sprint. Are you sure?</p><div><input id="dialogMoveSprintNeverAgain" type="checkbox" /> Don\'t ask me again</div></div>').dialog({resizable:false,modal:true,draggable:false,
+                buttons:{
+                    "Move from Sprint": function() {
+                        $(this).dialog("close");
+                        
+                        if($(this).find('#dialogMoveSprintNeverAgain').is(':checked')) {
+                            showMoveWorkToOtherSprintDialog = false;
+                            {!$RemoteAction.ADM_SprintVirtualWallController.neverShowMoveWorkToOtherSprintDialog}(handle({
+                                fail: function(event) {
+                                    console.warn('Failed to save ShowMoveWorkToSprintDialog preference');
+                                    console.log(event);
+                               }
+                            }));
+                        }
+                    
+                        moveToNextSprint(workid);
+                    },
+                    Cancel: function() {
+                        $(this).dialog("close");
+                    }
+                }, close: function(event,ui) {
+                    $(this).remove();
+                }
+            });
+
+        }
+    
+    }
+    
+
+    // WORK: REMOVE FROM SPRINT MENU ITEM
+    var showRemoveWorkFromSprintDialog = {!showRemoveWorkFromSprintDialog};
+    workOptionsDropdown.find("li[data-action=remove] a").on('click', function(event) {
+        var onApprove = function() {
+            recalcGaps();
+            startNotification('Hiding...');
+            var $workCard = $('tr[data-workid=' + $(workOptionsDropdown).data('workid') + ']').fadeOut(500, function() { $(this).hide(); });
+            var lastModifiedDate = $workCard.workCard('lastModifiedDate').toUTCString();
+            {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({ Id:workOptionsDropdown.data('workid'),Sprint__c:null }, lastModifiedDate, handle({
+                success: function(data) {
+                    endNotification();
+                    reCalculatePlannedVelocity();
+                    $workCard.workCard('lastModifiedDate', data.LastModifiedDate).remove();
+                },
+                fail: function(event) {
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                    $workCard.show();
+                    recalcGaps();
+                }
+            }));
+        };
+    
+        if(!showRemoveWorkFromSprintDialog) {
+            onApprove();
+        } else {
+            $('<div id="dialogRemoveSprint" title="Are you sure?"><p>This will remove the Work record from this Sprint. Are you sure?</p><div><input id="dialogRemoveSprintNeverAgain" type="checkbox" /> Don\'t ask me again</div></div>').dialog({resizable:false,modal:true,draggable:false,
+                buttons:{
+                    "Remove from Sprint": function() {
+                        $(this).dialog("close");
+                        
+                        if($(this).find('#dialogRemoveSprintNeverAgain').is(':checked')) {
+                            showRemoveWorkFromSprintDialog = false;
+                            ADM_SprintVirtualWallController.neverShowRemoveWorkFromSprintDialog(handle({
+                                fail: function(event) {
+                                    console.warn('Failed to save ShowRemoveWorkFromSprintDialog preference');
+                                    console.log(event);
+                               }
+                            }));
+                        }
+                    
+                        onApprove();
+                    },
+                    Cancel: function() {
+                        $(this).dialog("close");
+                    }
+                }, close: function(event,ui) {
+                    $(this).remove();
+                }
+            });
+        }
+    });
+
+
+    var userDropdown = $('#menu_assignee_users').hide();
+    // WORK: CHANGE USER DROPDOWN
+    $('.column-assignee img').live('click', function(event) {
+        hide_dd();
+        userDropdown.find('.slds-icon').hide();
+        userDropdown.find('li[data-userid=' + $(this).closest('tr[data-userid]').data('userid') + '] .slds-icon').show();
+        userDropdown.data('active-button', this);
+        userDropdown.show();
+        userDropdown.position({
+	        my:"right middle",
+	        at:"left middle",
+	        of:this,
+	        offset:"-10px 0px",
+	        collision:"fit"
+	    });
+        userDropdown.data('workid', $(this).closest('tr').attr('data-workid') );
+        userDropdown.data('type','work');
+        $(document).click(hide_dd);
+        return false;
+    });
+
+    var userQEDropdown = $('#menu_qe_users').hide();
+    // WORK: CHANGE QE DROPDOWN
+    $('.column-qa img').live('click', function(event) {
+        hide_dd();
+        userQEDropdown.find('.slds-icon').hide();
+        userQEDropdown.find('li[data-qeid=' + $(this).closest('tr[data-qeid]').data('qeid') + '] .slds-icon').show();
+        userQEDropdown.data('active-button', this);
+        userQEDropdown.show();
+        userQEDropdown.position({
+	        my:"right middle",
+	        at:"left middle",
+	        of:this,
+	        offset:"-10px 0px",
+	        collision:"fit"
+	    });
+        userQEDropdown.data('workid', $(this).closest('tr').attr('data-workid') );
+        userQEDropdown.data('type','work');
+        $(document).click(hide_dd);
+        return false;
+    });
+
+    $('#compactWorkView').live('click', function(event){
+        showBacklogView();
+    });
+
+    $('#fullWorkView').live('click', function(event){
+        showWallView();
+    });
+
+    // WORK: MINIMIZE WORK BUTTON
+    $('#headliner_buttons button#minWork').button({ text:true }).click(function() {
+            toggleView();
+    }).live('mouseleave', function(event){
+        if ($('#sortable>li').hasClass("min_work")) {
+            $(this).addClass('ui-state-active');
+            $(this).css('box-shadow','inset 1px 2px 3px #c0c0c0');
+        } else {
+            $(this).removeClass('ui-state-active');
+            $(this).css('box-shadow','none');
+        }
+    });
+    
+    $('#headliner_buttons').buttonset({text:false});
+    $('#headliner_buttons [name=workView]').live('change', function(event){
+        if($(event.currentTarget).val() == 'fullWorkView') {
+            showWallView();
+        } else {
+            showBacklogView();
+        }
+    });
+
+    // WORK: EXPAND/COLLAPSE WORK ITEMS
+    $('#sortable>tr').live('dblclick',function(e){
+        if (!$(e.target).hasClass('ui-sortable')) {
+            if ($(this).hasClass('min_work')) {
+                $(this).removeClass('min_work');
+                $(this).find('.column-tasks').attr('colspan','4');
+            } else {
+                $(this).addClass('min_work');
+                $(this).find('.column-tasks').removeAttr('colspan');
+            }
+        }
+    });
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------*/
+/* !Task Functions                                                                                                                   */
+/*-----------------------------------------------------------------------------------------------------------------------------------*/
+    /* TASK: EDIT TASK */
+    var originalTaskText = '';
+    $(".task_desc textarea").live('focus',function() {
+         //$(this).closest('.task_card').css('background-color','#FFFFCC').taskCard('startEditing');
+         $(this).closest('.task_card').taskCard('startEditing');
+         originalTaskText = $(this).val();
+    }).live('blur',function() {
+         $(this).closest('li').find('.task_hint').html(''); // double check this on newly created tasks
+         //$(this).closest('.task_card').css('background-color','#FFFFFF').taskCard('stopEditing');
+         $(this).closest('.task_card').taskCard('stopEditing');
+         if ($(this).val() == '') {
+            var elm = $(this).closest('li[data-workid]');
+            if ($(this).closest('li[data-taskid]').data('taskid')) {
+                deleteTask($(this).closest('li[data-taskid]').data('taskid'));
+                $(this).closest('li').fadeOut(500, function() {
+                    recalcRow(elm);
+                });
+            } else {
+                $(this).closest('li').fadeOut(500, function() {
+                    $(this).remove();
+                    recalcRow(elm);
+                });
+            }
+         } else if (originalTaskText != $(this).val()) {
+            var newTask = $(this).closest('li');
+            startNotification('Saving...', newTask);
+            var taskid = $(this).closest('li[data-taskid]').data('taskid') || null;
+            // determine if task has been saved and has it's own userid data value, otherwise default to assignee
+            var assigneeid = $(this).closest('.task_card').data('userid') || '{!defaultAssigneeId}';
+            var hoursRemaining = $(newTask).find('.task_hours input').val() || 0;
+            var lastModifiedDate = ($(this).closest('.task_card').taskCard('lastModifiedDate'))? $(this).closest('.task_card').taskCard('lastModifiedDate').toUTCString() : null;
+            {!$RemoteAction.ADM_SprintVirtualWallController.saveTask}({ Id:taskid,Work__c:$(this).closest('[data-workid]').data('workid'),Assigned_To__c:assigneeid,Subject__c:$(this).val().substring(0,255),Starting_Hours__c:0,Hours_Remaining__c:hoursRemaining,Status__c:$(this).closest('ul').data('type') }, lastModifiedDate, handle({
+                success: function(data){
+                    $(newTask).removeAttr('data-type');
+                    $(newTask).attr('data-taskid',data.Id).data('taskid',data.Id);
+                    $(newTask).attr('data-userid',data.Assignee.Id).data('userid',data.Assignee.Id);
+                    //$(newTask).taskCard('sobject', data.item);
+                    $(newTask).taskCard('lastModifiedDate', data.item.LastModifiedDate);
+                    $(newTask).find('.task_link a').attr('href','/'+data.Id);
+                    $(newTask).find('.task_dd,.task_link').show()
+                    $(newTask).find('.task_img').html('<img src="' + data.Assignee.SmallPhotoUrl + '" class="img_clickable" />');
+                    $(newTask).find('.task_grippy').show();
+                    $(newTask).find('.task_assignee_name').show();
+                    $(newTask).find('.task_hint').html('');
+                    //$(newTask).insertBefore( $(newTask).siblings('li.showAllTasks') ); // put before "expand/collapse tasks" - disabled bc it 
+                    modifyList( $(newTask).closest('ul') ); // stack (if needed)
+                    endNotification();
+                },
+                fail: function(event) {
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }
+            }), {escape:false});
+         }
+    }).live('keydown focus paste', function(e) {
+            if ($(this).val().length > 240) {
+                $(this).closest('li').find('.task_hint').css('padding-right','5px').css('color','#FA5A2F').html($(this).val().length + '/255');
+            } else if ($(this).closest('li').find('.task_hint').text().length < 10) {
+                $(this).closest('li').find('.task_hint').html('');
+            }
+    
+            if ($(this).val().length >= 255) {
+                $(this).val( $(this).val().substring(0,255) );
+            }
+    }).live('keydown', function(e) {
+        if ($(this).val().length == 0 && e.which == 9 && !e.shiftKey) { // don't allow TAB on a new item with no text (unless it's SHIFT+TAB which goes to previous tab index)
+             e.preventDefault();
+        } else if (e.which == 13 && !e.shiftKey) { // hit enter (except SHIFT + ENTER), blur, focus to new task item (for rapid entry)
+             e.preventDefault();
+            if ($(this).val().length > 0) {
+                $(this).blur();
+                $('<li></li>').taskCard().appendTo( $(this).closest('ul') ).find('.task_desc textarea').focus();
+                }
+         } else if ($(this).val().length == 0 && e.which == 27 && $(this).closest('li[data-taskid]').data('taskid') == undefined) { // hitting ESCAPE on new items when the text is empty blurs (removes item)
+             $(this).blur();
+         } else if (e.which == 27 && $(this).closest('li[data-taskid]').data('taskid')) { // hitting ESCAPE on a saved (existing) item with text will reset text (undo)
+             $(this).val(originalTaskText);
+         }
+    });
+
+    /* TASK: EDIT HOURS */
+    var originalTaskHours = '';
+    var showMoveTaskToCompletedDialog = {!showMoveTaskToCompletedDialog};
+    var showMoveTaskToInProgressDialog = {!showMoveTaskToInProgressDialog};
+    $(".task_hours input").live('focus',function() {
+        // FOCUS //
+         originalTaskHours = $(this).val();
+         $(this).closest('.task_card').taskCard('startEditing');
+    }).live('blur',function(e) {
+        // BLUR //
+        e.stopPropagation();
+        var self = $(this);
+        var newTask = $(this).closest('li');
+        var inProgressColumn = $(this).closest('.work_columns').find('.work_column2>.work_tasks>ul');
+        var completedColumn = $(this).closest('.work_columns').find('.work_column3>.work_tasks>ul');
+
+        //tell the task card to stop editing
+        $(this).closest('.task_card').taskCard('stopEditing')
+
+        // if blank value or period are used, revert to zero
+        if (self.val() == '' || self.val() == '.' || self.val() == '0.' || self.val() == '0.0') {
+            self.val('0')
+        }
+
+        // if hours have not changed, then we don't need to do anything
+        if (originalTaskHours == $(this).val()) {
+            return;
+        }
+        
+        //if we are already in the progress of an update, don't allow another
+        if ($(this).data('blurInProgress')) {
+            return;
+        }
+        $(this).data('blurInProgress',true);
+        
+        // is the task set to zero and in Not Started or In Progress column?
+        if ($(this).val() == '0' && $(this).closest('ul').data('type') == 'Not Started' || $(this).val() == '0' && $(this).closest('ul').data('type') == 'In Progress') {
+
+            var taskHours = $(this).val();
+            var onApprove = function() {
+                startNotification('Saving...', newTask);
+                var taskid = self.closest('li[data-taskid]').data('taskid') || null;
+                if (taskid) {
+                    var lastModifiedDate = self.closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+                    {!$RemoteAction.ADM_SprintVirtualWallController.saveTask}({ Id:taskid,Hours_Remaining__c:taskHours.substring(0,4),Order__c:null }, lastModifiedDate, handle({
+                        success: function(data) {
+                            var oldList = self.closest('ul');
+                            self.closest('li').appendTo(completedColumn);
+                            $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                            modifyList(oldList);
+                            modifyList(self.closest('ul'));
+                            endNotification();
+                            self.data('blurInProgress',false);
+                        },
+                        fail: function(event) {
+                            errorNotification(event.message,'Error during save');
+                            $(newTask).find('.task_hours input').val(originalTaskHours);
+                            self.data('blurInProgress',false);
+                        }
+                    }), {escape:false});
+                }
+            };
+            
+            if(!showMoveTaskToCompletedDialog) {
+                onApprove();
+            } else {
+          var dialogApproved = false;
+             $('<div id="dialogSetZero" title="Are you sure?"><p>By setting the value to zero, this will move the task to the completed column. To undo, press Cancel.</p><div><input id="dialogSetZeroNeverAgain" type="checkbox" /> Don\'t ask me again</div></div>').appendTo(document.body).dialog({resizable:false,modal:true,draggable:false,
+                 buttons:{
+                     "Move to Completed": function() {
+                        dialogApproved = true;
+                         $(this).dialog("close");
+                         
+                         //if the never show again is checked
+                         if($(this).find('#dialogSetZeroNeverAgain').is(':checked')) {
+                            showMoveTaskToCompletedDialog = false;
+                            {!$RemoteAction.ADM_SprintVirtualWallController.neverShowMoveTaskToCompletedDialog}(handle({
+                                fail: function(event) {
+                                    console.warn('Failed to save ShowMoveTaskToCompletedDialog preference');
+                                    console.log(event);
+                                }
+                               }))
+                         }
+                         
+                            onApprove();
+                     },
+                     Cancel: function() {
+                         $(this).dialog("close");
+                self.data('blurInProgress',false);
+                     }
+                 }, close: function(event,ui) {
+                if (!dialogApproved) {
+                    //self.val(originalTaskHours);
+                    $(newTask).find('.task_hours input').val(originalTaskHours);
+                }
+                    $(this).remove();
+                    self.data('blurInProgress',false);
+                  }
+             });
+            }
+
+        // is the task in the Completed column and not zero?
+        } else if ($(this).val() != '0' && $(this).closest('ul').data('type') == 'Completed') {
+            
+            var taskHours = $(this).val();
+            var revertTaskHours = function() {
+                $(newTask).find('.task_hours input').val(originalTaskHours);
+            };
+            var onApprove = function() {
+                startNotification('Saving...', newTask);
+                var taskid = self.closest('li[data-taskid]').data('taskid') || null;
+                if (taskid) {
+                    var lastModifiedDate = self.closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+                    {!$RemoteAction.ADM_SprintVirtualWallController.saveTask}({ Id:taskid,Hours_Remaining__c:taskHours.substring(0,4),Order__c:null }, lastModifiedDate, handle({
+                        success: function(data) {
+                            var oldList = self.closest('ul');
+                            self.closest('li').appendTo(inProgressColumn);
+                            $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                            modifyList(oldList);
+                            modifyList(self.closest('ul'));
+                            endNotification();
+                            self.data('blurInProgress',false);
+                        },
+                        fail: function(event) {
+                            errorNotification(event.message,'Error during save');
+                            revertTaskHours();
+                            self.data('blurInProgress',false);
+                        }
+                    }), {escape:false});
+                }
+            };
+            
+            if(!showMoveTaskToInProgressDialog) {
+                onApprove();
+            } else {
+                
+                var dialogApproved = false;
+                $('<div id="dialogSetZero" title="Are you sure?"><p>By setting the value greater than zero, this will move the task to the In Progress column. To undo, press Cancel.</p><div><input id="dialogSetZeroNeverAgain" type="checkbox" /> Don\'t ask me again</div></div>').appendTo(document.body).dialog({resizable:false,modal:true,draggable:false,
+                    buttons:{
+                        "Move to In Progress": function() {
+                            dialogApproved = true;
+                            $(this).dialog("close");
+                            
+                            //if the never show again is checked
+                            if($(this).find('#dialogSetZeroNeverAgain').is(':checked')) {
+                                showMoveTaskToInProgressDialog = false;
+                                {!$RemoteAction.ADM_SprintVirtualWallController.neverShowMoveTaskToInProgressDialog}(handle({
+                                    fail: function(event) {
+                                        console.warn('Failed to save ShowMoveTaskToInProgressDialog preference');
+                                        console.log(event);
+                                    }
+                                }));
+                            }
+                            
+                            onApprove();
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                            self.data('blurInProgress',false);
+                        }
+                    }, 
+                 close: function(event,ui) {
+                        $(this).remove();
+                        if (!dialogApproved) {
+                            revertTaskHours();
+                        }
+                        self.data('blurInProgress',false);
+                    }
+             });
+            }
+
+        } else {
+        
+            // hours changed, but not to zero (in Not Started or In Progress column), update!
+            startNotification('Saving...', newTask);
+            var taskid = $(this).closest('li[data-taskid]').data('taskid') || null;
+            if (taskid) {
+                var lastModifiedDate = $(this).closest('li[data-taskid]').taskCard('lastModifiedDate').toUTCString();
+                {!$RemoteAction.ADM_SprintVirtualWallController.saveTask}({ Id:taskid,Hours_Remaining__c:$(this).val().substring(0,4) }, lastModifiedDate, handle({
+                    success: function(data) {
+                        $('[data-taskid="' + data.Id + '"]').taskCard('sobject', data.item);
+                        endNotification();
+                        self.data('blurInProgress',false);
+                    },
+                    fail: function(event) {
+                        errorNotification(event.message,'Error during save');
+                        $(newTask).find('.task_hours input').val(originalTaskHours);
+                        self.data('blurInProgress',false);
+                    }
+                }),{escape:false});
+            }
+        }
+         
+
+    }).live('click', function(e) {
+        $(this).select();
+    }).live('paste', function(e) {
+        // PASTE //
+        e.preventDefault();
+    }).live('keypress', function(e) {
+        if ($(this).closest('li').find('.task_desc textarea').val().length == 0) {
+            e.preventDefault();
+        } else {
+            // KEYPRESS //
+            if (e.which == 46 && $(this).val().indexOf('.') >= 0) { // prevent multiple decimals
+                e.preventDefault();
+            }
+            
+            if (e.which == 13) {
+                if ($(this).val().length > 0) {
+                    $(this).blur();
+                }
+                e.preventDefault();
+             }
+            return restrictInput(e,integerOnly)
+        }
+    });
+
+
+
+    /*
+    $(".task_desc").live('focus', function() {
+        var $this = $(this);
+        $this.data('before', $this.html());
+        return $this;
+    }).live('blur keyup paste', function() {
+        var $this = $(this);
+        if ($this.data('before') !== $this.html()) {
+            $this.data('before', $this.html());
+            $this.trigger('change');
+        }
+        return $this;
+    });
+    */
+
+    // TASK: DOUBLE CLICK LIST TO CREATE TASK
+    $('.work_tasks ul').live('dblclick',function(e) {
+        if (e.target === this) {
+            if($(this).find('li[data-type="new"]').length === 0) {
+                $('<li></li>').taskCard().appendTo($(this)).find('.task_desc textarea').focus();
+                recalcRow($(this));
+            }
+        }
+    });
+    
+    // TASK: CHANGE USER DROPDOWN
+    $('.task_img img').live('click', function(event) {
+        hide_dd();
+        if ($(this).closest('li').data('taskid')) {
+            userDropdown.find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            userDropdown.find('li[data-userid=' + $(this).closest('li[data-userid]').data('userid') + '] .ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            userDropdown.data('active-button', this);
+            userDropdown.menu('deactivate').show();
+            userDropdown.position({my:"right top",at:"right top",of:this,offset:"0px -1px"})
+            userDropdown.data('taskid', $(this).closest('li').attr('data-taskid') );
+            userDropdown.data('type','task');
+            $(document).click(hide_dd);     
+        }
+        return false;
+    });
+
+    // WORK AND TASK: CHANGE ASSIGNEE ASSIGNMENT
+    userDropdown.find('li a').on('click', function(event) {
+        if (userDropdown.data('type') == 'task') {
+            startNotification('Saving...');
+            
+            var $taskCard = $('li[data-taskid=' + userDropdown.data('taskid') + ']');
+            var lastModifiedDate = $taskCard.taskCard('lastModifiedDate').toUTCString();
+             {!$RemoteAction.ADM_SprintVirtualWallController.saveTask}({ Id:userDropdown.data('taskid'),Assigned_To__c:$(this).closest('li[data-userid]').data('userid')}, lastModifiedDate, handle({
+                success: function(data) {
+                    var modifyTask = $('li[data-taskid=' + userDropdown.data('taskid') + ']');
+                    $(modifyTask).taskCard('sobject', data.item);
+                    $(modifyTask).attr('data-userid',data.Assignee.Id).data('userid',data.Assignee.Id);
+                    $(modifyTask).find('.task_img').html('<img src="' + data.Assignee.SmallPhotoUrl + '" />');
+                    endNotification();
+                },
+                fail: function(event) {
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }
+            }), {escape:false});
+        } else if (userDropdown.data('type') == 'work') {
+            startNotification('Saving...');
+            var $workCard = $('tr[data-workid=' + userDropdown.data('workid') + ']');
+            var lastModifiedDate = $workCard.workCard('lastModifiedDate').toUTCString();
+            {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({ Id:userDropdown.data('workid'),Assignee__c:$(this).closest('li[data-userid]').data('userid')}, lastModifiedDate, handle({
+                success: function(data) {
+                    var modifyWork = $('tr[data-workid=' + userDropdown.data('workid') + ']');
+                    $(modifyWork).attr('data-userid',data.Assignee.Id).data('userid',data.Assignee.Id).attr('data-lastmodifieddate', data.LastModifiedDate).data('lastmodifieddate', data.LastModifiedDate);
+                    $(modifyWork).find('.column-assignee img').attr('src',data.Assignee.SmallPhotoUrl);
+                    $(modifyWork).find('.column-assignee-name').html(data.Assignee.FirstName);
+                    endNotification();
+                },
+                fail: function(event) {
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }
+            }), {escape:false});
+        }
+    });
+
+    // WORK: CHANGE QE ASSIGNMENT
+    userQEDropdown.find('li a').on('click', function(event) {
+        if (userQEDropdown.data('type') == 'work') {
+            startNotification('Saving...');
+            var $workCard = $('tr[data-workid=' + userQEDropdown.data('workid') + ']');
+            var lastModifiedDate = $workCard.workCard('lastModifiedDate').toUTCString();
+            {!$RemoteAction.ADM_SprintVirtualWallController.saveWork}({ Id:userQEDropdown.data('workid'),QA_Engineer__c:$(this).closest('li[data-qeid]').data('qeid')}, lastModifiedDate, handle({
+                success: function(data) {
+                    var modifyWork = $('tr[data-workid=' + userQEDropdown.data('workid') + ']');
+                    $(modifyWork).attr('data-qeid',data.QA_Engineer.Id).data('qeid',data.QA_Engineer.Id).attr('data-lastmodifieddate', data.LastModifiedDate).data('lastmodifieddate', data.LastModifiedDate);
+                    $(modifyWork).find('.column-qa img').attr('src',data.QA_Engineer.SmallPhotoUrl);
+                    $(modifyWork).find('.column-qa-name').html(data.QA_Engineer.FirstName);
+                    endNotification();
+                },
+                fail: function(event) {
+                    errorNotification('<div>Error during save:</div>' + event.message);
+                }
+            }), {escape:false});
+        }
+    });
+
+    // TASK: DELETE
+    var showDeleteTaskDialog = {!showDeleteTaskDialog};
+    $('.task_dd .delete-task-button')
+        .live('click', function(event) {
+            var taskId = $(this).closest('[data-taskid]').data('taskid');
+            
+            var onApprove = function() {
+                deleteTask(taskId);
+            };
+        
+            if(!showDeleteTaskDialog) {
+                onApprove();
+            } else {
+                $('<div id="dialogSetZero" title="Are you sure?"><p>This will permanently delete the task. To undo, press Cancel.</p><div><input id="dialogSetZeroNeverAgain" type="checkbox" /> Don\'t ask me again</div></div>').appendTo(document.body).dialog({resizable:false,modal:true,draggable:false,
+                    buttons:{
+                        "Delete": function() {
+                            $(this).dialog("close");
+                        
+                            //if the never show again is checked
+                            if($(this).find('#dialogSetZeroNeverAgain').is(':checked')) {
+                                showDeleteTaskDialog = false;
+                                ADM_SprintVirtualWallController.neverShowDeleteTaskDialog(handle({
+                                    fail: function(event) {
+                                        console.warn('Failed to save ShowDeleteTaskDialog preference');
+                                        console.log(event);
+                                    }
+                                }));
+                            }
+                        
+                            onApprove();
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }, close: function(event,ui) {
+                        $(this).remove();
+                    }
+                });
+            }
+        });
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+FILTER FUNCTIONS
+/----------------------------------------------------------------------------------------------------------------------------------*/
+    (function($) {
+        $.fn.filterMenuItem = function(method) {
+            var methods = {
+                check : function() {
+                    return this.each(function() {
+                        $(this).find('a').attr('data-checked', true).data('checked', true);
+                        $(this).find('.ui-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
+                    });
+                }, 
+                uncheck : function() {
+                    return this.each(function() {
+                        $(this).find('a').attr('data-checked', false).data('checked', false);
+                        $(this).find('.ui-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
+                    });
+                },
+                checked : function(value) {
+                    if(typeof value == 'undefined') {
+                        return this.first().find('a').attr('data-checked') == 'true';
+                    } else {
+                        if(value == true) {
+                            methods.check.call(this);
+                        } else {
+                            methods.uncheck.call(this);
+                        }
+                    }
+                }
+            };
+            if ( methods[method] ) {
+                return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+            } else if ( typeof method === 'object' || ! method ) {
+                return methods.create.apply( this, arguments );
+            } else {
+                $.error( 'Method ' +  method + ' does not exist on jQuery.filterMenuItem' );
+            }
+        };
+    })($);
+    
+    var createFilterMenuItem = function(label) {
+        return $('<li class="menu_item"></li>')
+            .append(
+                $('<a href="#" data-checked="false"></a>')
+                    .text(label)
+                    .prepend($('<span class="ui-icon ui-icon-blank"></span>')))
+    };
+    
+    /**
+     * creates an object that contains all of the settings for the current menu items.
+     */
+    function serializeFilterMenu() {
+        var items = [];
+        $('#menu_filter [data-type]').each(function() {
+            items.push({
+                type: $(this).data('type'),
+                property: $(this).data('property'),
+                value: $(this).data($(this).data('property')),
+                checked: $(this).filterMenuItem('checked')
+            });
+        });
+        return items;
+    }
+    function deserializeFilterMenu(checkedOptions) {
+        //all menu items should default to be checked
+        $('#menu_filter li[data-type]').filterMenuItem('check');
+        
+        for(var index in checkedOptions) {
+            var item = checkedOptions[index];
+            if(!item.checked) {
+                $('#menu_filter [data-type=' + item.type + '][data-' + item.property + '=' + item.value + ']').filterMenuItem('uncheck');
+            }
+        }
+    }
+    
+    var onlyCheckVisible = function() {
+        var filterDropdown = $('#menu_filter');
+        filterDropdown.find('[data-type=status]').each(function() {
+            if ($('#sortable>li[data-closed="' + $(this).data('closed') + '"]').is(':visible')) {
+                $(this).filterMenuItem('check');
+            }
+        });
+        
+        //record types
+        filterDropdown.find('[data-type=recordType]').each(function(){
+            if ($('#sortable>li[data-rt="' + $(this).data('record-type')  + '"]').is(':visible')) {
+                $(this).filterMenuItem('check');
+            }
+        });
+        
+        //themes
+        filterDropdown.find('[data-type=theme]').each(function(){
+            if ($('#sortable>li .theme[data-themeid="' + $(this).data('themeid') + '"]').is(':visible')) {
+                $(this).filterMenuItem('check');
+            }
+        });
+    };
+    
+    function createFilterMenu() {
+        $('#menu_filter').remove();
+        var filterDropdown = $('<ul id="menu_filter" class="dropdown"></ul>').appendTo( $(document.body) );
+        
+        //create the status options
+        filterDropdown.append( $('<li class="menu_group">Status:</li>') )
+        createFilterMenuItem('Open').attr('data-type', 'status').attr('data-property', 'closed').attr('data-closed', '0').appendTo(filterDropdown);
+        createFilterMenuItem('Closed').attr('data-type', 'status').attr('data-property', 'closed').attr('data-closed', '1').appendTo(filterDropdown);
+        
+        //create the record type options
+        var filterRecordTypes = {};
+        $('#sortable>li').each(function() {
+            filterRecordTypes[ $(this).data('rt') ] = $(this).find('.wall_icon_recordtype').text();
+        });
+        
+        if (Object.keys(filterRecordTypes).length > 0) {
+            filterDropdown.append( $('<li class="menu_group">Record Types:</li>') )
+            for(var type in filterRecordTypes) {
+                createFilterMenuItem(filterRecordTypes[type]).attr('data-type', 'recordType').attr('data-property', 'record-type').attr('data-record-type', type).appendTo(filterDropdown);
+            }
+        }
+    
+        //create the theme options
+        var hasWorkWithNoTheme = false;
+        var filterThemes = {};
+        $('#sortable>li').each(function() {
+            var $themes = $(this).find('.theme');
+            if($themes.length == 0) {
+                hasWorkWithNoTheme = true;
+            }
+            $themes.each(function() {
+                var themeId = $(this).data('themeid');
+                if(themeId) {
+                    filterThemes[ themeId ] = $(this).text();
+                }
+            });
+        });
+
+        if (Object.keys(filterThemes).length > 0 || hasWorkWithNoTheme) {
+            filterDropdown.append( $('<li class="menu_group">Themes:</li>') )
+            if(hasWorkWithNoTheme) {
+                //create the blank entry
+                createFilterMenuItem('-').attr('data-type', 'theme').attr('data-property', 'themeid').attr('data-themeid', '').appendTo(filterDropdown);
+            }
+            for(var type in filterThemes) {
+                createFilterMenuItem(filterThemes[type]).attr('data-type', 'theme').attr('data-property', 'themeid').attr('data-themeid', type).appendTo(filterDropdown);
+            }
+        }
+        
+        $('#menu_filter').menu();
+        filterDropdown.appendTo($('#sprint_buttons'));
+        filterDropdown.data('active-button', this);
+        filterDropdown.menu('deactivate').show();
+        filterDropdown.position({my:"right top",at:"right bottom",of:$('button#filterOptions'),offset:"1px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        
+        return filterDropdown;
+    }
+    
+    // FILTER: DROPDOWN CREATION
+    /*var filterDropDown = createFilterMenu().hide();
+    filterDropDown.find('.menu_item').filterMenuItem('check'); //check all menu items
+    if ($('#sortable>li[data-closed="1"]').is(':visible')) {
+        filterDropDown.find('.menu_item[data-closed=1]').filterMenuItem('check');
+    } else {
+        filterDropDown.find('.menu_item[data-closed=1]').filterMenuItem('uncheck');
+    }*/
+
+    // FILTER DROPDOWN
+    $('button#filterOptions').button({text:true,icons: {secondary: "ui-icon-triangle-1-s"}}).live('click', function(event) {
+        if ($('#menu_filter').is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        
+        var serialized = serializeFilterMenu();
+        
+        createFilterMenu();
+        
+        //apply the filter menu options that were serialized earlier
+        deserializeFilterMenu(serialized);
+        
+        return false;
+    }).mouseleave(function(e){
+        if ($('#menu_filter').is(':visible') ){
+            $(this).addClass('ui-state-active');
+        } else {
+            $(this).removeClass('ui-state-active');
+        }
+    });
+
+    var applyFilteringToWorkItems = function(workCards) {
+        
+        /**
+         * Returns true if all applicable filter menu items are checked. If the menu item does not apply to the given
+         * work card, it is not evaluated (and therefore evaluates to true).
+         */
+        var determineVisibilityFromFilterMenu = function(workCard) {
+            var visible = true;
+            
+            //check the work card against each of the menu items
+            $('#menu_filter [data-type]').not('[data-type=theme]').each(function() {
+                var workCardValue = null;
+            
+                //get the data from the work card based on the menu items type
+                var dataType = $(this).data('type');
+                if(dataType == 'recordType') {
+                    workCardValue = workCard.data('rt');
+                } else if(dataType == 'status') {
+                    workCardValue = workCard.data('closed');
+                } else {
+                    throw "Unsupported menu type specified: " + dataType;
+                }
+                
+                //if the filter value isn't the same as the work card's value, then the filter doesn't apply
+                //to this work card
+                var filterValue = $(this).data($(this).data('property'));
+                if(filterValue != workCardValue) {
+                    return;
+                }
+                
+                //if the menu item is not checked (and it is valid for this work card) then the work card should 
+                //not be visible
+                var checked = $(this).filterMenuItem('checked');
+                if(!checked) {
+                    visible = false;
+                    return false;
+                }
+            });
+            
+            if(!visible) {
+                return false;
+            }
+            
+            var themeVisibility = false;
+            var themes = [];
+            var $themes = workCard.find('.theme');
+            
+            //if the work does not have themes and the blank theme menu item is checked, then the work item should be visible
+            if($themes.length == 0) {
+                var checked = $('#menu_filter [data-type=theme][data-themeid=""]').filterMenuItem('checked');
+                if(checked) {
+                    return true;
+                }
+            }
+            
+            //a work card is visible when it contains at least one visible theme
+            $themes.each(function() {
+                var workTheme = $(this).data('themeid');
+                
+                $('#menu_filter [data-type=theme]').each(function() {
+                    var menuTheme = $(this).data('themeid');
+                    var checked = $(this).filterMenuItem('checked');
+                    
+                    if(workTheme == menuTheme && checked) {
+                        themeVisibility = true;
+                        return false; //break
+                    }
+                });
+                
+                if(themeVisibility) {
+                    return false; //break;
+                }
+            });
+            
+            return themeVisibility;
+        }
+        
+        workCards.each(function(){
+            var workCard = $(this);
+            
+            var shouldBeVisible = determineVisibilityFromFilterMenu(workCard);
+            if(shouldBeVisible) {
+                workCard.workCard('show');
+            } else {
+                workCard.workCard('hide');
+            }
+        });
+    };
+    
+    // FILTER: TOGGLE THEMES
+    $("#menu_filter li a").live('click', function(event) {
+        event.stopPropagation();
+        
+        //toggle the currently selected item
+        var $menuItem = $(this).closest('li');
+        if($menuItem.filterMenuItem('checked') == false) {
+            $menuItem.filterMenuItem('check');
+        } else {
+            $menuItem.filterMenuItem('uncheck');
+        }
+        
+        //apply a new filtering scheme to all of the work items
+        applyFilteringToWorkItems($('#sortable>li'));
+    });
+    
+    // FILTER ON WORK CHANGE
+    $('#sortable li').live('workCard-changed', function() {
+       applyFilteringToWorkItems($(this));
+    });
+    
+/*-----------------------------------------------------------------------------------------------------------------------------------
+OTHER BUTTON FUNCTIONS
+/----------------------------------------------------------------------------------------------------------------------------------*/
+    // STATUS DROPDOWN
+    var statusDropdown = $('#menu_statuses').hide();
+    $('#headliner #headliner_status button').button({text:false,icons: {secondary: "ui-icon-triangle-1-s"}}).live('click', function(event) {
+        if (statusDropdown.is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        
+        $('#menu_statuses').remove();
+        statusDropdown = $('<ul id="menu_statuses" class="dropdown"></ul>').appendTo( $(document.body) );
+            //statusDropdown.append( $('<li class="menu_group">Sort:</li>') )
+            //statusDropdown.append( $('<li data-sort="asc"><a href="#"><span class="ui-icon ui-icon-arrowthick-1-n"></span>Ascending</a></li>') );
+            //statusDropdown.append( $('<li data-sort="desc"><a href="#"><span class="ui-icon ui-icon-arrowthick-1-s"></span>Descending</a></li>') );
+        
+        var filterStatuses = {};
+        $('#sortable>li').each(function() {
+            filterStatuses[ $(this).data('status') ] = $(this).find('.work_desc_status_dropdown span.ui-button-text').text();
+        });
+
+        if (Object.keys(filterStatuses).length > 0) {
+            //statusDropdown.append( $('<li class="menu_group">Filter:</li>') )
+            for(var type in filterStatuses) {
+                var $item = createFilterMenuItem(filterStatuses[type]).attr('data-status', type).appendTo(statusDropdown);
+                
+                if ($('#sortable>li[data-status="' + type + '"]').is(':visible')) {
+                    $item.filterMenuItem('check');
+                }
+            }
+        }
+
+        $('#menu_statuses').menu();
+        statusDropdown.data('active-button', this);
+        statusDropdown.menu('deactivate').show();
+        statusDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        return false;
+    }).mouseleave(function(e){
+        if (statusDropdown.is(':visible') ){
+            $(this).addClass('ui-state-active');
+        } else {
+            $(this).removeClass('ui-state-active');
+        }
+    });
+
+    // STATUS: TOGGLE
+    $("#menu_statuses li a").live('click', function(event) {
+        event.stopPropagation();
+        var selectedStatus = $(this).closest('li').data('status');
+        if ($(this).data('checked') == false){
+            $(this).data('checked',true).find('.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            $('#sortable li[data-status="' + selectedStatus + '"]').show();
+            workDescTextResize($('#sortable li[data-status="' + selectedStatus + '"]'));
+        } else {
+            $(this).data('checked',false).find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            $('#sortable li[data-status="' + selectedStatus + '"]').hide();
+        }
+        statusDropdown.position({my:"right top",at:"right bottom",of:$('#headliner #headliner_status button'),offset:"0px -1px"}); // re-align status dropdown when alignment changes occur (page gets smaller because of hiding stories
+    });
+
+    // ASSIGNEE DROPDOWN
+    var assigneeDropdown = $('#menu_assignee').hide();
+    $('button#assigneeOptions').button({text:false,icons: {secondary: "ui-icon-triangle-1-s"}}).live('click', function(event) {
+        if (assigneeDropdown.is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        
+        $('#menu_assignee').remove();
+        assigneeDropdown = $('<ul id="menu_assignee" class="dropdown"></ul>').appendTo( $(document.body) );
+        //assigneeDropdown.append( $('<li class="menu_group">Sort:</li>') )
+        //assigneeDropdown.append( $('<li data-sort="asc"><a href="#"><span class="ui-icon ui-icon-arrowthick-1-n"></span>Ascending</a></li>') );
+        //assigneeDropdown.append( $('<li data-sort="desc"><a href="#"><span class="ui-icon ui-icon-arrowthick-1-s"></span>Descending</a></li>') );
+
+        var filterAssignees = {};
+        $('#sortable>li').each(function() {
+            filterAssignees[ $(this).data('userid') ] = $(this).find('.work_desc_assignee_name').text();
+        });
+
+        if (Object.keys(filterAssignees).length > 0) {
+            //assigneeDropdown.append( $('<li class="menu_group">Filter:</li>') )
+            for(var type in filterAssignees) {
+                var $item = createFilterMenuItem(filterAssignees[type]).attr('data-userid', type).appendTo(assigneeDropdown);
+                
+                if ($('#sortable>li[data-userid="' + type + '"]').is(':visible')) {
+                    $item.filterMenuItem('check');
+                }
+            }
+        }
+
+        $('#menu_assignee').menu();
+        assigneeDropdown.data('active-button', this);
+        assigneeDropdown.menu('deactivate').show();
+        assigneeDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        return false;
+    }).mouseleave(function(e){
+        if (assigneeDropdown.is(':visible') ){
+            $(this).addClass('ui-state-active');
+        } else {
+            $(this).removeClass('ui-state-active');
+        }
+    });
+
+    // ASSIGNEE: TOGGLE PEOPLE
+    $("#menu_assignee li a").live('click', function(event) {
+        event.stopPropagation();
+        var selectedUserId = $(this).closest('li').data('userid');
+        if ($(this).data('checked') == false){
+            $(this).data('checked',true).find('.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            $('#sortable li[data-userid="' + selectedUserId + '"]').show();
+            workDescTextResize($('#sortable li[data-userid="' + selectedUserId + '"]'));
+        } else {
+            $(this).data('checked',false).find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            $('#sortable li[data-userid="' + selectedUserId + '"]').hide();
+        }
+        assigneeDropdown.position({my:"right top",at:"right bottom",of:$('button#assigneeOptions'),offset:"0px -1px"}); // re-align assignee dropdown when alignment changes occur (page gets smaller because of hiding stories
+    });
+
+    // QE DROPDOWN
+    var qeDropdown = $('#menu_qe').hide();
+    $('button#qeOptions').button({text:false,icons: {secondary: "ui-icon-triangle-1-s"}}).live('click', function(event) {
+        if (qeDropdown.is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        $(this).addClass('ui-state-active button-active button-active-left button-active-right');
+        
+        $('#menu_qe').remove();
+        qeDropdown = $('<ul id="menu_qe" class="dropdown"></ul>').appendTo( $(document.body) );
+        var filterQEs = {};
+        $('#sortable>li').each(function() {
+            filterQEs[ $(this).data('qeid') ] = $(this).find('.work_desc_qe_name').text();
+        });
+
+        if (Object.keys(filterQEs).length > 0) {
+            for(var type in filterQEs) {
+                var $item = createFilterMenuItem(filterQEs[type]).attr('data-qeid', type).appendTo(qeDropdown);
+                
+                if ($('#sortable>li[data-qeid="' + type + '"]').is(':visible')) {
+                    $item.filterMenuItem('check');
+                }
+            }
+        }
+
+        $('#menu_qe').menu();
+        qeDropdown.data('active-button', this);
+        qeDropdown.menu('deactivate').show();
+        qeDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        return false;
+    }).mouseleave(function(e){
+        if (qeDropdown.is(':visible') ){
+            $(this).addClass('ui-state-active');
+        } else {
+            $(this).removeClass('ui-state-active');
+        }
+    });
+
+    // QE: TOGGLE PEOPLE
+    $("#menu_qe li a").live('click', function(event) {
+        event.stopPropagation();
+        var selectedUserId = $(this).closest('li').data('qeid');
+        if ($(this).data('checked') == false){
+            $(this).data('checked',true).find('.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            $('#sortable li[data-qeid="' + selectedUserId + '"]').show();
+            workDescTextResize($('#sortable li[data-qeid="' + selectedUserId + '"]'));
+        } else {
+            $(this).data('checked',false).find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            $('#sortable li[data-qeid="' + selectedUserId + '"]').hide();
+        }
+        qeDropdown.position({my:"right top",at:"right bottom",of:$('button#qeOptions'),offset:"0px -1px"}); // re-align assignee dropdown when alignment changes occur (page gets smaller because of hiding stories
+    });
+
+
+    var optionsDropdown = $('#menu_options');
+
+    // SHOW HOURS
+    $('#menu_options #menuButtonShowHours a').live('click', function(event) {
+        if ($('#sortable li').hasClass("min_tasks")) {
+            $(this).find('.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            $('#sortable li').removeClass("min_tasks");
+        } else {
+            $(this).find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            $('#sortable li').addClass("min_tasks");
+        }
+    });
+    
+    // RESET WORK ORDER
+    $('#menu_options #menuButtonResetWorkSort a').live('click', function(event) {
+        $('<div id="dialogResetSprint" title="Are you sure?"><p>This will reset the Work sorting to the same as the Prioritizer. It will then refresh the page. Are you sure?</p></div>').dialog({resizable:false,modal:true,draggable:false,
+            buttons:{
+                "OK": function() {
+                    $(this).dialog("close");
+                    startNotification('Resetting work order...');
+                    ADM_SprintVirtualWallController.resetWorkOrder('{!sprint.Id}', handle({
+                        success: function(data){
+                            endNotification();
+                            //refresh the page
+                            //TODO replace full page reload with dom manipulation
+                            location.reload(true);
+                        },
+                        fail: function(event){
+                            errorNotification('<div>Error during reset:</div>' + event.message);
+                        }   
+                    }));
+                },
+                Cancel: function() {
+                    $(this).dialog("close");
+                }
+            }, close: function(event,ui) {
+                $(this).remove();
+            }
+        });
+    });
+    if(!{!isSprintOrdered}) {
+        disableMenuItem('#menuButtonResetWorkSort');
+    }
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+SORTABLES
+/----------------------------------------------------------------------------------------------------------------------------------*/
+
+    // WORK SORTABLE
+    $("#sortable").sortable({axis:"y", cursor:"move", distance:10, forcePlaceholderSize: true, placeholder: "work_highlight", tolerance: 'pointer', containment: "#virtualwall", cancel: '.work_column',
+    stop:function(event, ui) {
+        recalcGaps();
+        $(this).children('li').css('z-index','');
+        endNotification($('#sortable').data('last_message_id'));
+        $('.task_card').css('background-color','#fff');
+        // recolor 
+    },
+    start:function(event, ui) {
+        hide_dd();
+        //var msgId = startNotification('Sorting work...');
+        //$('#sortable').data('last_message_id', msgId);
+    },
+    update:function(event, ui) {
+        startNotification('Saving...');
+        
+        //reorder the item so that it is ahead of all hidden elements
+        if($(ui.item).index() != 0 && $(ui.item).prevUntil(':not(:hidden)').length > 0) {
+            var $prevVisibleSibling = $(ui.item).prevUntil(':not(:hidden)').last().prev();
+            if($prevVisibleSibling.length == 1) {
+                $prevVisibleSibling.after(ui.item);
+            } else {
+                $(ui.item).parent().prepend(ui.item);
+            }
+        }
+        
+        var request = {
+            sprintId: '{!sprintId}',
+            workIds: []
+        };
+        
+        $("#sortable>tr").each(function() {
+            var workId = $(this).data('workid');
+            if(workId && workId.length > 0) {
+                request.workIds.push( workId );
+            }
+        });
+
+         {!$RemoteAction.ADM_SprintVirtualWallController.updateWorkOrder}(request, handle({
+            success: function(data) {
+                
+                //update the data on all the work cards
+                $.each(data.works, function(){
+                    $('[data-workid="' + this.Id + '"]').workCard('lastModifiedDate', this.LastModifiedDate);
+                });
+                
+                enableMenuItem('#menuButtonResetWorkSort');
+                endNotification();
+            },
+            fail: function(event) {
+                errorNotification('<div>Error during save:</div>' + event.message);
+            }       
+        }));
+        
+    }
+    }); 
+
+    // INITIALIZE WORK CARD
+    <apex:repeat value="{!Stories}" var="storyAndTasks" id="storyAndTasksSortables">
+    $(".row{!storyAndTasks.Story.Id}").workCard('init');
+    </apex:repeat>
+
+    $("#buttonCharts").on("click", function() {
+		if ($("#chartDialog").hasClass("opened")) {
+			// opened, close it!
+			$(this).removeClass('slds-is-selected');
+			$("#virtualwall").width($(window).width());
+			var chartDialogWidth = $("#chartDialog").width()+20;
+			$("#chartDialog").removeClass('opened').css('right','-' + chartDialogWidth + 'px').css('opacity','0');
+		} else {
+			// closed, open it!			
+			$("#virtualwall").width($(window).width() - 400);
+			$('.sideContainer').each(function(index) {
+				var sideContainerWidth = $(this).width()+20;
+				$(this).removeClass('opened').css('right','-' + sideContainerWidth +'px').css('opacity','0');
+			});	
+			$(this).closest('.slds-button-group').find('button').removeClass('slds-is-selected');
+			$(this).addClass('slds-is-selected');
+			$("#chartDialog").addClass('opened').css('right','0px').css('opacity','1.0');
+		}
+    });
+
+    $("#buttonChatter").on("click", function() {
+		if ($("#chatterDialog").hasClass("opened")) {
+			// opened, close it!
+			$(this).removeClass('slds-is-selected');
+			$("#virtualwall").width($(window).width());
+			var chatterDialogWidth = $("#chatterDialog").width()+20;
+			$("#chatterDialog").removeClass('opened').css('right','-' + chatterDialogWidth + 'px').css('opacity','0');
+		} else {
+			// closed, open it!			
+			$("#virtualwall").width($(window).width() - 400);
+			var chatterDialogWidth = $("#chatterDialog").width()+20;
+			$('.sideContainer').each(function(index) {
+				var sideContainerWidth = $(this).width()+20;
+				$(this).removeClass('opened').css('right','-' + sideContainerWidth +'px').css('opacity','0');
+			});	
+			$(this).closest('.slds-button-group').find('button').removeClass('slds-is-selected');
+			$(this).addClass('slds-is-selected');
+			$("#chatterDialog").addClass('opened').css('right','0px').css('opacity','1.0');
+		}
+    });
+
+    $("#buttonFilter").on("click", function() {
+		if ($("#filterDialog").hasClass("opened")) {
+			// opened, close it!
+			$(this).removeClass('slds-is-selected');
+			$("#virtualwall").width($(window).width());
+			var filterDialogWidth = $("#filterDialog").width()+20;
+			$("#filterDialog").removeClass('opened').css('right','-' + filterDialogWidth + 'px').css('opacity','0');
+			$("#sortable > tr").show();
+		} else {
+			// closed, open it!
+			$("#virtualwall").width($(window).width() - 200);
+			var filterDialogWidth = $("#filterDialog").width()+20;
+			$('.sideContainer').each(function(index) {
+				var sideContainerWidth = $(this).width()+20;
+				$(this).removeClass('opened').css('right','-' + sideContainerWidth +'px').css('opacity','0');
+			});	
+			$(this).closest('.slds-button-group').find('button').removeClass('slds-is-selected');
+			$(this).addClass('slds-is-selected');
+			$("#filterDialog").addClass('opened').css('right','0px').css('opacity','1.0');
+			
+			//$('#filterDialog #filterSearch').val(null);
+			$('#filterDialog .filterTopic').hide();
+			$('#filterDialog .filterTopic .itemList').empty();
+
+			$("#sortable > tr").each(function(index) {
+
+				// Record Types:
+				if ($('#filterBoxRecordTypes #item-' + $(this).attr('data-rt')).length === 0) {
+					$('#filterBoxRecordTypes').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-' + $(this).attr('data-rt') + '" value="' + $(this).attr('data-rt').replace(' ','').toLowerCase() + '" /></div><div class="itemTitle"><label for="item-' + $(this).attr('data-rt') + '">' + $(this).find('.column-record-type').text()  + '</label></div></div>').show();
+				}
+
+				// Status:
+				if ($('#filterBoxStatuses #item-' + $(this).attr('data-status').replace(/\s+/g, '').toLowerCase()).length === 0) {
+					$('#filterBoxStatuses').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-' + $(this).attr('data-status').replace(/\s+/g, '').toLowerCase() + '" value="status-' + $(this).attr('data-status').replace(/\s+/g, '').toLowerCase() + '" /></div><div class="itemTitle"><label for="item-' + $(this).attr('data-status').replace(/\s+/g, '').toLowerCase() + '">' + $(this).find('.column-status').text()  + '</label></div></div>').show();
+				}
+
+				// Themes:
+				$(this).find('.column-themes span.theme').each(function(themeIndex) {
+					if ($('#filterBoxThemes #item-' + $(this).attr('data-themeid')).length === 0) {
+						$('#filterBoxThemes').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-' + $(this).attr('data-themeid') + '" value="theme-' + $(this).attr('data-themeid') + '" /></div><div class="itemTitle"><label for="item-' + $(this).attr('data-themeid') + '">' + $(this).text()  + '</label></div></div>').show();
+					}
+				});	
+				
+				// Builds:
+				//if ($('#filterBoxBuilds #item-' + $(this).attr('data-build')).length === 0) {
+				//	$('#filterBoxBuilds').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-' + $(this).attr('data-build') + '" value="build-' + $(this).attr('data-build') + '" /></div><div class="itemTitle"><label for="item-' + $(this).attr('data-build') + '">' + $(this).find('.column-build').text()  + '</label></div></div>').show();
+				//}
+
+				// Work Assignees
+				if ($(this).attr('data-userid').length > 0 && $('#filterBoxAssignees #item-assignee-' + $(this).attr('data-userid')).length === 0) {
+					$('#filterBoxAssignees').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-assignee-' + $(this).attr('data-userid') + '" value="assignee-' + $(this).attr('data-userid') + '" /></div><div class="itemTitle"><label for="item-assignee-' + $(this).attr('data-userid') + '">' + $(this).find('.column-assignee-name').text()  + '</label></div></div>').show();
+				}
+				
+				// Work QEs
+				if ($(this).attr('data-qeid').length > 0 && $('#filterBoxQEs #item-qe-' + $(this).attr('data-qeid')).length === 0) {
+					$('#filterBoxQEs').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-qe-' + $(this).attr('data-qeid') + '" value="qe-' + $(this).attr('data-qeid') + '" /></div><div class="itemTitle"><label for="item-qe-' + $(this).attr('data-qeid') + '">' + $(this).find('.column-qa-name').text()  + '</label></div></div>').show();
+				}
+
+				// Task Assignees
+				$(this).find('.task_card').each(function(taskIndex) {
+					if ($('#filterBoxTaskAssignee #item-taskassignee-' + $(this).attr('data-userid')).length === 0) {
+						$('#filterBoxTaskAssignee').append('<div class="itemRow"><div class="itemCheckbox"><input type="checkbox" id="item-taskassignee-' + $(this).attr('data-userid') + '" value="' + $(this).attr('data-userid') + '" /></div><div class="itemTitle"><label for="item-taskassignee-' + $(this).attr('data-userid') + '">' + $(this).find('.task_assignee_name > a').text()  + '</label></div></div>').show();
+					}
+				});	
+
+			});
+			
+			if ($("#filterBoxRecordTypes > .itemRow").length > 0) {
+				$("#filterBoxRecordTypes > .itemRow").sort(asc_sort).appendTo('#filterBoxRecordTypes');
+				$("#filterRecordTypes").show();
+			}
+
+			if ($("#filterBoxStatuses > .itemRow").length > 0) {
+				$("#filterBoxStatuses > .itemRow").sort(asc_sort).appendTo('#filterBoxStatuses');
+				$("#filterStatuses").show();
+			}
+			
+			if ($("#filterBoxThemes > .itemRow").length > 0) {
+				$("#filterBoxThemes > .itemRow").sort(asc_sort).appendTo('#filterBoxThemes');
+				$("#filterThemes").show();
+			}
+			
+			if ($("#filterBoxBuilds > .itemRow").length > 0) {
+				$("#filterBoxBuilds > .itemRow").sort(asc_sort).appendTo('#filterBoxBuilds');
+				$("#filterBuilds").show();
+			}
+
+			if ($("#filterBoxAssignees > .itemRow").length > 0) {
+				$("#filterBoxAssignees > .itemRow").sort(asc_sort).appendTo('#filterBoxAssignees');
+				$("#filterAssignees").show();
+			}
+
+			if ($("#filterBoxQEs > .itemRow").length > 0) {
+				$("#filterBoxQEs > .itemRow").sort(asc_sort).appendTo('#filterBoxQEs');
+				$("#filterQEs").show();
+			}
+			
+			if ($("#filterBoxTaskAssignee > .itemRow").length > 0) {
+				$("#filterBoxTaskAssignee > .itemRow").sort(asc_sort).appendTo('#filterBoxTaskAssignee');
+				$("#filterTaskAssignee").show();
+			}
+			
+			updateFilter();
+		}
+    });
+
+	$(document).on('click','.itemList input[type=checkbox]', function(e) {
+		// Allow only one checkbox to be checked at a time
+		$(this).closest('.itemList').find('input[type=checkbox]:not([id=' + $(this).attr('id') + '])').prop('checked', false);
+		updateFilter();
+	});
+
+    /*$('#sprint_leftpanel').tabs({
+        selected:2,
+        select:function(event, ui) {
+            if (ui.tab.hash == '#virtualwall') {
+                $('#sprint_buttons').show();
+            } else {
+                $('#sprint_buttons').hide();
+            }
+            
+            if (ui.tab.hash === '#charts') {
+                rerenderCharts();
+            }
+        }
+    });*/
+    
+/*
+    if ({!BacklogViewPreference}) {
+        console.log('test');
+        $('#fullWorkView').removeAttr('checked');
+        $('#compactWorkView').attr('checked', 'checked');
+        showBacklogView();
+    } else {
+        $('#fullWorkView').attr('checked', 'checked');
+        $('#compactWorkView').removeAttr('checked');
+    }
+*/
+
+});
+
+$(window).load(function () {
+    $('#vw_loading').hide();
+    $('#virtualwall').css('visibility','visible');
+	resizeContainer();
+});
+
+$(window).resize(resizeContainer);
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+SHOW/HIDE BACKLOG VIEW
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function toggleView() {
+    if ($('#sortable>tr').hasClass('min_work')) {
+        showWallView();
+    } else {
+        showBacklogView();
+    }
+}
+
+function showBacklogView() {
+    saveBacklogPreference(true);
+    $('#fullWorkView').removeClass("slds-is-selected");
+    $('#compactWorkView').addClass("slds-is-selected");
+    $('.headliner_columns_tasks').hide();
+    $('.headliner_columns_work').css('display','table-cell');
+    $('#sortable>tr').addClass("min_work");
+}
+
+function showWallView() {
+    saveBacklogPreference(false);
+    $('#fullWorkView').addClass("slds-is-selected");
+    $('#compactWorkView').removeClass("slds-is-selected");
+    $('.headliner_columns_tasks').css('display','table-cell');
+    $('.headliner_columns_work').hide();
+    $('#sortable>tr').removeClass("min_work");
+}
+
+function saveBacklogPreference(backlogview) {
+    {!$RemoteAction.ADM_SprintVirtualWallController.setBacklogPreference}(backlogview, handle({
+        success: function(event){
+            if (backlogview) {console.log('Backlog view now default');} else {console.log('Regular view now default');}
+        },
+        fail: function(event){
+            console.log('Error when saving the Backlog view preference.');
+        } 
+    }));
+
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+TASK: DELETE
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function deleteTask(id) {
+    startNotification('Deleting...');
+    var elm = $('li[data-taskid=' + id + ']').closest('li[data-workid]');
+    $('li[data-taskid=' + id + ']').fadeOut(500, function() {
+        recalcRow(elm);
+    });
+     {!$RemoteAction.ADM_SprintVirtualWallController.deleteTask}(id,handle({
+        success: function(data){
+            var listOwner = $('li[data-taskid=' + id + ']').closest('ul');
+            $('li[data-taskid=' + id + ']').remove();
+            modifyList(listOwner);
+            endNotification();
+        },
+        fail: function(event){
+            $('li[data-taskid=' + id + ']').show();
+            errorNotification('<div>Error during delete:</div>' + event.message);
+        }
+    }));
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+GAP CALCULATOR
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function recalcGaps() {
+    
+    $('#sortable>li').each(function(index,item) {
+        if ($(item).hasClass('min_work')) {
+            $(item).css('margin-bottom','-1px');
+        } else {
+            $(item).prev('li').css('margin-bottom','7px');
+            $(item).css('margin-bottom','7px');
+        }
+    })
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+WORKCARD REORDERING
+/----------------------------------------------------------------------------------------------------------------------------------*/
+/**
+ * Performs the reordering of the work cards in the DOM.  This operation is
+ * asynchronous.
+ * @param success Optional function to invoke after the reorder has finished.
+ */
+function reorderWork(success) {
+    ADM_SprintVirtualWallController.getWorkOrder('{!sprintId}', handle({
+        success: function(data) {
+            var $last = null;
+            $.each(data, function() {
+                var $work = $('#sortable [data-workid="' + this + '"]');
+                
+                //continue looping if we don't find the dom for the work
+                if($work.length == 0) {
+                    console.log('Reordering returned a work item that isn\'t in the dom. continue reordering and assume that we will be told about it later.');
+                    return true;
+                }
+                
+                if($last != null){
+                    $work.insertAfter($last);
+                } else {
+                    //move the item to the top
+                    $work.prependTo($('#sortable'));
+                }
+                
+                $last = $work;
+            });
+            
+            console.log('Work Items Reordered');
+            
+            if(success) {
+                success();
+            }
+        },
+        fail: 'Error occurred while reordering work'
+    }));
+}
+
+/**
+ * Queues a reordering of the work cards for a later time. Default time to wait
+ * is 1 second. 
+ *
+ * You would want to queue a reorder if multiple work cards are being received or
+ * updated and you wouldn't want to reorder after each one is received.
+ */
+function queueWorkReorder() {
+    if($(document).data('work-reorder')) {
+        return;
+    }
+    var timeoutId = window.setTimeout(function(){
+        reorderWork(function(){   
+            $(document).removeData('work-reorder');
+        });
+    }, 1000);
+    $(document).data('work-reorder', timeoutId);
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+TASKCARD REORDERING
+/----------------------------------------------------------------------------------------------------------------------------------*/
+/**
+ * Performs the reordering of the task cards in the DOM.  This operation is
+ * asynchronous.
+ * @param workId ID of the work card to be reordered
+ * @param success Optional function to invoke after the reorder has finished.
+ */
+function reorderTasks(workId, success) {
+    function reorderTaskList($list, order) {
+        var $last = null;
+        $.each(order, function() {
+            var $task = $list.find('[data-taskid="' + this + '"]');
+            
+            //continue looping if we don't find the dom for the task
+            if($task.length == 0) {
+                console.log('Reordering returned a task that isn\'t in the list. continuing to reorder the rest');
+                return true;
+            }
+            
+            if($last != null){
+                $task.insertAfter($last);
+            } else {
+                //move the item to the top
+                $task.prependTo($list);
+            }
+            
+            $last = $task;
+        });
+    }
+
+    {!$RemoteAction.ADM_SprintVirtualWallController.getTaskOrder}(workId, handle({
+        success: function(data) {
+            var $work = $('#sortable [data-workid="' + workId + '"]');
+            if($work.length == 0) {
+                console.log('Tried to reorder tasks on a work item that isn\'t in the dom - assuming it was removed.');
+                return;
+            }
+            
+            reorderTaskList($work.find('[data-type="Not Started"]'), data.notStartedTasks || []);
+            modifyList($work.find('[data-type="Not Started"]'));
+            reorderTaskList($work.find('[data-type="In Progress"]'), data.inProgressTasks || []);
+            modifyList($work.find('[data-type="In Progress"]'));
+            reorderTaskList($work.find('[data-type="Completed"]'), data.completedTasks || []);
+            modifyList($work.find('[data-type="Completed"]'));
+            
+            console.log('Task Items for Work ' + workId + ' Reordered');
+            
+            if(success) {
+                success();
+            }
+        },
+        fail: 'Error occurred while reordering task'
+    }));
+}
+
+/**
+ * Queues a reordering of the tasks within a work card for a later time. Default time to wait
+ * is 0.5 second. 
+ *
+ * You would want to queue a reorder if multiple tasks are being received or
+ * updated and you wouldn't want to reorder after each one is received.
+ */
+function queueTaskReorder(workId) {
+    var timeoutMap = $(document).data('task-reorder');
+    if(!timeoutMap) {
+        timeoutMap = {};
+        $(document).data('task-reorder', timeoutMap);
+    }
+    
+    //if we have already queued this work's tasks to be reorder, then reset the
+    //timer
+    if(timeoutMap[workId]) { 
+        clearTimeout(timeoutMap[workId])
+    }
+    
+    var timeoutId = window.setTimeout(function(){
+        reorderTasks(workId, function(){
+            delete timeoutMap[workId];
+        });
+    }, 500);
+    timeoutMap[workId] = timeoutId;
+}
+
+
+
+function reCalculatePlannedVelocity() {
+         Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.ADM_SprintVirtualWallController.calculatePlannedVelocity}','{!sprintId}',
+            function(result, event) {
+              if(event.type == 'exception') {
+               console.debug('Error while fetching planned velocity value : '+event.message);
+            } else {
+                $('#plannedVelocityId').text(result);    
+            }});
+    }
+
+$(document).bind('cometd-init', function(event, cometd){
+    cometd.batch(function(){
+        
+        var updateWork = function(sobject) {
+            //check to see if the work card on the page is newer than the streamed
+            //in work. if the client has a newer version, then no need to continue
+            //processing the stream
+            var currentLastModifiedDate = $('[data-workid="' + sobject.Id + '"]').workCard('lastModifiedDate');
+            if(sobject.LastModifiedDate && currentLastModifiedDate && new Date(sobject.LastModifiedDate).getTime() <= currentLastModifiedDate.getTime()) {
+                console.log('Ignoring streamed work because the client is already at this version or newer');
+                return;
+            }
+            
+            var id = sobject.Id;
+            var thisSprintId = '{!sprintId}';
+            
+            //if the page does not have the work item and the sprint on the work 
+            //item is not the same as this, then no need to continue processing
+            if($('[data-workid="' + id + '"]').length === 0 && sobject.Sprint__c !== thisSprintId) {
+                return;
+            }
+            
+            ADM_SprintVirtualWallController.getWorkById(id, handle({
+                success: function(data){
+                    if(typeof data == 'undefined' || data == null || typeof data.work === 'undefined' || data.work == null) {
+                        console.warn('Unable to find work with ID of ' + id);
+                        return;
+                    }
+                    
+                    var sobject = data.work;
+                    var $work = $('[data-workid="' + id + '"]');
+                    var onPage = $work.length > 0;
+                    var sameSprint = thisSprintId == sobject.Sprint__c;
+                    
+                    if(onPage && sameSprint) {
+                    
+                        //check to see if the user is currently editing the task on the page and ignore the update
+                        if($work.workCard('isEditing')) {
+                            console.log('Ignoring update to ' + sobject.Name + ' (' + sobject.Id + ') from ' + sobject.LastModifiedBy.Name + ' because the user is currently editing the same work');
+                            return;
+                        }
+                        $work.workCard('sobject', sobject);
+                        queueWorkReorder();
+                        reCalculatePlannedVelocity();
+                        if(sobject.LastModifiedBy && sobject.LastModifiedBy.Id != '{!$User.Id}') {
+                            showNotification((sobject.LastModifiedBy.FirstName || sobject.LastModifiedBy.Name) + ' updated work ' + sobject.Name);
+                        }
+                        console.log('Work Updated: ' + id);
+                    } else if(onPage && !sameSprint) {
+                        $work.remove();
+                        reCalculatePlannedVelocity(); 
+                        if(sobject.LastModifiedBy && sobject.LastModifiedBy.Id != '{!$User.Id}') {
+                            showNotification((sobject.LastModifiedBy.FirstName || sobject.LastModifiedBy.Name) + ' removed work ' + sobject.Name);
+                        }
+                        console.log('Work Removed: ' + id);
+                    } else if(!onPage && sameSprint){
+                        $('#sortable').append($('<tr></tr>').workCard({sobject:sobject}));
+                        
+                        if(data.notStartedTasks) {
+                            $.each(data.notStartedTasks, function(index, item){
+                                appendTaskCard(item, 'Not Started');
+                            });
+                        }
+                        
+                        if(data.inProgressTasks) {
+                            $.each(data.inProgressTasks, function(index, item){
+                                appendTaskCard(item, 'In Progress');
+                            });
+                        }
+                        
+                        if(data.completedTasks) {
+                            $.each(data.completedTasks, function(index, item){
+                                appendTaskCard(item, 'Completed');
+                            });
+                        }
+                        
+                        queueWorkReorder();
+                        reCalculatePlannedVelocity(); 
+                        if(sobject.LastModifiedBy && sobject.LastModifiedBy.Id != '{!$User.Id}') {
+                            showNotification((sobject.LastModifiedBy.FirstName || sobject.LastModifiedBy.Name) + ' added work ' + sobject.Name);
+                        }
+                        console.log('Work Added: ' + id);
+                    }
+                }, 
+                fail: 'Error during update of streamed work'
+            }), {escape:false});
+            
+        };
+        
+        cometd.subscribe('/topic/WorkUpdates?Sprint__c={!sprint.Id}', function(message) {
+            console.log('received update on WorkUpdates channel');
+            if(!message.data || !message.data.sobject) {
+                return;
+            }
+            
+            var sobject = message.data.sobject;
+            updateWork(sobject);
+        });
+        
+        //whenever the sprint on a work record gets changed from this sprint to another sprint, we need to remove the 
+        //work item on the page
+        cometd.subscribe('/topic/WorkHistory?Sprint_Old__c={!sprint.Id}', function(message) {
+            console.log('received update on WorkHistory channel');
+            if(!message.data || !message.data.sobject) {
+                return;
+            }
+            
+            var sobject = message.data.sobject;
+            updateWork({Id:sobject.Work__c});
+        });
+        
+         cometd.subscribe('/topic/TaskUpdates?SprintId__c={!sprint.Id}', function(message) {
+            console.log('Received update on Task Update channel');
+            var onSuccess = function(data) {
+                if(typeof data === 'undefined' || data == null || typeof data.Work__c === 'undefined' || data.Work__c == null) {
+                    return;
+                }
+                
+                var sobject = data;
+                var $work = $('[data-workid="' + sobject.Work__c + '"]');
+                var workOnPage = $work.length > 0;
+                var $task = $work.find('[data-taskid="' + sobject.Id + '"]');
+                var taskOnPage = $task.length > 0;
+                
+                if(workOnPage && taskOnPage) {
+                
+                    //check to see if the user is currently editing the task on the page and ignore the update
+                    if($task.taskCard('isEditing')) {
+                        console.log('Ignoring update to ' + sobject.Name + ' (' + sobject.Id + ') from ' + sobject.LastModifiedBy.Name + ' because the user is currently editing the same task');
+                        return;
+                    }
+                
+                    $task.taskCard("sobject", sobject);
+                    
+                    //if there is more than one task in the column, then we need
+                    //to reorder
+                    if($task.closest('[data-type]').find('[data-taskid]').size() > 1) {
+                        queueTaskReorder(sobject.Work__c);
+                    }
+                    
+                    if(sobject.LastModifiedBy && sobject.LastModifiedBy.Id != '{!$User.Id}') {
+                        showNotification((sobject.LastModifiedBy.FirstName || sobject.LastModifiedBy.Name) + ' updated task ' + sobject.Name);
+                    }
+                    console.log('Task Updated: ' + sobject.Id);
+                } else if(workOnPage && !taskOnPage) {
+                    $task = appendTaskCard(sobject);
+                    
+                    //if there is more than one task in the column, then we need
+                    //to reorder
+                    if($task.closest('[data-type]').find('[data-taskid]').size() > 1) {
+                        queueTaskReorder(sobject.Work__c);
+                    }
+                    
+                    if(sobject.LastModifiedBy && sobject.LastModifiedBy.Id != '{!$User.Id}') {
+                        showNotification((sobject.LastModifiedBy.FirstName || sobject.LastModifiedBy.Name) + ' added task ' + sobject.Name);
+                    }
+                    console.log('Task Added: ' + sobject.Id);
+                }
+            };
+            
+            if(typeof message.data !== 'undefined' && message.data != null && typeof message.data.sobject !== 'undefined' && message.data.sobject != null) {
+                var sobject = message.data.sobject;
+                
+                //check to see if the task card on the page is newer than the streamed
+                //in task. if the client has a newer version, then no need to continue
+                //processing the stream
+                var currentLastModifiedDate = $('[data-taskid="' + sobject.Id + '"]').taskCard('lastModifiedDate');
+                if(sobject.LastModifiedDate && currentLastModifiedDate && new Date(sobject.LastModifiedDate).getTime() <= currentLastModifiedDate.getTime()) {
+                    console.log('Ignoring streamed task because the client is already at this version or newer');
+                    return;
+                }
+                
+                {!$RemoteAction.ADM_SprintVirtualWallController.getTaskById}(sobject.Id, handle({
+                    success: onSuccess, 
+                    fail: 'Error during update of streamed task'
+                }), {escape:false});
+            }
+        });
+        
+        
+        cometd.subscribe('/topic/DeletedTaskUpdates', function(message) {
+            var sobject = message.data.sobject;
+            if(message.data.sobject) {
+                var $taskCard = $('[data-taskid="' + sobject.Task__c + '"]');
+                var onPage = $taskCard.size() > 0;
+                if(onPage) {
+                    {!$RemoteAction.ADM_SprintVirtualWallController.getDeletedTaskById}(sobject.Id, handle({
+                        success: function(sobject) {
+                            var listOwner = $taskCard.closest('ul');
+                            $taskCard.remove();
+                            modifyList(listOwner);
+                            
+                            if(sobject.LastModifiedBy && sobject.LastModifiedBy.Id != '{!$User.Id}') {
+                                showNotification((sobject.LastModifiedBy.FirstName || sobject.LastModifiedBy.Name) + ' deleted task ' + sobject.Name);
+                            }
+                            console.log('Task Deleted: ' + sobject.Id);
+                        }, 
+                        fail: 'Error while deleting task'
+                    }), {escape:false});
+                }
+            }
+        });
+    });
+});
+
+var currWallView = null;
+</script>
+</apex:component>

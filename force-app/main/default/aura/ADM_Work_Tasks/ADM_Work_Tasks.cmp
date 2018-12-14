@@ -1,0 +1,179 @@
+<aura:component controller="ADM_TasksController">
+    <ltng:require styles="/resource/dragula_min_css_3_7_2"
+                  scripts="{!join(',',
+                    $Resource.dragula_min_js_3_7_2,
+                    $Resource.ADM_Util,
+                    $Resource.ADM_SprintShared_Resource)}"
+    />
+
+    <aura:attribute name="workId" type="String"/>
+    <aura:attribute name="workIsCapex" type="Boolean"/>
+    <aura:attribute name="plannedTasks" type="Object[]"/>
+    <aura:attribute name="plannedTasksCollapsed" type="Boolean" default="true"/>
+    <aura:attribute name="inProgressTasks" type="Object[]"/>
+    <aura:attribute name="inProgressTasksCollapsed" type="Boolean" default="true"/>
+    <aura:attribute name="completedTasks" type="Object[]"/>
+    <aura:attribute name="completedTasksCollapsed" type="Boolean" default="true"/>
+    <aura:attribute name="scrumTeamMembers" type="Object"/>
+    <aura:attribute name="userPrefs" type="Object"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    <aura:attribute name="showColumnHeaders" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+    <aura:handler event="c:ADM_Event_Update_User_Pref" action="{!c.updateUserPref}"/>
+    <aura:handler event="c:ADM_Event_New_Task" action="{!c.createNewTask}"/>
+    <aura:handler event="c:ADM_Event_Delete_Unsaved_Task" action="{!c.handleDeleteUnsavedTask}"/>
+
+    <div>
+        <div class="slds-grid adm-tasks-container">
+
+            <div class="slds-col slds-size--1-of-3 slds-border--left">
+                <div aura:id="plannedTasksContainer" class="slds-text-align--center full-height slds-is-relative">
+
+                    <aura:if isTrue="{!v.showColumnHeaders}">
+                        <div class="slds-m-top--x-small adm-tasks-header">Not Started</div>
+                    </aura:if>
+                    
+                    <div
+                        id="{!globalId + '_plannedTasks'}"
+                        aura:id="plannedTasks"
+                        data-col-name="plannedTasks"
+                        data-col-status="Not Started"
+                        class=  "{!and(v.plannedTasksCollapsed, v.plannedTasks.length > 4) ?
+                                    'full-height slds-p-bottom--x-large slds-is-relative adm-tasks-collapse-container '
+                                    : 'full-height slds-p-bottom--x-large slds-is-relative '
+                                }"
+                        ondblclick="{!c.createNewTask}"
+                    >
+                        <aura:iteration items="{!v.plannedTasks}" var="task" indexVar="pCounter">
+                            <aura:if isTrue="{!or(v.plannedTasks.length lt 5, or((v.plannedTasks.length == pCounter+1), !v.plannedTasksCollapsed))}">
+                                <c:ADM_Task task="{!task}" scrumTeamMembers="{!v.scrumTeamMembers}" userPrefs="{!v.userPrefs}"/>
+                                <aura:set attribute="else">
+                                    <article class="slds-card slds-theme--default adm-task-placeholder cADM_Task" data-task-id="{!task.Id}">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-grid slds-wrap">
+                                            </div>
+                                        </div>
+                                    </article>
+                                </aura:set>
+                            </aura:if>
+                        </aura:iteration>
+                    </div>
+
+                    <aura:if isTrue="{!v.plannedTasks.length == 0}">
+                        <div class="newTaskMsg slds-text-color_weak slds-hide">Double click to add new tasks</div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.plannedTasks.length > 4}">
+                        <button
+                            onclick="{!c.toggleCollapsedTasks}"
+                            data-col-name="plannedTasks"
+                            class="{!v.plannedTasksCollapsed ? 'slds-button adm-expand-button ' : 'slds-button adm-collapse-button '}">
+                            {! v.plannedTasksCollapsed ? ('Expand (' + v.plannedTasks.length + ')') : ('Collapse (' + v.plannedTasks.length + ')')}
+                        </button>
+                    </aura:if>
+
+                </div>
+            </div>
+
+            <div class="slds-col slds-size--1-of-3 slds-border--left">
+                <div aura:id="inProgressTasksContainer" class="slds-text-align--center full-height slds-is-relative">
+
+                    <aura:if isTrue="{!v.showColumnHeaders}">
+                        <div class="slds-m-top--x-small adm-tasks-header">In Progress</div>
+                    </aura:if>
+
+                    <div
+                        id="{!globalId + '_inProgressTasks'}"
+                        aura:id="inProgressTasks"
+                        data-col-name="inProgressTasks"
+                        data-col-status="In Progress"
+                        class=  "{!and(v.inProgressTasksCollapsed, v.inProgressTasks.length > 4) ?
+                                    'full-height slds-p-bottom--x-large slds-is-relative adm-tasks-collapse-container '
+                                    : 'full-height slds-p-bottom--x-large slds-is-relative '
+                                }"
+                        ondblclick="{!c.createNewTask}"
+                    >
+                        <aura:iteration items="{!v.inProgressTasks}" var="task" indexVar="ipCounter">
+                            <aura:if isTrue="{!or(v.inProgressTasks.length lt 5, or((v.inProgressTasks.length == ipCounter+1), !v.inProgressTasksCollapsed))}">
+                                <c:ADM_Task task="{!task}" scrumTeamMembers="{!v.scrumTeamMembers}" userPrefs="{!v.userPrefs}"/>
+                                <aura:set attribute="else">
+                                    <article class="slds-card slds-theme--default adm-task-placeholder cADM_Task" data-task-id="{!task.Id}">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-grid slds-wrap">
+                                            </div>
+                                        </div>
+                                    </article>
+                                </aura:set>
+                            </aura:if>
+                        </aura:iteration>
+                    </div>
+
+                    <aura:if isTrue="{!v.inProgressTasks.length == 0}">
+                        <div class="newTaskMsg slds-text-color_weak slds-hide">Double click to add new tasks</div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.inProgressTasks.length > 4}">
+                        <button
+                            onclick="{!c.toggleCollapsedTasks}"
+                            data-col-name="inProgressTasks"
+                            class="{!v.inProgressTasksCollapsed ? 'slds-button adm-expand-button ' : 'slds-button adm-collapse-button '}">
+                            {! v.inProgressTasksCollapsed ? ('Expand (' + v.inProgressTasks.length + ')') : ('Collapse (' + v.inProgressTasks.length + ')')}
+                        </button>
+                    </aura:if>
+
+                </div>
+            </div>
+
+            <div class="slds-col slds-size--1-of-3 slds-border--left">
+                <div aura:id="completedTasksContainer" class="slds-text-align--center full-height slds-is-relative">
+
+                    <aura:if isTrue="{!v.showColumnHeaders}">
+                        <div class="slds-m-top--x-small adm-tasks-header">Completed</div>
+                    </aura:if>
+
+                    <div
+                        id="{!globalId + '_completedTasks'}"
+                        aura:id="completedTasks"
+                        data-col-name="completedTasks"
+                        data-col-status="Completed"
+                        class=  "{!and(v.completedTasksCollapsed, v.completedTasks.length > 4) ?
+                                    'full-height slds-p-bottom--x-large slds-is-relative adm-tasks-collapse-container '
+                                    : 'full-height slds-p-bottom--x-large slds-is-relative '
+                                }"
+                        ondblclick="{!c.createNewTask}"
+                    >
+                        <aura:iteration items="{!v.completedTasks}" var="task" indexVar="cCounter">
+                            <aura:if isTrue="{!or(v.completedTasks.length lt 5, or((v.completedTasks.length == cCounter+1), !v.completedTasksCollapsed))}">
+                                <c:ADM_Task task="{!task}" scrumTeamMembers="{!v.scrumTeamMembers}" userPrefs="{!v.userPrefs}"/>
+                                <aura:set attribute="else">
+                                    <article class="slds-card slds-theme--default adm-task-placeholder cADM_Task" data-task-id="{!task.Id}">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-grid slds-wrap">
+                                            </div>
+                                        </div>
+                                    </article>
+                                </aura:set>
+                            </aura:if>
+                        </aura:iteration>
+                    </div>
+
+                    <aura:if isTrue="{!v.completedTasks.length == 0}">
+                        <div class="newTaskMsg slds-text-color_weak slds-hide">Double click to add new tasks</div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.completedTasks.length > 4}">
+                        <button
+                            onclick="{!c.toggleCollapsedTasks}"
+                            data-col-name="completedTasks"
+                            class="{!v.completedTasksCollapsed ? 'slds-button adm-expand-button ' : 'slds-button adm-collapse-button '}">
+                            {! v.completedTasksCollapsed ? ('Expand (' + v.completedTasks.length + ')') : ('Collapse (' + v.completedTasks.length + ')')}
+                        </button>
+                    </aura:if>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</aura:component>

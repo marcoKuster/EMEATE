@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provide_open_Accessibility_bug_details__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>FF Criteria: All bugs &gt; 45 days closed; RF Criteria: All bugs closed</inlineHelpText>
+    <label>Provide open Accessibility bug details</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

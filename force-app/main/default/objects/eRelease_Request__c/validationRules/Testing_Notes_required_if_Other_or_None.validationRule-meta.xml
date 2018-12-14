@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Testing_Notes_required_if_Other_or_None</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR( INCLUDES(Testing_Required__c, &quot;Other&quot;), 
+INCLUDES(Testing_Required__c, &quot;None required&quot;)), 
+OR( ISBLANK( Other_Testing__c ), BEGINS(Other_Testing__c, &#39;Please specify testing details if &quot;None Required&quot; or &quot;Other&quot; selected.&#39;)) )</errorConditionFormula>
+    <errorDisplayField>Other_Testing__c</errorDisplayField>
+    <errorMessage>You must specify testing details if &quot;None Required&quot; or &quot;Other&quot; selected for Testing Required.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateAssigneeOnPeforceStatusOpen</fullName>
+    <active>true</active>
+    <description>Make sure there is an assignee designated if the source control status is changed to either open or open once.</description>
+    <errorConditionFormula>AND(CASE( Perforce_Status__c,
+     &quot;Approved - Open&quot;, 1,
+     &quot;Approved - Open Once&quot;, 1,
+     0) = 1,Assignee__c = &quot;&quot;)</errorConditionFormula>
+    <errorDisplayField>Perforce_Status__c</errorDisplayField>
+    <errorMessage>An assignee must be specified if the source control status is changed to Approved - Open or Approved - Open Once</errorMessage>
+</ValidationRule>

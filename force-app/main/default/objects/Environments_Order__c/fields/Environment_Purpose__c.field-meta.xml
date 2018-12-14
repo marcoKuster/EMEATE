@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Environment_Purpose__c</fullName>
+    <description>What is the primary use of the environment</description>
+    <externalId>false</externalId>
+    <inlineHelpText>What is the primary use of the environment?</inlineHelpText>
+    <label>Environment Purpose</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Functional Testing</fullName>
+                <default>false</default>
+                <label>Functional Testing</label>
+            </value>
+            <value>
+                <fullName>Upgrade Testing</fullName>
+                <default>false</default>
+                <label>Upgrade Testing</label>
+            </value>
+            <value>
+                <fullName>Workloads</fullName>
+                <default>false</default>
+                <label>Workloads</label>
+            </value>
+            <value>
+                <fullName>Stagger Testing</fullName>
+                <default>false</default>
+                <label>Stagger Testing</label>
+            </value>
+            <value>
+                <fullName>Capacity expansion</fullName>
+                <default>false</default>
+                <label>Capacity expansion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

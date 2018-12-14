@@ -1,0 +1,3851 @@
+<apex:page showHeader="true" sidebar="false" controller="ADM_BacklogController" tabStyle="Work_Manager__tab" applyBodyTag="false">
+<apex:remoteObjects >
+	<apex:remoteObjectModel jsShorthand="Sprints" name="ADM_Sprint__c" fields="Id,Name,Start_Date__c,End_Date__c"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Epics" name="ADM_Epic__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Teams" name="ADM_Scrum_Team__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Themes" name="ADM_Theme__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Builds" name="ADM_Build__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="ProductTags" name="ADM_Product_Tag__c" fields="Id,Name"></apex:remoteObjectModel>
+</apex:remoteObjects>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+	<title>{!teamName} Backlog</title>
+	<apex:stylesheet value="{!URLFOR($Resource.SLDS091, '/assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA6tJREFUeNrMV01IVFEU/u67b3Js/MVMpUwk0U2E2Q+uQrCNq4Ii2wYtgmjRtlWbitYSSJsiqDZWRIEt+pGMAgvTNmWWv1CTmaWOOuO8n865773Z+Gac55h14DjjvWfO+c6559xzj7BtGx6dvj67hT7aiFuIm4hrkTsZxJPE/cQ9xN2dJ4unvU3hASDjrfRxlvgw/i49IO4gEE9TAFzjl4gPYGOoj/g8g5DRmnMc9ovErdg42kZc/Ggg8URzzzxw2AUfrgWYlvN9DcQ223Q34VYaIK2cHj9jljJSGtGQR9IWrWm0N7tkK8Pqf3KjKCxSewnDxq8FG5LWywq0lC4fatHdbF9JbHzeQntzPnQJ3Hm9hGiClArH89pyidOtESSSNjqfLWJs2iQ5AdO0UZgvcKplM+K0d/vVEsoLtXRRaNL9So0R/5izUF+p49iBsFrbtV1H30gSC3EbVaUaDjbkoSjfCf6V9kL0Di2r3/DavtoQdlboau/taBKfvhkoL9L8olCr+zpvO16eaA6n1upIYV2Fr7gK85G9Yd+94+TAhfuxdEcA39j8XrCwp0bH7h2hnNO9sSaEJtLFOeFHvi4l6O4qL5ReKrh/1kDCqZAy0rVsGvCrF18AW4s19I8lce7WnMpke40AOJe4guaoYiqKtOwi4GG0yO2ZmK1yIRfSya4uHc3CJ5grACRNx+iZQxHUV+nq/1woRKXJVXD1yYILRmQGwCFjwQYqQafMRM6JyOXMOpVuuUoVSEIYTwJT8+a6XfxTc6bSKaVYvQwZaYxuvOistW4AWBfr1LUs7wHO+uHo+kVgOGoEu4j47AfGkzByTEAvqQcmjNS1nRWASJ7AlykDLz4u5wyAdYyQroJwAABCRUFD15s4eZCL98Bd0sG6EOQIWLYkIjA5Y+Ha88U1A+Dfsg7Wle4w0zZqi4qgqkTD4/dxFYmg1NUXR/dgXOmwMhQUAxhNt8l9gPv4zd5F3OjNPhIse/PlEiqop0gto+go34TV6Xa5dMK6oOYklUefv5s4uj9Mrdq/TXMDu0fRGphIorJEYpN0nmwZqFp3h4aytEdBCkLkRXWZxIevBi4/jGF3dUi9FxqqnJt8iO76d+MGBskwy7MsH7q1ehVP6u7E0phJynsTcEvlRsWG+Knl1Ta325B0Hq4B23e/5o5LWZH36uUnWCWd7ya625n5O69pIvDboYcBdLvjUvBeL1d2t4AjWrfmDood7ri0UdTnzofT/8dw+i/H8z8CDABNo3wVGT1wUQAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon" />
+	<style>
+	body.slds{overflow:hidden;}
+	.slds-page-header{cursor:default;}
+	.slds-page-header *{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+	.slds-page-header.fixed{position:fixed;left:10px;right:10px;top:0;z-index:1;}
+	.noSidebarCell, .sidebarCell .fixed{padding:0 !important;}
+	#dataTable{overflow:auto;min-height:300px;}
+	#dataTable .ui-sortable-helper td{border-bottom:1px #D8DDE6 solid;}
+	#dataTable tr.placeholder.multiple td{background:#6193DF;height:1px;padding:1px;}
+	#dataTable tr.sprintline td{position:static;background-color:#F7B15A;height:2px;padding:1px;border-top:4px #fff solid;border-bottom:4px #fff solid;text-align:center;}
+	#dataTable td[data-label="Subject"] {word-break:break-word;}
+	#dataTable td[data-label="Assignee"] a,
+	#dataTable td[data-label="QA Engineer"] a,
+	#dataTable td[data-label="Epic"] a{display:block;max-width:150px;}
+	#dataTable td[data-label="Subject"] a{overflow:hidden;display:-webkit-inline-box;text-overflow:ellipsis;-webkit-box-orient:vertical;-webkit-line-clamp:2;}
+	/*#dataTable tr.sprintline td div{display:none;position:absolute;background:#EFAB57;padding:3px 7px;border-radius:5px;font-size:9px;font-weight:bold;z-index:2;margin:-10px auto 0 auto;left:50%;}*/
+	#dataTable tr.sprintline td:hover div{display:block;}
+	.slds .slds-table th, .slds .slds-table td{padding:4px 8px;}
+	.slds .slds-text-body--small{font-size:11px;}
+	#quickSearch::-webkit-input-placeholder{color:#ccc;}
+	#quickSearch::-moz-input-placeholder{color:#ccc;}
+	#quickSearch:-moz-input-placeholder{color:#ccc;}
+	#quickSearch::-ms-input-placeholder{color:#ccc;}
+	#quickSearchClear{display:none;position:absolute;right:8px;top:50%;margin-top:-8px;cursor:pointer;}
+	#buttonFilter.tristate:not(.slds-is-selected){background-color:#B4C1D4;}
+	/* filter button half-checked: #E1E3E6 */
+	.slds-button-group+.slds-button-group{margin-left: 0.25rem;}
+	.slds .slds-dropdown__item{margin-left:0;}
+	#header-fixed{position:absolute;}
+	#header-fixed.fixed{position:fixed;}
+	body.slds #header-fixed{top:0px;position:fixed;}
+	#header-fixed.shadow{box-shadow:rgba(0, 0, 0, 0.3) 0px 2px 4px 0px;border-bottom-color:#fff;}
+	.slds .slds-is-sortable.descending{background-color:#f4f6f9;color:#0070d2;}
+	.slds .slds-is-sortable.descending .slds-button{visibility:visible;}
+	.slds .slds-is-sortable.ascending{background-color:#f4f6f9;color:#0070d2;}
+	.slds .slds-is-sortable.ascending .slds-button{visibility:visible;}
+	.slds tr.group td{background-color:#54698D;color:#fff;font-size:11px;font-weight:bold;-webkit-transition-duration:0.1s;-moz-transition-duration:0.1s;-o-transition-duration:0.1s;transition-duration:0.1s;padding:6px 8px;}
+	.slds tr.group td a{color:#fff;text-decoration:none;}
+	.slds tr.group td a:hover{text-decoration:underline;}
+	tr.selected td,
+	tr.notsaved.selected td{background-color:#F3F5F8;}
+	tr.notsaved td,
+	tr td.notsaved{background-color:#faf7e0;}
+	tr.notsaved td.notsaved{background-color:#eae5c0;}
+	tr.selected td.notsaved,
+	tr.notsaved.selected td.notsaved{background-color:#e5eaf1;}
+	#holderButtonSaveOrder{display:none;}
+	#storyPointsCount{display:none;}
+	#loading{position:absolute;top:50%;left:50%;margin-left:-34px;margin-top:-34px;}
+	#norecords{display:none;position:absolute;top:50%;left:0;right:0;text-align:center;}
+	#workTable,#table-fixed{visibility:hidden;}
+	#sideContainer{display:none;background:#fff;position:absolute;right:0;top:0;bottom:0;padding:0px;width:300px;box-shadow:-1px 2px 4px 0px rgba(0,0,0,.4);overflow-y:auto;border-bottom-right-radius:5px;}
+	#sideContainer.fixed{position:fixed;top:0px;right:10px;bottom:51px;}
+	body.slds #sideContainer{border-bottom-right-radius:0px;}
+	.sideContainerBox{overflow-y:auto;}
+	.slds .slds-picklist__options{overflow-y:auto;height:340px;}
+	.slds-row-select .slds-button__icon{cursor:move;}
+	li[data-required=true] span:after {content:" *";color:#a62f2f;}
+	#sortLabel{font-weight:bold;}
+	#filterCount span:hover{cursor:pointer;text-decoration:underline;}
+	/* filter dialog */
+	.filterTopic:not(:first-child){margin-top:15px;}
+	.filterTopic > div:first-child{font-size:12px;line-height:1.25;text-transform:uppercase;letter-spacing:.0625em;color:#54698d;}
+	.itemList{margin-top:5px;display:table;width:100%;background:#f5f5f5;border-radius:5px;border:1px #e5e5e5 solid;padding:5px;overflow-y:auto;user-select:none;-webkit-user-select:none;-moz-user-select:none;}
+	.itemList .spacer{padding-top:5px;text-align:center;}
+	#boxFilter{position:relative;}
+	#clearFilters{font-size:10px;position:absolute;right:20px;top:10px;display:none;}
+	/*.itemRow:first-child > div{padding-top:10px;}*/
+	.itemRow{display:table-row;}
+	.itemRow > div{display:table-cell;padding:2px 3px;font-size:11px;}
+	.itemRow > div.itemTitle{width:100%;}
+	.itemRow > div.itemTitle label{display:block;}
+	.itemRow > div.itemTitle label div{width:9px;height:9px;display:inline-block;border-radius:2px;vertical-align:middle;margin-right:5px;margin-top:-2px;border:1px rgba(0,0,0,0.13) solid;}
+	#filterDialog input[type=text]{margin:5px 0px 15px 0px;display:block;background:#F0F0F0;border:1px #C0C0C0 solid;border-radius:5px;padding:5px;outline:0;width:100%;}
+	#filterDialog input[type=text]:focus{background-color:#FFE;border-color:#AAA;}
+	#filterDialog #filterResults{margin-bottom:15px;}
+	#filterDialog .filterTopic{margin-bottom:15px;display:none;}
+	#boxMassEdit #massEditNone{position:absolute;text-align:center;top:40%;left:50px;right:50px;}
+	#boxMassEdit #massEditOptions{display:none;}
+	#boxCharts div.chartTitle{/*position:fixed;*/width:300px;padding:7px;background:#54698D;color:#fff;font-size:11px;font-weight:bold;z-index:1;border-bottom:1px #8E95A7 solid;cursor:pointer;}
+	#boxCharts div.chartTitle.selected{background:#2D3D58;}
+	#boxCharts div.chartTitle svg{fill:#fff;width:10px;height:10px;margin-right:5px;}
+	#boxCharts div.chart{display:none;padding:10px 0px;border-bottom:1px #D0D5DE solid;}
+	#boxCharts div.chart .slds-spinner--small{display:block;margin:20px auto;text-align:center;}
+	#boxCharts div.chart .nodata{text-align:center;font-size:11px;padding:30px 0px;}
+	.slds #listAvailableFields .slds-picklist__item,
+	.slds #listVisibleFields .slds-picklist__item{line-height:1;font-size:11px;}
+	.ui-widget-content{border:1px solid #AAA;background:#FFF;color:#222;}
+	.ui-slider-horizontal{height:7px;}
+	.ui-slider{position:relative;text-align:left;background-color:#0070D2;}
+	.ui-slider-horizontal .ui-slider-range-max{right:0;background-color:#fff;}
+	.ui-slider-horizontal .ui-slider-range{top:0;height:100%;}
+	.ui-slider .ui-slider-range{position:absolute;z-index:1;font-size:.7em;display: block;border: 0;background-position: 0 0;}
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{border: 1px solid #d3d3d3;background: #e6e6e6;font-weight: normal;color: #555;}
+	.ui-slider-horizontal .ui-slider-handle{top: -.4em;margin-left: -.6em;}
+	.ui-slider .ui-slider-handle{outline:none;position:absolute;z-index:2;width:1.2em;height:1.2em;cursor:default;-ms-touch-action:none;touch-action:none;border-radius:1.2em;background-color:#0070D2;}
+	input[type=checkbox]{-webkit-appearance:none;border:1px #D8DDE6 solid;width:16px;height:16px;border-radius:3px;background-color:#fff;outline:none;vertical-align:text-bottom;}
+	input[type=checkbox]:checked:after{display:block;content:'';height:0.25rem;width:0.5rem;position:relative;top:50%;left:50%;-webkit-transform:translate3d(-50%, -50%, 0) rotate(-45deg);transform:translate3d(-50%, -50%, 0) rotate(-45deg);border-bottom:2px solid #1589ee;border-left:2px solid #1589ee;}
+	.itemCheckbox input[type=checkbox]:checked:after{display:block;content:'';height:0.5rem;width:0.5rem;border-radius:0.5rem;position:relative;top:50%;left:50%;background:#1589ee;margin-left:-0.25rem;margin-top:-0.25rem;-webkit-transform:inherit;transform:inherit;border:0;}
+	.slds .slds-dropdown__item > a.selected{background-color:#E1E7F1;}
+	#dropdownDataSources{max-width:none;}
+	#dropdownDataSourcesSidePanel{display:none;vertical-align:top;padding:0px 4px 0px 0px;width:200px;}
+	#dropdownDataSourcesSidePanel > div{background-color:#E1E7F1;padding:8px;border-radius:4px;}
+	#dropdownDataSourcesSidePanel.firstChild > div{border-top-left-radius:0px;}
+	#dropdownDataSourcesSidePanel.lastChild > div{border-bottom-left-radius:0px;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch{margin-bottom:10px;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch::-webkit-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch::-moz-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch:-moz-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch::-ms-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearchClear{display:none;position:absolute;right:21px;top:30px;margin-top:-8px;cursor:pointer;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesRecents{text-transform:uppercase;font-size:8px;font-weight:bold;padding-bottom:5px;color:#54698d;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults{overflow-x:auto;max-height:181px;min-height:181px;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a{padding:8px 12px;border-radius:4px;display:block;color:#16325c;text-decoration:none;white-space:nowrap;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a:hover,
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a.hover{background-color:#D3DAE6;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a.selected{background-color:#C8D0DC;}
+
+	/* fullscreen changes */
+	html.fullscreen{height:100%;}
+	html.fullscreen body{height:100%;margin:0px;background:#fff;overflow:hidden !important;}
+	html.fullscreen.issfx body{overflow:hidden auto !important;}
+	html.fullscreen .slds-page-header{position:fixed;left:0px;right:0px;top:0;z-index:1;}
+	html.fullscreen #header-fixed{position:fixed;top:110px !important;}
+	html.fullscreen #workTable{margin-top:110px !important;}
+	html.fullscreen div#contentWrapper{height:100%}
+	html.fullscreen div.bPageHeader,
+	html.fullscreen div.bPageFooter{display:none;}
+	html.fullscreen div.bodyDiv{box-shadow:none;-webkit-box-shadow:none;background:none;border:0px;}
+	html.fullscreen table#bodyTable{height:100%;padding:0px;}
+	html.fullscreen td.noSidebarCell{padding:0px;vertical-align:top;height:100%;background:#fff;}
+
+	@media all and (max-width: 900px) {
+		.slds-page-header .slds-media__figure{display:none;}
+		#managerToolbar > .slds-grid{display:block;}
+		#managerToolbar > .slds-grid > div.slds-button-group:not(#holderButtonSaveOrder){display:inline-flex;margin-top:10px;}
+	}
+	@media all and (max-width: 650px) {
+		#managerToolbar,
+		#buttonListViewControls,
+		#workTable .slds-row-select,
+		#workTable th:not([data-label="Rank"]):not([data-label="Subject"]):not([data-label="Status"]),
+		#workTable td:not([data-label="Rank"]):not([data-label="Subject"]):not([data-label="Status"]),
+		#header-fixed th:not([data-label="Rank"]):not([data-label="Subject"]):not([data-label="Status"]){display:none;}
+	}
+	@media all and (max-width: 450px) {
+		html,html body{overflow:auto;/*-webkit-overflow-scrolling:touch;*/}
+        body{position:absolute;left:0;right:0;top:0;bottom:0;}
+        .slds a:link, .slds a:visited{text-decoration:none;color:#54698d;}
+		#workTable thead,
+		#workTable td:not([data-label="Subject"]),
+		#header-fixed{display:none;}
+		body{overflow:auto;}
+		#dataTable{overflow:visible;height:auto !important;}
+		.slds .slds-table th, .slds .slds-table td{font-size:13px;padding:10px;}
+		#attentionBlock{display:none;}
+	}
+	</style>
+	<apex:includeScript value="{!$Resource.moment_1_7_2_min_js}" />
+	<apex:includeScript value="{!$Resource.jquery2_1_4}" />
+	<apex:includeScript value="{!$Resource.handlebars4_0_2}" />
+	<apex:includeScript value="{!$Resource.jqueryui1_11_4}" />
+	<apex:includeScript value="{!$Resource.highcharts4_1_8}" />
+</head>
+<body class="slds">
+
+<div class="slds">
+
+<c:ADM_WorkDialogSds rendered="{!showBoard}" teamid="{!teamId}" />
+<c:ADM_TeamSelector rendered="{!NOT(showBoard)}" destinationurl="/apex/ADM_Backlog" destinationlabel="Work Manager" destinationparam="teamId"></c:ADM_TeamSelector>
+
+<apex:outputPanel layout="block" rendered="{!showBoard}">
+
+<div class="slds-notify slds-notify--alert slds-theme--error slds-hide" role="alert" style="position:fixed;top:0;left:0;right:0;z-index:5000;"><h2></h2></div>
+
+<!--------------------------------------------------------------------------------------------------------------
+PAGE HEADER
+--------------------------------------------------------------------------------------------------------------->
+<div class="slds-page-header" role="banner">
+	<!--apex:outputPanel layout="block" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" style="position:absolute;top:4px;right:10px;font-size:10px;"><a style="color:#54698D;" href="/">Exit to GUS</a></apex:outputPanel-->
+	<div class="slds-grid">
+		<div class="slds-media__figure">
+			<svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-custom-73" style="padding:8px;">
+				<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#new_custom73')}"></use>
+			</svg>
+		</div>
+		<div class="slds-col slds-has-flexi-truncate">
+			<p class="slds-text-heading--label">Work Manager</p>
+			<div class="slds-grid">
+		        <div id="buttonTitle" class="slds-grid slds-no-space slds-type-focus">
+					<h1 class="slds-text-heading--medium slds-truncate" title="{!teamName} Backlog">{!teamName} Backlog</h1>
+					<button class="slds-button slds-button--icon-bare slds-shrink-none slds-align-middle slds-m-left--x-small">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+						</svg>
+						<span class="slds-assistive-text">View More</span>
+					</button>
+				</div>
+				<div class="slds-m-left--large" role="group">
+					<button id="buttonListViewControls" class="slds-button slds-button--icon-more slds-shrink-none" aria-haspopup="true">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#settings')}"></use>
+						</svg>
+						<span class="slds-assistive-text">Settings</span>
+						<svg aria-hidden="true" class="slds-button__icon slds-button__icon--x-small">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div id="managerToolbar" class="slds-col slds-no-flex slds-align-bottom">
+			<div class="slds-grid">
+				<div id="holderButtonSaveOrder" class="slds-button-group slds-button-space-left" role="group">
+					<button id="buttonUndo" class="slds-button slds-button--brand" style="border-right:1px #7C94C5 solid;">Undo</button>
+					<button id="buttonSaveOrder" class="slds-button slds-button--brand" style="border-right:1px #7C94C5 solid;">Save</button>
+				</div>
+				<div class="slds-button-space-left" style="position:relative;">
+					<input name="quickSearch" id="quickSearch" class="slds-input" type="text" placeholder="Quick search" />
+					<svg id="quickSearchClear" aria-hidden="true" class="slds-button__icon">
+						<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#clear')}"></use>
+					</svg>
+				</div>
+				<div class="slds-button-group slds-button-space-left" role="group">
+					<button id="buttonMassEdit" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+						</svg>
+						<span class="slds-assistive-text">Mass Edit</span>
+					</button>
+					<button id="buttonFilter" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#filterList')}"></use>
+						</svg>
+						<span class="slds-assistive-text">Filter List</span>
+					</button>
+					<button id="buttonChart" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#chart')}"></use>
+						</svg>
+						<span class="slds-assistive-text">Chart</span>
+					</button>
+				</div>
+				<apex:outputPanel layout="block" styleClass="slds-button-group slds-button-space-left" html-role="group" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}">
+					<button id="buttonFullscreen" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon">
+							<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#expand')}"></use>
+						</svg>
+						<span class="slds-assistive-text">Full Screen</span>
+					</button>
+				</apex:outputPanel>
+				<div class="slds-button-group" role="group">
+					<button id="buttonNewWork" class="slds-button slds-button--neutral">New Work</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<p class="slds-text-body--small slds-m-top--x-small">
+		<span id="numItems">Loading items</span> &bull;
+		Sorted by <span id="sortLabel">Rank</span>
+		<span id="storyPointsCount"> &bull; <b><span></span></b> points selected</span>
+		<span id="filterCount">&bull; <span></span></span>
+	</p>
+</div>
+
+<!--------------------------------------------------------------------------------------------------------------
+HTML FOUNDATION
+--------------------------------------------------------------------------------------------------------------->
+<div id="dataTable">
+	<div id="loading">
+		<div class="slds-spinner--large">
+			<img src="{!URLFOR($Resource.SLDS091, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." />
+		</div>
+	</div>
+	<div id="norecords">
+		No records could be found.
+	</div>
+	<table id="workTable" class="slds-table slds-table--bordered slds-no-row-hover">
+		<thead><tr class="slds-text-heading--label"></tr></thead>
+		<tbody></tbody>
+	</table>
+	<table class="slds-table slds-table--bordered" id="header-fixed"></table>
+</div>
+<div id="sideContainer">
+	<div class="sideContainerBox" id="boxMassEdit" style="padding:15px;">
+		<div id="massEditNone">Please select some work items to the left first.</div>
+		<div id="massEditOptions">
+			<div style="text-align:center;margin-bottom:15px;">
+				<button id="massEditMoveTo" class="slds-button slds-button--neutral">Move to...</button>
+			</div>
+			<form></form>
+		</div>
+	</div>
+	<div class="sideContainerBox" id="boxCharts">
+		<div class="chartGroup">
+			<div id="buttonVisibleCharts" class="chartTitle selected"><svg aria-hidden="true" class="slds-icon slds-icon--x-small"><use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use></svg>Charts of Visible Work</div>
+			<div class="chart" id="allocationChart"></div>
+			<div class="chart" id="recordTypeChart"></div>
+		</div>
+		<div class="chartGroup">
+			<div id="buttonStandardCharts" class="chartTitle"><svg aria-hidden="true" class="slds-icon slds-icon--x-small"><use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#right')}"></use></svg>Standard Charts</div>
+			<!--div class="chart" id="sprintBurndownChart"></div-->
+			<div class="chart" id="velocityChart"></div>
+			<div class="chart" id="throughputChart"></div>
+		</div>
+
+	</div>
+	<div class="sideContainerBox" id="boxFilter" style="padding:15px;"></div>
+</div>
+
+<!--------------------------------------------------------------------------------------------------------------
+DROPDOWNS
+--------------------------------------------------------------------------------------------------------------->
+<div id="dropdownDataSources" class="slds-dropdown slds-dropdown--left slds-dropdown--menu slds-dropdown--nubbin-top slds-hide" data-source="backlog">
+	<ul class="slds-dropdown__list" role="menu" style="display:table-cell;vertical-align:top;">
+		<li class="slds-dropdown__item"><a data-source="backlog" href="#" class="slds-truncate" role="menuitem">Backlog...</a></li>
+		<li class="slds-dropdown__item"><a data-source="backburner" href="#" class="slds-truncate" role="menuitem">Backburner...</a></li>
+		<li class="slds-dropdown__item"><a data-source="epic" href="#" class="slds-truncate" role="menuitem">By Epic...</a></li>
+		<li class="slds-dropdown__item"><a data-source="sprint" href="#" class="slds-truncate" role="menuitem">By Sprint...</a></li>
+		<li class="slds-dropdown__item"><a data-source="theme" href="#" class="slds-truncate" role="menuitem">By Theme...</a></li>
+		<li class="slds-dropdown__item"><a data-source="build" href="#" class="slds-truncate" role="menuitem">By Build...</a></li>
+		<li class="slds-dropdown__item"><a data-source="producttag" href="#" class="slds-truncate" role="menuitem">By Product Tag...</a></li>
+	</ul>
+	<div id="dropdownDataSourcesSidePanel">
+		<div>
+			<input id="dropdownDataSourcesSearch" class="slds-input" placeholder="" />
+			<svg id="dropdownDataSourcesSearchClear" aria-hidden="true" class="slds-button__icon">
+				<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#clear')}"></use>
+			</svg>
+			<div id="dropdownDataSourcesRecents"></div>
+			<div id="dropdownDataSourcesResults"></div>
+		</div>
+	</div>
+</div>
+
+<div id="dropdownListViewControls" class="slds-dropdown slds-dropdown--left slds-dropdown--menu slds-hide">
+	<!--div class="slds-dropdown__header">
+		<span class="slds-text-heading--label">List View Controls</span>
+	</div-->
+	<ul class="slds-dropdown__list" role="menu">
+		<li id="refreshData" href="#" class="slds-dropdown__item"><!-- slds-has-icon--left--><a href="#" class="slds-truncate" role="menuitemradio">Refresh Data</a></li>
+		<!--li id="groupData" class="slds-dropdown__item slds-is-selected slds-has-icon--left slds-is-selected" href="#" aria-selected="true">
+			<a href="#" class="slds-truncate" role="menuitemradio">
+				<svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon--left">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/standard-sprite/svg/symbols.svg#task2')}"></use>
+				</svg>Use Grouping
+			</a>
+		</li-->
+		<li id="selectFieldsToDisplay" href="#" class="slds-dropdown__item"><a href="#" class="slds-truncate" role="menuitemradio">Columns...</a></li>
+		<li id="velocityLineSettings" href="#" class="slds-dropdown__item"><a href="#" class="slds-truncate" role="menuitemradio">Velocity Line...</a></li>
+	</ul>
+</div>
+
+<!--------------------------------------------------------------------------------------------------------------
+MODALS
+--------------------------------------------------------------------------------------------------------------->
+<div id="releaseNotes" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container" style="max-width:360px;">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium"></h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+			<p>What's new in this version?</p>
+		</div>
+		<div class="slds-modal__content"><div></div></div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral slds-button--brand buttonCloseModal">Dismiss</button>
+		</div>
+	</div>
+</div>
+
+<div id="nofityUserDialog" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container" style="max-width:360px;">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium"></h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+
+		</div>
+		<div class="slds-modal__content"><div></div></div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral slds-button--brand buttonCloseModal">Dismiss</button>
+		</div>
+	</div>
+</div>
+
+<div id="modalSelectFieldsToDisplay" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container" style="max-width:528px;">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium">Select Columns to Display</h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+			<p style="padding:0px 30px;">Drag-and-Drop between panels to pick which fields are visible and the order in which there displayed. Fields with <span class="required">asterisks</span> cannot be removed from visible fields.</p>
+		</div>
+		<div class="slds-modal__content">
+			<div>
+				<!-- begin -->
+				<div class="slds-picklist--draggable slds-grid">
+					<div class="slds-form-element slds-m-right--x-small">
+						<span class="slds-form-element__label" aria-label="select-1">Available Fields</span>
+						<div class="slds-picklist slds-picklist--multi">
+							<ul id="listAvailableFields" class="slds-picklist__options slds-picklist__options--multi shown"></ul>
+						</div>
+					</div>
+					<div class="slds-form-element slds-m-left--x-small">
+						<span class="slds-form-element__label" aria-label="select-2">Visible Fields</span>
+						<div class="slds-picklist slds-picklist--multi">
+							<ul id="listVisibleFields" class="slds-picklist__options slds-picklist__options--multi shown"></ul>
+						</div>
+					</div>
+				</div>
+				<!-- end -->
+			</div>
+		</div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral buttonCloseModal">Cancel</button>
+			<button id="modalSelectFieldsToDisplayButtonSave" class="slds-button slds-button--neutral slds-button--brand">Save</button>
+		</div>
+	</div>
+</div>
+
+<div id="modalMetadataProblem" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container" style="max-width:360px;">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium">Potential Problem</h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+		<div class="slds-modal__content">
+			<div>
+				We didn't have any metadata for the field you changed. When you click Save, we will attempt to lookup the changed value. You will see
+				an error if we were unsuccessful.
+			</div>
+		</div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral slds-button--brand buttonCloseModal">Got It!</button>
+		</div>
+	</div>
+</div>
+
+<div id="modalVelocitySettings" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium">Estimated Velocity Line Settings</h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+		<div class="slds-modal__content">
+			<div>
+				<div id="sprintHistory" style="height:200px;margin-bottom:20px;"></div>
+				<div id="slider-range-max" style="margin-bottom:15px;margin-left:90px;margin-right:40px;"></div>
+				<div id="sprintHistoryInfo" class="slds-form-element">
+					Your team averaged <b><span id="modalVelocitySettingsPoints"></span> story points</b> from the last <b><span id="modalVelocitySettingsSprints"></span> sprints</b>.
+					Use the slider to adjust how many past sprints to consider or enter a custom override value below.
+				</div>
+				<div id="sprintHistoryEmpty" style="display:none;">We don't have any sprint history for your team yet.</div>
+				<div class="slds-form-element">
+					<label class="slds-checkbox" for="checkboxShowVelocityLine">
+						<input name="checkbox" type="checkbox" id="checkboxShowVelocityLine" />
+						<span class="slds-checkbox--faux"></span>
+						<span class="slds-form-element__label" style="color:inherit;">Show velocity line after <input id="averageVelocity" class="slds-input" type="text" size="2" maxlength="2" style="text-align:center;width:48px;" /> story points</span>
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral buttonCloseModal">Cancel</button>
+			<button id="modalVelocitySettingsButtonSave" class="slds-button slds-button--neutral slds-button--brand buttonCloseModal">Save</button>
+		</div>
+	</div>
+</div>
+
+<div id="modalMoveItems" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container" style="max-width:360px;">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium">Move To...</h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+		<div class="slds-modal__content">
+			<div>
+				<div class="slds-form-element">
+					<select id="modalMoveItemsList" class="slds-select" style="width:auto;"></select>
+					at rank position
+					<input id="modalMoveItemsNumber" type="number" class="slds-input" style="width:70px;padding:0 0px 0 6px;text-align:center;" value="1" min="1" max="100" />
+				</div>
+				<div class="slds-form-element" style="margin-top:15px;font-size:11px;">
+					NOTE: Your view will change to <span id="modalMoveItemsName"></span> after you click Move.
+				</div>
+			</div>
+		</div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral buttonCloseModal">Cancel</button>
+			<button id="modalMoveItemsSave" class="slds-button slds-button--neutral slds-button--brand buttonCloseModal">Move</button>
+		</div>
+	</div>
+</div>
+
+<div id="modalSecretSettings" aria-hidden="false" role="dialog" class="slds-modal">
+	<div class="slds-modal__container" style="max-width:360px;">
+		<div class="slds-modal__header">
+			<h2 class="slds-text-heading--medium">Secret Settings</h2>
+			<button class="slds-button slds-modal__close buttonCloseModal">
+				<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+					<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+				</svg>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+		<div class="slds-modal__content">
+			<div>
+				<div class="slds-form-element">
+					<label class="slds-checkbox" for="checkboxShowDebugInfo">
+						<input name="checkbox" type="checkbox" id="checkboxShowDebugInfo" />
+						<span class="slds-checkbox--faux"></span>
+						<span class="slds-form-element__label">Show Debug info in console</span>
+					</label>
+				</div>
+				<!--div class="slds-form-element">
+					<label class="slds-checkbox" for="checkboxShowVelocityLine">
+						<input name="checkbox" type="checkbox" id="checkboxShowVelocityLine" />
+						<span class="slds-checkbox--faux"></span>
+						<span class="slds-form-element__label">Show velocity line, average velocity: <input id="averageVelocity" class="slds-input" type="text" size="2" maxlength="2" style="text-align:center;width:48px;" /></span>
+					</label>
+				</div-->
+			</div>
+		</div>
+		<div class="slds-modal__footer">
+			<button class="slds-button slds-button--neutral slds-button--brand buttonCloseModal">Close</button>
+		</div>
+	</div>
+</div>
+
+<div class="slds-modal-backdrop"></div>
+
+<!--------------------------------------------------------------------------------------------------------------
+TEMPLATES
+--------------------------------------------------------------------------------------------------------------->
+<script id="filter-options-template" type="text/x-handlebars-template">
+	<div class="filterTopic" data-label="{{ Label }}">
+		<div>{{ Label }}</div>
+		<div class="itemList"></div>
+	</div>
+</script>
+
+<script id="massedit-template" type="text/x-handlebars-template">
+	<div class="filterTopic" data-label="{{ Label }}">
+		<div>{{ Label }}</div>
+		<div class="itemList">
+			<{{ Type }} class="slds-{{ Type }}" list="{{ Id }}" />
+			<datalist id="{{ Id }}" /></datalist>
+		</div>
+	</div>
+</script>
+
+<script id="massedit-options-template" type="text/x-handlebars-template">
+	<option value="{{ Value }}"{{#if Id }} data-id="{{ Id }}"{{/if}}{{#if Link }} data-link="{{ Link }}"{{/if}}{{#if SmallPhotoUrl }} data-smallphotourl="{{ SmallPhotoUrl }}"{{/if}}>{{ Value }}</option>
+</script>
+
+<script id="filter-options-row-template" type="text/x-handlebars-template">
+	<div class="itemRow" data-label="{{ DataLabel }}">
+		<div class="itemCheckbox"><input type="checkbox" id="item-{{ Value }}" value="{{ Value }}" /></div>
+		<div class="itemTitle"><label for="item-{{ Value }}">{{ Label }}</label></div>
+	</div>
+</script>
+
+<script id="table-column-start-template" type="text/x-handlebars-template">
+	<th class="slds-cell-shrink" scope="col">
+		<!--label class="slds-checkbox" for="select-all">
+			<input name="checkbox" type="checkbox" id="select-all" />
+			<span class="slds-checkbox--faux"></span>
+			<span class="slds-form-element__label slds-assistive-text">Select All</span>
+		</label-->
+		<input name="checkbox" type="checkbox" id="select-all" />
+	</th>
+</script>
+
+<script id="table-column-template" type="text/x-handlebars-template">
+	{{#if Sortable}}<th data-label="{{ Label }}" class="slds-is-sortable{{#if Groupable}} groupable{{/if}}{{#if Direction}} {{ Direction }}{{/if}}" scope="col">
+		{{#if ShowLabel}}<span class="slds-truncate">{{ Label }}</span>{{/if}}
+		<button class="slds-button slds-button--icon-bare slds-button--icon-border-small">
+			<svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+				<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+			</svg>
+			<span class="slds-assistive-text">Sort</span>
+		</button>
+	</th>{{/if}}
+	{{#unless Sortable}}<th data-label="{{ Label }}" scope="col">
+		<span class="slds-truncate">{{ Label }}</span>
+	</th>{{/unless}}
+</script>
+
+<script id="table-column-end-template" type="text/x-handlebars-template">
+	<!--th class="slds-row-action" scope="col">
+		<button class="slds-button slds-button--icon-border-filled slds-button--icon-border-small">
+			<svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+				<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+			</svg>
+			<span class="slds-assistive-text">Show More</span>
+		</button>
+	</th-->
+</script>
+
+<script id="table-row-start-template" type="text/x-handlebars-template">
+	<td class="slds-row-select">
+		<!--label class="slds-checkbox" for="select-row-{{ Id }}"-->
+			<input name="select-row1" type="checkbox" id="select-row-{{ Id }}" />
+			<!--span class="slds-checkbox--faux"></span>
+			<span class="slds-form-element__label slds-assistive-text">Select Row</span>
+		</label-->
+		<svg aria-hidden="true" class="slds-button__icon slds-button__icon--small slds-m-left--x-small gripicon">
+			<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#rows')}"></use>
+		</svg>
+	</td>
+</script>
+
+<script id="table-row-template" type="text/x-handlebars-template">
+	<td data-label="{{ Label }}" data-field="{{ Field }}" data-value="{{ Value }}"{{#if Id }} data-id="{{ Id }}"{{/if}}{{#if Link }} data-link="{{ Link }}"{{/if}}{{#if SmallPhotoUrl }} data-smallPhotoUrl="{{ SmallPhotoUrl }}"{{/if}} class="slds-text-body--small" style="{{#if Style }}{{ Style }}{{/if}}{{#unless Truncate }}white-space:normal;{{/unless}}">{{#if Icon}}<svg aria-hidden="true" class="slds-icon slds-icon--x-small slds-icon-text-default"><use xlink:href="/resource/SLDS091/assets/icons/action-sprite/svg/symbols.svg#{{ Icon }}"></use></svg><span class="slds-assistive-text">{{ Value }}</span>{{/if}}{{#if Link}}<a href="{{ Link }}"{{#if Truncate }} class="slds-truncate"{{/if}}>{{/if}}{{#if SmallPhotoUrl }}<span class="slds-avatar slds-avatar--circle slds-avatar--x-small slds-m-right--x-small"><img src="{{ SmallPhotoUrl }}" /></span>{{/if}}{{#if ShowValue }}{{ Value }}{{/if}}{{#if Link}}</a>{{/if}}</td>
+</script>
+
+<script id="table-row-end-template" type="text/x-handlebars-template">
+	<!--td class="slds-row-action" style="width:52px;">
+		<button class="slds-button slds-button--icon-border-filled slds-button--icon-border-small">
+			<svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+				<use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+			</svg>
+			<span class="slds-assistive-text">Show More</span>
+		</button>
+	</td-->
+</script>
+<!-- end: data table -->
+
+<script id="column-options-template" type="text/x-handlebars-template">
+	<li data-label="{{ Label }}"{{#if Required }}data-required="true"{{/if}} class="slds-picklist__item slds-has-icon slds-has-icon--left" tabindex="-1" aria-selected="false" role="option"><span class="slds-truncate">{{ Label }}</span></li>
+</script>
+
+<script id="clear-filters-template" type="text/x-handlebars-template">
+	<div id="clearFilters"><a href="#">Clear Filters</a></div>
+</script>
+
+<script id="chart-title-template" type="text/x-handlebars-template">
+	<div class="chartGroup">
+		<div class="chartTitle" data-id="{{ Id }}"><svg aria-hidden="true" class="slds-icon slds-icon--x-small"><use xlink:href="{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#right')}"></use></svg>{{ Name }}</div>
+		<div class="chart"></div>
+	</div>
+</script>
+
+<script id="data-source-template" type="text/x-handlebars-template">
+	<a data-id="{{ Id }}" href="#">{{ Name }}</a>
+</script>
+
+<script>
+var undoArray = [];
+var dataObject = {};
+var movedWork = [];
+
+function setDefaultOptions() {
+	if (dataObject.options == null) {
+		console.log('No options found. Setting defaults.');
+		dataObject.options = {}
+	}
+	if (!dataObject.options.hasOwnProperty('showVelocityLine')) {
+		dataObject.options.showVelocityLine = false;
+	}
+	if (!dataObject.options.hasOwnProperty('showDebugInfo')) {
+		dataObject.options.showDebugInfo = false;
+	}
+	if (!dataObject.options.hasOwnProperty('numOfSprintsToCalculate')) {
+		dataObject.options.numOfSprintsToCalculate = null;
+	}
+	if (!dataObject.options.hasOwnProperty('averageVelocity')) {
+		dataObject.options.averageVelocity = 0;
+	}
+	if (!dataObject.options.hasOwnProperty('lastView')) {
+		dataObject.options.lastView = 'backlog';
+	}
+	if (!dataObject.options.hasOwnProperty('filters')) {
+		dataObject.options.filters = null;
+	}
+}
+
+// headers
+var tableColumnTemplate = Handlebars.compile($("#table-column-template").html());
+var tableColumnStartTemplate = Handlebars.compile($("#table-column-start-template").html());
+var tableColumnEndTemplate = Handlebars.compile($("#table-column-end-template").html());
+// data rows
+var tableRowTemplate = Handlebars.compile($("#table-row-template").html());
+var tableRowStartTemplate = Handlebars.compile($("#table-row-start-template").html());
+var tableRowEndTemplate = Handlebars.compile($("#table-row-end-template").html());
+// misc templates
+var filterOptionsTemplate = Handlebars.compile($("#filter-options-template").html());
+var filterOptionsRowTemplate = Handlebars.compile($("#filter-options-row-template").html());
+var columnOptionsTemplate = Handlebars.compile($("#column-options-template").html());
+var massEditTemplate = Handlebars.compile($("#massedit-template").html());
+var massEditOptionsTemplate = Handlebars.compile($("#massedit-options-template").html());
+var clearFiltersTemplate = Handlebars.compile($("#clear-filters-template").html());
+var chartTitleTemplate = Handlebars.compile($("#chart-title-template").html());
+var dataSourceTemplate = Handlebars.compile($("#data-source-template").html());
+
+$(function() {
+	refreshBoard(); // initially grab data
+
+	//------------------------------------------------------------------------------------------------------------
+	// REFRESH BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonRefresh,#refreshData').on('click', function(e) {
+		refreshBoard();
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// FULL SCREEN BUTTON
+	//------------------------------------------------------------------------------------------------------------
+    $("#buttonFullscreen").on("click", function() {
+        var elem = document.documentElement;
+        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {
+            requestFullscreen(elem);
+        } else {
+            exitFullscreen();
+        }
+        //javascript:document.getElementsByTagName("iframe")[0].setAttribute("allowfullscreen", "true");
+    });
+
+    $(document).on('fullscreenchange mozfullscreenchange webkitfullscreenchange MSFullscreenChange', function() {
+        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {
+            $('html').removeClass('fullscreen');
+            $('#buttonFullscreen').removeClass('slds-is-selected');
+        } else {
+            $('html').addClass('fullscreen');
+            $('#buttonFullscreen').addClass('slds-is-selected');
+        }
+    });
+
+	//------------------------------------------------------------------------------------------------------------
+	// DROPDOWN TO SWITCH DATA SOURCES
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonTitle').on('click', function(e) {
+		e.stopPropagation();
+
+		if ($('html').hasClass('fullscreen')) {
+			var headerOffset = 0;
+		} else {
+			var headerOffset = $('.bPageHeader').height();
+		}
+		var bottomPosition = $(this).offset().top + $(this).height() - headerOffset + 5;
+		var leftPosition = $(this).offset().left - parseInt($('body').css('margin-left'));
+
+		$('#dropdownDataSources > ul a,#dropdownDataSourcesResults a').removeClass('hover selected');
+		$('#dropdownDataSourcesSidePanel').hide();
+		if ($('#dropdownDataSources').hasClass('slds-hide')) {
+			hideDropdowns();
+			$('#dropdownDataSources').removeClass('slds-hide').css('top',bottomPosition + 'px').css('left',leftPosition + 'px');
+			$('body').css('overflow','hidden');
+			$(document).on('click', hideDropdowns);
+			$(document).on('click', function(e) {
+				hideDropdowns(e);
+			});
+		} else {
+			hideDropdowns();
+		}
+	});
+
+	$('#dropdownDataSources').on('click', 'li a', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		$('#dropdownDataSources a').removeClass('selected');
+		$(this).addClass('selected');
+		$('#dropdownDataSourcesSidePanel').css('display','table-cell');
+		$('#dropdownDataSources').attr('data-source',$(this).attr('data-source'));
+		populateDataSources();
+		if ($(this).closest('li').is(':first-child')) { $('#dropdownDataSourcesSidePanel').addClass('firstChild'); } else { $('#dropdownDataSourcesSidePanel').removeClass('firstChild'); }
+		if ($(this).closest('li').is(':last-child')) { $('#dropdownDataSourcesSidePanel').addClass('lastChild'); } else { $('#dropdownDataSourcesSidePanel').removeClass('lastChild'); }
+	});
+
+	function populateDataSources() {
+		$('#dropdownDataSourcesSearch').val('');
+	    $('#dropdownDataSourcesSearchClear').hide();
+	    $('#dropdownDataSourcesSearch').focus();
+
+		if ($('#dropdownDataSources').attr('data-source') == 'backlog' || $('#dropdownDataSources').attr('data-source') == 'backburner') {
+			$('#dropdownDataSourcesSearch').attr('placeholder','Search Teams...');
+			$('#dropdownDataSourcesResults').empty();
+			$('#dropdownDataSourcesRecents').text('Suggested Teams:');
+	    	$('#dropdownDataSourcesResults').prepend(dataSourceTemplate({
+	            Id:"{!teamId}",
+	    	    Name:"{!teamName}"
+	    	}));
+	    	// TODO: Add in other teams user has a membership to
+		} else if ($('#dropdownDataSources').attr('data-source') == 'epic') {
+			$('#dropdownDataSourcesSearch').attr('placeholder','Search Epics...');
+			$('#dropdownDataSourcesResults').empty();
+			$('#dropdownDataSourcesRecents').text('Suggested Epics:');
+			$.each(dataObject.allEpics, function(index, record) {
+		    	$('#dropdownDataSourcesResults').prepend(dataSourceTemplate({
+		            Id:record.Id,
+		    	    Name:record.Name
+		    	}));
+			});
+		} else if ($('#dropdownDataSources').attr('data-source') == 'sprint') {
+			$('#dropdownDataSourcesSearch').attr('placeholder','Search Sprints...');
+			$('#dropdownDataSourcesResults').empty();
+			$('#dropdownDataSourcesRecents').text('Suggested Sprints:');
+			$.each(dataObject.allSprints, function(index, record) {
+		    	$('#dropdownDataSourcesResults').prepend(dataSourceTemplate({
+		            Id:record.Id,
+		    	    Name:record.Name
+		    	}));
+			});
+		} else if ($('#dropdownDataSources').attr('data-source') == 'theme') {
+			$('#dropdownDataSourcesSearch').attr('placeholder','Search Themes...');
+			$('#dropdownDataSourcesResults').empty();
+			$('#dropdownDataSourcesRecents').text('No Theme Suggestions');
+			/*$.each(dataObject.allSprints, function(index, record) {
+		    	$('#dropdownDataSourcesResults').prepend(dataSourceTemplate({
+		            Id:record.Id,
+		    	    Name:record.Name
+		    	}));
+			});*/
+		} else if ($('#dropdownDataSources').attr('data-source') == 'build') {
+			$('#dropdownDataSourcesSearch').attr('placeholder','Search Builds...');
+			$('#dropdownDataSourcesResults').empty();
+			$('#dropdownDataSourcesRecents').text('Suggested Builds:');
+			$.each(dataObject.allBuilds, function(index, record) {
+		    	$('#dropdownDataSourcesResults').prepend(dataSourceTemplate({
+		            Id:record.Id,
+		    	    Name:record.Name
+		    	}));
+			});
+		} else if ($('#dropdownDataSources').attr('data-source') == 'producttag') {
+			$('#dropdownDataSourcesSearch').attr('placeholder','Search Product Tags...');
+			$('#dropdownDataSourcesResults').empty();
+			$('#dropdownDataSourcesRecents').text('Suggested Product Tags:');
+			$.each(dataObject.allProductTags, function(index, record) {
+		    	$('#dropdownDataSourcesResults').prepend(dataSourceTemplate({
+		            Id:record.Id,
+		    	    Name:record.Name
+		    	}));
+			});
+		}
+	}
+
+	function autoCompleteResults(err, records) {
+		if(err) {
+			console.error(err);
+		} else {
+            $('#dropdownDataSourcesResults').empty();
+            if (records.length > 0) {
+    	        records.forEach(function(record) {
+        	    	$('#dropdownDataSourcesResults').append(dataSourceTemplate({
+		                Id:record.get("Id"),
+			    	    Name:record.get("Name")
+			    	}));
+        	    });
+            } else {
+                $('#dropdownDataSourcesResults').text('No results found');
+            }
+	    }
+	}
+
+	$('#dropdownDataSources').on('keyup', '#dropdownDataSourcesSearch', function(e) {
+		if (e.which == 38 || e.which == 40) {
+			var selectedSource = 0;
+			if (e.which == 40 && $('#dropdownDataSourcesResults a.hover').length > 0) {
+				// Down
+				selectedSource = $('#dropdownDataSourcesResults a.hover').index() + 1;
+				if ($('#dropdownDataSourcesResults a:nth(' + selectedSource + ')').length == 0) {
+					selectedSource = 0;
+				}
+			} else if (e.which == 38 && $('#dropdownDataSourcesResults a.hover').length > 0) {
+				// Up
+				selectedSource = $('#dropdownDataSourcesResults a.hover').index() - 1;
+				if (selectedSource == -1) {
+					selectedSource = $('#dropdownDataSourcesResults a:last').index();
+				}
+			}
+			var newScrollTop = (35 * selectedSource);
+			//console.log(newScrollTop);
+			$('#dropdownDataSourcesResults').animate({ scrollTop: newScrollTop });
+			$('#dropdownDataSourcesResults a').removeClass('hover');
+			$('#dropdownDataSourcesResults a:nth(' + selectedSource + ')').addClass('hover');
+		} else if (e.which == 13) {
+			// Enter
+			if ($('#dropdownDataSourcesResults a.hover').length > 0) {
+				$('#dropdownDataSourcesResults a.hover').removeClass('hover').addClass('selected');
+				switchDataSource($('#dropdownDataSources > ul a.selected').attr('data-source'),$('#dropdownDataSourcesResults a.selected').attr('data-id'), $('#dropdownDataSourcesResults a.selected').text());
+			}
+		} else {
+			// Other
+			if ($(this).val() == '') {
+			    $('#dropdownDataSourcesSearchClear').hide();
+			    populateDataSources();
+		    } else {
+			    $('#dropdownDataSourcesSearchClear').show();
+
+			    if ($('#dropdownDataSources').attr('data-source') == 'backlog' || $('#dropdownDataSources').attr('data-source') == 'backburner') {
+				    var keyword = '%' + $(this).val() + '%';
+					var autoComplete = new SObjectModel.Teams();
+					autoComplete.retrieve({ where: { Name: {like: keyword}}, limit: 100, orderby: [ {Name: 'ASC'}] }, autoCompleteResults);
+					$('#dropdownDataSourcesRecents').text('Team Search Results:');
+
+
+			    } else if ($('#dropdownDataSources').attr('data-source') == 'epic') {
+				    var keyword = '%' + $(this).val() + '%';
+					var autoComplete = new SObjectModel.Epics();
+					autoComplete.retrieve({ where: { Name: {like: keyword}}, limit: 100, orderby: [ {Name: 'ASC'}] }, autoCompleteResults);
+					$('#dropdownDataSourcesRecents').text('Epic Search Results:');
+
+			    } else if ($('#dropdownDataSources').attr('data-source') == 'sprint') {
+				    var keyword = '%' + $(this).val() + '%';
+					var autoComplete = new SObjectModel.Sprints();
+					autoComplete.retrieve({ where: { Name: {like: keyword}}, limit: 100, orderby: [ {Name: 'DESC'}] }, autoCompleteResults);
+					$('#dropdownDataSourcesRecents').text('Sprint Search Results:');
+
+			    } else if ($('#dropdownDataSources').attr('data-source') == 'theme') {
+				    var keyword = '%' + $(this).val() + '%';
+					var autoComplete = new SObjectModel.Themes();
+					autoComplete.retrieve({ where: { Name: {like: keyword}}, limit: 100, orderby: [ {Name: 'ASC'}] }, autoCompleteResults);
+					$('#dropdownDataSourcesRecents').text('Theme Search Results:');
+
+			    } else if ($('#dropdownDataSources').attr('data-source') == 'build') {
+				    var keyword = '%' + $(this).val() + '%';
+					var autoComplete = new SObjectModel.Builds();
+					autoComplete.retrieve({ where: { Name: {like: keyword}}, limit: 100, orderby: [ {Name: 'ASC'}] }, autoCompleteResults);
+					$('#dropdownDataSourcesRecents').text('Build Search Results:');
+
+			    } else if ($('#dropdownDataSources').attr('data-source') == 'producttag') {
+				    var keyword = '%' + $(this).val() + '%';
+					var autoComplete = new SObjectModel.ProductTags();
+					autoComplete.retrieve({ where: { Name: {like: keyword}}, limit: 100, orderby: [ {Name: 'ASC'}] }, autoCompleteResults);
+					$('#dropdownDataSourcesRecents').text('Product Tag Search Results:');
+				}
+		    }
+
+
+		}
+	});
+
+	$('#dropdownDataSourcesResults').on('click', 'a', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		$('#dropdownDataSourcesResults a').removeClass('selected');
+		$(this).addClass('selected');
+
+		switchDataSource($('#dropdownDataSources > ul a.selected').attr('data-source'),$('#dropdownDataSourcesResults a.selected').attr('data-id'), $('#dropdownDataSourcesResults a.selected').text());
+	});
+
+	$('#dropdownDataSourcesSearchClear').on('click', function() {
+		$(this).hide();
+		$('#dropdownDataSourcesSearch').val(null).focus();
+		populateDataSources();
+	});
+
+	function switchDataSource(type, id, selectedText) {
+		$('#dropdownDataSources').addClass('slds-hide');
+		$('#dropdownDataSources > ul a,#dropdownDataSourcesResults a').removeClass('hover selected');
+		$('#dropdownDataSourcesSearch').attr('placeholder','');
+		$('#dropdownDataSourcesRecents').text('');
+		$('#dropdownDataSourcesResults').empty();
+		$('#dropdownDataSourcesSidePanel').hide();
+		console.log('Changing data source to ' + type + ': ' + id);
+
+		dataObject.options.lastView = type;
+
+
+		Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify({columns:dataObject.columns, options:dataObject.options}), function(result, event) {
+    		if (event.status) {
+				console.log('User preference save successfully');
+			} else {
+				console.error('WARNING: Failed to save User Preferences.  Error:' + event);
+			}
+		},{ escape:false });
+
+		refreshBoard('changeView', id, selectedText);
+	}
+
+	//------------------------------------------------------------------------------------------------------------
+	// LIST VIEW CONTROLS BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonListViewControls').on('click', function(e) {
+		e.stopPropagation();
+
+		if ($('html').hasClass('fullscreen')) {
+			var headerOffset = 0;
+		} else {
+			var headerOffset = $('.bPageHeader').height();
+		}
+		var bottomPosition = $(this).offset().top + $(this).height() - headerOffset + 5;
+		var leftPosition = $(this).offset().left - parseInt($('body').css('margin-left'));
+
+		if ($('#dropdownListViewControls').hasClass('slds-hide')) {
+			hideDropdowns();
+			$('#dropdownListViewControls').removeClass('slds-hide').css('top',bottomPosition + 'px').css('left',leftPosition + 'px');
+			$('body').css('overflow','hidden');
+			$(document).on('click', hideDropdowns);
+		} else {
+			hideDropdowns();
+		}
+	});
+
+	$('#dropdownListViewControls').on('click', 'li a', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$('#dropdownListViewControls').addClass('slds-hide');
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// SELECT FIELDS TO DISPLAY
+	//------------------------------------------------------------------------------------------------------------
+	$('#selectFieldsToDisplay').on('click', function(e) {
+		$('#modalSelectFieldsToDisplay').addClass('slds-fade-in-open');
+		$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+	});
+
+	$('#modalSelectFieldsToDisplay .slds-picklist__options').sortable({
+		items: "> li",
+		connectWith: "#modalSelectFieldsToDisplay .slds-picklist__options",
+		containment: '#modalSelectFieldsToDisplay .slds-modal__content',
+		cursor: "move",
+		start: function(event, ui) {
+			if ($(ui.helper).attr('data-required') == 'true') {
+				$("#listVisibleFields").sortable("option", "axis", "y");
+			} else {
+				$("#listVisibleFields").sortable("option", "axis", false);
+			}
+		},
+		beforeStop: function (event, ui) {
+			if ($(ui.helper).attr('data-required') == 'true' && $(ui.helper).parent().attr('id') === 'listAvailableFields') {
+				return false;
+			}
+		}
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// SAVE FIELDS TO DISPLAY
+	//------------------------------------------------------------------------------------------------------------
+	$('#modalSelectFieldsToDisplayButtonSave').on('click', function(e) {
+	    var columnPosition = Math.max($('#header-fixed th.ascending').index(), $('#header-fixed th.descending').index());
+		var selectedColumnLabel = $('#header-fixed').find('th:eq(' + columnPosition + ')').attr('data-label');
+		var selectedColumnDirection = 'descending';
+		if ($('#header-fixed').find('th:eq(' + columnPosition + ')').hasClass('ascending')) {
+			selectedColumnDirection = 'ascending';
+		}
+		var columns = [];
+
+		$('#listVisibleFields > li').each(function() {
+			var newObject = {};
+			newObject["label"] = $(this).attr('data-label');
+			if (selectedColumnLabel == $(this).attr('data-label')) {
+				newObject["direction"] = selectedColumnDirection;
+			}
+			columns.push(newObject);
+		});
+
+		dataObject.columns = columns; // Update object directly
+
+		Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify({columns:dataObject.columns, options:dataObject.options}), function(result, event) {
+    		if (event.status) {
+				console.log('User preference save successfully');
+				$('.slds-modal').removeClass('slds-fade-in-open');
+				$('.slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+				refreshBoard();
+			} else {
+				console.error('WARNING: Failed to save User Preferences.  Error:' + event);
+			}
+		},{ escape:false });
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// VELOCITY LINE SETTINGS
+	//------------------------------------------------------------------------------------------------------------
+	$('#velocityLineSettings').on('click', function(e) {
+		initCharts();
+
+		if (dataObject.options.showVelocityLine) {
+			$('#checkboxShowVelocityLine').prop('checked', true);
+		}
+
+		if (dataObject.options.showVelocityLine && dataObject.options.averageVelocity > 0) {
+			$('#averageVelocity').val(dataObject.options.averageVelocity);
+		}
+
+		$('#modalVelocitySettings').addClass('slds-fade-in-open');
+		$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+	});
+
+	$('#modalVelocitySettingsButtonSave').on('click', function(e) {
+		if (!$('#averageVelocity').val() == '') {
+
+			if ($('#checkboxShowVelocityLine').is(':checked')) {
+				dataObject.options.showVelocityLine = true;
+				dataObject.options.averageVelocity = parseInt($('#averageVelocity').val());
+			} else {
+				dataObject.options.showVelocityLine = false;
+				dataObject.options.averageVelocity = 0;
+			}
+			if (dataObject.oldSprints.length > 0) {
+				dataObject.options.numOfSprintsToCalculate = $('#slider-range-max').slider('value');
+			} else {
+				dataObject.options.numOfSprintsToCalculate = null;
+			}
+
+			console.log(dataObject.options);
+
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify({columns:dataObject.columns, options:dataObject.options }), function(result, event) {
+				if (event.status) {
+		    		if (dataObject.options.showDebugInfo) { console.log('Saved velocity line preferences'); }
+		    	} else {
+					console.error('WARNING: Failed to save User Preferences.  Error:' + event);
+				}
+			},{ escape:false });
+
+			calcNumItems();
+		}
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// MASS EDIT MODAL
+	//------------------------------------------------------------------------------------------------------------
+	$('#massEditMoveTo').on('click', function(e) {
+		$('#modalMoveItemsNumber').val('1');
+		if (dataObject.options.lastView == 'backlog') {
+			$('#modalMoveItemsList').empty().append($('<option value="backburner">Backburner</option>'));
+			$('#modalMoveItemsName').text('Backburner');
+		} else {
+			$('#modalMoveItemsList').empty().append($('<option value="backlog">Backlog</option>'));
+			$('#modalMoveItemsName').text('Backlog');
+		}
+		$('#modalMoveItems').addClass('slds-fade-in-open');
+		$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+	});
+
+	$('#modalMoveItemsSave').on('click', function(e) {
+		var rankPosition = $.isNumeric($('#modalMoveItemsNumber').val()) ? parseInt($('#modalMoveItemsNumber').val()) : 1;
+		dataObject.options.lastView = $('#modalMoveItemsList').val(); // Set view so on refresh it shows
+		if ($('#modalMoveItemsList').val() == 'backlog') {
+	        $('#workTable tr.work-row.selected').each(function(workIndex) {
+	        	newWork = {
+		        	Id: $(this).attr('id')
+		        }
+				newWork.Priority_Rank__c = rankPosition;
+				newWork.Backburner_Rank__c = null;
+				movedWork.push(newWork);
+	        });
+		} else if ($('#modalMoveItemsList').val() == 'backburner') {
+	        $('#workTable tr.work-row.selected').each(function(workIndex) {
+	        	newWork = {
+		        	Id: $(this).attr('id')
+		        }
+				newWork.Priority_Rank__c = null;
+				newWork.Backburner_Rank__c = rankPosition;
+				movedWork.push(newWork);
+	        });
+		}
+
+		console.log(movedWork);
+
+		if (movedWork.length > 0) {
+			$('.slds-modal').removeClass('slds-fade-in-open');
+			$('.slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+			$('#buttonMassEdit').removeClass('slds-is-selected');
+			$('#sideContainer,.sideContainerBox').hide();
+			resizeContainer();
+			showLoader();
+
+			console.log('Saving...');
+	        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveWorks}', movedWork, false, function(result, event) {
+	            if (event.status) {
+			        refreshBoard();
+	            } else {
+	             	console.error('Failed to save move to information. Error:' + event);
+	            }
+	        });
+		}
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CLOSE MODAL
+	//------------------------------------------------------------------------------------------------------------
+	$('.buttonCloseModal').on('click', function(e) {
+		$('.slds-modal').removeClass('slds-fade-in-open');
+		$('.slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CLICK SUBJECTS
+	//------------------------------------------------------------------------------------------------------------
+	$('#dataTable').on('click', 'tr.work-row.work-story td[data-label="Subject"] a,tr.work-row.work-bug td[data-label="Subject"] a,tr.work-row.work-investigation td[data-label="Subject"] a', function(e) {
+		e.preventDefault();
+		selectedWork = $(this).closest('tr').attr('id');
+
+		if (navigator.userAgent.match(/Mobile/i) && (typeof sforce == 'object')) {
+			sforce.one.navigateToSObject(selectedWork);
+		} else if (navigator.userAgent.match(/Mobile/i) && (typeof sforce !== 'object')) {
+			location.href='/' + selectedWork;
+		} else {
+			workModalOpen();
+		}
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CLICK SPRINTS
+	//------------------------------------------------------------------------------------------------------------
+	// TODO: I guess we'll come back to this...
+	/*$('#dataTable').on('click', 'tr.work-row td[data-label="Sprint"] a', function(e) {
+		e.preventDefault();
+
+		var sprintId = $(this).closest('td').attr('data-id');
+		var sprintLabel = $(this).closest('td').attr('data-value');
+		if (sprintId && sprintLabel) {
+			chartSprint(sprintId,sprintLabel);
+		}
+	});*/
+
+	//------------------------------------------------------------------------------------------------------------
+	// CLICK HEADERS - SPRINTS
+	//------------------------------------------------------------------------------------------------------------
+	// TODO: I guess we'll come back to this...
+	/*$('#dataTable').on('click', 'tr.group[data-label="Sprint"] a', function(e) {
+		e.preventDefault();
+
+		var sprintId = $(this).closest('tr').attr('data-id');
+		var sprintLabel = $(this).closest('tr').attr('data-value');
+		if (sprintId && sprintLabel) {
+			chartSprint(sprintId,sprintLabel);
+		}
+	});*/
+
+	//------------------------------------------------------------------------------------------------------------
+	// SELECT TABLE ROWS
+	//------------------------------------------------------------------------------------------------------------
+	$('#dataTable').on('change', 'tr.work-row input[type=checkbox]', function(e) {
+		if ($(this).is(':checked')) {
+            $(this).closest('tr.work-row').addClass('selected');
+        } else {
+            $(this).closest('tr.work-row').removeClass('selected');
+        }
+		if ($('#dataTable tr.work-row.selected').length > 0) {
+			// show multi-edit controls?
+			$('#workTable > tbody').sortable("option", "disabled", false);
+		} else {
+			// hide multi-edit controls?
+			$('#workTable > tbody').sortable("option", "disabled", true);
+		}
+		calcNumItems();
+	});
+
+	// For clicking gripper and moving straight away
+	$('#dataTable').on('mouseover', '.slds-row-select svg', function(e) {
+		$('#workTable > tbody').sortable("option", "disabled", false);
+	}).on('mouseoout', '.slds-row-select svg', function(e) {
+		$('#workTable > tbody').sortable("option", "disabled", true);
+	}).on('mousedown', '.slds-row-select svg', function(e) {
+		$(this).siblings('input[type=checkbox]').prop( "checked",true);
+        $(this).closest('tr.work-row').addClass('selected');
+	});
+
+	// Select all/none
+	$('#dataTable').on('change', '#select-all', function(e) {
+		if ($(this).is(':checked')) {
+			if ($('tr.work-row input[type=checkbox]:checked').length > 0) {
+				$('tr.work-row input[type=checkbox]:checked').closest('tr.work-row').removeClass('selected');
+				$('tr.work-row input[type=checkbox]:checked').prop('checked', false);
+
+				$(this).prop('checked', false);
+			} else {
+				$('tr.work-row:visible input[type=checkbox]').prop('checked', true);
+				$('tr.work-row:visible').addClass('selected');
+			}
+		} else {
+			$('tr.work-row:visible input[type=checkbox]').prop('checked', false);
+			$('tr.work-row:visible').removeClass('selected');
+		}
+		calcNumItems();
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CLICK HEADER TO RE-ORDER
+	//------------------------------------------------------------------------------------------------------------
+	$('#header-fixed').on('click', 'th.slds-is-sortable', function() {
+		reorderData($(this).index());
+	});
+
+	initSortable();
+
+	//------------------------------------------------------------------------------------------------------------
+	// MASS EDIT SELECT DROPDOWNS
+	//------------------------------------------------------------------------------------------------------------
+	$('#massEditOptions').on('change', 'select', function(e) {
+        undoArray.push($('#workTable').clone());
+		var columnLabel = $(this).closest('.filterTopic').attr('data-label');
+		var columnPosition = $('#header-fixed tr th[data-label="' + columnLabel + '"]').index();
+		var groupValue = $(this).val();
+		var groupContents = groupValue;
+		var groupId = $(this).siblings('datalist').find('option[value="' + groupValue + '"]').attr('data-id');
+		var groupLink = $(this).siblings('datalist').find('option[value="' + groupValue + '"]').attr('data-link');
+		var groupSmallPhotoUrl = $(this).siblings('datalist').find('option[value="' + groupValue + '"]').attr('data-smallphotourl');
+		var groupObject = {
+			value: groupValue,
+			id: groupId,
+			link: groupLink,
+			smallPhotoUrl: groupSmallPhotoUrl
+		}
+		changeCell(columnPosition, groupObject,false);
+		// TODO: change CSS classes on ROW too
+        $('#holderButtonSaveOrder').css('display','flex');
+        $('#massEditMoveTo').attr('disabled','disabled');
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// MASS EDIT INPUTS (with Auto-Completes)
+	//------------------------------------------------------------------------------------------------------------
+	$('#massEditOptions').on('change', 'input', function(e) {
+        undoArray.push($('#workTable').clone());
+		var columnLabel = $(this).closest('.filterTopic').attr('data-label');
+		var columnPosition = $('#header-fixed tr th[data-label="' + columnLabel + '"]').index();
+		var groupValue = $(this).val();
+		var groupContents = groupValue;
+		var groupId = $(this).siblings('datalist').find('option[value="' + groupValue + '"]').attr('data-id');
+		var groupLink = $(this).siblings('datalist').find('option[value="' + groupValue + '"]').attr('data-link');
+		var groupSmallPhotoUrl = $(this).siblings('datalist').find('option[value="' + groupValue + '"]').attr('data-smallphotourl');
+		var groupObject = {
+			value: groupValue,
+			id: groupId,
+			link: groupLink,
+			smallPhotoUrl: groupSmallPhotoUrl
+		}
+		changeCell(columnPosition, groupObject,true);
+		// TODO: change CSS classes on ROW too
+        $('#holderButtonSaveOrder').css('display','flex');
+        $('#massEditMoveTo').attr('disabled','disabled');
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// UNDO BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonUndo').on('click', undoDom);
+
+	//------------------------------------------------------------------------------------------------------------
+	// SAVE BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	// TODO: If we push the work we save back into the dataObject.records then if we call populateTable again, it'll be in sync
+	$('#buttonSaveOrder').on('click', function() {
+		//showLoader();
+        works = [];
+        $('#workTable tr.work-row').each(function(workIndex) {
+        	newWork = {
+	        	Id: $(this).attr('id')
+	        }
+	        var affectedFields = 0;
+			$(this).find('td.notsaved').each(function(cellIndex) {
+				if (dataObject.options.lastView == 'backburner') {
+					var fieldName = $(this).attr('data-field');
+					if (fieldName == 'Priority_Rank__c') {
+						fieldName = 'Backburner_Rank__c';
+					}
+				} else if (dataObject.options.lastView == 'sprint') {
+					var fieldName = $(this).attr('data-field');
+					if (fieldName == 'Priority_Rank__c') {
+						fieldName = 'Sprint_Rank__c';
+					}
+				}
+				else if (dataObject.options.lastView == 'backlog') {
+					var fieldName = $(this).attr('data-field');
+				}
+				var fieldValue = $(this).attr('data-value');
+				if ($(this).attr('data-id')) {
+					fieldValue = $(this).attr('data-id');
+				}
+				newWork[fieldName] = fieldValue;
+				affectedFields =+ 1;
+			});
+			if (affectedFields > 0) {
+				works.push(newWork);
+			}
+        });
+
+		// Go ahead and make the UI show that everything has been saved
+        $('#dataTable tr.work-row').removeClass('notsaved').removeClass('selected');
+        $('#dataTable tr td.notsaved').removeClass('notsaved');
+		$('#dataTable tr.work-row input[type=checkbox]').prop('checked',false);
+        $('#holderButtonSaveOrder').hide();
+        $('#massEditMoveTo').removeAttr('disabled');
+
+		console.log(works);
+
+		if (works.length > 0) {
+			console.log('Saving...');
+	        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveWorks}', works, false, function(result, event) {
+	            if (event.status) {
+			        undoArray = [];
+			        console.log('Work records saved!');
+	            } else {
+		            undoDom();
+	             	console.error('Failed to save work items to server. Error:' + event);
+	            }
+	            hideLoader();
+	        });
+		}
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// QUICK SEARCH
+	//------------------------------------------------------------------------------------------------------------
+	$('#quickSearch').on('keyup', updateFilter);
+
+	$('#quickSearchClear').on('click', function() {
+		$('#quickSearch').val(null).focus();
+		updateFilter();
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// MASS EDIT BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonMassEdit').on('click', function() {
+		if (showSidePanel($(this))) {
+			$('#boxMassEdit').show();
+		};
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CHART BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonChart').on('click', function() {
+		if (showSidePanel($(this))) {
+			$('#boxCharts').show();
+			$('div.chart').hide();
+			$('#buttonVisibleCharts').closest('.chartGroup').find('div.chart').show();
+			chartAllocations();
+			chartRecordTypes();
+			//chartVelocity2(4);
+			//chartThroughput();
+		};
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CHART BUTTONS
+	//------------------------------------------------------------------------------------------------------------
+	$('#boxCharts').on('click', '.chartGroup .chartTitle', function(e) {
+		if ($(this).hasClass('selected')) {
+			$('div.chart').hide();
+			$('.chartTitle').removeClass('selected');
+			$('.chartTitle use').attr('xlink:href',"{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#right')}");
+		} else {
+			$('div.chart').hide();
+			$('.chartTitle').removeClass('selected');
+			$(this).addClass('selected');
+			$(this).closest('.chartGroup').find('div.chart').show();
+			$(this).find('use').attr('xlink:href',"{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}");
+		}
+	});
+
+	$('#buttonVisibleCharts').on('click', function(e) {
+		if (!$(this).hasClass('selected')) {
+			chartAllocations();
+			chartRecordTypes();
+		}
+	});
+
+	$('#buttonStandardCharts').on('click', function(e) {
+		if (!$(this).hasClass('selected')) {
+			chartVelocity2(4);
+			chartThroughput();
+		}
+	});
+
+	$('#boxCharts').on('click', '.chartGroup .chartTitle[data-id]', function(e) {
+		if ($(this).hasClass('selected')) {
+			chartSprint($(this).attr('data-id'),$(this).text());
+		}
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// FILTER BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonFilter').on('click', function() {
+		if (showSidePanel($(this))) {
+			$('#boxFilter').show();
+		};
+	});
+
+	// Filter link
+	$('#filterCount span').on('click', function() {
+		if (showSidePanel($('#buttonFilter'))) {
+			$('#boxFilter').show();
+		};
+	});
+
+	//------------------------------------------------------------------------------------------------------------
+	// CREATE WORK BUTTON
+	//------------------------------------------------------------------------------------------------------------
+	$('#buttonNewWork').on('click', function() {
+		if (navigator.userAgent.match(/Mobile/i) && (typeof sforce == 'object')) {
+			sforce.one.createRecord('ADM_Work__c');
+		} else {
+			selectedWork = '';
+			workModalOpen();
+		}
+	});
+});
+
+//------------------------------------------------------------------------------------------------------------
+// ORDERING
+//------------------------------------------------------------------------------------------------------------
+function reorderData(columnIndex, columnDirection) {
+	if (dataObject.options.showDebugInfo) { console.log('re-ordering'); }
+	// TODO: Make un-grouped columns such as ID and Subject use simplistic sorting not involving arrays (will make it perform much better too)
+	showLoader();
+
+	var selectedColumn = $('#header-fixed').find('th:eq(' + columnIndex + ')');
+	var selectedColumnLabel = selectedColumn.attr('data-label');
+	var columnCount = selectedColumn.siblings('th').length + 1;
+	var groupable = selectedColumn.hasClass('groupable');
+	var direction = 'descending';
+
+	if (columnDirection == 'descending') {
+		selectedColumn.removeClass('descending').addClass('ascending');
+	} else if (columnDirection == 'ascending') {
+		selectedColumn.removeClass('ascending').addClass('descending');
+	}
+
+	// Set direction
+	selectedColumn.siblings('.slds-is-sortable').removeClass('ascending descending');
+	selectedColumn.siblings('.slds-is-sortable').find('use').attr("xlink:href","{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}");
+	if (selectedColumn.hasClass('descending')) {
+		direction = 'ascending';
+		selectedColumn.removeClass('descending').addClass('ascending');
+		selectedColumn.find('use').attr("xlink:href","{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#arrowup')}");
+	} else {
+		selectedColumn.removeClass('ascending').addClass('descending');
+		selectedColumn.find('use').attr("xlink:href","{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}");
+	}
+
+	// Save order back to object
+	$.each(dataObject.columns, function(index, column) {
+		if (column.label == selectedColumnLabel) {
+			column.direction = direction;
+		} else {
+			column.direction = null;
+		}
+	});
+	// TODO: Keep this from being called on load when not needed
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify({columns:dataObject.columns, options:dataObject.options }), function(result, event) {
+		if (event.status) {
+    		if (dataObject.options.showDebugInfo) { console.log('Saved new sort order (' + selectedColumnLabel + ': ' + direction + ')'); }
+    	} else {
+			console.error('WARNING: Failed to save sort order to User Preferences.  Error:' + event);
+		}
+	},{ escape:false });
+
+	$('#workTable tbody tr.group').remove();
+
+	// Create group header array
+	var currentGroups = [];
+	if (selectedColumnLabel == 'Kanban State') {
+		// Kanban State
+		$.each(dataObject.allKanbanStates, function(index, record) {
+			var group = {};
+			group.id = record.columnId;
+			group.value = record.path;
+			group.label = selectedColumnLabel;
+			currentGroups.push(group);
+		});
+	} else if (selectedColumnLabel == 'Status') {
+		// Kanban State
+		$.each(dataObject.allWorkStatuses, function(index, record) {
+			if (record.Type__c.indexOf("Investigation") == -1) {
+				var group = {};
+				group.id = record.columnId;
+				group.value = record.Name;
+				group.label = selectedColumnLabel;
+				currentGroups.push(group);
+			}
+		});
+	} else if (selectedColumnLabel == 'Product Tag') {
+		// Product Tags
+		$.each(dataObject.allProductTags, function(index, record) {
+			var group = {};
+			group.id = record.Id;
+			group.link = '/' + record.Id;
+			group.value = record.Name;
+			group.label = selectedColumnLabel;
+			currentGroups.push(group);
+		});
+	} else if (selectedColumnLabel == 'Sprint') {
+		// Sprints
+		$.each(dataObject.allSprints, function(index, record) {
+			var group = {};
+			group.id = record.Id;
+			group.link = '/' + record.Id;
+			group.value = record.Name;
+			group.label = selectedColumnLabel;
+			currentGroups.push(group);
+		});
+	} else if (selectedColumnLabel == 'Assignee' || selectedColumnLabel == 'QA Engineer') {
+		// Assignees
+		$.each(dataObject.allUsers, function(index, record) {
+			var group = {};
+			group.id = record.Id;
+			group.link = '/' + record.Id;
+			group.value = record.Name;
+			group.label = selectedColumnLabel;
+			currentGroups.push(group);
+		});
+	}
+
+	// Scan column for additional values
+	$('#workTable tr.work-row').each(function() {
+		var groupId = $(this).find('td:eq(' + columnIndex + ')').attr('data-id');
+		var groupValue = $(this).find('td:eq(' + columnIndex + ')').attr('data-value');
+		var groupLabel = $(this).find('td:eq(' + columnIndex + ')').attr('data-label');
+		var groupLink = $(this).find('td:eq(' + columnIndex + ')').attr('data-link');
+		var groupSmallPhotoUrl = $(this).find('td:eq(' + columnIndex + ')').attr('data-smallphotourl');
+
+		if (groupId && groupId.length > 0) {
+			// Eliminate duplicates by ID
+			if (!isIdInObjectArray(currentGroups, groupId)) {
+				var group = {};
+				group.id = groupId;
+				group.value = groupValue;
+				group.label = groupLabel;
+				group.link = groupLink;
+				group.smallPhotoUrl = groupSmallPhotoUrl
+				currentGroups.push(group);
+			}
+		} else {
+			// Eliminate duplicates by Value
+			if (!isValueInObjectArray(currentGroups, groupValue)) {
+				var group = {};
+				group.id = groupId;
+				group.value = groupValue;
+				group.label = groupLabel;
+				group.link = groupLink;
+				group.smallPhotoUrl = groupSmallPhotoUrl
+				currentGroups.push(group);
+			}
+		}
+	});
+
+	if (dataObject.options.showDebugInfo) { console.log(currentGroups); }
+
+	if (selectedColumnLabel == 'Points') {
+		// Reverse normal order (higher is first)
+		if (selectedColumn.hasClass('descending')) {
+			currentGroups.sort(alphaSort).reverse();
+		} else {
+			currentGroups.sort(alphaSort);
+		}
+	} else if(selectedColumnLabel == 'Created Date' || selectedColumnLabel == 'Last Modified Date') {
+        if (selectedColumn.hasClass('descending')) {
+            currentGroups.sort(dateSort).reverse();
+		} else {
+            currentGroups.sort(dateSort);
+		}
+
+    } else {
+		// Everything else
+		if (selectedColumn.hasClass('descending')) {
+			currentGroups.sort(alphaSort);
+		} else {
+			currentGroups.sort(alphaSort).reverse();
+		}
+	}
+
+	// Move blank values to the front/back depending on the order being asked
+	var indexToRemove = -1;
+	$.each(currentGroups, function(index, group) {
+		if (group.value.length == 0) {
+			indexToRemove = index;
+		}
+	});
+	if (indexToRemove > -1) {
+		var removed = currentGroups.splice(indexToRemove,1);
+		if (selectedColumn.hasClass('descending')) {
+			currentGroups.push({ value:'', label:selectedColumnLabel });
+		} else {
+			currentGroups.unshift({ value:'', label:selectedColumnLabel });
+		}
+	}
+
+
+	// All Other Fields
+	$.each(currentGroups, function(index, group) {
+		if (groupable) {
+			var groupName = group.value;
+			if (groupName.length == 0) {
+				groupName = 'No ' + group.label;
+			}
+
+			// Create group headers
+			$('<tr>', {
+				'data-value': group.value,
+				'data-label': group.label,
+				'data-link': group.link,
+				'data-id': group.id,
+				'data-smallphotourl': group.smallPhotoUrl,
+				'class': 'group'
+				}).append(
+			$('<td>', {
+				'colspan': columnCount
+				}).append(
+			$('<a>', {
+				'href': '#',
+				text: groupName
+				}))
+			).appendTo('#workTable tbody');
+		}
+
+		// Move work items under group headers
+		$('#workTable tr.work-row').each(function() {
+			if (group.id) {
+				if ($(this).find('td:eq(' + columnIndex + ')').attr('data-id') == group.id) {
+					$(this).appendTo('#workTable tbody');
+				}
+			} else {
+				if ($(this).find('td:eq(' + columnIndex + ')').attr('data-value') == group.value) {
+					$(this).appendTo('#workTable tbody');
+				}
+			}
+		});
+	});
+
+	// Copy fixed header back to original header
+	$("#workTable > thead").empty().append($("#header-fixed > thead > tr").clone());
+
+	hideLoader();
+	calcNumItems();
+	resizeContainer();
+}
+
+//------------------------------------------------------------------------------------------------------------
+// DRAG & DROP (SORTING)
+//------------------------------------------------------------------------------------------------------------
+function initSortable() {
+	$('#workTable > tbody').sortable({
+		items: "> tr:not(.first)",
+		cancel: ".group",
+		handle: ".slds-row-select svg",
+		disabled: true,
+		containment: "parent",
+		axis: "y",
+		cursor: '-webkit-grabbing',
+		placeholder: 'placeholder',
+		distance: 15,
+		helper: function(e, tr){
+			var $originals = tr.children();
+			var $helper = tr.clone();
+			$helper.children().each(function(index) {
+				$(this).width($originals.eq(index).outerWidth())
+			});
+			return $helper;
+		},
+        start: function(event, ui) {
+	        $('.slds-notify').hide();
+	        undoArray.push($('#workTable').clone());
+			$('#dataTable tr.work-row.selected').hide();
+            var numColumns = $(ui.placeholder).closest('table').find('thead th:visible').length;
+			var placeholderHtml = '<td colspan="' + numColumns + '"></td>';
+            $(ui.placeholder).addClass('multiple').html(placeholderHtml);
+            $(ui.helper).hide();
+        },
+        stop: function(event, ui) {
+	        $('#dataTable tr.work-row input[type=checkbox]').prop('checked',false);
+	        $(ui.item).addClass('notsaved');
+	        $('#dataTable tr.work-row.selected').show().insertAfter(ui.item);
+
+			// Highlight and change fields when sort changed in an approved column grouping
+	      	var approvedColumns = ['Status', 'Sprint', 'Kanban State', 'Assignee', 'QA Engineer', 'Product Owner', 'Points', 'Epic', 'Found In Build', 'Scheduled Build'];
+	        var columnPosition = Math.max($('#header-fixed th.ascending').index(), $('#header-fixed th.descending').index());
+	        var selectedColumnLabel = $('#header-fixed').find('th:eq(' + columnPosition + ')').attr('data-label');
+			if (approvedColumns.indexOf(selectedColumnLabel) > -1) {
+				var groupId = '';
+				var groupLabel = '';
+				var groupValue = '';
+				var groupLink = '';
+				var groupSmallPhotoUrl = '';
+				var groupContents = '';
+				$('#workTable tr').each(function(index) {
+					if ($(this).hasClass('group')) {
+						groupId = $(this).attr('data-id');
+						groupValue = $(this).attr('data-value');
+						groupLabel = $(this).attr('data-label');
+						groupLink = $(this).attr('data-link');
+						groupSmallPhotoUrl = $(this).attr('data-smallphotourl');
+					}
+					if ($(this).hasClass('selected')) {
+						if (groupId !== undefined && groupId !== $(this).find('td:eq(' + columnPosition + ')').attr('data-id') || groupValue !== undefined && groupValue !== $(this).find('td:eq(' + columnPosition + ')').attr('data-value')) {
+							if (groupLink && groupLink.length > 0 && groupSmallPhotoUrl && groupSmallPhotoUrl.length > 0) {
+								// Picture + Link + Value
+								var groupPicture = $('<img>', {
+									'src': groupSmallPhotoUrl
+								});
+								var groupSpan = $('<span>', {
+									'class': 'slds-avatar slds-avatar--circle slds-avatar--x-small slds-m-right--x-small'
+								}).append(groupPicture);
+								groupContents = $('<a>', {
+									'href': groupLink,
+									'class': 'slds-truncate'
+								}).append(groupSpan).append(groupValue);
+							} else if (groupLink && groupLink.length > 0) {
+								// Link + Value
+								groupContents = $('<a>', {
+									'href': groupLink,
+									'class': 'slds-truncate'
+								}).append(groupValue);
+							} else {
+								// Value
+								groupContents = groupValue;
+							}
+							$(this).find('td:eq(' + columnPosition + ')').addClass('notsaved').empty().append(groupContents).attr('data-value',groupValue).attr('data-id',groupId).attr('data-link',groupLink).attr('data-smallphotourl',groupSmallPhotoUrl);
+						}
+					}
+				});
+			} else {
+				if (selectedColumnLabel !== 'Rank') {
+					var errorMsg = 'The column "' + selectedColumnLabel + '" is not approved to change values in it\'s cell when moving between groups.';
+					/*$('.slds-notify').show().delay(10000).fadeOut(500, function() {
+						$('.slds-notify h2').text('');
+					});
+					$('.slds-notify h2').text(errorMsg);*/
+					console.warn(errorMsg);
+				}
+			}
+
+	        $('#dataTable tr.work-row.selected').addClass('notsaved').removeClass('selected');
+	        $('#holderButtonSaveOrder').css('display','flex');
+	        $('#massEditMoveTo').attr('disabled','disabled');
+			$('#workTable > tbody').sortable("option", "disabled", true);
+			$('#storyPointsCount').hide();
+
+			var rankColumnPosition = $('#header-fixed tr th[data-label="Rank"]').index();
+
+			// Highlight rank field to denote changes in rank
+			//var pastBackburnerHeader = false;
+			var workRowIndex = 0;
+			$('#workTable tr').each(function(index) {
+				if ($('#header-fixed th.descending').attr('data-label') == 'Rank' || $('#header-fixed th.ascending').attr('data-label') == 'Rank' || $('#header-fixed th.descending').attr('data-label') == 'Sprint' || $('#header-fixed th.ascending').attr('data-label') == 'Sprint' || $('#header-fixed th.descending').attr('data-label') == 'ID' || $('#header-fixed th.ascending').attr('data-label') == 'ID' || $('#header-fixed th.descending').attr('data-label') == 'Subject' || $('#header-fixed th.ascending').attr('data-label') == 'Subject') {
+					// Rank field
+						if ($(this).hasClass('work-row')) {
+							workRowIndex += 1;
+						}
+						//if ($(this).hasClass('group') && $(this).attr('data-label') == 'Backburner') {
+						//	pastBackburnerHeader = true;
+						//}
+						//if (pastBackburnerHeader == false) {
+							$(this).find('td:eq(' + rankColumnPosition + ')').addClass('notsaved').text(workRowIndex).attr('data-value',workRowIndex);
+						//} else if (pastBackburnerHeader == true) {
+						//	$(this).find('td:eq(' + rankColumnPosition + ')').addClass('notsaved').text('').attr('data-value','');
+						//}
+						// TODO: change CSS classes on ROW too for changed data!
+						// TODO: Compare if rank did change on that row, if not, highlight row but don't send? Will take some work to make that happen.
+				} else {
+					// All other fields
+					/*if ($(this).hasClass('work-row')) {
+						workRowIndex += 1;
+						$(this).find('td:eq(' + rankColumnPosition + ')').addClass('notsaved').text(workRowIndex).attr('data-value',workRowIndex);
+					}*/
+				}
+			});
+
+			$(ui.helper).remove();
+			$(ui.placeholder).remove();
+			calcNumItems();
+        }
+	});
+}
+
+//------------------------------------------------------------------------------------------------------------
+// MISC METHODS
+//------------------------------------------------------------------------------------------------------------
+function changeCell(columnPosition, metaDataObject, showAlertOnNoMetadata) {
+	var noMetadata = false;
+    var selectedColumnLabel = $('#header-fixed').find('th:eq(' + columnPosition + ')').attr('data-label');
+
+	if (columnPosition == -1) {
+		// TODO: Save metadata into row so saving is still possible...
+	} else {
+		$('#workTable tr.work-row.selected').each(function(index) {
+			var groupContents = metaDataObject.value;
+			if (metaDataObject.link && metaDataObject.link.length > 0 && metaDataObject.smallPhotoUrl && metaDataObject.smallPhotoUrl.length > 0) {
+				// Picture + Link + Value
+				var groupPicture = $('<img>', {
+					'src': metaDataObject.smallPhotoUrl
+				});
+				var groupSpan = $('<span>', {
+					'class': 'slds-avatar slds-avatar--circle slds-avatar--x-small slds-m-right--x-small'
+				}).append(groupPicture);
+				groupContents = $('<a>', {
+					'href': metaDataObject.link,
+					'class': 'slds-truncate'
+				}).append(groupSpan).append(metaDataObject.value);
+			} else if (metaDataObject.link && metaDataObject.link.length > 0) {
+				// Link + Value
+				groupContents = $('<a>', {
+					'href': metaDataObject.link,
+					'class': 'slds-truncate'
+				}).append(metaDataObject.value);
+			} else {
+				noMetadata = true;
+			}
+			$(this).find('td:eq(' + columnPosition + ')').addClass('notsaved').empty().append(groupContents).attr('data-value',metaDataObject.value).attr('data-id',metaDataObject.id).attr('data-link',metaDataObject.link).attr('data-smallphotourl',metaDataObject.smallPhotoUrl);
+		});
+
+		if (showAlertOnNoMetadata && noMetadata && selectedColumnLabel !== 'Points') {
+			$('#modalMetadataProblem').addClass('slds-fade-in-open');
+			$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+		}
+	}
+}
+
+function clearSettings() {
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify(''), function(result, event) {
+	        if (event.status) {
+	            console.log('user preference cleared');
+	        } else {
+	         	console.error('WARNING: Failed to clear User Preferences.  Error:' + event);
+	        }
+	 },{ escape:false });
+}
+
+function resetSettings() {
+	clearSettings();
+	refreshBoard();
+	$('.slds-modal').removeClass('slds-fade-in-open');
+	$('.slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+}
+
+jQuery.expr[":"].icontains = jQuery.expr.createPseudo(function (arg) {
+    return function (elem) {
+        return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+    };
+});
+
+function isIdInObjectArray(arr, id) {
+	var valueFound = false;
+	for(var i = 0; i < arr.length; i++) {
+		if(arr[i].id === id) {
+			valueFound = true;
+		}
+	}
+	return valueFound;
+}
+
+function isValueInObjectArray(arr, value) {
+	var valueFound = false;
+	for(var i = 0; i < arr.length; i++) {
+		if(arr[i].value === value) {
+			valueFound = true;
+		}
+	}
+	return valueFound;
+}
+
+function hideDropdowns(e) {
+	if (e) {
+		if ($(e.target).closest('.slds-dropdown').length == 0) {
+			hideDropdownInc();
+		}
+	} else {
+		hideDropdownInc();
+	}
+}
+
+function hideDropdownInc() {
+	$('.slds-dropdown').addClass('slds-hide');
+	if ($('html').hasClass('fullscreen')) {
+		$('body').css('overflow','hidden');
+	} else {
+		$('body').css('overflow-x','hidden').css('overflow-y','auto');
+	}
+    $(document).unbind('click', hideDropdowns);
+}
+
+function undoDom() {
+	if (undoArray.length > 0) {
+		$('#workTable').replaceWith(undoArray[undoArray.length-1]);
+		$('#workTable > tbody > tr.placeholder').remove();
+		$('#workTable > tbody > tr.selected:last-child').remove();
+		$('#workTable > tbody > tr.selected').css('display','table-row');
+		initSortable(); // since we destroy the DOM, we have to re-init
+		resizeContainer();
+		$('#workTable > tbody').sortable("option", "disabled", false);
+
+		undoArray.pop();
+		if (undoArray.length == 0) {
+			$('#holderButtonSaveOrder').hide();
+			$('#massEditMoveTo').removeAttr('disabled');
+		}
+	} else {
+		console.error('Undo buffer was null');
+	}
+	calcNumItems();
+}
+
+function showNoRecords() {
+	$('#workTable,#table-fixed').css('visibility','hidden');
+	$('#loading').hide();
+	$('#norecords').show();
+}
+
+function showLoader() {
+	$('#workTable,#table-fixed').css('visibility','hidden');
+	$('#loading').show();
+	$('#norecords').hide();
+}
+
+function hideLoader() {
+	$('#workTable,#table-fixed').css('visibility','visible');
+	$('#loading').hide();
+}
+
+function refreshBoard(viewChangeRequested, paramId, selectedText) {
+	if ($('#dataTable tr.work-row.notsaved').length > 0) {
+		return confirm('You have unsaved changes! Are you sure you want to refresh before saving?');
+	}
+
+	resizeContainer();
+	showLoader();
+	if(!viewChangeRequested && '{!JSINHTMLENCODE($CurrentPage.parameters.sprintId)}'){
+		$('title').text('Loading...');
+		$('#buttonTitle h1').attr('title','Loading...').text('Loading...');
+		lastView = 'sprint';
+	}
+	else{
+		var lastView = '';
+		if (dataObject && dataObject.options && dataObject.options.lastView) {
+				lastView = dataObject.options.lastView;
+		}
+
+		if(!paramId && !selectedText){ //If not using query parameter and these values are null try to restore it from the button attributes.
+			paramId = $('#buttonTitle h1').attr('data-id');
+			selectedText = $('#buttonTitle h1').attr('data-text');
+	}
+
+	}
+
+ var paramObject = new Object();
+ paramObject.teamId = '{!JSINHTMLENCODE($CurrentPage.parameters.teamid)}';
+ paramObject.sprintId = '{!JSINHTMLENCODE($CurrentPage.parameters.sprintId)}';
+ paramObject.paramId = paramId;
+
+ if(!lastView){
+	 lastView = 'backlog';
+ }
+
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.getPanelWorkItemsAsJson}', paramObject, lastView, false, '200', '0', function(result, event) {
+		if (event.status) {
+			dataObject = JSON.parse(result);
+
+		//	if(!viewChangeRequested ){//Sprint view requested via query parameter
+				/*if(!dataObject.defaultView){
+				if (dataObject.records && dataObject.records[0]){
+					$('title').text(dataObject.records[0].Sprint__r.Name);
+					$('#buttonTitle h1').attr('title',dataObject.records[0].Sprint__r.Name).text(dataObject.records[0].Sprint__r.Name);
+
+				}
+			}*/
+
+			console.log(dataObject);
+			//console.log(JSON.stringify(dataObject.columns));
+			if (dataObject.records === null) {
+				showNoRecords();
+			} else {
+				setDefaultOptions();
+				populateTable();
+				initCharts();
+				checkMovedWork();
+
+				/*dataObject.defaultView is a fall back options in situations where user requests for a sprint id using query parameter and it returns no work items, in this case we show them team's back log view and set defaultView = "true" on server response object*/
+				var selectedId = paramObject.paramId;
+				if (dataObject.options && dataObject.options.lastView) {
+					//dataObject.options.lastView = lastView; // Manually set this because it might not have been saved to the server yet (setting and refreshing at the same time)
+					lastView = dataObject.options.lastView;
+					if (lastView == 'backburner') {
+						$('.gripicon').show();
+					  setTextByDataSource('{!teamName} Backburner', selectedId);
+				  }
+					else if (lastView == 'backlog') {
+						$('.gripicon').show();
+						setTextByDataSource('{!teamName} Backlog', selectedId);
+					}
+					else{
+						$('.gripicon').hide();
+						setTextByDataSource(selectedText, selectedId, selectedText);// pass the selected test to save in data-text attribute with button so can be used when calling refresh data locally...
+					}
+
+					if(!viewChangeRequested && '{!JSINHTMLENCODE($CurrentPage.parameters.sprintId)}'){
+						$('.gripicon').hide();
+						selectedText = '{!JSINHTMLENCODE($CurrentPage.parameters.sprintId)}';
+						selectedId = '{!JSINHTMLENCODE($CurrentPage.parameters.sprintId)}';
+						if (dataObject.records && dataObject.records[0]){
+							setTextByDataSource(dataObject.records[0].Sprint__r.Name, selectedId);
+						}
+					}
+				}
+				if(dataObject.defaultView){
+					$('.gripicon').show(); //show grip icon if it's backlog view
+					if(!selectedText){
+						selectedText = '';
+					}
+					renderUserAlert(lastView, selectedText, selectedId);
+					setTextByDataSource('{!teamName} Backlog', selectedId);
+			  	}
+			}
+		} else {
+			// TODO: Error message(s) go here
+	}
+	},{ escape:false });
+}
+function setTextByDataSource(title, selectedId, selectedText){
+	$('title').text(title);
+	$('#buttonTitle h1').attr('title',title).text(title);
+	$('#buttonTitle h1').attr('data-id',selectedId);
+	if(selectedText){
+		$('#buttonTitle h1').attr('data-text',selectedText);
+	}
+
+}
+function checkMovedWork() {
+	if (movedWork.length > 0) {
+		// select work
+		$.each(movedWork, function(index, work) {
+			$('#' + work.Id).addClass('selected');
+			$('#select-row-' + work.Id).prop( "checked",true);
+		});
+		movedWork = [];
+		calcNumItems();
+	}
+}
+//------------------------------------------------------------------------------------------------------------
+// FILTER
+//------------------------------------------------------------------------------------------------------------
+$(document).on('click','.itemList input[type=checkbox]', function(e) {
+	// Allow only one checkbox to be checked at a time
+	$(this).closest('.itemList').find('input[type=checkbox]:not([id=' + $(this).attr('id') + '])').prop('checked', false);
+	updateFilter();
+});
+
+$(document).on('click','#clearFilters a', function(e) {
+	e.preventDefault();
+	$('#boxFilter input[type=checkbox]').prop('checked', false);
+	$('#quickSearch').val('');
+	updateFilter();
+});
+
+function updateFilter() {
+	$('.work-row').hide();
+	$('#quickSearchClear').hide();
+	var className = '';
+	var prevFilter = dataObject.options.filters;
+	dataObject.options.filters = '';
+
+	$('#boxFilter input[type=checkbox]').each(function(index) {
+		if ($(this).is(':checked')) {
+			dataObject.options.filters += $(this).attr('id') + ',';
+			className += '.' + $(this).val();
+		}
+	});
+
+	// Search:
+	if ($('#quickSearch').val().length > 0) {
+		className += '.work-row:icontains("' + $('#quickSearch').val() + '")';
+		$('#quickSearchClear').show();
+	}
+
+	if (className.length === 0) {
+		$('#clearFilters').hide();
+		$('.work-row').show();
+	} else {
+		$('#clearFilters').show();
+		$(className).show();
+	}
+	calcNumItems();
+	$('div#sprintBurndownChart').hide();
+	chartAllocations();
+	chartRecordTypes();
+	resizeContainer();
+
+	if (prevFilter !== dataObject.options.filters) {
+		Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify({columns:dataObject.columns, options:dataObject.options}), function(result, event) {
+			if (event.status) {
+				console.log('Filter preference save successfully');
+			} else {
+				console.error('WARNING: Failed to save filter preferences.  Error:' + event);
+			}
+		},{ escape:false });
+	}
+}
+
+//------------------------------------------------------------------------------------------------------------
+// SHOW SIDE PANEL
+//------------------------------------------------------------------------------------------------------------
+function showSidePanel(button,panel) {
+	var buttonSelected = button.hasClass('slds-is-selected');
+	var sidePanelVisible = $('#sideContainer').is(':visible');
+	$('.sideContainerBox').hide();
+
+	if (buttonSelected && sidePanelVisible) {
+		// button was selected so turn it off, hide side container
+		button.removeClass('slds-is-selected');
+		$('#sideContainer').hide();
+		resizeContainer();
+		return;
+	} else if (buttonSelected && !sidePanelVisible) {
+		// button was selected, do something...
+		$('#sideContainer').show();
+		resizeContainer();
+		return true;
+	} else if (!buttonSelected && sidePanelVisible) {
+		// button not selected, do something...
+		button.closest('.slds-button-group').find('button.slds-is-selected').removeClass('slds-is-selected');
+		button.addClass('slds-is-selected');
+		resizeContainer();
+		return true;
+	} else if (!buttonSelected && !sidePanelVisible) {
+		// button not selected, select it, do something...
+		button.addClass('slds-is-selected');
+		$('#sideContainer').show();
+		resizeContainer();
+		return true;
+	}
+}
+
+//------------------------------------------------------------------------------------------------------------
+// BUILD TABLE
+//------------------------------------------------------------------------------------------------------------
+function populateTable(){
+	if (dataObject.options.showDebugInfo) { console.log('populating data'); }
+
+	showLoader();
+
+	// Clear filter box (for now, until we have sticky filters)
+	$('#quickSearchClear').hide();
+	$('#quickSearch').val('');
+
+	// Setup filter boxes
+	$('#boxFilter').empty();
+	$.each(dataObject.allColumns, function(index, column) {
+		if (column.filterable) {
+			$('#boxFilter').append(filterOptionsTemplate({
+				Label:column.label
+			}));
+		}
+	});
+	$('#boxFilter').append(clearFiltersTemplate());
+
+	// Setup mass edit boxes
+	$('#boxMassEdit #massEditOptions form').empty();
+
+	$.each(dataObject.allColumns, function(index, column) {
+		if (column.editable) {
+			$('#boxMassEdit #massEditOptions form').append(massEditTemplate({
+				Label:column.label,
+				Type:column.editType,
+				Id:column.label.toLowerCase().split(' ').join('')
+			}));
+		}
+	});
+
+
+	// Scan data for stuff not already being pre-populated... TODO: controller should really do this
+	dataObject['recordTypes'] = [];
+	dataObject['allEpics'] = [];
+	dataObject['allBuilds'] = [];
+
+	$.each(dataObject.records, function(workIndex, work) {
+		// Record Types (see what we're working with, hide statuses for record types not on the board)
+		if (dataObject.recordTypes.indexOf(work.RecordType.Name) == -1) {
+			dataObject.recordTypes.push(work.RecordType.Name);
+		}
+		// TODO: Order by
+
+		// Kanban States
+		var statesFound = false;
+		$.each(dataObject.allKanbanStates, function(columnIndex, column) {
+			if (work.Column__c == column.columnId) {
+				statesFound = true;
+			}
+		});
+		if (!statesFound && work.Column__r) {
+			dataObject.allKanbanStates.push({
+				columnId: work.Column__r.Id,
+				path: work.Column__r.Name
+			});
+		}
+		// TODO: Sort dataObject.allKanbanStates
+
+		// Sprints
+		var sprintFound = false;
+		$.each(dataObject.allSprints, function(sprintIndex, sprint) {
+			if (work.Sprint__c == sprint.Id) {
+				sprintFound = true;
+			}
+		});
+		if (!sprintFound && work.Sprint__r) {
+			dataObject.allSprints.push({
+				Id: work.Sprint__r.Id,
+				Name: work.Sprint__r.Name
+			});
+		}
+		// TODO: Sort dataObject.allSprints
+
+		// Epics
+		var epicFound = false;
+		$.each(dataObject.allEpics, function(epicIndex, epic) {
+			if (work.Epic__c == epic.Id) {
+				epicFound = true;
+			}
+		});
+		if (!epicFound && work.Epic__r) {
+			dataObject.allEpics.push({
+				Id: work.Epic__r.Id,
+				Name: work.Epic__r.Name
+			});
+		}
+		// TODO: Sort dataObject.allEpics
+
+		// Builds
+		var foundInBuildFound = false;
+		var scheduledBuildFound = false;
+		$.each(dataObject.allBuilds, function(buildIndex, build) {
+			if (work.Found_in_Build__c == build.Id) {
+				foundInBuildFound = true;
+			}
+			if (work.Scheduled_Build__c == build.Id) {
+				scheduledBuildFound = true;
+			}
+		});
+		if (!foundInBuildFound && work.Found_in_Build__r) {
+			dataObject.allBuilds.push({
+				Id: work.Found_in_Build__r.Id,
+				Name: work.Found_in_Build__r.Name
+			});
+		}
+		if (!scheduledBuildFound && work.Scheduled_Build__r) {
+			dataObject.allBuilds.push({
+				Id: work.Scheduled_Build__r.Id,
+				Name: work.Scheduled_Build__r.Name
+			});
+		}
+		// TODO: Sort dataObject.allBuilds
+
+		// Users
+		var assigneeFound = false;
+		var qaFound = false;
+		var poFound = false;
+		$.each(dataObject.allUsers, function(userIndex, user) {
+			if (work.Assignee__c == user.Id) {
+				assigneeFound = true;
+			}
+			if (work.QA_Engineer__c == user.Id) {
+				qaFound = true;
+			}
+			if (work.Product_Owner__c == user.Id) {
+				poFound = true;
+			}
+		});
+		dataObject.allUsers.sort(nameSort); // Sort
+		// Assignees
+		if (!assigneeFound && work.Assignee__r) {
+			dataObject.allUsers.push({
+				Id: work.Assignee__r.Id,
+				Name: work.Assignee__r.Name,
+				SmallPhotoUrl: work.Assignee__r.SmallPhotoUrl
+			});
+		}
+		// QA Engineers
+		if (!qaFound && work.QA_Engineer__r) {
+			dataObject.allUsers.push({
+				Id: work.QA_Engineer__r.Id,
+				Name: work.QA_Engineer__r.Name,
+				SmallPhotoUrl: work.QA_Engineer__r.SmallPhotoUrl
+			});
+		}
+		// Product Owners
+		$.each(dataObject.allUsers, function(userIndex, user) {
+		});
+		if (!poFound && work.Product_Owner__r) {
+			dataObject.allUsers.push({
+				Id: work.Product_Owner__r.Id,
+				Name: work.Product_Owner__r.Name,
+				SmallPhotoUrl: work.Product_Owner__r.SmallPhotoUrl
+			});
+		}
+		// TODO: Sort dataObject.allUsers
+
+		// Product Tags
+		var productTagFound = false;
+		$.each(dataObject.allProductTags, function(tagIndex, tag) {
+			if (work.Product_Tag__c == tag.Id) {
+				productTagFound = true;
+			}
+		});
+		if (!productTagFound && work.Product_Tag__r) {
+			dataObject.allProductTags.push({
+				Id: work.Product_Tag__r.Id,
+				Name: work.Product_Tag__r.Name
+			});
+		}
+		// TODO: Sort dataObject.allProductTags
+
+	});
+
+	// Kanban State
+	$.each(dataObject.allKanbanStates, function(index, record) {
+		$('#massEditOptions .filterTopic[data-label="Kanban State"] .itemList select').append(massEditOptionsTemplate({
+			Id: record.columnId,
+			Value: record.path,
+			Link: '/' + record.Id
+		}));
+	});
+	// Work Statuses - TODO: Sort needed???
+	$.each(dataObject.allWorkStatuses, function(index, record) {
+		var recordTypeFound = false;
+		$.each(dataObject.recordTypes, function(typeIndex, type) {
+			if (record.Type__c.indexOf(type) > -1) {
+				recordTypeFound = true;
+			}
+		});
+		if (recordTypeFound) {
+			$('#massEditOptions .filterTopic[data-label="Status"] .itemList select').append(massEditOptionsTemplate({
+				Id: record.Id,
+				Value: record.Name
+			}));
+		}
+	});
+	// Product Tags
+	$.each(dataObject.allProductTags, function(index, record) {
+		$('#massEditOptions .filterTopic[data-label="Product Tag"] .itemList datalist').append(massEditOptionsTemplate({
+			Id: record.Id,
+			Value: record.Name,
+			Link: '/' + record.Id
+		}));
+	});
+	// Epics
+	$.each(dataObject.allEpics, function(index, record) {
+		$('#massEditOptions .filterTopic[data-label="Epic"] .itemList datalist').append(massEditOptionsTemplate({
+			Id: record.Id,
+			Value: record.Name,
+			Link: '/' + record.Id
+		}));
+	});
+	// Found in Build / Scheduled Build
+	$.each(dataObject.allBuilds, function(index, record) {
+		$('#massEditOptions .filterTopic[data-label="Found In Build"] .itemList datalist,#massEditOptions .filterTopic[data-label="Scheduled Build"] .itemList datalist').append(massEditOptionsTemplate({
+			Id: record.Id,
+			Value: record.Name,
+			Link: '/' + record.Id
+		}));
+	});
+	// Sprints
+	$.each(dataObject.allSprints, function(index, record) {
+		$('#massEditOptions .filterTopic[data-label="Sprint"] .itemList datalist').append(massEditOptionsTemplate({
+			Id: record.Id,
+			Value: record.Name,
+			Link: '/' + record.Id
+		}));
+	});
+	// Assignees / QA Engineers / Product Owners
+	$.each(dataObject.allUsers, function(index, record) {
+		$('#massEditOptions .filterTopic[data-label="Assignee"] .itemList datalist,#massEditOptions .filterTopic[data-label="QA Engineer"] .itemList datalist,#massEditOptions .filterTopic[data-label="Product Owner"] .itemList datalist').append(massEditOptionsTemplate({
+			Id: record.Id,
+			Value: record.Name,
+			Link: '/' + record.Id,
+			SmallPhotoUrl: record.SmallPhotoUrl
+		}));
+	});
+	// Story Points
+	if (dataObject.team.Story_Point_Scale__c) {
+		$.each(dataObject.team.Story_Point_Scale__c.split(','), function(index, record) {
+			$('#massEditOptions .filterTopic[data-label="Points"] .itemList datalist').append(massEditOptionsTemplate({
+				Id: record,
+				Value: record
+			}));
+		});
+	}
+
+	// Setup Fields to Display box
+	$('#listAvailableFields,#listVisibleFields').empty();
+	// Show visible columns in order they were saved in the visible fields column
+	$.each(dataObject.columns, function(index, column) {
+		$.each(dataObject.allColumns, function(allColumnIndex, allColumn) {
+			if (column.label == allColumn.label) {
+				$('#listVisibleFields').append(columnOptionsTemplate({
+					Label:allColumn.label,
+					Required: allColumn.required
+				}));
+			}
+		});
+	});
+	// Show the remaining columns in the available fields column
+	$.each(dataObject.allColumns, function(allColumnIndex, allColumn) {
+		var showInList = true;
+		$.each(dataObject.columns, function(index, column) {
+			if (column.label == allColumn.label) {
+				showInList = false;
+			}
+		});
+		if (showInList) {
+			$('#listAvailableFields').append(columnOptionsTemplate({
+				Label:allColumn.label,
+				Required: allColumn.required
+			}));
+		}
+	});
+
+	// Header
+	var currentOrder = 'Rank'; // TODO: Should grab this default information from allColumns
+	var currentDirection = 'descending';
+	var reorderIndex;
+	$('#workTable thead tr').empty().append(tableColumnStartTemplate);
+	$.each(dataObject.columns, function(index, column) {
+		var label = column.label;
+
+		if (column.direction == 'ascending' || column.direction == 'descending') {
+			reorderIndex = index;
+			currentOrder = column.label;
+			currentDirection = column.direction;
+		}
+
+		$.each(dataObject.allColumns, function(allColumnIndex, allColumn) {
+			if (allColumn.label == label) {
+				var truncate = true;
+				if (allColumn.truncate == false) {
+					truncate = false;
+				}
+				$('#workTable thead tr').append(tableColumnTemplate({
+					Label:label,
+					ShowLabel: allColumn.showLabel,
+					Sortable: allColumn.sortable,
+					Groupable: allColumn.groupable,
+					Truncate: truncate,
+					Direction: allColumn.direction
+			    }));
+			}
+		});
+	});
+
+	$('#workTable thead tr').append(tableColumnEndTemplate);
+	var columnCount = $('#workTable thead th').length;
+	//var backlogHeaderSet = false;
+	//var backburnerHeaderSet = false;
+
+	// Data
+	$('#workTable tbody').empty();
+
+	$.each(dataObject.records, function(workIndex, work) {
+		var className = '';
+
+		$.each(dataObject.allColumns, function(columnIndex, column) {
+			// Filters
+			if (column.filterable) {
+				var value = '';
+				try { value = eval(column.value) }
+				catch(err){ /*console.log('Got error finding value "' + column.value + '" for field "' + column.label + '": ' + err.message);*/ }
+
+				// Build up class names for row
+				var id = '';
+				var singleClassName = '';
+				if (column.id) {
+					// Always go with ID if available
+					try { id = eval(column.id) }
+					catch(err){ /*console.log('Got error finding value "' + column.value + '" for field "' + column.label + '": ' + err.message); */ }
+					if (id !== undefined) {
+						singleClassName = column.id.replace('work.','').replace('__c','') + '-' + id;
+						className += ' ' + singleClassName; // Build up class names based on ID
+					} else {
+						singleClassName = column.id.replace('work.','').replace('__c','') + '-null';
+						className += ' ' + singleClassName;
+					}
+				} else if (value !== undefined) {
+					// Otherwise go with Value
+					singleClassName = column.value.replace('work.','').replace('__c','').toLowerCase() + '-' + value.toString().toLowerCase().split(' ').join('')
+					className += ' ' + singleClassName;
+				} else {
+					singleClassName = column.value.replace('work.','').replace('__c','') + '-null';
+					className += ' ' + singleClassName;
+				}
+
+				// Add Filter checkboxes
+				if ($('#boxFilter .filterTopic[data-label="' + column.label + '"] .itemList').length > 0) {
+					var label = value;
+					var dataLabel = value;
+					if (!value && value !== 0) {
+						label = '(None)';
+						dataLabel = '(No ' + column.label + ')';
+						//console.log('column.value=' + column.value + '\nvalue=' + value + '\nsingleClassName=' + singleClassName + '\ncolumn.label=' + column.label + '\ntypeof=' + (typeof value));
+					}
+
+					if ($('#boxFilter .filterTopic[data-label="' + column.label + '"] .itemList .itemRow[data-label=' + JSON.stringify(dataLabel) + ']').length == 0) {
+						$('#boxFilter .filterTopic[data-label="' + column.label + '"] .itemList').append(filterOptionsRowTemplate({
+							DataLabel: dataLabel,
+							Label: label,
+							Value: singleClassName
+						}));
+					}
+				}
+			}
+		});
+
+
+		/*if (typeof(work.Priority_Rank__c) == 'number' && backlogHeaderSet == false) {
+			$('#workTable tbody').append('<tr class="group" data-label="Backlog"><td colspan="' + columnCount + '">Backlog</td></tr>');
+			backlogHeaderSet = true;
+		}
+
+		if (typeof(work.Priority_Rank__c) == 'undefined' && backburnerHeaderSet == false) {
+			$('#workTable tbody').append('<tr class="group" data-label="Backburner"><td colspan="' + columnCount + '">Backburner</td></tr>');
+			backburnerHeaderSet = true;
+		}*/
+
+		//format dates
+		work.LastModifiedDate = moment(work.LastModifiedDate).format('MM/DD/YYYY');
+        work.CreatedDate = moment(work.CreatedDate).format('MM/DD/YYYY');
+
+		// Record Type
+		var recordType = work.RecordType.Name;
+		//var recordTypeName = '';
+		if (recordType == 'Bug') {
+			className += ' work-bug';
+			recordTypeIcon = 'new_custom34';
+		} else if (recordType == 'User Story') {
+			className += ' work-story';
+			recordTypeIcon = 'new_custom55';
+		} else if (recordType == 'Investigation') {
+			className += ' work-investigation';
+			recordTypeIcon = 'new_custom39';
+		} else if (recordType == 'ToDo') {
+			className += ' work-todo';
+			recordTypeIcon = 'new_custom26';
+		} else {
+			className += ' work-unknown';
+			recordTypeIcon = 'new_custom62';
+		}
+
+		var newRow = $('<tr>', {
+			id: work.Id,
+			'data-points': work.Story_Points__c,
+			'class': 'work-row slds-hint-parent'
+		}).addClass(className).append(tableRowStartTemplate({
+			Id:work.Id
+		}));
+
+		$.each(dataObject.columns, function(columnIndex, column) {
+			var label = column.label;
+
+			$.each(dataObject.allColumns, function(allColumnIndex, allColumn) {
+				if (allColumn.label == label) {
+					var value = '';
+					try { value = eval(allColumn.value) }
+					catch(err){ /* console.log('Got error finding value "' + allColumn.value + '" for field "' + allColumn.label + '": ' + err.message); */ }
+
+					//if (id !== undefined) {
+					//	className = allColumn.id.replace('work.','').replace('__c','') + '-' + id; // Build up class names based on ID
+					//}
+
+					var smallPhotoUrl = '';
+					if (allColumn.smallPhotoUrl) {
+						try { smallPhotoUrl = eval(allColumn.smallPhotoUrl) }
+						catch(err){ /* console.log('Got error finding value "' + allColumn.value + '" for field "' + allColumn.label + '": ' + err.message); */ }
+					}
+
+					var link = '';
+					if (allColumn.link) {
+						try { link = '/' + eval(allColumn.link) }
+						catch(err){ /*console.log('Got error finding value "' + allColumn.value + '" for field "' + allColumn.label + '": ' + err.message); */ }
+					}
+
+					var style = '';
+					if (allColumn.style) {
+						try { style = allColumn.style }
+						catch(err){ /*console.log('Got error finding value "' + allColumn.value + '" for field "' + allColumn.label + '": ' + err.message); */ }
+					}
+
+					var showValue = true;
+					var icon = '';
+					if (allColumn.value == 'work.RecordType.Name') {
+						showValue = false;
+						value = recordType;
+						icon = recordTypeIcon;
+					}
+
+					var id = '';
+					if (allColumn.id) {
+						try { id = eval(allColumn.id) }
+						catch(err){ /*console.log('Got error finding value "' + allColumn.value + '" for field "' + allColumn.label + '": ' + err.message); */ }
+					}
+
+					var width = '';
+					if (allColumn.width) {
+						width = allColumn.width;
+					}
+
+					var truncate = true;
+					if (allColumn.truncate == false) {
+						truncate = false;
+					}
+
+					var field = allColumn.value.replace('work.','');
+					if (allColumn.id) {
+						field = allColumn.id.replace('work.','');
+					}
+
+					if (field == 'Priority_Rank__c') {
+						if(dataObject.options.lastView == 'backburner'){
+						field = 'Backburner_Rank__c'; // TODO: Not my favorite hack
+						try { value = null}//Show null or no value for Backburner rank
+						catch(err){ /*console.log('Got error finding value "' + allColumn.value + '" for field "' + allColumn.label + '": ' + err.message); */ }
+					}
+							//Discussed with Chad and Saran - Just show backlog always - irrespective of source selected.
+							}
+
+
+					newRow.append(tableRowTemplate({
+						Id: id,
+						Label: label,
+						Field: field,
+						Value: value,
+						SmallPhotoUrl: smallPhotoUrl,
+						Link: link,
+						Icon: icon,
+						Width: width,
+						ShowValue: showValue,
+						Truncate: truncate,
+						Style: style
+					}));
+				}
+			});
+		});
+		newRow.append(tableRowEndTemplate);
+		$('#workTable tbody').append(newRow);
+
+	});
+
+	// Adding target so SFX won't click-jack
+	$('#dataTable tr.work-row td[data-label="Subject"] a').attr('target','_blank');
+	$('#dataTable tr.work-row td[data-label="Sprint"] a').attr('target','_blank');
+
+	// Sort filter items
+	$('.itemList').each(function(index) {
+		$(this).find('.itemRow').sort(filterSort).appendTo(this);
+	});
+
+	// See if filters have been saved, if so, filter!
+	if (dataObject.options.filters) {
+		var filterArray = dataObject.options.filters.split(',');
+		//console.log(filterArray);
+		$.each(filterArray, function(index, filter) {
+			$('#' + filter).prop('checked',true);
+		});
+		updateFilter();
+	}
+
+	resizeContainer();
+
+	// Re-order (if needed)
+	if (currentOrder !== 'Rank' || currentDirection !== 'descending') {
+		var reorderIndex = reorderIndex + 1;
+		//console.log('Re-ordering data based on column "' + currentOrder + '" (' + currentDirection + '): ' + reorderIndex);
+		reorderData(reorderIndex, currentDirection);
+	} else {
+		calcNumItems();
+		hideLoader();
+	}
+
+	chartAllocations();
+	chartRecordTypes();
+}
+
+function filterSort(a, b){
+	var an = padNumbers($(a).attr('data-label').toLowerCase()), bn = padNumbers($(b).attr('data-label').toLowerCase());
+	return an > bn ? 1 : -1;
+}
+
+function alphaSort(a, b) {
+	var an = padNumbers(a.value.toLowerCase()), bn = padNumbers(b.value.toLowerCase());
+	return an > bn ? 1 : -1;
+}
+
+function sprintSort(a, b) {
+	var an = padNumbers(a.Start_Date__c.toLowerCase()), bn = padNumbers(b.Start_Date__c.toLowerCase());
+	return an > bn ? -1 : 1;
+}
+
+function dateSort(a, b) {
+	var date1 = new Date(a.value);
+    var date2 = new Date(b.value)
+    if(date1 < date2) {
+       return -1;
+    } else if(date1 > date2) {
+       return 1;
+    } else {
+       return 0;
+    }
+}
+
+function nameSort(a, b) {
+	var an = padNumbers(a.Name.toLowerCase()), bn = padNumbers(b.Name.toLowerCase());
+	return an > bn ? 1 : -1;
+}
+
+function padNumbers(string, length) {
+    if (!length) {
+        length = 10;
+    }
+
+    return string.replace(/(\d+(\S\d+)*)/g, function(m) {
+        var delimiter, decimalLength;
+        //console.log('------------------------------');
+        //console.log(m);
+        // preserve decimal delimiter
+        m = m.replace(/(\D)(\d+)$/, function(m, delim, num) {
+            delimiter = delim;
+            decimalLength = num.length;
+            return '###' + num;
+        });
+
+        // if decimal delimiter occurs multiple times
+        // it is not a decimal delimiter, but thousand delimiter
+        if (delimiter && m.indexOf(delimiter) > -1) {
+            m = m.replace('###', '');
+        } else {
+            // TODO: decide what to do with decimals
+            // that are 3-accurate - might be german thousand-delim
+        }
+
+        // remove thousand delimiters
+        m = m.replace(/[^0-9#]/g, '');
+
+        // left-padd integer
+        m = m.replace(/^\d+/, function(m) {
+            while (m.length < length) {
+                m = "0" + m;
+            }
+
+            return m;
+        });
+
+        // add decimal component
+        if (m.indexOf('#') < 0) {
+            m += "###0";
+        }
+
+        // right-padd decimal
+        m = m.replace(/#(\d+)$/, function(tmp, m) {
+            while (m.length < length) {
+                m += "0";
+            }
+
+            return m;
+        });
+
+        //console.log(m);
+        return m;
+    });
+}
+
+function requestFullscreen(elem) {
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+
+function calcNumItems() {
+	if (dataObject.options.showDebugInfo) { console.log('calculating'); }
+	// Number of selected items
+	var numItems = $('#workTable tbody tr.work-row:visible').length;
+	var totalItems = $('#workTable tbody tr.work-row').length;
+	if (numItems != totalItems) {
+		$('#numItems').html('<b>' + numItems + '</b> of <b>' + totalItems + '</b> items');
+	} else {
+		$('#numItems').html('<b>' + totalItems + '</b> items');
+	}
+
+	// Sorted by
+	var columnPosition = Math.max($('#header-fixed th.ascending').index(), $('#header-fixed th.descending').index());
+	var selectedColumnLabel = $('#header-fixed').find('th:eq(' + columnPosition + ')').attr('data-label');
+	$('#sortLabel').text(selectedColumnLabel);
+
+	// Count Story Points
+	if ($('#dataTable tr.work-row.selected').length > 0) {
+		$('#boxMassEdit #massEditNone').hide();
+		$('#boxMassEdit #massEditOptions').show();
+		$('#boxMassEdit #massEditOptions form')[0].reset();
+		$('#storyPointsCount').show();
+		var storyPointsSelected = 0;
+		$('#dataTable tr.work-row.selected').each(function(workIndex) {
+			var rowStoryPoints = $(this).attr('data-points');
+			if ($.isNumeric(rowStoryPoints)) {
+				storyPointsSelected += parseInt(rowStoryPoints);
+			}
+		});
+		$('#storyPointsCount span').text(storyPointsSelected);
+	} else {
+		$('#boxMassEdit #massEditNone').show();
+		$('#boxMassEdit #massEditOptions').hide();
+		$('#storyPointsCount').hide();
+		$('#storyPointsCount span').text(null);
+	}
+
+	// Report on filters
+	if ($('#boxFilter input[type=checkbox]:checked').length > 0) {
+		$('#buttonFilter').addClass('tristate');
+		$('#filterCount').show();
+		var filterLabels = [];
+		$('#boxFilter input[type=checkbox]:checked').each(function(index) {
+			var filterLabel = $(this).closest('.itemRow').attr('data-label');
+			var filterTopic = $(this).closest('.filterTopic').attr('data-label');
+			//filterLabels.push(filterTopic + ': <b>' + filterLabel + '</b>');
+			filterLabels.push('<b>' + filterLabel + '</b>');
+		});
+		$('#filterCount span').html('Filtered by ' + filterLabels.join(", "));
+	} else {
+		$('#buttonFilter').removeClass('tristate');
+		$('#filterCount').hide();
+	}
+
+	// Story Point Line
+	$('tr.sprintline').remove();
+	var storyPointsColumnPosition = $('#header-fixed tr th[data-label="Points"]').index();
+    var numColumns = $('#dataTable').find('thead th:visible').length;
+	if (dataObject.options.showVelocityLine && selectedColumnLabel == 'Sprint') {
+		var sprintVelocity = 0;
+		var sprintStoryPoints = 0;
+		var sprintLineShown = false;
+
+		$('#workTable tr').each(function(index) {
+			if ($(this).hasClass('group')) {
+				sprintVelocity = dataObject.options.averageVelocity;
+				sprintStoryPoints = 0;
+				sprintLineShown = false;
+				//console.log('sprint found: ' + $(this).attr('data-value') + ' - velocity: ' + sprintVelocity);
+			} else if ($(this).hasClass('work-row')) {
+				var rowStoryPoints = parseInt($(this).find('td:eq(' + storyPointsColumnPosition + ')').text()) || 0;
+				sprintStoryPoints += rowStoryPoints;
+				//console.log('work item found (' + sprintStoryPoints + ') (' + rowStoryPoints + ')');
+				if (sprintLineShown == false && sprintStoryPoints > sprintVelocity) {
+					$('<tr class="sprintline"><td colspan="' + numColumns + '"></td></tr>').insertBefore($(this));
+					sprintLineShown = true;
+				}
+
+			}
+		});
+	} else if (dataObject.options.showVelocityLine && selectedColumnLabel == 'Rank') {
+		var sprintVelocity = dataObject.options.averageVelocity;
+		var sprintStoryPoints = 0;
+
+		$('#workTable tr.work-row').each(function(index) {
+				var rowStoryPoints = parseInt($(this).find('td:eq(' + storyPointsColumnPosition + ')').text()) || 0;
+				sprintStoryPoints += rowStoryPoints;
+				if (sprintStoryPoints > sprintVelocity) {
+					$('<tr class="sprintline"><td colspan="' + numColumns + '"></td></tr>').insertBefore($(this));
+					sprintStoryPoints = rowStoryPoints;
+				}
+		});
+	}
+
+
+}
+</script>
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','true', 'false')}">
+<script>
+// SFX
+$('#dataTable').scroll(function() {
+	if ($(this).scrollTop() > 5) {
+		$('#header-fixed').addClass('shadow');
+	} else {
+		$('#header-fixed').removeClass('shadow');
+	}
+
+	var leftScroll = $('#dataTable').scrollLeft();
+	$('#header-fixed').css('left','-' + leftScroll + 'px');
+	$('#dataTable tr.group td').css('padding-left', (leftScroll + 24) + 'px')
+});
+
+function resizeContainerInside() {
+	//console.log('resizeContainerInside (SFX)');
+	if ($('#sideContainer').is(':visible')) {
+		$('#dataTable,#dataTable table').width($(window).width() - $('#sideContainer').width());
+	} else {
+		$('#dataTable,#dataTable table').width($(window).width());
+	}
+
+	$('#dataTable,.sideContainerBox').outerHeight($(window).height() - $('.slds-page-header').outerHeight());
+	//$('#sideContainer').css('top', $('#dataTable').offset().top + 'px');
+	$('html').addClass('fullscreen').addClass('issfx');
+}
+</script>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}">
+<script>
+// Aloha
+$('#dataTable').scroll(function() {
+	var isFullscreen = $('html').hasClass('fullscreen');
+
+	if (isFullscreen && $(this).scrollTop() > 5) {
+		$('#header-fixed').addClass('shadow');
+	} else {
+		$('#header-fixed').removeClass('shadow');
+	}
+
+	var leftScroll = $('#dataTable').scrollLeft();
+	var bodyMargin = isFullscreen ? 0 : 20;
+	$('#header-fixed.fixed').css('margin-left','10px');
+	$('#header-fixed').css('left','-' + leftScroll + 'px').css('clip','rect(0px ' + ($(window).width() - bodyMargin + leftScroll) + 'px 50px ' + leftScroll + 'px)')
+	$('#dataTable tr.group td').css('padding-left', (leftScroll + 24) + 'px')
+});
+
+function resizeContainerInside() {
+	//console.log('resizeContainerInside (Aloha)');
+
+	var leftScroll = $('#dataTable').scrollLeft();
+	$('#header-fixed').css('clip','rect(0px ' + ($(window).width()-20+leftScroll) + 'px 50px ' + leftScroll + 'px)') // TODO: Is this needed?
+
+	if ($('#sideContainer').is(':visible')) {
+		$('#dataTable,#dataTable table').width($('body').width() - $('#sideContainer').width());
+	} else {
+		$('#dataTable,#dataTable table').width($('body').width());
+	}
+
+	$('#dataTable').css('min-height', ($(window).height() - 300) + 'px');
+	//$('#sideContainer').height( $('#dataTable').height()+20 + 'px');
+	$('#sideContainer').height(($(window).height()-$('#header-fixed').position().top) + 'px');
+}
+
+function scrolling() {
+	//console.log('window scrolling');
+	// Hide dropdowns
+	//if (!$('.slds-page-header').hasClass('fixed')) {
+		hideDropdowns();
+	//}
+
+	// Setup cool header stuff
+	var offsetFromBottom = $(document).height() - $('.bPageFooter').offset().top;
+	var endOfDocument = $(document).height() - offsetFromBottom;
+	var maxScroll = $(window).height() + $(window).scrollTop();
+
+	if ($(window).scrollTop() >= 114) {
+		// Fixed Header
+		$('.slds-page-header').addClass('fixed');
+		$('#dataTable').css('margin-top','111px');
+		$('#sideContainer,#header-fixed').addClass('fixed').css('top',$('.slds-page-header').outerHeight() + 'px');
+		$('#header-fixed.fixed').addClass('shadow').css('margin-left','10px').css('left','-' + $('#dataTable').scrollLeft() + 'px');
+		$('#sideContainer').height(($(window).height()-$('#header-fixed').position().top) + 'px');
+	} else {
+		// Not Fixed Header
+		$('.slds-page-header').removeClass('fixed');
+		$('#header-fixed').removeClass('fixed shadow').css('margin-left','0px').css('top', $('#dataTable').position().top + 'px');
+		$('#dataTable').css('margin-top','');
+		$('#sideContainer').removeClass('fixed');
+	}
+}
+
+$(window).on('scroll', scrolling);
+</script>
+</apex:outputPanel>
+<script>
+var headerOffset = $('.bodyDiv').offset().top + 3;
+
+function resizeContainer() {
+	resizeContainerInside();
+
+	$('#sideContainer').css('top', $('#header-fixed').position().top + 'px');
+
+	$("#header-fixed").empty();
+	var header = $("#dataTable table > thead").clone();
+	var fixedHeader = $("#header-fixed").append(header).css('top', $('#dataTable').position().top + 'px');
+
+	$("#workTable > thead > tr > th").each(function(index) {
+		var upIndex = index + 1;
+		$('#header-fixed > thead > tr > th:nth-child(' + upIndex + ')').css('width', $(this).outerWidth() + 'px');
+	});
+
+	$("#header-fixed").width($('#workTable').width());
+
+	if ($('html').hasClass('fullscreen')) {
+		//headerOffset = 0;
+        $('#dataTable').height($(window).height());
+	} else {
+		if ($(window).scrollTop() >= 114) {
+			$('#header-fixed').addClass('fixed').css('top',$('.slds-page-header').outerHeight() + 'px');
+		} else {
+		}
+        $('#dataTable').css('height','auto');
+        $('body').css('overflow-x','hidden').css('overflow-y','auto');
+	}
+}
+
+$(window).on('resize', resizeContainer);
+$(window).bind('beforeunload', function(){
+	if ($('#dataTable .notsaved').length > 0) {
+		return 'You have unsaved changes!';
+	}
+});
+
+var loader = '<div class="slds-spinner--small"><img src="{!URLFOR($Resource.SLDS091, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." /></div>';
+var nodata = '<div class="nodata">No data to display</div>';
+var dataerror = '<div class="nodata">Error loading chart</div>';
+
+//------------------------------------------------------------------------------------------------------------
+// SPRINT BURNDOWN CHART
+//------------------------------------------------------------------------------------------------------------
+function chartSprint(sprintId,sprintLabel) {
+	$('.sideContainerBox').hide();
+	$('#sideContainer,#boxCharts').show();
+    $('#boxCharts div.chart').hide();
+	$('#buttonChart').closest('.slds-button-group').find('button.slds-is-selected').removeClass('slds-is-selected');
+	$('#buttonChart').addClass('slds-is-selected');
+	$('#boxCharts .chartTitle').removeClass('selected');
+	$('#boxCharts div[data-id="' + sprintId + '"]').addClass('selected');
+	$('.chartTitle use').attr('xlink:href',"{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#right')}");
+	$('#boxCharts div[data-id="' + sprintId + '"]').find('use').attr('xlink:href',"{!URLFOR($Resource.SLDS091, '/assets/icons/utility-sprite/svg/symbols.svg#down')}");
+
+    $('#boxCharts div[data-id="' + sprintId + '"]').closest('.chartGroup').find('div.chart').empty().show().append(loader);
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.getSprintChart}', sprintId, function(result, event) {
+		if (event.status) {
+			var chartObject = JSON.parse(result);
+			console.log(chartObject);
+
+			if (chartObject.xAxis.categories.length > 0) {
+			    $('#boxCharts div[data-id="' + sprintId + '"]').closest('.chartGroup').find('div.chart').empty().show().highcharts({
+					chart: {
+			            width: 300,
+			            height: 250
+			        },
+			        title: {
+			            text: 'Sprint Burndown',
+			            style: {
+		                            fontSize: '12px'
+		                        }
+			        },
+			        legend: {
+			            itemStyle: {
+			                fontSize: '10px'
+			            }
+					},
+			        xAxis: {
+			            categories: chartObject.xAxis.categories
+			        },
+			        yAxis: {
+				        gridLineWidth: 0,
+			            title: {
+			                text: null
+			            },
+			            min: 0
+			        },
+					tooltip: {
+			            formatter: function () {
+		    	            return this.y + ' points';
+						}
+					},
+			        series:
+			        	[{
+				        	name:"Ideal Burndown",
+				        	dashStyle:"Solid",
+				        	data:chartObject.seriesList[0].data,
+				        	color:'#F7B15A',
+				        	marker:{enabled:false},
+					        enableMouseTracking:false
+						},{
+				        	name:"Real Burndown",
+				        	data:chartObject.seriesList[1].data,
+				        	marker: {enabled: false},
+				        	color:'#0070D2',
+				        	dashStyle: 'solid',
+				            zoneAxis: 'x',
+							zones: [{
+								value: chartObject.xAxis.futureIndex
+								}, {
+								dashStyle: 'dot'
+							}],
+				        }],
+				    credits: {
+				        enabled: false
+				    }
+			    });
+			} else {
+				$('#boxCharts div[data-id="' + sprintId + '"]').closest('.chartGroup').find('div.chart').empty().show().append(nodata);
+			}
+
+		} else {
+			console.error('Error fetching chart. Error:' + event.message);
+			$('#boxCharts div[data-id="' + sprintId + '"]').closest('.chartGroup').find('div.chart').empty().show().append(dataerror);
+		}
+	},{ escape:false });
+
+	//chartAllocations('.Sprint-' + sprintId);
+	//chartRecordTypes('.Sprint-' + sprintId);
+    //$('#boxCharts > div#chartTitleVisibleWork').text('Charts based on ' + sprintLabel);
+}
+
+//------------------------------------------------------------------------------------------------------------
+// CHART: ALLOCATIONS
+//------------------------------------------------------------------------------------------------------------
+function chartAllocations(additionalFilters) {
+
+	if ($('#boxCharts').is(':visible')) {
+		var allottedUsers = [];
+		var allottedData = [];
+		var totalStoryPoints = 0;
+		$.each(dataObject.allUsers, function(userIndex, record) {
+			var workSelector = (additionalFilters) ? '#workTable tr.work-row.Assignee-' + record.Id + additionalFilters : '#workTable tr.work-row.Assignee-' + record.Id + ':visible';
+			if ($(workSelector).length > 0) {
+				allottedUsers.push(record.Name);
+				// Get story points from row (when available)
+				var storyPointsSelected = 0;
+				$(workSelector).each(function(workIndex) {
+					var rowStoryPoints = $(this).attr('data-points');
+					if ($.isNumeric(rowStoryPoints)) {
+						storyPointsSelected += parseInt(rowStoryPoints);
+						totalStoryPoints += parseInt(rowStoryPoints);
+					}
+				});
+				allottedData.push(storyPointsSelected);
+			}
+		});
+
+		if (totalStoryPoints == 0) {
+			$('#boxCharts div#allocationChart').css('height','200px').empty().append(nodata);
+		} else {
+			var chartTitle = (additionalFilters) ? 'Sprint Allocation (' + totalStoryPoints + ' Points)' : 'Allocation (' + totalStoryPoints + ' Points)';
+			var chartHeight = (100 + allottedUsers.length * 30);
+			$('#boxCharts div#allocationChart').css('height','auto').empty().highcharts({ // TODO: Height needs to differ based on size of people (20 pixel per person?)
+			    chart: {
+			        type: 'bar',
+			        width: 300,
+			        height: chartHeight
+			    },
+			    title: {
+			        text: chartTitle,
+		            style: {
+		                        fontSize: '12px'
+		                    }
+			    },
+			    xAxis: {
+			        categories: allottedUsers,
+			        title: {
+			            text: null
+			        }
+			    },
+			    yAxis: {
+			        gridLineWidth: 0,
+			        min: 0,
+			        title: {
+			            text: null
+			        },
+			        labels: {
+				        enabled: false
+			        }
+			    },
+				tooltip: {
+			        enabled: false
+				},
+			    plotOptions: {
+			        bar: {
+			            dataLabels: {
+			                enabled: true
+			            }
+			        }
+			    },
+			    legend: {
+				    enabled: false
+			    },
+			    credits: {
+			        enabled: false
+			    },
+			    series: [{
+			        name: 'Story Points',
+			        data: allottedData,
+		        	color:'#0070D2',
+		        	enableMouseTracking: false
+
+			    }]
+			});
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------------------------
+// CHART: RECORD TYPES
+//------------------------------------------------------------------------------------------------------------
+function chartRecordTypes(additionalFilters) {
+	var storyCount = (additionalFilters) ? $(additionalFilters + '.work-story').length : $('.work-story:visible').length;
+	var bugCount = (additionalFilters) ? $(additionalFilters + '.work-bug').length : $('.work-bug:visible').length;
+	var investigationCount = (additionalFilters) ? $(additionalFilters + '.work-investigation').length : $('.work-investigation:visible').length;
+	var totalCount = (additionalFilters) ? $(additionalFilters + '.work-row').length : $('.work-row:visible').length;
+
+	//$('.sideContainerBox').hide();
+	//$('#boxCharts').show();
+	if ($('#boxCharts').is(':visible')) {
+		$('#boxCharts > #chartTitleVisibleWork').text('Charts based on visible work');
+
+		if (totalCount == 0) {
+			$('#boxCharts div#recordTypeChart').css('height','200px').empty().append(nodata);
+		} else {
+			var chartTitle = (additionalFilters) ? 'Work in Sprint (' + totalCount + ' Records)' : 'Visible Work (' + totalCount + ')';
+			$('#boxCharts div#recordTypeChart').css('height','auto').empty().highcharts({
+		        chart: {
+		            type: 'pie',
+		            width: 300,
+		            height: 200
+		        },
+		        title: {
+		            text: chartTitle,
+		            style: {
+		                        fontSize: '12px'
+		                    }
+		        },
+		        tooltip: {
+		            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		        },
+		        plotOptions: {
+		            pie: {
+		                allowPointSelect: true,
+		                cursor: 'pointer',
+		                dataLabels: {
+							enabled: true,
+							format: '{point.y} {point.name}'
+						}
+		            }
+		        },
+			    credits: {
+			        enabled: false
+			    },
+		        series: [{
+		            name: "Types",
+		            colorByPoint: true,
+					enableMouseTracking: false,
+		            data: [{
+			        	color:'#58AE39',
+		                name: "Bugs",
+		                y: bugCount
+		            }, {
+			        	color:'#0070D2',
+		                name: "Stories",
+		                y: storyCount
+		            }, {
+			        	color:'#EB572D',
+		                name: "Investigations",
+		                y: investigationCount
+		            }]
+		        }]
+		    });
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------------------------
+// INIT CHARTS
+//------------------------------------------------------------------------------------------------------------
+var sprintNames = [];
+var sprintVelocities = [];
+var sprintAverage = [];
+
+function initCharts() {
+	sprintNames = [];
+	sprintVelocities = [];
+	sprintAverage = [];
+
+	dataObject.oldSprints.sort(sprintSort); // Sort sprint data
+
+	$.each(dataObject.oldSprints, function(index, sprint) {
+		if (index < 5) {
+			$('#boxCharts').append(chartTitleTemplate({
+				Id:sprint.Id,
+				Name:sprint.Name.substring(0,sprint.Name.indexOf('-'))
+			}));
+		}
+
+		if (index < 10) {
+			var completedPoints = sprint.Completed_Story_Points__c || 0;
+			sprintNames.push(sprint.Name.substring(0,sprint.Name.indexOf('-')));
+			sprintVelocities.push(completedPoints);
+			sprintAverage.push(dataObject.options.averageVelocity);
+		}
+	});
+
+	if (dataObject.options && dataObject.options.numOfSprintsToCalculate) {
+		var initSliderValue = dataObject.options.numOfSprintsToCalculate || sprintNames.length;
+	} else {
+		var initSliderValue = sprintNames.length;
+	}
+
+    if (sprintNames.length < 1) {
+		$('#sprintHistory,#sprintHistoryInfo,#slider-range-max').hide();
+		$('#sprintHistoryEmpty').show();
+    } else {
+	    chartVelocity1(initSliderValue);
+
+		$("#slider-range-max").slider({
+			range: "max",
+			min: 1,
+			max: sprintNames.length,
+			value: initSliderValue,
+			slide: function(event, ui) {
+				chartVelocity1(ui.value);
+				$('#checkboxShowVelocityLine').prop('checked',true);
+			}
+		});
+    }
+};
+
+function chartVelocity1(maxSprints) {
+
+	var newVelocity = 0;
+	for (i = 0; i < maxSprints; i++) {
+		newVelocity += sprintVelocities[i];
+	}
+	newVelocity = Math.round(newVelocity / maxSprints);
+
+	sprintAverage = [];
+	for (i = 0; i < maxSprints; i++) {
+		sprintAverage.push(newVelocity);
+	}
+
+	if (dataObject.options && dataObject.options.averageVelocity) {
+		$("#averageVelocity").val(dataObject.options.averageVelocity);
+	} else {
+		$("#averageVelocity").val(newVelocity);
+	}
+
+	$('#modalVelocitySettingsPoints').text(newVelocity);
+	$('#modalVelocitySettingsSprints').text(maxSprints);
+
+	$('#sprintHistory').highcharts({
+        title: {
+            text: 'Sprint History',
+            align: 'center',
+            style: {
+	            'font-size': '11px'
+            }
+        },
+        chart: {
+            animation: false
+            //type: 'area'
+        },
+        xAxis: {
+            categories: sprintNames
+        },
+        legend: {
+	      enabled: false
+        },
+        yAxis: {
+	        gridLineWidth: 0,
+            title: {
+                text: 'Points'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+            return 'Velocity for <b>' + this.x + '</b> was <b>' + this.y + '</b> pts';
+			}
+        },
+	    credits: {
+	        enabled: false
+	    },
+        series: [{
+		        animation: false,
+		        color: '#0070D2',
+	            name: 'Sprint Velocity',
+	            data: sprintVelocities,
+	            dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false,
+	            zoneAxis: 'x',
+	            marker: {
+                    enabled: true,
+                    symbol: 'circle',
+                    radius: 2
+                },
+	            zones: [{
+	                value: (maxSprints-1)
+	            }, {
+	                dashStyle: 'dot',
+		            color: '#D8DDE6'
+	            }]
+        	},{
+		        //type:'line',
+		        animation: false,
+		        color: '#F7B15A',
+	            name: 'Average Velocity',
+	            data: sprintAverage,
+	            marker: {
+		            enabled: false
+	            },
+	            enableMouseTracking: false
+        	}]
+    });
+}
+
+function chartVelocity2(maxSprints) {
+	var newVelocity = 0;
+	for (i = 0; i < maxSprints; i++) {
+		newVelocity += sprintVelocities[i];
+	}
+	newVelocity = Math.round(newVelocity / maxSprints);
+
+	sprintAverage = [];
+	for (i = 0; i < maxSprints; i++) {
+		sprintAverage.push(newVelocity);
+	}
+
+	$('#velocityChart').empty().highcharts({
+		chart: {
+            width: 300,
+            height: 199
+            //animation: false
+        },
+        title: {
+            text: 'Sprint History',
+            align: 'center',
+            style: {
+	            'font-size': '11px'
+            }
+        },
+        xAxis: {
+            categories: sprintNames
+        },
+        legend: {
+	      enabled: false
+        },
+        yAxis: {
+	        gridLineWidth: 0,
+            title: {
+                text: 'Points'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+	    credits: {
+	        enabled: false
+	    },
+        series: [{
+		        animation: false,
+		        color: '#0070D2',
+	            name: 'Sprint Velocity',
+	            data: sprintVelocities.slice(0,maxSprints),
+	            dataLabels: {
+                    enabled: true
+                },
+                //enableMouseTracking: false,
+	            zoneAxis: 'x',
+	            marker: {
+                    enabled: true,
+                    symbol: 'circle',
+                    radius: 2
+                },
+	            zones: [{
+	                value: (maxSprints-1)
+	            }, {
+	                dashStyle: 'dot',
+		            color: '#D8DDE6'
+	            }],
+		        tooltip: {
+		            formatter: function () {
+		            return 'Velocity for <b>' + this.x + '</b> was <b>' + this.y + '</b> pts';
+					}
+		        }
+        	},{
+		        //type:'line',
+		        animation: false,
+		        color: '#F7B15A',
+	            name: 'Average Velocity',
+	            data: sprintAverage.slice(0,maxSprints),
+	            marker: {
+		            enabled: false
+	            },
+		        tooltip: {
+		            formatter: function () {
+		            return 'Average Velocity <b>' + this.y + '</b> pts';
+					}
+		        }
+	            //enableMouseTracking: false
+        	}]
+    });
+}
+
+function chartThroughput() {
+
+	$('#throughputChart').empty().show().append(loader);
+
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.getThroughputChart}', 4, '{!teamId}', function(result, event) {
+		if (event.status) {
+			var chartObject = JSON.parse(result);
+			console.log(chartObject);
+
+		    if (chartObject.xAxis.categories.length > 0) {
+			    $('#throughputChart').highcharts({
+					chart: {
+			            width: 300,
+			            height: 299,
+			            //animation: false,
+			            type: 'column'
+			        },
+					title: {
+			            text: 'Weekly Throughput',
+			            align: 'center',
+			            style: {
+				            'font-size': '11px'
+			            }
+			        },
+			        xAxis: {
+			            categories: chartObject.xAxis.categories.slice(0,4)
+			        },
+			        yAxis: {
+				        gridLineWidth: 0,
+			            min: 0,
+			            title: {
+			                text: 'Items Closed'
+			            },
+			            stackLabels: {
+			                enabled: true,
+			                style: {
+			                    fontWeight: 'bold',
+			                }
+			            }
+			        },
+			        legend: {
+				        enabled: false,
+			            align: 'center',
+			            verticalAlign: 'bottom',
+			            floating: true,
+			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+			            borderColor: '#CCC',
+			            borderWidth: 1,
+			            shadow: false,
+			            style: {
+				            'font-size': '10px'
+			            }
+			        },
+			        tooltip: {
+			            headerFormat: '<b>{point.x}</b><br/>',
+			            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+			        },
+			        plotOptions: {
+			            column: {
+			                stacking: 'normal',
+			                dataLabels: {
+			                    enabled: true,
+			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+			                    style: {
+			                        textShadow: '0 0 3px black'
+			                    }
+			                }
+			            }
+			        },
+			        series: [{
+			            name: 'Bugs',
+			            data: chartObject.seriesList[0].data.slice(0,4),
+			            color: '#58AE39'
+			        }, {
+			            name: 'Investigations',
+			            data: chartObject.seriesList[2].data.slice(0,4),
+			        	color:'#EB572D'
+			        }, {
+			            name: 'User Stories',
+			            data: chartObject.seriesList[1].data.slice(0,4),
+			        	color:'#0070D2'
+			        }],
+				    credits: {
+				        enabled: false
+				    }
+			    });
+
+			} else {
+				$('#throughputChart').append(nodata);
+			}
+		} else {
+			console.error('Error fetching chart. Error:' + event.message);
+			$('#throughputChart').append(dataerror);
+		}
+	},{ escape:false });
+}
+
+//------------------------------------------------------------------------------------------------------------
+// RELEASE NOTES
+//------------------------------------------------------------------------------------------------------------
+/*var version = 'v1.0';
+var versionNumber = '1.0';
+var releaseNotes = '<ul class="slds-list--dotted"><li><b>Mass Move</b> &mdash; You can now select items from your backlog/backburner and click the mass edit button (pencil) and move those items in bulk to another view.</li></ul>';
+
+$(function() {
+	var checkVersion = getCookie(version);
+	if (checkVersion.length == 0 && !navigator.userAgent.match(/Mobile/i)) {
+		renderReleaseNotes();
+	}
+});
+
+$("#releaseNotes button").on("click", function() {
+	setCookie(version,'seen',365);
+});
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+
+function renderReleaseNotes() {
+	$('#releaseNotes .slds-text-heading--medium').text('Release Notes - v ' + versionNumber);
+	$('#releaseNotes .slds-modal__content > div').html(releaseNotes);
+	$('#releaseNotes').addClass('slds-fade-in-open');
+	$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+}
+
+function showReleaseNotes() {
+	document.cookie = version + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+	renderReleaseNotes();
+}*/
+
+
+function renderUserAlert(type, selectedText, selectedId) {
+	$('#nofityUserDialog .slds-text-heading--medium').text('Showing Backlog view');
+	var msg = 'No work items found for ' + type.charAt(0).toUpperCase() + type.slice(1) + ' <a href="/'+selectedId+'">' + selectedText + '</a>, showing Backlog Work items';
+	$('#nofityUserDialog .slds-modal__content > div').html(msg);
+	$('#nofityUserDialog').addClass('slds-fade-in-open');
+	$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+}
+
+//------------------------------------------------------------------------------------------------------------
+// CHEAT SHEET
+//------------------------------------------------------------------------------------------------------------
+var kkeys = [], konami = "38,38,40,40,37,39,37,39";
+$(document).keydown(function(e) {
+	kkeys.push(e.keyCode);
+	if ( kkeys.toString().indexOf( konami ) >= 0 ){
+		kkeys = [];
+		if (dataObject.options.showDebugInfo) {
+			$('#checkboxShowDebugInfo').prop('checked', true);
+		}
+		$('#modalSecretSettings').addClass('slds-fade-in-open');
+		$('.slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+	}
+});
+
+$('#checkboxShowDebugInfo').on('change', function(e) {
+	dataObject.options.showDebugInfo = $(this).is(':checked');
+	console.log('Debug in console: ' + dataObject.options.showDebugInfo);
+});
+
+$('#modalSecretSettings button').on("click", function() {
+	Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}', JSON.stringify({columns:dataObject.columns, options:dataObject.options}), function(result, event) {
+		if (event.status) {
+			console.log('User preference save successfully');
+			refreshBoard();
+		} else {
+			console.error('WARNING: Failed to save User Preferences.  Error:' + event);
+		}
+	},{ escape:false });
+});
+
+// Org ID: {!$organization.id}
+</script>
+<apex:outputPanel layout="none" rendered="{!IF($Organization.Id == '00DT0000000DpvcMAC','true', 'false')}">
+
+
+<script>
+//------------------------------------------------------------------------------------------------------------
+// ANALYTICS WILL BE RESTORED HERE
+//------------------------------------------------------------------------------------------------------------
+
+</script>
+
+
+</apex:outputPanel>
+</apex:outputPanel>
+
+</div>
+
+</body>
+</html>
+</apex:page>

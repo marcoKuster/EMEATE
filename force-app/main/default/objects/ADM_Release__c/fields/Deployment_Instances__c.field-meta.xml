@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deployment_Instances__c</fullName>
+    <description>Instances to receive this release.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the instances to receive this release as a space separated list (1 space between each instance). For example: NA1 NA2 CS2</inlineHelpText>
+    <label>Deployment Instances</label>
+    <length>2000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

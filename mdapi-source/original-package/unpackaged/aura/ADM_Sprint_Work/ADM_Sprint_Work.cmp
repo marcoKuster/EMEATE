@@ -1,0 +1,57 @@
+<aura:component controller="ADM_SprintVirtualWallController" >
+    <ltng:require styles="/resource/dragula_min_css_3_7_2"
+                  scripts="{!join(',',
+                    $Resource.dragula_min_js_3_7_2,
+                    $Resource.ADM_SprintShared_Resource,
+                    $Resource.ADM_Util)}"
+                    afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="userInfo" type="Object"/>
+    <aura:attribute name="onMousemoveCB" type="Object"/>
+    <aura:attribute name="height" type="String" description="Include units (i.e. 'px')" default="0px"/>
+
+    <aura:handler event="c:ADM_Event_SprintData_Initialized" action="{!c.handleSprintDataInitialized}"/>
+    <aura:handler event="c:ADM_Toggle_TaskView" action="{!c.toggleHeaderRow}"/>
+
+    <div aura:id="adm-sprint-work-container" style="{! 'height:' + v.height }">
+        <div aura:id="headerRow" class="slds-grid sprint-header-row">
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-gripper slds-truncate" title="GRIPPER"></div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default slds-size--1-of-12 slds-truncate" title="ID">ID</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-work-type slds-truncate" title="TYPE">TYPE</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-work-subject slds-truncate" title="SUBJECT">SUBJECT</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-work-status" title="STATUS">STATUS</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-work-assignee slds-truncate" title="ASSIGNEE">ASSIGNEE</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-work-qa slds-truncate" title="QA">QA</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default slds-size--1-of-12 slds-truncate" title="THEMES">THEMES</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default slds-size--1-of-12 slds-truncate" title="BUILD">BUILD</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default slds-size--1-of-12" title="PTS">PTS</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default sprint-actions slds-truncate" title="Work Actions"></div>
+        </div>
+        <div aura:id="taskHeaderRow" class="slds-grid sprint-header-row">
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default adm-task-work-col slds-truncate" title="WORK"></div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default adm-task-card-col slds-truncate" title="NOT STARTED">NOT STARTED</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default adm-task-card-col slds-truncate" title="IN PROGRESS">IN PROGRESS</div>
+            <div class="slds-p-horizontal--small slds-p-vertical--xx-small slds-border--bottom slds-theme--default adm-task-card-col slds-truncate" title="COMPLETED">COMPLETED</div>
+        </div>
+        <div aura:id="workItemRows" class="slds-theme_default slds-scrollable slds-grid" style="{! 'width:100%;flex-direction:column;height:' + v.height }">
+            <aura:iteration items="{!v.sprintData.sprintWork}" var="work">
+                    <c:ADM_Sprint_Work_Row
+                    work="{!work}"
+                    nextSprintId="{!v.sprintData.nextSprintId}"
+                    sprintId="{!v.sprintData.sprintInfo.Id}"
+                    storyPointScale="{!v.sprintData.storyPointScale}"
+                    scrumTeamMembers="{!v.sprintData.scrumTeamMembers}"
+                    userPreferences="{!v.sprintData.userPreferences}"
+                    userPermSets="{!v.userInfo.permSets}"
+                    statusTypes="{!v.sprintData.statusTypes}"
+                    teamIsCapex="{!v.sprintData.sprintInfo.Scrum_Team__r.Capex_Enabled__c}"
+                    teamId="{!v.sprintData.sprintInfo.Scrum_Team__c}"
+                    wallPreferences="{!v.sprintData.wallPreferences}"
+                    nameSpace="{!v.sprintData.nameSpace}"
+                />
+            </aura:iteration>
+        </div>
+        <c:ADM_Work_Modal />
+    </div>
+</aura:component>

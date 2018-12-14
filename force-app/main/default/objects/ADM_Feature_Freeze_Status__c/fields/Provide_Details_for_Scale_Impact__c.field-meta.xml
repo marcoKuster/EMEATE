@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provide_Details_for_Scale_Impact__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Provide details if Scale Impact is not documented.</inlineHelpText>
+    <label>Provide Details for Scale Impact</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

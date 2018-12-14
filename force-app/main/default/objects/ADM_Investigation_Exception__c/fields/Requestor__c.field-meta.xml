@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requestor__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Person who created the exception. Value entered automatically upon saving the record.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Person who created the exception. Value entered automatically upon saving the record.</inlineHelpText>
+    <label>Requestor</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Investigation_Exceptions</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

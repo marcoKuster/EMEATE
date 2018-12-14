@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Second_Chatter_Post_Email__c</fullName>
+    <description>Email address to send an external post of a Release Alert, for example, an external Chatter group. Intended for sending Release Alerts to a Chatter group in a different Salesforce org.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter an email address to which Release Alerts will be posted when the &quot;Post Release Alert&quot; button is selected, for example, an external Chatter group.</inlineHelpText>
+    <label>External Post Email</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Email</type>
+    <unique>false</unique>
+</CustomField>

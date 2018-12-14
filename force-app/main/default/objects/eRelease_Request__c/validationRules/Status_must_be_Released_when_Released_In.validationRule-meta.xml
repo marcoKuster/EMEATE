@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_must_be_Released_when_Released_In</fullName>
+    <active>true</active>
+    <description>When the Released In field is used, the eRelease Status must be &#39;Released&#39; or &#39;Approved&#39;.</description>
+    <errorConditionFormula>AND(
+  NOT(
+      OR(ISPICKVAL(eRelease_Status__c, &quot;Released&quot;),   
+         ISPICKVAL(eRelease_Status__c, &quot;Approved&quot;))),  
+  NOT(ISBLANK(Released_In__c))
+)</errorConditionFormula>
+    <errorDisplayField>eRelease_Status__c</errorDisplayField>
+    <errorMessage>eRelease Status must be &#39;Released&#39; or &#39;Approved&#39; when Released In is specified. Please clear the Released In field or set the eRelease Status to &#39;Released&#39; or &#39;Approved&#39;.</errorMessage>
+</ValidationRule>

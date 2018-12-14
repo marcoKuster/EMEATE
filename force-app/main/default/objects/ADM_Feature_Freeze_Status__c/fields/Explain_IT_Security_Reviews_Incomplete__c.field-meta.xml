@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_IT_Security_Reviews_Incomplete__c</fullName>
+    <description>IT Freature Freeze Criteria to explain any Security Reviews, testing or fixes complete.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>IT Freature Freeze Criteria to explain any Security Reviews, testing or fixes complete.</inlineHelpText>
+    <label>Explain IT Security Reviews Incomplete</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

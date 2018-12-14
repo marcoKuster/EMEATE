@@ -1,0 +1,5 @@
+<apex:page id="bugDetail" standardController="ADM_Work__c" extensions="ADM_UserStoryExtension,ADM_WorkRemoteActionsExtension" showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+<apex:include pageName="ADM_WorkSds" />
+
+</apex:page>

@@ -1,0 +1,20 @@
+<aura:component extends="c:ADM_Sprint_Shared" access="global" controller="ADM_SprintVirtualWallController" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:appHostable">
+    <aura:attribute name="sidebarHeight" type="String" description="include units" default="0px" />
+    <aura:attribute name="workRowsHeight" type="String" description="include units" default="0px" />
+    <aura:attribute name="sidebarOpen" type="Boolean" />
+    <aura:attribute name="utilityBarHeight" type="Integer" default="0" description="Needed to adjust the height of the table and sidebar if the utility bar is there."/>
+    <aura:handler event="aura:locationChange" action="{!c.locationChangeHandler}"/>
+    <aura:handler event="c:ADM_Event_Toggle_Sidebar" action="{!c.toggleSidebar}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds fadeIn">
+        <div aura:id="headerWrapperContainer" class="sprint-header-wrapper">
+            <c:ADM_Sprint_VirtualWall_Header sprintData="{!v.sprintData}"/>
+        </div>
+
+        <div class="sprint-body-wrapper slds-grid slds-grid_reverse slds-scrollable">
+            <c:ADM_Sidebar sprintData="{!v.sprintData}" height="{! v.sidebarHeight }"/>
+            <c:ADM_Sprint_Work sprintData="{!v.sprintData}" userInfo="{!v.userInfo}" height="{! v.workRowsHeight }"/>
+        </div>
+    </div>
+</aura:component>

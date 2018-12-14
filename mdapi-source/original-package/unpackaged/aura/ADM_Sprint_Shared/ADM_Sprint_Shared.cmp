@@ -1,0 +1,44 @@
+<aura:component controller="ADM_SprintVirtualWallController" extensible="true">
+    <ltng:require scripts="{!join(
+                           ',',$Resource.cometd_2_2_0,
+                          $Resource.jquery_1_7_2_min,
+                          $Resource.json2,$Resource.jquery_cometd_2_2_0,
+                          $Resource.ADM_SprintShared_Resource)}" afterScriptsLoaded="{!c.doInit}"
+        />
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="sprintId" type="String"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    <aura:attribute name="timeoutToastTimerId" type="String"/>
+    <aura:attribute name="userInfo" type="Object"/>
+    <aura:attribute name="apiVersion" type="Integer" required="true"
+                    description="API Version" default="36"/>
+    <aura:attribute name="topics" type="String" required="true"
+                    description="PushTopic names" default="WorkUpdates"/>
+    <aura:attribute name="dataRefreshQueue" type="String"/>
+    
+    <aura:handler event="aura:locationChange" action="{!c.locationChangeHandler}"/>
+
+    <aura:registerEvent name="updatePlannedVelocity" type="c:ADM_Event_Update_PlannedVelocity"/>
+    <aura:registerEvent name="updateTaskData" type="c:ADM_Event_Update_TaskData"/>
+    <aura:registerEvent name="updateSprintData" type="c:ADM_Event_Update_SprintData"/>
+
+
+    <aura:handler event="c:ADM_Event_Update_SprintData" action="{!c.updateSprintData}"/>
+    <!-- contain events to within this component instance -->
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Update_ActualVelocity" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Update_PlannedVelocity" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_SprintData_Initialized" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Filter_Work" action="{!c.stopEventPropagation}"/> 
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Open_Modal" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Toggle_TaskView" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Toggle_Sidebar" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Update_SprintData" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Delete_Unsaved_Task" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_New_Task" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Show_Spinner" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Update_TaskData" action="{!c.stopEventPropagation}"/>
+    <aura:handler includeFacets="true" phase="bubble" event="c:ADM_Event_Update_User_Pref" action="{!c.stopEventPropagation}"/>
+
+    <div>{!v.body}</div>
+
+</aura:component>

@@ -1,0 +1,39 @@
+.THIS button span.slds-avatar--circle {
+    pointer-events: none;
+}
+
+.THIS .check-col {
+    visibility: hidden;
+}
+
+.THIS .check-col.col-checked {
+    visibility: visible;
+}
+
+.THIS .selected {
+    font-weight: bold;
+    color: #000;
+}
+
+.THIS .slds-dropdown__item > button:hover, .THIS .slds-dropdown__item > button:focus {
+    outline: 0;
+    text-decoration: none;
+    background-color: rgb(244, 246, 249);
+}
+
+.THIS .slds-dropdown__item > button {
+    display: flex;
+}
+
+.THIS .slds-dropdown__item > button > span.slds-truncate {
+    width: 225px;
+    text-align: left;
+}
+
+.THIS .slds-button:focus {
+    box-shadow: none;
+}
+
+.THIS .slds-button .slds-avatar .slds-icon-utility-adduser {
+    line-height: 1.875rem;
+}

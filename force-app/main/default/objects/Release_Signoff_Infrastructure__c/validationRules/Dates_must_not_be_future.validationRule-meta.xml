@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dates_must_not_be_future</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR ( Release_Approved__c &gt; TODAY(),
+Chatter_Now_Signoff__c  &gt; TODAY(),
+  Dev_Mgr_Signoff__c  &gt; TODAY(),
+ Dev_VP_Signoff__c  &gt; TODAY(),
+Development_Engineering_Signoff__c &gt; TODAY(),
+ FFX_Signoff__c  &gt; TODAY(),
+ LiveAgent_Signoff__c &gt; TODAY(),
+ M_M_Signoff__c &gt; TODAY(),
+ OSC_Signoff__c &gt; TODAY(),
+ OSC_Exec_Signoff__c &gt; TODAY(),
+ PODSquad_PO_Signoff__c &gt; TODAY(),
+ QE_Mgr_Signoff__c &gt; TODAY(),
+ QE_VP_Signoff__c &gt; TODAY(),
+ Release_Management_Signoff__c &gt; TODAY(),
+ Release_Management_Exec_Signoff__c &gt; TODAY(),
+ Sandbox_Signoff__c &gt; TODAY(),
+ Search_Signoff__c &gt; TODAY(),
+ Sites_Signoff__c &gt; TODAY(),
+ Service_Delivery_TechOps_Signoff__c   &gt; TODAY(),
+ TBR_Signoff__c &gt; TODAY(),
+ Technology_Exec_Signoff__c &gt; TODAY(),
+ Technology_Products_Operations_Signoff__c &gt; TODAY(),
+ TechOps_Eng_VP_Signoff__c &gt; TODAY(),
+ TechOps_Operations_Signoff__c &gt; TODAY())</errorConditionFormula>
+    <errorMessage>Signoff dates cannot be in the future.</errorMessage>
+</ValidationRule>

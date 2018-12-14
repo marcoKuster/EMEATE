@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>KMSTowned</fullName>
+    <columns>NAME</columns>
+    <columns>Actual_Coverage__c</columns>
+    <columns>Target_Coverage__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Scrum_Team__c</field>
+        <operation>equals</operation>
+        <value>Search</value>
+    </filters>
+    <label>Search owned</label>
+</ListView>

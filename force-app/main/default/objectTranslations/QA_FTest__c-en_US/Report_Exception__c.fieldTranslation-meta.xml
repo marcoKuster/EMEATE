@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Exclude from Report --></label>
+    <name>Report_Exception__c</name>
+    <picklistValues>
+        <masterLabel>Generated Test</masterLabel>
+        <translation><!-- Generated Test --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>PLSQL Findbugs</masterLabel>
+        <translation><!-- PLSQL Findbugs --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Unit Test</masterLabel>
+        <translation><!-- Unit Test --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

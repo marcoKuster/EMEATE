@@ -1,0 +1,18 @@
+.THIS .sprintAllocationContainer {
+    width: 300px;
+}
+
+.THIS .select-view-by, .THIS .select-view-by .slds-form-element__control{
+    display: inline-block;
+}
+
+.THIS .select-view-by .slds-form-element__label {
+    display: none;
+}
+
+.THIS .tooltip {
+    position:absolute;
+    bottom:150%;
+    left: -100%;
+    min-width:5rem;
+}

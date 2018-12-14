@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Related Work</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Related Works</value>
+    </caseValues>
+    <fields>
+        <label><!-- Child Scheduled Build --></label>
+        <name>Child_Scheduled_Build__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child Scrum Team --></label>
+        <name>Child_Scrum_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child Sprint --></label>
+        <name>Child_Sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child Subject --></label>
+        <name>Child_Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- The closed flag for the child work record.  Will be 0 or 1 depending on the status of the work record. --></help>
+        <label><!-- Child Work Closed --></label>
+        <name>Child_Work_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child Work --></label>
+        <name>Child_Work__c</name>
+        <relationshipLabel><!-- Parent Work Records --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is child a duplicate of parent? --></label>
+        <name>Duplicate__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Scheduled Build --></label>
+        <name>Parent_Scheduled_Build__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Scrum Team --></label>
+        <name>Parent_Scrum_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Sprint --></label>
+        <name>Parent_Sprint__c</name>
+    </fields>
+    <fields>
+        <help><!-- The closed flag for the parent work record. Will be 0 or 1 depending on the status of the work record. --></help>
+        <label><!-- Parent Work Closed --></label>
+        <name>Parent_Work_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Work Subject --></label>
+        <name>Parent_Work_Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Work --></label>
+        <name>Parent_Work__c</name>
+        <relationshipLabel><!-- Child Work Records --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sort Order --></label>
+        <name>Sort_Order__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

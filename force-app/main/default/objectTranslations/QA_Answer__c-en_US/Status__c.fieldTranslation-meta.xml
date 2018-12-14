@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Status --></label>
+    <name>Status__c</name>
+    <picklistValues>
+        <masterLabel>Considered</masterLabel>
+        <translation><!-- Considered --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Does not apply</masterLabel>
+        <translation><!-- Does not apply --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Not Started</masterLabel>
+        <translation><!-- Not Started --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under Consideration</masterLabel>
+        <translation><!-- Under Consideration --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

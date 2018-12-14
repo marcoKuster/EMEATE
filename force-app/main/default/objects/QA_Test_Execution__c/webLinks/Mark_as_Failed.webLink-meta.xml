@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mark_as_Failed</fullName>
+    <availability>online</availability>
+    <description>Mark the current Test Execution as failed.</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Mark as Failed</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT (&quot;/soap/ajax/9.0/connection.js&quot;)}
+var t = new sforce.SObject(&quot;QA_Test_Execution__c&quot;);
+t.id = &#39;{!QA_Test_Execution__c.Id}&#39;;
+
+var num = {!QA_Test_Execution__c.Number_of_Executions__c}
+t.Status__c = &#39;Failed&#39;;
+t.Number_Of_Executions__c = parseInt(num)+1;
+t.Date_of_Last_Execution__c = new Date();
+sforce.connection.update([t]);
+window.location.reload();</url>
+</WebLink>

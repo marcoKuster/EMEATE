@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Minute_Offset_when_using_Start_Time</fullName>
+    <active>true</active>
+    <description>When Start Time is being used, Minute Offset cannot be specified.</description>
+    <errorConditionFormula>NOT(ISBLANK(Minute_Offset__c)) &amp;&amp; NOT(ISBLANK(Start_Time__c))</errorConditionFormula>
+    <errorDisplayField>Minute_Offset__c</errorDisplayField>
+    <errorMessage>When Start Time is being used, Minute Offset cannot be specified. Either clear Start Time and set Day of Week to blank or set  Minute Offset  to blank.</errorMessage>
+</ValidationRule>

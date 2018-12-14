@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Open Modal">
+    <aura:attribute name="modalName" type="String"/>
+    <aura:attribute name="modalData" type="Object"/>
+</aura:event>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Sprint</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Sprints</value>
+    </caseValues>
+    <fields>
+        <label><!-- Backlog --></label>
+        <name>Backlog__c</name>
+    </fields>
+    <fields>
+        <label><!-- Committed Items Completed --></label>
+        <name>Committed_Items_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Committed Items --></label>
+        <name>Committed_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Committed Points --></label>
+        <name>Committed_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Committed Story Points Completed --></label>
+        <name>Committed_Story_Points_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completed Items --></label>
+        <name>Completed_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Velocity --></label>
+        <name>Completed_Story_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completion Committed Items --></label>
+        <name>Completion_Committed_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completion Committed Story Points --></label>
+        <name>Completion_Committed_Story_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completion Items --></label>
+        <name>Completion_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completion Story Points --></label>
+        <name>Completion_Story_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days Remaining --></label>
+        <name>Days_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- Definition of Done Met --></label>
+        <name>Definition_of_Done_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Definition of Ready Met --></label>
+        <name>Definition_of_Ready_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount work time (%) --></label>
+        <name>Discount_Work__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goals --></label>
+        <name>Goals__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours in a work day --></label>
+        <name>Hours_in_a_work_day__c</name>
+    </fields>
+    <fields>
+        <label><!-- NameValidator --></label>
+        <name>NameValidator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Projected Velocity --></label>
+        <name>Projected_Velocity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Burndown Calculated --></label>
+        <name>Release_Burndown_Calc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retrospective --></label>
+        <name>Retrospective__c</name>
+    </fields>
+    <fields>
+        <label><!-- Risks --></label>
+        <name>Risks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scrum Team --></label>
+        <name>Scrum_Team__c</name>
+        <relationshipLabel><!-- Sprints --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sprint Timeframe YYYY.MMx --></label>
+        <name>Sprint_Timeframe__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Workdays --></label>
+        <name>Total_Workdays__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transformed --></label>
+        <name>Transformed__c</name>
+    </fields>
+    <layouts>
+        <layout>Sprint Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Other Information --></label>
+            <section>Other Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Hours in a work day cannot exceed 24 --></errorMessage>
+        <name>Hours_In_A_Work_Day</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Hours in a work day cannot be a negative number --></errorMessage>
+        <name>Hours_In_A_Work_Day_Neg</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Projected velocity cannot be a negative number --></errorMessage>
+        <name>Projected_Velocity_Neg</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The scrum team you selected is not active. --></errorMessage>
+        <name>Scrum_Team_Is_Active</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Your End Date must be after your Start Date --></errorMessage>
+        <name>Verify_end_date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A sprint can&apos;t be longer than one month (31 days). Please correct your end date and click &apos;Save&apos;. --></errorMessage>
+        <name>Verify_length_of_sprint</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Your sprint should follow the format: YYYY.MM(0-9 or a-f) - &lt;Team Name&gt;4 digit year, 2 digit month, optional (0-9 or a-f) - &lt;your team name&gt; --></errorMessage>
+        <name>Verify_name_format</name>
+    </validationRules>
+</CustomObjectTranslation>

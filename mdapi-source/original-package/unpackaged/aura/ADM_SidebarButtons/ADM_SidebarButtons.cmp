@@ -1,0 +1,30 @@
+<aura:component controller="ADM_SprintVirtualWallController">
+    <aura:attribute name="sidebar" type="String" default=""/>
+    <aura:attribute name="sprintData" type="Object"/>
+    <aura:attribute name="showChart" type="Boolean" default="true"/>
+    <aura:attribute name="showChatter" type="Boolean" default="true"/>
+    <aura:attribute name="showFilter" type="Boolean" default="true"/>
+
+    <aura:registerEvent name="toggleSidebar" type="c:ADM_Event_Toggle_Sidebar"/>
+
+    <aura:handler event="c:ADM_Event_SprintData_Initialized" action="{!c.handleSprintDataInitialized}"/>
+    <aura:handler event="c:ADM_Event_Filter_Work" action="{!c.handleUpdatedFilters}"/>
+
+    <div id="sidebarGroup" class="slds-button-group" role="group">
+        <aura:if isTrue="{!v.showFilter}">
+            <button aura:id="sprint-header-filter-button" id="filter" onclick="{!c.switchSidebar}" class="{!'slds-button slds-button--icon-border' + (v.sidebar == 'filter' ? ' sprint-button-selected' : '')}" title="Toggle Filter panel">
+                <lightning:icon iconName="utility:filterList" size="x-small" alternativeText="Filter" class="slds-button__icon"/>
+            </button>
+        </aura:if>
+        <aura:if isTrue="{!v.showChart}">
+            <button id="charts" onclick="{!c.switchSidebar}" class="{!'slds-button slds-button--icon-border' + (v.sidebar == 'charts' ? ' sprint-button-selected' : '')}" title="Toggle Charts panel">
+                <lightning:icon iconName="utility:chart" size="x-small" alternativeText="Charts" class="slds-button__icon"/>
+            </button>
+        </aura:if>
+        <aura:if isTrue="{!v.showChatter}">
+            <button aura:id="sprint-header-chatter-button"  id="chatter" onclick="{!c.switchSidebar}" class="{!'slds-button slds-button--icon-border' + (v.sidebar == 'chatter' ? ' sprint-button-selected' : '')}" title="Toggle Chatter panel">
+                <lightning:icon iconName="utility:chat" size="x-small" alternativeText="Chatter" class="slds-button__icon"/>
+            </button>
+        </aura:if>
+    </div>
+</aura:component>

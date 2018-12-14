@@ -1,0 +1,214 @@
+<apex:component id="overlayComponent" controller="ADM_WorkLookupController">
+<apex:attribute name="height" description="Height of overlay in pixels" type="Integer" default="480" />
+<apex:attribute name="title" description="Title of overlay" type="String" default="Lookup Work" />
+<apex:attribute name="instructions" description="Instructions for overlay" type="String" default="Search open work records by typing your query in the search box below." />
+
+<style type="text/css">
+
+/* attributes of the container element of textbox */
+.lookupboxdiv{
+    margin:0px;
+    height:30px;
+    width:375px;
+    background:url({!URLFOR($Resource.textbox)}) no-repeat bottom;
+}
+/* attributes of the input box */
+.lookupbox
+{
+    background:none;
+    border:none;
+    width:350px;
+    height:20px;
+    margin:2px 20px; 0px; 0px;
+    padding: 2px 0px 10px 2px;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    outline:none;
+}
+
+a.closex {
+    background-image:url({!URLFOR($Resource.overlay_resources, 'closex.gif')});
+    background-position:0 0;
+    background-repeat:no-repeat;
+    height:16px;
+    width:16px;
+    float:right;
+    margin: 3px 6px 6px 6px;
+}
+
+.popup {
+    width: 942px;
+    border: 1px solid #5A5D70;
+    background-color: #F5F5F5;
+    padding: 0px 0px 20px 0px;
+    position: absolute;
+    z-index: 50;
+}
+
+.popup .header {
+    background-color: #5A5D70;
+    font-weight: bold;
+    font-size: 12pt;
+    padding: 5px;
+    color: #FFFFFF;
+    height: 20px;
+    cursor:move
+}
+
+.popupHeaderTitle {
+    float:left; 
+    height: 10px; 
+    width: 80%
+}
+
+.popupHeaderButtons {
+    float:right; 
+    width:20px; 
+    height: 10px; 
+    font-size:10pt; 
+    text-align: center; 
+    cursor:pointer;
+}
+
+.popupInstructions {
+    padding:10px;
+}
+
+.popupBody {
+    margin-left: 20px; 
+    overflow:auto; 
+    height:400px; 
+    width: 900px; 
+    border: 1px solid #A7A6AA;
+}
+
+#grayScreen{
+    position:absolute;
+    display:none;
+    background-color:#FFFFFF;
+    opacity:0.7;
+    z-index: 49;
+    top: 0;
+    left: 0;
+    border: medium none;
+}
+
+.activeTab {
+    color: white;
+    background-color: #75702B;
+    background-image: none;
+    font-weight: bold;
+}
+
+.inactiveTab {
+    background-color: #DDDBD7;
+    background-image: none;
+    font-weight: normal;
+    color: black;
+}
+ 
+#draggable { width: 150px; height: 150px; padding: 0.5em; }
+
+</style>
+<script type="text/javascript">
+
+$(function() {
+	$( "#popup" ).draggable({handle: '#popupHandle'});
+});
+
+function openCustomPopup(button) {
+
+    //create the mask that covers the area behind the dialog 
+    var grayScreen = document.getElementById( 'grayScreen' );
+    if (!grayScreen) {
+        grayScreen = document.createElement("div");
+        grayScreen.id = "grayScreen";
+        document.body.appendChild(grayScreen);
+    }
+    grayScreen.style.position = 'absolute';
+    grayScreen.style.display = 'block';
+    grayScreen.style.width = document.width+'px';
+    grayScreen.style.height = document.height+'px';
+    
+    var element = document.getElementById( 'popup' );
+    element.style.display = 'block';
+    
+    //set the dialog relative to the element specified
+    var offsetTop = $(button).position().top;
+    element.style.top = (offsetTop - 400) + 'px';
+    
+    $(window).bind('resize', resizePopup);
+}
+
+function closeCustomPopup() {
+    $('#popup').hide();
+    $('#grayScreen').hide();
+    $(window).unbind('resize', resizePopup);
+}
+
+function resizePopup() {
+    var grayScreen = document.getElementById( 'grayScreen' );
+    grayScreen.style.width = document.width+'px';
+    grayScreen.style.height = document.height+'px';
+}
+
+</script>
+<apex:outputPanel id="popupPanel">
+    <div id="popup" class="popup hidden" >
+        <div class="header" id="popupHandle">
+            <div class="popupHeaderTitle">
+                {!title}
+            </div>
+            <div class="popupHeaderButtons">
+                <a href="javascript:closeCustomPopup();" class="closex" />
+            </div>
+        </div>
+        <div class="popupInstructions">
+            {!instructions} 
+        </div>
+        <div id="popupBody" class="popupBody">
+            <apex:pageMessages id="pm"/>
+            
+            <apex:outputPanel layout="block" id="worklookup" style="height:390px; overflow: auto;">
+            <apex:pageBlock id="workLookupPageBlock">
+                <div class="lookupboxdiv" style="float: left; padding-right:17px">
+                    <apex:inputText id="workLookupQueryInput" value="{!query}" onkeypress="return clickButtonOnEnterKeyPress(event.which, event.keyCode, '{!$Component.workLookupSearchBtn}');" styleClass="lookupbox" />
+                </div>
+                <div style="padding-top:3px;padding-bottom:10px">
+                    <apex:commandButton value="Search" id="workLookupSearchBtn"  action="{!searchWork}" rerender="worklookup"  />
+                </div> 
+                <apex:outputText id="norecordsmsg" rendered="{!matchingWork.size == 0}">No records to display.</apex:outputText>
+                <apex:outputText id="recordsmsg" rendered="{!matchingWork.size != 0}">{!matchingWork.size} out of a maximum of 50 records are displayed below.  If you need to expand your search use the salesforce.com global search box at the top of the screen. </apex:outputText>  
+            
+                <apex:pageBlockTable value="{!matchingWork}" var="workrec" width="100%" id="workrecs" rendered="{!matchingWork.size > 0}">
+                        
+                    <apex:column width="75px">
+                        <apex:facet name="header">Work ID</apex:facet>  
+                        <apex:outputPanel >
+                            <a href="javascript:setLookupWorkID('{!workrec.work.Name}');javascript:closeCustomPopup();"> {!workrec.work.Name} </a>
+                        </apex:outputPanel>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Subject</apex:facet>  
+                        {!LEFT(workrec.work.Subject__c,100)}<apex:outputText rendered="{!LEN(workrec.work.Subject__c) >=100}">...</apex:outputText>
+                    </apex:column>
+                        
+                    <apex:column >
+                        <apex:facet name="header">Team</apex:facet>
+                        {!workrec.work.Scrum_Team__r.Name}
+                    </apex:column> 
+                    
+                    <apex:column >
+                        <apex:facet name="header">Assignee </apex:facet>
+                        {!workrec.work.Assignee__r.Name}
+                    </apex:column>
+
+                </apex:pageBlockTable>          
+            </apex:pageBlock>
+            </apex:outputPanel>
+
+        </div>
+    </div>
+</apex:outputPanel>
+</apex:component>

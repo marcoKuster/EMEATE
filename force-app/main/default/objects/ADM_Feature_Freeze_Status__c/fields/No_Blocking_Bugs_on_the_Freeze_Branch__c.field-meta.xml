@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Blocking_Bugs_on_the_Freeze_Branch__c</fullName>
+    <description>There are no Blocking Bugs on the Freeze Branch.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>There are no Blocking Bugs on the Freeze Branch.</inlineHelpText>
+    <label>No Blocking Bugs on the Freeze Branch</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>True</fullName>
+                <default>false</default>
+                <label>True</label>
+            </value>
+            <value>
+                <fullName>False</fullName>
+                <default>false</default>
+                <label>False</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

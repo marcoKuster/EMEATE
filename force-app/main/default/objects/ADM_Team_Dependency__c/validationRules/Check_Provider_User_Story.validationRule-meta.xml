@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Provider_User_Story</fullName>
+    <active>true</active>
+    <description>In order for the dependency status to be changed to &#39;Prioritized&#39; or &#39;Committed&#39;, there must be a user story linked to the dependency for the work to be done .</description>
+    <errorConditionFormula>(ISPICKVAL( Dependency_Status__c, &quot;Prioritized&quot;) ||  ISPICKVAL( Dependency_Status__c, &quot;Committed&quot;)) &amp;&amp; (ISBLANK(Provider_User_Story__c))</errorConditionFormula>
+    <errorDisplayField>Provider_User_Story__c</errorDisplayField>
+    <errorMessage>A user story for the deliverable must be linked to the dependency in order to set the dependency status to &quot;Prioritized&quot; or &quot;Committed&quot;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- 520 for Nico, Uli, Kees
+488 for Kevin --></help>
+    <label><!-- Total Workable Time --></label>
+    <name>Total_Available_Time__c</name>
+</CustomFieldTranslation>

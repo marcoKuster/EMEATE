@@ -1,0 +1,82 @@
+<!--
+Contains the common functionality for Backbone, including inlining some frequently used operations 
+to reduce network calls back to the server.
+ -->
+<apex:component controller="ADM_BackboneController">
+<!-- 
+retrieve all of the Javascript dependencies
+ -->
+<c:RemoteTK />
+<script src="{!$Resource.underscore_1_4_3_min_js}"></script>
+<script src="{!$Resource.backbone_0_9_9_min_js}"></script>
+<script src="{!$Resource.moment_1_7_2_min_js}"></script>
+<script src="{!$Resource.forcetk_2013_03_05_js}"></script>
+<script src="{!$Resource.ADM_backbone_js}"></script>
+
+<!-- 
+Setup any in code dependencies
+ -->
+<script type="text/javascript">
+(function() {
+
+//setup the force REST toolkit client
+if(_.isUndefined(this.client)) {
+    this.client = new remotetk.Client();
+    this.client.setSessionToken('{!$Api.Session_ID}', 'v26.0');
+}
+
+/**
+ * Parses an encoded JSON string from the VF page into the Javascript data type
+ */
+if(_.isUndefined(this.parseVfJson)) {
+    this.parseVfJson = function(value) {
+        return JSON.parse(_.unescape(value));
+    }
+}
+
+}).call(this);
+</script>
+
+<!-- 
+Extend the WorkModel with cached values
+ -->
+<script type="text/javascript">
+(function() {
+
+//map of status values by record type name
+var statusValueMap = parseVfJson('{!JSINHTMLENCODE(workStatusValuesAsJson)}');
+
+//extend the gus work model with cached versions of the properties
+_.extend(gus.WorkModel, {
+
+    /**
+     * Gets the status values for the specified record type name.
+     * @param recordTypeName name of the record type
+     */
+    getStatusValues: function(/*String*/ recordTypeName) {
+		var d = $.Deferred();
+		if(statusValueMap[recordTypeName]) {
+			d.resolve(statusValueMap[recordTypeName]);
+		} else {
+			d.reject('Unknown record type name specified: ' + recordTypeName, recordTypeName);
+		}
+		return d.promise();
+	},
+    
+    getPriorityValues: function() {
+        var d = $.Deferred();
+        d.resolve(parseVfJson('{!JSINHTMLENCODE(prioritiesAsJson)}'));
+        return d.promise();
+    },
+    
+    getPerforceStatusValues: function() {
+        var d = $.Deferred();
+        d.resolve(parseVfJson('{!JSINHTMLENCODE(perforceStatusValuesAsJson)}'));
+        return d.promise();
+    }
+    
+});
+    
+}).call(this);
+</script>
+</apex:component>

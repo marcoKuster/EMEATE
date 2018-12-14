@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Editions__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Which editions will your feature be enabled for?  Select all that apply.</inlineHelpText>
+    <label>Editions</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Personal Edition</fullName>
+                <default>false</default>
+                <label>Personal Edition</label>
+            </value>
+            <value>
+                <fullName>Group Edition</fullName>
+                <default>false</default>
+                <label>Group Edition</label>
+            </value>
+            <value>
+                <fullName>Professional Edition</fullName>
+                <default>false</default>
+                <label>Professional Edition</label>
+            </value>
+            <value>
+                <fullName>Enterprise Edition</fullName>
+                <default>false</default>
+                <label>Enterprise Edition</label>
+            </value>
+            <value>
+                <fullName>Unlimited Edition</fullName>
+                <default>false</default>
+                <label>Unlimited Edition</label>
+            </value>
+            <value>
+                <fullName>Developer Edition</fullName>
+                <default>false</default>
+                <label>Developer Edition</label>
+            </value>
+            <value>
+                <fullName>database.com</fullName>
+                <default>false</default>
+                <label>database.com</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>6</visibleLines>
+</CustomField>

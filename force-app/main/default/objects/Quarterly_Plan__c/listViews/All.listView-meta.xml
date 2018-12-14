@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Partner_Time__c</columns>
+    <columns>Full_Utilisation__c</columns>
+    <columns>Total_DP_Planned__c</columns>
+    <columns>Expertise_Time__c</columns>
+    <columns>Self_Enablement__c</columns>
+    <columns>Scale_Activitiesq__c</columns>
+    <columns>Other_Time__c</columns>
+    <columns>Quarter__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

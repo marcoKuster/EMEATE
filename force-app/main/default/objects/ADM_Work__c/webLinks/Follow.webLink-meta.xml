@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Follow</fullName>
+    <availability>online</availability>
+    <description>Used to follow or unfollow a work record in Chatter</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Follow</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)}
+
+var chatterValue = sforce.apex.execute(&quot;ADM_Chatter&quot;,&quot;toggleSubscription&quot;, {parentId:&quot;{!ADM_Work__c.Id}&quot;,subscriberId:&quot;{!User.Id}&quot;});
+
+var buttons = document.getElementsByTagName(&#39;input&#39;);
+
+for(var i = 0; i &lt; buttons.length; i++) {
+  var button = buttons[i];
+  if(button.name == &#39;follow&#39;) {
+    if(chatterValue.indexOf(&#39;+ Follow&#39;) &gt; -1 || chatterValue.indexOf(&#39;- Unfollow&#39;) &gt; -1) {
+      button.value = chatterValue;
+      button.title = chatterValue;
+    } else {
+      alert(chatterValue);
+      break;
+    }
+  }
+}</url>
+</WebLink>

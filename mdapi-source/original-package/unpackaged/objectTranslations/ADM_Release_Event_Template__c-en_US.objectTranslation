@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Release Event Template</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Release Event Templates</value>
+    </caseValues>
+    <fields>
+        <help><!-- Enter the Application to which this Release Event Item applies --></help>
+        <label><!-- Application --></label>
+        <name>Application__c</name>
+        <relationshipLabel><!-- Release Event Templates --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Base Event --></label>
+        <name>Base_Event__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of days from the Scheduled Release Date that the Release Event is to occur. --></help>
+        <label><!-- Day Offset --></label>
+        <name>Day_Offset__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the day of the week that the Release Event would occur --></help>
+        <label><!-- Day of Week --></label>
+        <name>Day_of_Week__c</name>
+        <picklistValues>
+            <masterLabel>Friday</masterLabel>
+            <translation><!-- Friday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monday</masterLabel>
+            <translation><!-- Monday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saturday</masterLabel>
+            <translation><!-- Saturday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sunday</masterLabel>
+            <translation><!-- Sunday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thursday</masterLabel>
+            <translation><!-- Thursday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tuesday</masterLabel>
+            <translation><!-- Tuesday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wednesday</masterLabel>
+            <translation><!-- Wednesday --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the duration in minutes of this Release Event. Setting this value to zero when Day Offset, Hour Offset and Minute Offset are all zero creates Release Events with a Duration equal to the Release&apos;s Planned Duration. --></help>
+        <label><!-- Event Duration --></label>
+        <name>Event_Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter a name for the Release Event Template --></help>
+        <label><!-- Event Template Name --></label>
+        <name>Event_Template_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of hours that this event item is offset from the Scheduled Release Date. Note: Either Start Time or Hour and Minute Offset can be used. --></help>
+        <label><!-- Hour Offset --></label>
+        <name>Hour_Offset__c</name>
+    </fields>
+    <fields>
+        <help><!-- The result from evaluating the Test Instance List using the Instance Key are displayed in this field when this record is saved. --></help>
+        <label><!-- Instance Key Verification --></label>
+        <name>Instance_Key_Verification__c</name>
+    </fields>
+    <fields>
+        <help><!-- Instance Key is a Regular Expression (REGEX) that distinguishes which instances participate in this Release Event. See the Custom Link below for details on Regular Expressions. --></help>
+        <label><!-- Instance Key --></label>
+        <name>Instance_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of minutes that this event item is offset from the Scheduled Release Date. Note: Either Start Time or Hour and Minute Offset can be used. --></help>
+        <label><!-- Minute Offset --></label>
+        <name>Minute_Offset__c</name>
+    </fields>
+    <fields>
+        <help><!-- Release Events that are customer facing may be communicated to customers through the Trust site or other means --></help>
+        <label><!-- Customer facing? --></label>
+        <name>Notify_Customers__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Select the types of Release which employ this Release Event Item --></help>
+        <label><!-- Release Type --></label>
+        <name>Release_Type__c</name>
+        <picklistValues>
+            <masterLabel>Major</masterLabel>
+            <translation><!-- Major --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Patch</masterLabel>
+            <translation><!-- Patch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eRelease</masterLabel>
+            <translation><!-- eRelease --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the time of day when the Release Event would occur. Format is HH:MM AM/PM (12 hour). Note: Either Start Time or Hour and Minute Offset can be used. --></help>
+        <label><!-- Start Time --></label>
+        <name>Start_Time__c</name>
+    </fields>
+    <fields>
+        <help><!-- Test string used for validation of Instance Key field. This field can be changed to test the Instance Key on other instance lists. Instance Key Verification field is set when this record is updated. --></help>
+        <label><!-- Test Instance List --></label>
+        <name>Test_Instance_List__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Application must be specified. --></errorMessage>
+        <name>Application_required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Day Offset cannot be blank when Start Time is set. Either set Day Offset to zero (if event is for the same day) or another value. --></errorMessage>
+        <name>Day_Offset_required_with_Start_Time</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Event Duration cannot be less than zero. --></errorMessage>
+        <name>Event_Duration_must_be_nonnegative</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When Start Time is being used, Hour Offset cannot be specified. Either clear Start Time or set  Hours Offset  to blank. --></errorMessage>
+        <name>No_Hour_Offset_when_using_Start_Time</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When Start Time is being used, Minute Offset cannot be specified. Either clear Start Time and set Day of Week to blank or set  Minute Offset  to blank. --></errorMessage>
+        <name>No_Minute_Offset_when_using_Start_Time</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When an offset is set for either hours or minutes, Start Time cannot be specified. Either clear both Hours Offset and Minutes Offset or set Start Time to blank. --></errorMessage>
+        <name>No_Start_Time_when_using_offset</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- An Offset must be specified. If the Release Event is to occur at the Release&apos;s Schedule Release Date, set the Day Offset field to 0 (zero). --></errorMessage>
+        <name>Offset_must_be_specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Either Hours/Minutes Offset must be specified or Start Time must be specified. --></errorMessage>
+        <name>Offset_or_StartTime_must_be_specified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Time value must be formatted HH:MM AM or HH:MM PM (based on as 12 hour clock). --></errorMessage>
+        <name>Start_Time_must_be_in_12h_time_format</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Time value must be formatted HH:MM (based on a 24 hour clock), or HH:MM AM or HH:MM PM (based on as 12 hour clock). --></errorMessage>
+        <name>Start_Time_must_be_in_time_format</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Regular_Expressions --></label>
+        <name>Regular_Expressions</name>
+    </webLinks>
+</CustomObjectTranslation>

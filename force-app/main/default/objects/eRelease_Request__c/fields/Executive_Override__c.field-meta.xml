@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Executive_Override__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to denote when an exec overrides the decision of the release team.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check this box when the decision of the release team is overridden by executive decision.</inlineHelpText>
+    <label>Executive Override</label>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

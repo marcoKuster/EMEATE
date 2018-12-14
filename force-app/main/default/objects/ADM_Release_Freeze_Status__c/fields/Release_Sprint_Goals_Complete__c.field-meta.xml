@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Release_Sprint_Goals_Complete__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Release Sprint Goals Met/Complete.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Release Sprint Goals Met/Complete.</inlineHelpText>
+    <label>Release Sprint Goals Complete</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,41 @@
+<aura:component >
+    <aura:attribute name="title" type="String"/>
+    <aura:attribute name="columns" type="Object"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="rowData" type="Object"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+
+    <div class="slds-box slds-m-vertical_medium slds-scrollable">
+        <div class="slds-text-heading_small slds-p-around_x-small slds-theme_shade">{!v.title}</div>
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <aura:iteration items="{!v.columns}" var="column">
+                        <th scope="col">
+                            <div class="slds-truncate" title="{!column.label}">{!column.label}</div>
+                        </th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.rowData}" var="row">
+                    <tr>
+                        <aura:iteration items="{!row}" var="col">
+                            <td scope="row" data-label="{!col.value}" class="{!col.cssClass}">
+                                <div class="slds-truncate" title="{!col.value}">
+                                    <aura:if isTrue="{!col.linkId != null}">
+                                        <ui:outputURL value="{!'/' + col.linkId}" label="{!col.value}" target="_blank"/>
+                                        <aura:set attribute="else">
+                                            {!col.value}
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </td>
+                        </aura:iteration>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>

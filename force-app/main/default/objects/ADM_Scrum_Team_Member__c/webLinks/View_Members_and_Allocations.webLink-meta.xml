@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>View_Members_and_Allocations</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>View Members and Allocations</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>window.location = &quot;https://gus.soma.salesforce.com/apex/ScrumTeamMemberAllocations?id={!ADM_Scrum_Team_Member__c.Scrum_TeamId__c}&quot;;</url>
+</WebLink>

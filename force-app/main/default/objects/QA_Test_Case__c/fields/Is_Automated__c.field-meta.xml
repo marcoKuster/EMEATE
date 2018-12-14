@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Automated__c</fullName>
+    <description>Value is 1 if there is at least one completed execution of types ftest/prodtest/silk/selenium, or if the test case ftest ID is non-null (workaround for an old bug in the annotation uploader) Value is 0 otherwise</description>
+    <externalId>false</externalId>
+    <formula>if( Count_Automated_Executions__c &gt; 0, 1, if( LEN(Ftest_Id__c)&gt;0, 1, 0))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>A test case is automated when the ftest ID field of any of its children if non-null OR when there is a child execution with type=ftest/prodtest/silk/selenium and its status is Passed</inlineHelpText>
+    <label>Automation Completed?</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

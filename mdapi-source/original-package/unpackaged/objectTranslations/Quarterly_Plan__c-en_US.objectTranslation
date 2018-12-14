@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Quarterly Plan</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Quarterly Plans</value>
+    </caseValues>
+    <fields>
+        <label><!-- Admin Internal --></label>
+        <name>Admin_Private__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Ad-Hoc Enablement --></label>
+        <name>Average_Ad_Hoc_Enablement__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average DP &amp; Contract --></label>
+        <name>Average_DP_Contract__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Design Sprint --></label>
+        <name>Average_Design_Sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Product Review --></label>
+        <name>Average_Product_Review__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average SR --></label>
+        <name>Average_SR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Selling the Platform --></label>
+        <name>Average_Selling_the_Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average TR --></label>
+        <name>Average_TR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Workshop --></label>
+        <name>Average_Workshop__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. Ad-Hoc Enablement --></label>
+        <name>Current_Av_Ad_Hoc_Enablement__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. DP &amp; Contract --></label>
+        <name>Current_Av_DP_Contract__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. Design Sprint --></label>
+        <name>Current_Av_Design_Sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. Product Review --></label>
+        <name>Current_Av_Product_Review__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. SR --></label>
+        <name>Current_Av_SR__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. Selling the Platform --></label>
+        <name>Current_Av_Selling_the_Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. TR --></label>
+        <name>Current_Av_TR__c</name>
+    </fields>
+    <fields>
+        <label><!-- C-Av. Workshop --></label>
+        <name>Current_Av_Workshop__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dreamforce --></label>
+        <name>Dreamforce__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event --></label>
+        <name>Event__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expert Area --></label>
+        <name>Expert_Area__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Expertise Time --></label>
+        <name>Expertise_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Utilisation --></label>
+        <name>Full_Utilisation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Strategy --></label>
+        <name>Internal_Strategy__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Other Time --></label>
+        <name>Other_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- PAM Call --></label>
+        <name>PAM_Calls__c</name>
+    </fields>
+    <fields>
+        <label><!-- PM Activities --></label>
+        <name>PM_Activities__c</name>
+    </fields>
+    <fields>
+        <label><!-- PTO --></label>
+        <name>PTO__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Partner Time --></label>
+        <name>Partner_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quarter Name* --></label>
+        <name>Quarter_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quarter --></label>
+        <name>Quarter__c</name>
+        <relationshipLabel><!-- Quarterly Plans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Remaining Time --></label>
+        <name>Remaining_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Scale Activities --></label>
+        <name>Scale_Activitiesq__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Self- Enablement --></label>
+        <name>Self_Enablement__c</name>
+    </fields>
+    <fields>
+        <label><!-- Learning --></label>
+        <name>Self_Learning__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team Call --></label>
+        <name>Team_Call__c</name>
+    </fields>
+    <fields>
+        <help><!-- 520 for Nico, Uli, Kees
+488 for Kevin --></help>
+        <label><!-- Total Workable Time --></label>
+        <name>Total_Available_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total DP Planned --></label>
+        <name>Total_DP_Planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total DP done --></label>
+        <name>Total_DP_done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Partner Time --></label>
+        <name>Total_Partner_Time_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total SR Done --></label>
+        <name>Total_SR_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total SR Planned --></label>
+        <name>Total_SR_Planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total TR Done --></label>
+        <name>Total_TR_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total TR Planned --></label>
+        <name>Total_TR_Planned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Training --></label>
+        <name>Training__c</name>
+    </fields>
+    <fields>
+        <label><!-- VTO --></label>
+        <name>VTO__c</name>
+    </fields>
+    <layouts>
+        <layout>Quarterly Plan Layout</layout>
+        <sections>
+            <label><!-- Activity Time --></label>
+            <section>Activity Time</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

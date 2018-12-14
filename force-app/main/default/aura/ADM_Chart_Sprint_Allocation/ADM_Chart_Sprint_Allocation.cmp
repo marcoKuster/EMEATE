@@ -1,0 +1,37 @@
+<aura:component controller="ADM_SprintChartsController2" extends="c:ADM_Chart_Shared">
+    <aura:attribute name="dataAndOptions" type="Object" description=""/>
+    <aura:attribute name="sprintData" type="Object" description=""/>
+    <aura:attribute name="chartHeight" type="String" default="250" description="Height of chart which changes based on amount of data"/>
+    <aura:attribute name="viewBy" type="String" default="0" description=""/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.getAllocationChartData}" />
+
+    <div class="sprintAllocationContainer">
+        <p class="slds-m-bottom--small slds-grid slds-grid--align-center slds-grid--vertical-align-center">Task Hours Allocation by&nbsp;
+            <lightning:select value="{!v.viewBy}" label="View task Hours Allocation by" onchange="{!c.getAllocationChartData}" class="select-view-by">
+                <option value="0">User</option>
+                <option value="1">Story</option>
+                <option value="2">Role</option>
+            </lightning:select>
+            &nbsp;
+            <c:ADM_Tooltip_Icon
+                tooltipText="The blue bar represents the number of hours available that are not assigned to any tasks. The green bar represents the assigned hours. The red bar represents the hours assigned to tasks that are over the available hours."
+                nubbinClass="slds-nubbin--bottom-right"
+            />
+        </p>
+        <p aura:id="error-message" class="slds-grid slds-grid--align-center slds-text-color--error slds-is-collapsed">
+            There was an error displaying this chart.
+        </p>
+        <div class="slds-grid slds-grid--align-center">
+            <span aura:id="chart" class="slds-show">
+                <c:ADM_Chart
+                    type="horizontalBar"
+                    height="{! v.chartHeight }"
+                    width="350"
+                    dataAndOptions="{! v.dataAndOptions }"
+                />
+            </span>
+        </div>
+    </div>
+
+</aura:component>

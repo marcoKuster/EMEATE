@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Case_Pass_Percentage_0_to_100</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR( 
+     Test_Cases_Passing_Percentage__c  &gt; 1.0,
+     Test_Cases_Passing_Percentage__c  &lt; 0.0
+)</errorConditionFormula>
+    <errorDisplayField>Test_Cases_Passing_Percentage__c</errorDisplayField>
+    <errorMessage>Percentage must be between 0 and 100</errorMessage>
+</ValidationRule>

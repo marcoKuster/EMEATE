@@ -1,0 +1,63 @@
+<aura:component controller="ADM_AssignmentRuleCreateController">
+
+<!--TODO: This component is a duplicate of ADM_AssignmentRuleCreate with Investigation fields. Investigations can't use the ADM_AssignmentRuleCreate component because they require
+different fields yet when we wrap the force:inputField component in aura:if it breaks.  File a
+platform bug so that this code duplication can be removed -->
+
+<aura:attribute name="productTagId" type="String"/>
+    <aura:attribute name="recordType" type="String"/>
+    <!-- populate this will the default values you would like, if any -->
+    <aura:attribute name="defaultRule" type="ADM_Assignment_Rule__c"/>
+
+
+
+	<div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+      <h3 class="slds-truncate" title="Assignment Rule"><a href="javascript:void(0);">Investigation Assignment Rule</a></h3>
+
+</div>
+<div style="padding-top:3px;padding-bottom:3px">
+	An Investigation created using this Product Tag will be assigned to the following users.
+</div>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-01">Sev 1 Assignee</label>
+</div>
+<force:inputField aura:id="sev1assigneeinput" value="{!v.defaultRule.Sev_1_Assignee__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-02">Sev 2 Assignee</label>
+</div>
+<force:inputField aura:id="sev2assigneeinput" value="{!v.defaultRule.Sev_2_Assignee__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-03">Sev 3 Assignee</label>
+</div>
+<force:inputField aura:id="sev3assigneeinput" value="{!v.defaultRule.Sev_3_Assignee__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-04">Sev 4 Assignee</label>
+</div>
+<force:inputField aura:id="sev4assigneeinput" value="{!v.defaultRule.Sev_4_Assignee__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-05">Product Owner</label>
+</div>
+<force:inputField aura:id="poinputforinv" value="{!v.defaultRule.Product_Owner__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-06">Senior Manager POC</label>
+</div>
+<force:inputField aura:id="smpocinput" value="{!v.defaultRule.Senior_Management_POC_Assignment__c}"/>
+
+
+
+
+
+<div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate" style="padding-top:5px">
+      <div>&nbsp;</div>
+      <div class="slds-shrink-none">
+      	 <lightning:button variant="brand" label="Save Changes" onclick="{! c.handleSaveBugClick }" />
+
+      </div>
+</div>
+</aura:component>

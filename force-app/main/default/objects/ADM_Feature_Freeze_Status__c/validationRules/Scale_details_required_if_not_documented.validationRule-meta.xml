@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scale_details_required_if_not_documented</fullName>
+    <active>true</active>
+    <description>Details must be provided if Scale Impact is not documented.</description>
+    <errorConditionFormula>AND(ISPICKVAL(Scale_Impact_Documented__c, &quot;No&quot;), ISBLANK( Provide_Details_for_Scale_Impact__c))</errorConditionFormula>
+    <errorDisplayField>Provide_Details_for_Scale_Impact__c</errorDisplayField>
+    <errorMessage>You must provide details if scale impact has not been reviewed and documented.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduled_Build_Not_Blank_P4_Status_Chng</fullName>
+    <active>true</active>
+    <description>Setting the P4 status to something other than --None-- requires that a scheduled build has been entered as well.</description>
+    <errorConditionFormula>AND( ISBLANK( Scheduled_Build__c ) ,CONTAINS(TEXT( Perforce_Status__c ), &#39;Open&#39;))</errorConditionFormula>
+    <errorMessage>Enter a valid scheduled build when setting the Source Control Status to Open or Open Once.</errorMessage>
+</ValidationRule>

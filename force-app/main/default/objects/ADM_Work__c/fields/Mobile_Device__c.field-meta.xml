@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile_Device__c</fullName>
+    <externalId>false</externalId>
+    <label>Mobile Device</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Android Other</fullName>
+                <default>false</default>
+                <label>Android Other</label>
+            </value>
+            <value>
+                <fullName>Dell Windows Tablet</fullName>
+                <default>false</default>
+                <label>Dell Windows Tablet</label>
+            </value>
+            <value>
+                <fullName>Galaxy 4</fullName>
+                <default>false</default>
+                <label>Galaxy 4</label>
+            </value>
+            <value>
+                <fullName>Galaxy 5</fullName>
+                <default>false</default>
+                <label>Galaxy 5</label>
+            </value>
+            <value>
+                <fullName>Galaxy Note 2</fullName>
+                <default>false</default>
+                <label>Galaxy Note 2</label>
+            </value>
+            <value>
+                <fullName>Galaxy Note3</fullName>
+                <default>false</default>
+                <label>Galaxy Note3</label>
+            </value>
+            <value>
+                <fullName>Galaxy S3</fullName>
+                <default>false</default>
+                <label>Galaxy S3</label>
+            </value>
+            <value>
+                <fullName>HTC Windows Phone 8x</fullName>
+                <default>false</default>
+                <label>HTC Windows Phone 8x</label>
+            </value>
+            <value>
+                <fullName>iOS Other</fullName>
+                <default>false</default>
+                <label>iOS Other</label>
+            </value>
+            <value>
+                <fullName>iPad 4</fullName>
+                <default>false</default>
+                <label>iPad 4</label>
+            </value>
+            <value>
+                <fullName>iPad Air</fullName>
+                <default>false</default>
+                <label>iPad Air</label>
+            </value>
+            <value>
+                <fullName>iPad Air 2</fullName>
+                <default>false</default>
+                <label>iPad Air 2</label>
+            </value>
+            <value>
+                <fullName>iPad Mini 4</fullName>
+                <default>false</default>
+                <label>iPad Mini 4</label>
+            </value>
+            <value>
+                <fullName>iPad Pro</fullName>
+                <default>false</default>
+                <label>iPad Pro</label>
+            </value>
+            <value>
+                <fullName>iPhone 5</fullName>
+                <default>false</default>
+                <label>iPhone 5</label>
+            </value>
+            <value>
+                <fullName>iPhone 5S</fullName>
+                <default>false</default>
+                <label>iPhone 5S</label>
+            </value>
+            <value>
+                <fullName>iPhone 6</fullName>
+                <default>false</default>
+                <label>iPhone 6</label>
+            </value>
+            <value>
+                <fullName>iPhone 6 Plus</fullName>
+                <default>false</default>
+                <label>iPhone 6 Plus</label>
+            </value>
+            <value>
+                <fullName>iPhone 6S</fullName>
+                <default>false</default>
+                <label>iPhone 6S</label>
+            </value>
+            <value>
+                <fullName>iPhone 6S Plus</fullName>
+                <default>false</default>
+                <label>iPhone 6S Plus</label>
+            </value>
+            <value>
+                <fullName>Nexus 10</fullName>
+                <default>false</default>
+                <label>Nexus 10</label>
+            </value>
+            <value>
+                <fullName>Nexus 4</fullName>
+                <default>false</default>
+                <label>Nexus 4</label>
+            </value>
+            <value>
+                <fullName>Nexus 5</fullName>
+                <default>false</default>
+                <label>Nexus 5</label>
+            </value>
+            <value>
+                <fullName>Nexus 7</fullName>
+                <default>false</default>
+                <label>Nexus 7</label>
+            </value>
+            <value>
+                <fullName>Nokia 1020</fullName>
+                <default>false</default>
+                <label>Nokia 1020</label>
+            </value>
+            <value>
+                <fullName>Nokia Lumia 1020</fullName>
+                <default>false</default>
+                <label>Nokia Lumia 1020</label>
+            </value>
+            <value>
+                <fullName>Nokia Lumia 1520</fullName>
+                <default>false</default>
+                <label>Nokia Lumia 1520</label>
+            </value>
+            <value>
+                <fullName>Nokia Lumia 635</fullName>
+                <default>false</default>
+                <label>Nokia Lumia 635</label>
+            </value>
+            <value>
+                <fullName>Nokia Lumia 900</fullName>
+                <default>false</default>
+                <label>Nokia Lumia 900</label>
+            </value>
+            <value>
+                <fullName>Nokia Lumia 920</fullName>
+                <default>false</default>
+                <label>Nokia Lumia 920</label>
+            </value>
+            <value>
+                <fullName>Nokia Lumia 928</fullName>
+                <default>false</default>
+                <label>Nokia Lumia 928</label>
+            </value>
+            <value>
+                <fullName>Surface Pro 3</fullName>
+                <default>false</default>
+                <label>Surface Pro 3</label>
+            </value>
+            <value>
+                <fullName>SurfaceSurface Pro 2</fullName>
+                <default>false</default>
+                <label>SurfaceSurface Pro 2</label>
+            </value>
+            <value>
+                <fullName>Windows Other</fullName>
+                <default>false</default>
+                <label>Windows Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

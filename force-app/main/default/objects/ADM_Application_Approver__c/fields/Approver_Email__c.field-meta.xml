@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approver_Email__c</fullName>
+    <description>Email of Approver (may be blank if email is same as User email).</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Email of Approver. If Approver is specified, may be blank or must match Approver&#39;s User email. If Approver is not specified, this field may be set to a distribution list.</inlineHelpText>
+    <label>Approver Email</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Email</type>
+    <unique>false</unique>
+</CustomField>

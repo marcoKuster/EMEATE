@@ -1,0 +1,149 @@
+<apex:component controller="ADM_WorkRemoteActionsExtension" layout="none" id="workHiddenPanelWrapper">
+    <apex:attribute required="true" name="workObject" type="ADM_Work__c" description="The name of the object wrapped in Visualforce ex: {!ADM_Work__c}" />
+    <apex:attribute required="true" name="workPanelViewPreference" type="Boolean" description="Should panel show on load or not" />
+    <apex:attribute required="false" name="readonly" type="Boolean" description="Should we show edit or read only version?" />
+    <apex:attribute required="false" name="packagedOrg" default="false" type="Boolean" description="Is the code running on a packaged org or not?" />
+    <div id="workHiddenPanelComponentWrapper">
+        <div id="panelButton" class="{!IF(workPanelViewPreference,'opened','')}"><a href="javascript:void(0);" style="color:#fff;text-decoration:none;" tabindex="0"><span class="drawerDownArrows">&#9660;</span><span class="drawerUpArrows">&#9650;</span> Additional Fields <span class="drawerDownArrows">&#9660;</span><span class="drawerUpArrows">&#9650;</span></a></div>
+        <div id="hiddenPanel" class="{!IF(workPanelViewPreference,'opened','animation')}" aria-hidden="{!IF(workPanelViewPreference,'false','true')}">
+            <div id="hiddenPanelContents">
+                <!-- begin RENDER traditional additional fields if were in gus and not the packaged org-->
+                <apex:outputPanel rendered="{!NOT(packagedOrg)}">
+                    <div class="gusForm">
+                        <div id="hiddenPanelColumn1" class="gusForm3Column">
+                            <apex:outputPanel rendered="{!workObject.RecordType.Name=='Bug'}">
+                                <c:ADM_Input id="TypeInput" object="{!workObject}" inputFieldName="Type__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="typeInput gusStyle" />
+                            </apex:outputPanel>
+                            <c:ADM_Input id="priorityRankInput" object="{!workObject}" inputFieldName="Priority_Rank__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="priorityRankInput gusStyle" />
+                            <!--<c:ADM_Input id="usePrioritizerInput" object="{!workObject}" inputFieldName="Use_Prioritizer__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="false" inlineEdit="true" inputStyleClass="usePrioritizerInput gusStyle" />-->
+                             <div class="gusFormField gusFormFieldLeft"><label>Age With Scrum Team</label></div>
+                                <div class="gusFormField gusFormFieldRight">
+                                    <div class="gusFormFieldUserInputRight"><apex:outputField value=" {!workObject.Age_With_Scrum_Team__c}" /></div>
+                             </div>
+                            <c:ADM_Input id="dueDateInput" object="{!workObject}" inputFieldName="Due_Date__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true"  inputStyleClass="dueDateInput gusStyle" rendered="{!NOT(packagedOrg)}" />
+                        
+                            <c:ADM_Input id="casesInput" object="{!workObject}" inputFieldName="Number_of_Cases__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="true"  inputStyleClass="casesInput gusStyle" rendered="{!NOT(packagedOrg)}" />
+                            <apex:outputPanel rendered="{!workObject.RecordType.Name=='Bug'}">
+                            	<c:ADM_Input id="gackOccurrences" object="{!workObject}" inputFieldName="Gack_Occurrences__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="true" inlineEdit="false" inputStyleClass="gackOccInput gusStyle" rendered="{!NOT(packagedOrg)}" />
+                            </apex:outputPanel>
+                        </div>
+                        <div id="hiddenPanelColumn2" class="gusForm3Column">
+                            <apex:outputPanel rendered="{!ISNULL(workObject.UE_Engineer__c)}"></apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(readonly,true,false)}">
+                                <c:ADM_Input id="ueEngineerInputReadOnly" object="{!workObject}" inputFieldName="UE_Engineer__c" inputObjectName="ADM_Work__c" lookupObject="User" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="ueEngineerInput gusStyle" />
+                                <c:ADM_Input id="performanceEngineerInputReadOnly" object="{!workObject}" inputFieldName="System_Test_Engineer__c" inputObjectName="ADM_Work__c" lookupObject="User" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="performanceEngineerInput gusStyle" />
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(readonly,false,true)}">
+                                <c:ADM_FormRowUserInput id="ueEngineerInput" object="{!workObject}" field="UE_Engineer__c" type="ADM_Work__c" required="false" value="{!workObject.UE_Engineer__c}" cssClass="ueEngineerInput" />
+                                <c:ADM_FormRowUserInput id="performanceEngineerInput" object="{!workObject}" field="System_Test_Engineer__c" type="ADM_Work__c" required="false" value="{!workObject.System_Test_Engineer__c}" cssClass="performanceEngineerInput" />
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(workObject.Id))}">
+                                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(workObject.CreatedDate))}">
+                                    <div class="gusFormRow gusRow_ADM_Work__c_CreatedBy">
+                                        <div class="gusFormField gusFormFieldLeft"><label>Created By</label></div>
+                                        <div class="gusFormField gusFormFieldRight">
+                                            <!--div class="gusFormFieldUserInputLeft"><a href="/{!workObject.CreatedById}"><apex:image value="{!workObject.CreatedBy.smallPhotoUrl}" /></a></div-->
+                                            <div class="gusFormFieldUserInputRight"><a href="/{!workObject.CreatedById}">{!workObject.CreatedBy.Name}</a><br/><apex:outputField value=" {!workObject.CreatedDate}" /></div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                                <div class="gusFormRow gusRow_ADM_Work__c_LastModifiedBy">
+                                    <div class="gusFormField gusFormFieldLeft"><label>Last Modified By</label></div>
+                                    <div class="gusFormField gusFormFieldRight">
+                                        <!--div class="gusFormFieldUserInputLeft"><a href="/{!workObject.LastModifiedById}"><apex:image value="{!ADM_Work__c.LastModifiedBy.smallPhotoUrl}" /></a></div-->
+                                        <div class="gusFormFieldUserInputRight"><a href="/{!workObject.LastModifiedById}">{!workObject.LastModifiedBy.Name}</a><br/><apex:outputField value=" {!workObject.LastModifiedDate}" /></div>
+                                    </div>
+                                </div>
+                        </apex:outputPanel>
+                            <c:ADM_Input id="customerInput" object="{!workObject}" inputFieldName="Customer__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="customerInput gusStyle" />
+                        <apex:outputPanel rendered="{!workObject.RecordType.Name=='Bug'}">
+                            <c:ADM_Input id="gackFirstSeen" object="{!workObject}" inputFieldName="Gack_First_Seen__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="true" inlineEdit="false"  inputStyleClass="gackFirstSeenInput gusStyle" rendered="{!NOT(packagedOrg)}" />
+                         </apex:outputPanel>
+                            </div>
+                        
+                    <div id="hiddenPanelColumn3" class="gusForm3Column">
+                        <c:ADM_Input id="testFailureLinkInput" object="{!workObject}" inputFieldName="visual_link_num_of_Test_Failures__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="true" inlineEdit="false" inputStyleClass="testFailureLinkInput gusStyle" />
+                        <apex:outputPanel rendered="{!workObject.RecordType.Name == 'Bug'}">
+                            <c:ADM_Input id="testFailureStatusInput" object="{!workObject}" inputFieldName="Test_Failure_Status__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="testFailureStatusInput gusStyle" />
+                            <c:ADM_Input id="resolutionInput" object="{!workObject}" inputFieldName="Resolution__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="resolutionInput gusStyle" />
+                            <c:ADM_Input id="stackTrace" object="{!workObject}" inputFieldName="Gack_Stack_Trace_Id__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="true" inlineEdit="false"  inputStyleClass="stackTraceInput gusStyle" rendered="{!NOT(packagedOrg)}" />
+                        </apex:outputPanel>
+                        <c:ADM_Input id="helpStatusInput" object="{!workObject}" inputFieldName="Help_Status__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="helpStatusInput gusStyle" />
+                        <c:ADM_Input id="epicInput" object="{!workObject}" inputFieldName="Epic__c" inputObjectName="ADM_Work__c" lookupObject="ADM_Epic__c" renderRow="true" inlineEdit="true" readonly="{!readonly}" inputStyleClass="epicInput gusStyle" />
+                        <apex:outputPanel rendered="{!IF(NOT(ISNULL(workObject.Known_Issue_Num_Reporting_Customers__c))&& NOT(packagedOrg),true,false)}"> 
+                            <div class="gusFormRow gusRow_ADM_Work__c_Known_Issue_Link__c">
+                                    <div class="gusFormField gusFormFieldLeft"><label>{!$ObjectType.ADM_Work__c.fields.Known_Issue_Link__c.Label}</label></div>
+                                    <div class="gusFormField gusFormFieldRight"><apex:outputText value="{!workObject.Known_Issue_Link__c}" escape="false" /></div>
+                            </div>
+                        </apex:outputPanel>    
+                    </div>
+                </div>
+                
+                <div class="gusForm">
+                    <div class="gusForm1Column">
+                        <c:ADM_Input id="ftestInput" object="{!workObject}" inputFieldName="ftest__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="ftestInput gusStyle" />
+                        <c:ADM_Input rendered="{!workObject.RecordType.Name == 'Bug'}" id="readMeNotesInput" object="{!workObject}" inputFieldName="Readme_Notes__c" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!readonly}" inlineEdit="true" inputStyleClass="readmeNotesInput gusStyle" />
+                    </div>
+                </div>
+               </apex:outputPanel>
+                <!-- end If were in the packaged org then render the custom field set-->
+
+                <apex:outputPanel rendered="{!packagedOrg}">
+                    <div class="gusForm">
+                        <div class="gusForm3Column" style="width:100%!important;display:flex;flex-wrap:wrap">
+                            <apex:repeat value="{!CustomFields}" var="customFieldWrapper">
+                                <div style="width:33%;" >
+                                    <!-- if the components readOnly attribute is true then default to that, if its false then used the fields locked variable to determine if its updateable --> 
+                                    <c:ADM_Input object="{!workObject}" inputFieldName="{!customFieldWrapper.field}" inputObjectName="ADM_Work__c" renderRow="true" readonly="{!IF((readOnly),true,customFieldWrapper.locked)}"  inlineEdit="true" inputStyleClass="{!customFieldWrapper.field}Input gusStyle" />
+                               </div>
+                            </apex:repeat>
+                            
+                            
+                            <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(workObject.Id))}">
+                                <div style="width:33%">
+                                    <div class="gusFormRow gusRow_ADM_Work__c_LastModifiedBy">
+                                        <div class="gusFormField gusFormFieldLeft"><label>Last Modified By</label></div>
+                                        <div class="gusFormField gusFormFieldRight">
+                                            <!--div class="gusFormFieldUserInputLeft"><a href="/{!workObject.LastModifiedById}"><apex:image value="{!ADM_Work__c.LastModifiedBy.smallPhotoUrl}" /></a></div-->
+                                            <div class="gusFormFieldUserInputRight"><a href="/{!workObject.LastModifiedById}">{!workObject.LastModifiedBy.Name}</a><br/><apex:outputField value=" {!workObject.LastModifiedDate}" /></div>
+                                        </div>
+                                    </div>   
+                                </div>
+                                
+                            </apex:outputPanel> 
+                        </div>  
+                    </div>
+                </apex:outputPanel>    
+                    
+                
+            </div>
+        </div>
+
+        <script>
+        $(function() {
+            if ({!workPanelViewPreference}) {
+                $('#hiddenPanel').css('height', $('#hiddenPanelContents').height() + 'px' ); // panel is open, so set specific height so animation works
+                $('#hiddenPanel').delay(1000).queue(function(){ $(this).addClass('animation'); }) // add animation after, if set by default the line above triggers animation
+            }
+
+            $('#panelButton a').bind('click', function() {
+                if (!$('#hiddenPanel').hasClass('opened')) {
+                    // open panel
+                    $('#hiddenPanel,#panelButton').addClass('opened');
+                    $('#hiddenPanel').attr('aria-hidden','false').css('height', $('#hiddenPanelContents').height() + 'px' );
+                    //$('html,body').animate({ scrollTop: $('#panelButton').offset().top }, 'slow');
+                    {!$RemoteAction.ADM_WorkRemoteActionsExtension.setWorkPanelViewPreference}(true, function(result, event) { if (!event.status) { console.log('Error while saving panel view preference: ' + event.message) } });
+                } else {
+                    // close panel
+                    $('#hiddenPanel,#panelButton').removeClass('opened');
+                    $('#hiddenPanel').attr('aria-hidden','true').css('height','0px');
+                    {!$RemoteAction.ADM_WorkRemoteActionsExtension.setWorkPanelViewPreference}(false, function(result, event) {if (!event.status) { console.log('Error while saving panel view preference: ' + event.message) } });
+                }
+            });
+        });
+        </script>
+   </div>         
+
+
+
+</apex:component>

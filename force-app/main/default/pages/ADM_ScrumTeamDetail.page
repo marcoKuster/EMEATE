@@ -1,0 +1,173 @@
+<apex:page standardController="ADM_Scrum_Team__c" tabStyle="MyTeam__tab" extensions="ADM_ScrumTeamWorkExtension" recordSetVar="{!works}" showHeader="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" standardStylesheets="true" sidebar="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" applyHtmlTag="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" applyBodyTag="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" docType="html-5.0" title="{!ADM_Scrum_Team__c.Name} / Scrum Team">
+
+<apex:include pageName="ADM_ScrumTeamDetailSds" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','true', 'false')}" />
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}">
+<apex:styleSheet value="{!$Resource.ADM_common_css}" />
+<apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+<apex:includeScript value="{!$Resource.ADM_common_js}" />
+
+<div class="bPageTitle">
+    <div class="ptBody">
+        <div class="content">
+            <img src="{!$Resource.icon_scrum_team}" alt="Team" class="pageTitleIcon" title="Team" />
+            <h1 class="pageType"><a href="{!ListViewLink}">All Teams</a> &gt;</h1>
+            <h2 class="pageDescription"> {!ADM_Scrum_Team__c.Name}</h2>
+            <div class="blank">&nbsp;</div>
+        </div>
+    </div>
+    <div class="ptBreadcrumb"></div>
+</div>
+
+<c:ADM_Message type="warning" imgSrc="{!$Resource.p4lock_icon}" message="{!lock.message}"
+                                               lockRecord="{!lock.lockRecord}"/>
+
+<div class="gusTabs" data-tabsetid="teams">
+    <ul>
+        <li data-tab="teamInformation" class="on">Team Information</li>
+        <li data-tab="productTags">Product Tags</li>
+        <li data-tab="sprints">Sprints</li>
+        <li data-tab="dependencies">Dependencies</li>
+        <li data-tab="release">Release Support Information</li>
+    </ul>
+
+    <div class="gusTabPanelActive" id="tab-teamInformation">
+            <div class="gusFieldset gusFieldsetForm">
+                <div class="gusLegend">Team Detail</div>
+
+                <div class="gusFormToolbar gusFormToolbarTop">
+                  <apex:outputPanel layout="none" rendered="{!editable}">
+                    <input type="button" class="editButton" onClick="checkAndNavigateToURL('/{!ADM_Scrum_Team__c.Id}/e?retURL=%2Fapex%2Fadm_scrumteamdetail%3Fid%3D{!ADM_Scrum_Team__c.Id}');" value="Edit" />
+                  </apex:outputPanel>
+                    <input type="button" onClick="checkAndNavigateToURL('/apex/adm_WorkManager?teamid={!ADM_Scrum_Team__c.Id}&retURL=%2Fapex%2Fadm_scrumteamdetail%3Fid%3D{!ADM_Scrum_Team__c.Id}');" value="Work Manager" />
+                    <input type="button" onClick="checkAndNavigateToURL('/apex/adm_kanbansplash?teamid={!ADM_Scrum_Team__c.Id}&retURL=%2Fapex%2Fadm_scrumteamdetail%3Fid%3D{!ADM_Scrum_Team__c.Id}');" value="Kanban Board" />
+
+                </div>
+
+                <apex:form >
+                    <div class="gusForm" style="width:100%;">
+                        <div class="gusForm2Column">
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="true"  field="Name" />
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Story_Point_Scale__c" value="{!ADM_Scrum_Team__c.Story_Point_Scale__c}" />
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Distribution_Lists__c" value="{!ADM_Scrum_Team__c.Distribution_Lists__c}" />
+
+
+                             <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="true"  field="Cloud_LU__c" value="{!ADM_Scrum_Team__c.Cloud_LU__c}" rendered="{!NOT(packagedOrg)}" />
+                               <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Domain__c" value="{!ADM_Scrum_Team__c.Domain__c}"  />
+                               <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Scrum_Master__c" value="{!ADM_Scrum_Team__c.Scrum_Master__c}"  />
+                               <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Product_Owner__c" value="{!ADM_Scrum_Team__c.Product_Owner__c}"  />
+
+
+                        </div>
+                        <div class="gusForm2Column">
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Active__c" value="{!ADM_Scrum_Team__c.Active__c}" />
+                            <!-- Business Hours, for GUS Investigation SLAs -->
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Business_Hours__c" value="{!ADM_Scrum_Team__c.Business_Hours__c}" />
+                            <!-- Business Hours end -->
+                            <apex:outputPanel layout="none" rendered="{!NOT(packagedOrg)}">
+                                <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Lock_Report__c" value="{!ADM_Scrum_Team__c.Lock_Report__c}" />
+                            </apex:outputPanel>
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Release_Coverage_Needed__c" value="{!ADM_Scrum_Team__c.Release_Coverage_Needed__c}" />
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Capex_Enabled__c" value="{!ADM_Scrum_Team__c.Capex_Enabled__c}" />
+                            <c:ADM_FormRow object="{!ADM_Scrum_Team__c}" type="ADM_Scrum_Team__c" readonly="true" required="false" field="Capex_Lead__c" value="{!ADM_Scrum_Team__c.Capex_Lead__c}" />
+                            <div class="gusFormRow">
+                                <div class="gusFormField gusFormFieldLeft"><label>Last Modified By</label></div>
+                                <div class="gusFormField gusFormFieldRight"><a href="/{!ADM_Scrum_Team__c.LastModifiedById}">{!ADM_Scrum_Team__c.LastModifiedBy.Name}</a>,<span> </span><apex:outputField value=" {!ADM_Scrum_Team__c.LastModifiedDate}" /></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </apex:form>
+            </div>
+            <div class="gusFieldset">
+                <div class="gusLegend">Definition of Ready</div>
+                <br/>
+                <apex:outputField value="{!ADM_Scrum_Team__c.Definition_of_Ready__c}"/>
+            </div>
+            <div class="gusFieldset">
+                <div class="gusLegend">Definition of Done</div>
+                <br/>
+                <apex:outputField value="{!ADM_Scrum_Team__c.Definition_of_Done__c}"/>
+            </div>
+            <div class="gusFieldset">
+                <div class="gusLegend">Team Chatter</div>
+                <br/>
+                <chatter:feed entityId="{!ADM_Scrum_Team__c.Id}" rendered="{!IF(NOT($CurrentPage.parameters.isdtp == 'p1'),'true', 'false')}"/>
+            </div>
+        <div class="gusFieldset">
+            <div class="gusLegend">Team Members</div>
+            <apex:relatedList list="Scrum_Team_Members__r" pageSize="10" />
+        </div>
+
+        <div class="gusFieldset gusTeamMembersOutOfOffice">
+            <div class="gusLegend">Team Members Out of Office</div>
+            <c:ADM_OutOfOffice />
+        </div>
+
+        <div class="gusFieldset">
+            <div class="gusLegend">Google Docs, Notes, &amp; Attachments</div>
+            <apex:relatedList list="NotesAndAttachments" />
+        </div>
+
+    </div>
+
+    <div class="gusTabPanelInactive" id="tab-productTags">
+        <div class="gusFieldset">
+            <div class="gusLegend">Product Tag Assignment for {!ADM_Scrum_Team__c.Name}</div>
+            <c:ADM_TeamRules teamObject="{!ADM_Scrum_Team__c}" />
+        </div>
+    </div>
+
+
+    <div class="gusTabPanelInactive" id="tab-sprints">
+        <div class="gusFieldset">
+            <div class="gusLegend">Sprints</div>
+            <apex:relatedList list="Sprints__r" pageSize="10" />
+        </div>
+    </div>
+
+    <div class="gusTabPanelInactive" id="tab-dependencies">
+        <div class="gusFieldset">
+            <div class="gusLegend">Dependencies we have on other teams</div>
+            <apex:relatedList list="Our_Dependencies__r" pageSize="10" title="Dependencies we have on other teams" />
+        </div>
+
+        <div class="gusFieldset">
+            <div class="gusLegend">Dependencies other teams have on us</div>
+            <apex:relatedList list="Dependencies_on_us__r" pageSize="10" title="Dependencies other teams have on us" />
+        </div>
+
+        <apex:outputPanel layout="none" rendered="{!ADM_Scrum_Team__c.Copy_Record_Type_Name__c == 'Program Team'}">
+            <div class="gusFieldset">
+                <div class="gusLegend">Team Dependencies (Associated with Program)</div>
+                <apex:relatedList list="Associated_Team_Dependencies__r" pageSize="25" title="Team Dependencies (Associated with Program)" rendered="{!ADM_Scrum_Team__c.Copy_Record_Type_Name__c == 'Program Team'}" />
+            </div>
+        </apex:outputPanel>
+    </div>
+
+    <div class="gusTabPanelInactive" id="tab-release">
+        <div class="gusFieldset">
+            <div class="gusLegend">Team Releases</div>
+            <apex:relatedList list="Release_Teams__r" pageSize="10" />
+        </div>
+
+        <div class="gusFieldset">
+            <div class="gusLegend">Coverage</div>
+            <apex:relatedList list="Feature_Code_Coverage__r" pageSize="5" />
+        </div>
+
+        <div class="gusFieldset">
+            <div class="gusLegend">Security Questionnaires</div>
+            <apex:relatedList list="SecQ_Scrum_Team__r" pageSize="5" />
+        </div>
+
+        <div class="gusFieldset">
+            <div class="gusLegend">Third Party Software</div>
+            <apex:relatedList list="Third_Party_Software__r" pageSize="5" />
+        </div>
+    </div>
+
+</div>
+
+</apex:outputPanel>
+</apex:page>

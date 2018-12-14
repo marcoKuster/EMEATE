@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_ID__c</fullName>
+    <description>This is an ID that is used by the TechOps team to identify a budget line item for a specific user story.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>ID used to identify a budget line item for a story (used by TechOps).</inlineHelpText>
+    <label>Budget ID</label>
+    <length>40</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

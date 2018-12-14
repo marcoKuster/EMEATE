@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EA_2Week_Ready_Label__c</fullName>
+    <externalId>false</externalId>
+    <formula>&quot;At Feature Freeze, we’ll be ready to release to GS0 and provide a great experience for internal and external users. If necessary, we will disable incomplete features at Feature Freeze.&quot;</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>A</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

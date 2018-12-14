@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Execution Type --></label>
+    <name>Execution_Type__c</name>
+    <picklistValues>
+        <masterLabel>.Net</masterLabel>
+        <translation><!-- .Net --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Automated</masterLabel>
+        <translation><!-- Automated --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Boundary</masterLabel>
+        <translation><!-- Boundary --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CTI - script</masterLabel>
+        <translation><!-- CTI - script --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Client Automation</masterLabel>
+        <translation><!-- Client Automation --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>End To End</masterLabel>
+        <translation><!-- End To End --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Manual</masterLabel>
+        <translation><!-- Manual --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>ProdTest - API</masterLabel>
+        <translation><!-- ProdTest - API --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>ProdTest - Selenium</masterLabel>
+        <translation><!-- ProdTest - Selenium --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sanity</masterLabel>
+        <translation><!-- Sanity --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Silktest</masterLabel>
+        <translation><!-- Silktest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Systest</masterLabel>
+        <translation><!-- Systest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Upgrade Script</masterLabel>
+        <translation><!-- Upgrade Script --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Utest</masterLabel>
+        <translation><!-- Utest --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

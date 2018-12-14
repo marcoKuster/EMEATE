@@ -1,0 +1,1 @@
+/* Serves as an extension point for static field meta data */public class ADM_FieldWrapper {        public String fieldLabel { get; set; }        public String fieldName { get; set; }    public ADM_FieldWrapper(String newFieldLabel) {                this.fieldLabel = newFieldLabel;    }   }

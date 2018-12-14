@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateQAEngineerWithStatus</fullName>
+    <active>true</active>
+    <description>QA Engineer field should be populated with Status is set to fixed</description>
+    <errorConditionFormula>AND(CASE( Status__c,
+&quot;Fixed&quot;, 1,
+0) = 1, QA_Engineer__c = &quot;&quot;)</errorConditionFormula>
+    <errorDisplayField>QA_Engineer__c</errorDisplayField>
+    <errorMessage>A QA Engineer must be specified if the Status is set to Fixed</errorMessage>
+</ValidationRule>

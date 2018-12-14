@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Functional_Team__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Required when Approval_Role is &quot;Functional&quot;, otherwise must be blank. Scrum Team for which this Approver is providing functional approval.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter Scrum Team represented by this Approver when &quot;Functional&quot; Approval Role is selected, otherwise leave blank.</inlineHelpText>
+    <label>Functional Team</label>
+    <referenceTo>ADM_Scrum_Team__c</referenceTo>
+    <relationshipLabel>Application Approvers</relationshipLabel>
+    <relationshipName>Application_Approvers</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

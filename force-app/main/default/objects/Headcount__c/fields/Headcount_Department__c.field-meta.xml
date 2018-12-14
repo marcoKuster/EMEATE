@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Headcount_Department__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Department can be entered manually by Finance, but will be auto-populated by the value from the User record in the Employee Name field (User Lookup) if available.</inlineHelpText>
+    <label>Employee Department OLD</label>
+    <length>100</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

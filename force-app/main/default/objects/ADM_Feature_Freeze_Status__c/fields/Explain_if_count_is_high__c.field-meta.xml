@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_if_count_is_high__c</fullName>
+    <description>Bugs/TF Fixed the Week of Feature Freeze (explain if count is high relative to previous 2-3 weeks)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Bugs/TF Fixed the Week of Feature Freeze (explain if count is high relative to previous 2-3 weeks)</inlineHelpText>
+    <label>Explain if Count is High</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

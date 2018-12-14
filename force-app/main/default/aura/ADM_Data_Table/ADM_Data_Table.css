@@ -1,0 +1,19 @@
+.THIS .adm-max-width_5 {
+    max-width: 5rem;
+}
+
+.THIS .adm-col_small {
+    width: 8px;
+}
+
+.THIS.slds-box {
+    padding: 0;
+}
+
+.THIS .adm-align_right div {
+    float: right;
+}
+
+.THIS .adm-text-color_green {
+    color: rgb(13, 219, 13);
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>What_was_the_customer_impact__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>This answers the question of who was affected by the incident.  Was it all customers?  Only customers on NAX?</inlineHelpText>
+    <label>What was the customer impact?</label>
+    <length>32000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

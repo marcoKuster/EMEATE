@@ -1,0 +1,16 @@
+<!-- This component is for attributes, events, contoller/helper functions etc. that need to be shared across multiple components.
+Simply add extends="c:ADM_Work_Shared" to any component that needs functionality from this component
+-->
+<aura:component controller="ADM_SprintVirtualWallController" extensible="true">
+	<ltng:require scripts="{!join(',',
+    	$Resource.ADM_Util,
+    	$Resource.ADM_SprintShared_Resource)}"
+	/>
+
+	<aura:attribute name="message" type="String" />
+
+	<aura:registerEvent name="showSpinner" type="c:ADM_Event_Show_Spinner"/>
+	<aura:registerEvent name="updateSprintData" type="c:ADM_Event_Update_SprintData"/>
+
+	{!v.body}
+</aura:component>

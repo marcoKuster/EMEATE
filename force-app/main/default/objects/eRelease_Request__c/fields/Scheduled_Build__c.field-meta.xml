@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduled_Build__c</fullName>
+    <description>Scheduled Build for the Bug for which the eRelease has been requested</description>
+    <externalId>false</externalId>
+    <formula>Bug_ID__r.Scheduled_Build__r.Name</formula>
+    <inlineHelpText>The Scheduled Build of this Bug</inlineHelpText>
+    <label>Scheduled Build</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

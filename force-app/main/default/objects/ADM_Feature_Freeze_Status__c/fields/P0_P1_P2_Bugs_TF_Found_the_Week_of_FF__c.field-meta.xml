@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>P0_P1_P2_Bugs_TF_Found_the_Week_of_FF__c</fullName>
+    <description>P0/P1/P2 Bugs/TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>P0/P1/P2 Bugs/TF Found the Week of Feature Freeze (explain if count is not trending downward compared to previous 2-3 weeks)</inlineHelpText>
+    <label>P0/P1/P2 Bugs/TF Found the Week of FF</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

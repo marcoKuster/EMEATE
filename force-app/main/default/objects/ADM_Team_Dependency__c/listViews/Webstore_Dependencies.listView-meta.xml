@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Webstore_Dependencies</fullName>
+    <booleanFilter>1 OR 2</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Deliverable__c</columns>
+    <columns>Dependency_Status__c</columns>
+    <columns>Deliver_By__c</columns>
+    <columns>Notes__c</columns>
+    <columns>Provider_Team__c</columns>
+    <columns>Dependent_Team__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Dependent_Team__c</field>
+        <operation>equals</operation>
+        <value>Webstore</value>
+    </filters>
+    <filters>
+        <field>Provider_Team__c</field>
+        <operation>equals</operation>
+        <value>Webstore</value>
+    </filters>
+    <label>Webstore Dependencies</label>
+</ListView>

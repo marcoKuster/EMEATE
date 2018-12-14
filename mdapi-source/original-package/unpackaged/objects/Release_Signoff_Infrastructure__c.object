@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Tracks approvals for Infrastructure projects.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>CCE_and_Operations_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>CCE and Operations Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CCE_and_Operations__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>CCE and Operations</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureizfZ</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Capacity_Approver_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Capacity Approver Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Capacity_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Capacity Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Chatter_Now_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Chatter Now Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHAWI</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Chatter_Now_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Chatter Now Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Dev_Mgr_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Dev Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure3</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Dev_Mgr_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Dev Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Dev_VP_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Dev Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHCXr</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Dev_VP_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Dev Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Development_Engineering_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Engineering Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Development_Engineering__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Engineering</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHDeA</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>FFX_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>FFX Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure8</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>FFX_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>FFX Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>HBase_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>HBase Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure8Dql</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>HBase_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>HBase Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Insights_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Insights Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure8Dqv</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Insights_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Insights Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>LiveAgent_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>LiveAgent Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHAW8</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>LiveAgent_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>LiveAgent Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>M_M_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>M&amp;M Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure7</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>M_M_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>M&amp;M Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>OSC_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SR Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure4</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OSC_Exec_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SR Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHCYu</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OSC_Exec_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>SR Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>OSC_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>SR Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PODSquad_PO_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>PODOps PO Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>PODSquad_PO_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>PODOps PO Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>QE_Mgr_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>QE Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QE_Mgr_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>QE Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>QE_VP_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>QE Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHCY1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QE_VP_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>QE Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Release_Approved__c</fullName>
+        <externalId>false</externalId>
+        <label>Release Approved</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Release_Management_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>RM Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure6</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Release_Management_Exec_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>RM Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHCYk</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Release_Management_Exec_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>RM Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Release_Management_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>RM Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Sandbox_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Sandbox Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure9</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sandbox_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Sandbox Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Signoff_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheduled Signoff Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Search_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Search Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHAVo</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Search_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Search Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Service_Delivery_TechOps_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Infrastructure Engineering Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Service_Delivery_Technical_Operations__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Infrastructure Engineering</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHDdq</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sites_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Sites Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHAVy</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sites_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Sites Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Staggered_Release__c</fullName>
+        <externalId>false</externalId>
+        <label>Staggered Release</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GUS</fullName>
+                    <default>false</default>
+                    <label>GUS</label>
+                </value>
+                <value>
+                    <fullName>SB</fullName>
+                    <default>false</default>
+                    <label>SB</label>
+                </value>
+                <value>
+                    <fullName>R0</fullName>
+                    <default>false</default>
+                    <label>R0</label>
+                </value>
+                <value>
+                    <fullName>R1</fullName>
+                    <default>false</default>
+                    <label>R1</label>
+                </value>
+                <value>
+                    <fullName>R2</fullName>
+                    <default>false</default>
+                    <label>R2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>TBR_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>TCR Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_Infrastructure5</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TBR_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>TCR Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TechOps_Eng_VP_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>TechOps Eng Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHCYB</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TechOps_Eng_VP_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>TechOps Eng Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TechOps_Operations_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>TechOps Operations Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHCZ4</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TechOps_Operations_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>TechOps Operations Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Technology_Exec_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Chief Infrastructure Officer Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Technology_Exec__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Chief Infrastructure Officer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHDdg</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Technology_Products_Operations_Signoff__c</fullName>
+        <externalId>false</externalId>
+        <label>Technology &amp; Products Operations Signoff</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Technology_Products_Operations__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Technology &amp; Products Operations</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Release_Signoffs_InfrastructureHDe0</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Release Signoff Infrastructure</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Release Signoff Infrastructure Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Release Signoffs Infrastructure</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>New_Pods</fullName>
+        <active>true</active>
+        <description>Tracks approvals for new POD buildouts</description>
+        <label>New Pods</label>
+        <picklistValues>
+            <picklist>Staggered_Release__c</picklist>
+            <values>
+                <fullName>GUS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SB</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Splits_Migrations</fullName>
+        <active>true</active>
+        <description>Tracks approvals for POD migrations and splits</description>
+        <label>Splits &amp; Migrations</label>
+        <picklistValues>
+            <picklist>Staggered_Release__c</picklist>
+            <values>
+                <fullName>GUS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SB</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Scheduled_Signoff_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Release_Approved__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>OWNER.FIRST_NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>OWNER.LAST_NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Scheduled_Signoff_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Release_Approved__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OWNER.FIRST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OWNER.LAST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Dates_must_not_be_future</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR ( Release_Approved__c &gt; TODAY(),
+Chatter_Now_Signoff__c  &gt; TODAY(),
+  Dev_Mgr_Signoff__c  &gt; TODAY(),
+ Dev_VP_Signoff__c  &gt; TODAY(),
+Development_Engineering_Signoff__c &gt; TODAY(),
+ FFX_Signoff__c  &gt; TODAY(),
+ LiveAgent_Signoff__c &gt; TODAY(),
+ M_M_Signoff__c &gt; TODAY(),
+ OSC_Signoff__c &gt; TODAY(),
+ OSC_Exec_Signoff__c &gt; TODAY(),
+ PODSquad_PO_Signoff__c &gt; TODAY(),
+ QE_Mgr_Signoff__c &gt; TODAY(),
+ QE_VP_Signoff__c &gt; TODAY(),
+ Release_Management_Signoff__c &gt; TODAY(),
+ Release_Management_Exec_Signoff__c &gt; TODAY(),
+ Sandbox_Signoff__c &gt; TODAY(),
+ Search_Signoff__c &gt; TODAY(),
+ Sites_Signoff__c &gt; TODAY(),
+ Service_Delivery_TechOps_Signoff__c   &gt; TODAY(),
+ TBR_Signoff__c &gt; TODAY(),
+ Technology_Exec_Signoff__c &gt; TODAY(),
+ Technology_Products_Operations_Signoff__c &gt; TODAY(),
+ TechOps_Eng_VP_Signoff__c &gt; TODAY(),
+ TechOps_Operations_Signoff__c &gt; TODAY())</errorConditionFormula>
+        <errorMessage>Signoff dates cannot be in the future.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

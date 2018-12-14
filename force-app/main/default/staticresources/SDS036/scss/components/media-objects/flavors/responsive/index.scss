@@ -1,0 +1,11 @@
+/* Salesforce Design System v0.3.6 */
+@include mq-medium-max {
+
+  .#{$css-prefix}media--responsive {
+    display: block;
+
+    .#{$css-prefix}media__figure {
+      margin: 0 0 $spacing-small;
+    }
+  }
+}

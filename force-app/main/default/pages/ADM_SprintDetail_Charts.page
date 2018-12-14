@@ -1,0 +1,5 @@
+<apex:page standardController="ADM_Sprint__c" extensions="ADM_SprintDetailExtension" showHeader="true" sidebar="false" id="sprintDetailCharts" showChat="true" title="{!ADM_Sprint__c.Name}">
+<c:ADM_Sprint_Tabs sprint="{!ADM_Sprint__c}" selectedTabId="charts">
+    <c:ADM_Sprint_Charts sprintId="{!ADM_Sprint__c.Id}" />
+</c:ADM_Sprint_Tabs>
+</apex:page>

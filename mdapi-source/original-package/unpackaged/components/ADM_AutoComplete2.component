@@ -1,0 +1,38 @@
+<apex:component id="autoCompleteComp" controller="ADM_AutoComplete2Controller" >
+	<apex:attribute name="obj" type="sObject" description="The sObject to which the value is set and retrieved" required="true" />
+    <apex:attribute name="inputFieldName" type="String" description="Field name within the object" required="false" />
+	<apex:attribute name="inputOnchange" type="String" description="JavaScript that is invoked during the onchange event of the input" required="false" />
+	<apex:attribute name="inputOnclick" type="String" description="JavaScript that is invoked during the onclick event of the input" required="false" />
+	<apex:attribute name="inputStyleClass" type="String" description="CSS classes to be added to the input field" required="false" />
+	<apex:attribute name="inputStyle" type="String" description="Style attribute to be added to the input field" required="false" />
+    <apex:attribute name="ObjectName" description="This is the lookup Object." type="String" required="true"/>
+    <apex:attribute name="ScrumTeamId" description="Used to limit the results based upon the scrum team" type="String" required="false"/>
+	
+	<apex:inputField id="autoComp" value="{!obj[inputFieldName]}" onchange="{!inputOnchange}" onclick="{!inputOnclick}" styleClass="{!inputStyleClass}" style="{!inputStyle}" />
+    <script type="text/javascript" language="javascript">
+        (function($){
+            var $input = $byId('{!$Component.autoComp}', $);
+            
+            var selected = null,
+                isLookup = gus.sfdc.isLookup($input);
+            if(isLookup) {
+                selected = gus.sfdc.getSobjectFromLookup($input);
+            }
+            
+            var input = autocomplete2.initialize({
+                queryName: '{!JSINHTMLENCODE(ObjectName)}', 
+                scrumteamId: '{!JSINHTMLENCODE(ScrumTeamId)}',
+                $input: $input,
+                selected: selected
+            });
+            input.render();
+            
+            if(isLookup) {
+                input.on('select', function() {
+                    var selected = input.getSelected();
+                    gus.sfdc.setLookup($input, selected);
+                });
+            }
+        })(window.jQueryPage || window.$);
+    </script>
+</apex:component>

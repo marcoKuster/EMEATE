@@ -1,0 +1,5 @@
+<apex:component id="helpHoverComponent" layout="none">
+    <apex:attribute name="type" description="The sObject type" type="String" required="true" />
+    <apex:attribute name="field" description="This name of the field in the sObject." type="String" required="true" />
+    <apex:outputPanel id="helpHover" styleClass="gusFormHelpText" rendered="{!NOT ISBLANK($ObjectType[type].fields[field].inlineHelpText)}" title="{!$ObjectType[type].fields[field].inlineHelpText}"></apex:outputPanel>
+</apex:component>

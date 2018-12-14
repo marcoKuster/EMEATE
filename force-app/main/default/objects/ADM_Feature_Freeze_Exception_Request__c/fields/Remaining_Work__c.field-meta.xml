@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remaining_Work__c</fullName>
+    <description>What remains to meet Feature Freeze criteria?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>What remains to meet Feature Freeze criteria?</inlineHelpText>
+    <label>Remaining Work</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

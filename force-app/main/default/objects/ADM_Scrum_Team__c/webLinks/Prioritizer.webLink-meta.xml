@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prioritizer</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Prioritizer</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/apex/adm_prior3?retURL=&#39;/scrumteamid&#39;&amp;scrumteamId={!ADM_Scrum_Team__c.Id}</url>
+</WebLink>

@@ -1,0 +1,7 @@
+.THIS .select-num-sprints, .THIS .select-num-sprints .slds-form-element__control{
+    display: inline-block;
+}
+
+.THIS .select-num-sprints .slds-form-element__label {
+    display: none;
+}

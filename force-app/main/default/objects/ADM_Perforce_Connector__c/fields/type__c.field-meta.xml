@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>type__c</fullName>
+    <externalId>false</externalId>
+    <label>type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>one</fullName>
+                <default>true</default>
+                <label>one</label>
+            </value>
+            <value>
+                <fullName>three</fullName>
+                <default>false</default>
+                <label>three</label>
+            </value>
+            <value>
+                <fullName>two</fullName>
+                <default>false</default>
+                <label>two</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

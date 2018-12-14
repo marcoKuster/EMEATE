@@ -1,0 +1,15 @@
+<apex:component layout="none">
+<apex:attribute name="tabIndex" type="Integer" description="Zero-based index of the tab" required="true" />
+<apex:attribute name="label" type="String" description="The label of the tab" required="true" />
+<apex:attribute name="url" type="String" description="The URL when the tab is clicked" required="true" />
+<apex:attribute name="selected" type="Boolean" description="Set to true if this tab is currently selected" required="false" />
+
+<apex:variable var="selectedTabCssClasses" value="" />
+
+<apex:outputPanel layout="none" rendered="{!selected}">
+<li class="{!IF(tabIndex == 0, 'zen-firstItem', '')} brndPrmBg primaryPalette zen-active"><a href="{!url}" class="brndPrmFg" title="{!label} - Selected">{!label}<span class="zen-assistiveText">(Currently Selected)</span></a></li>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!NOT(selected)}">
+<li class="{!IF(tabIndex == 0, 'zen-firstItem', '')}"><a href="{!url}" title="{!label}">{!label}</a></li>
+</apex:outputPanel>
+</apex:component>

@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>ADM_ScrumTeamMember</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>ADM_ScrumTeamMemberNew</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>ADM_ScrumTeamMember</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Allocation (%)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Department__c</fullName>
+        <externalId>false</externalId>
+        <label>Department</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>External Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>External ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Area__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Area</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Scrum_Team__r.Team_Email_Group_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Group ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Internal_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Member_Name__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Internal Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Member_Name_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( OR ( $RecordType.Name = &apos;Internal&apos;, $RecordType.Name = &apos;&apos; ), Member_Name__r.FirstName &amp; &apos; &apos; &amp; Member_Name__r.LastName,
+IF ( $RecordType.Name = &apos;External&apos;, &apos;(External) &apos; , &apos;(Planned)&apos; ) &amp; Member_Name_Text__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Member_Name_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Member Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Member_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Member Name</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Scrum_Team_Members</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Record_Type_Copy__c</fullName>
+        <defaultValue>$RecordType.Name</defaultValue>
+        <externalId>false</externalId>
+        <label>Record Type Copy</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Req_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Req. Code</label>
+        <length>16</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Analyst</fullName>
+                    <default>false</default>
+                    <label>Analyst</label>
+                </value>
+                <value>
+                    <fullName>Architect</fullName>
+                    <default>false</default>
+                    <label>Architect</label>
+                </value>
+                <value>
+                    <fullName>BSA</fullName>
+                    <default>false</default>
+                    <label>BSA</label>
+                </value>
+                <value>
+                    <fullName>Business Owner</fullName>
+                    <default>false</default>
+                    <label>Business Owner</label>
+                </value>
+                <value>
+                    <fullName>Capacity Planner</fullName>
+                    <default>false</default>
+                    <label>Capacity Planner</label>
+                </value>
+                <value>
+                    <fullName>Data Center Engineer</fullName>
+                    <default>false</default>
+                    <label>Data Center Engineer</label>
+                </value>
+                <value>
+                    <fullName>DBA</fullName>
+                    <default>false</default>
+                    <label>DBA</label>
+                </value>
+                <value>
+                    <fullName>Developer</fullName>
+                    <default>false</default>
+                    <label>Developer</label>
+                </value>
+                <value>
+                    <fullName>Dev Manager</fullName>
+                    <default>false</default>
+                    <label>Dev Manager</label>
+                </value>
+                <value>
+                    <fullName>Doc Editor</fullName>
+                    <default>false</default>
+                    <label>Doc Editor</label>
+                </value>
+                <value>
+                    <fullName>Doc Manager</fullName>
+                    <default>false</default>
+                    <label>Doc Manager</label>
+                </value>
+                <value>
+                    <fullName>Engineering Manager</fullName>
+                    <default>false</default>
+                    <label>Engineering Manager</label>
+                </value>
+                <value>
+                    <fullName>Network Engineer</fullName>
+                    <default>false</default>
+                    <label>Network Engineer</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Performance Engineer</fullName>
+                    <default>false</default>
+                    <label>Performance Engineer</label>
+                </value>
+                <value>
+                    <fullName>Product Owner</fullName>
+                    <default>false</default>
+                    <label>Product Owner</label>
+                </value>
+                <value>
+                    <fullName>Program Manager</fullName>
+                    <default>false</default>
+                    <label>Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Provisioning Specialist / Asset Manager</fullName>
+                    <default>false</default>
+                    <label>Provisioning Specialist / Asset Manager</label>
+                </value>
+                <value>
+                    <fullName>QA Engineer</fullName>
+                    <default>false</default>
+                    <label>QA Engineer</label>
+                </value>
+                <value>
+                    <fullName>QA Manager</fullName>
+                    <default>false</default>
+                    <label>QA Manager</label>
+                </value>
+                <value>
+                    <fullName>Release Engineer</fullName>
+                    <default>false</default>
+                    <label>Release Engineer</label>
+                </value>
+                <value>
+                    <fullName>Release Manager</fullName>
+                    <default>false</default>
+                    <label>Release Manager</label>
+                </value>
+                <value>
+                    <fullName>Scrum Master</fullName>
+                    <default>false</default>
+                    <label>Scrum Master</label>
+                </value>
+                <value>
+                    <fullName>Security Engineer</fullName>
+                    <default>false</default>
+                    <label>Security Engineer</label>
+                </value>
+                <value>
+                    <fullName>Site Reliability Engineer</fullName>
+                    <default>false</default>
+                    <label>Site Reliability Engineer</label>
+                </value>
+                <value>
+                    <fullName>Software Engineer</fullName>
+                    <default>false</default>
+                    <label>Software Engineer</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin</fullName>
+                    <default>false</default>
+                    <label>SysAdmin</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin Linux</fullName>
+                    <default>false</default>
+                    <label>SysAdmin Linux</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin Storage</fullName>
+                    <default>false</default>
+                    <label>SysAdmin Storage</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin Win</fullName>
+                    <default>false</default>
+                    <label>SysAdmin Win</label>
+                </value>
+                <value>
+                    <fullName>Technical Writer</fullName>
+                    <default>false</default>
+                    <label>Technical Writer</label>
+                </value>
+                <value>
+                    <fullName>TechOps Manager</fullName>
+                    <default>false</default>
+                    <label>TechOps Manager</label>
+                </value>
+                <value>
+                    <fullName>Trust Engineer</fullName>
+                    <default>false</default>
+                    <label>Trust Engineer</label>
+                </value>
+                <value>
+                    <fullName>UE</fullName>
+                    <default>false</default>
+                    <label>UE</label>
+                </value>
+                <value>
+                    <fullName>UE Manager</fullName>
+                    <default>false</default>
+                    <label>UE Manager</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Scrum_Team_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Scrum_Team__r.Name</formula>
+        <label>Team Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scrum_Team__c</fullName>
+        <externalId>false</externalId>
+        <label>Team</label>
+        <referenceTo>ADM_Scrum_Team__c</referenceTo>
+        <relationshipLabel>Team Members</relationshipLabel>
+        <relationshipName>Scrum_Team_Members</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>formula_email__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  ISNULL(External_Email__c), IF( ISNULL(Internal_Email__c), &apos;&apos;,Internal_Email__c), External_Email__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Team Member</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>Member_Name__c</columns>
+        <columns>Scrum_Team__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Record_Type_Copy__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>STM-{00000}</displayFormat>
+        <label>Team Member Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Team Members</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>External</fullName>
+        <active>true</active>
+        <description>Employee from outside SFDC</description>
+        <label>External</label>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Owner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Capacity Planner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DBA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Center Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dev Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Developer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Doc Editor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Doc Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Performance Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Owner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Program Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisioning Specialist %2F Asset Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scrum Master</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Site Reliability Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SysAdmin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TechOps Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Writer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UE Manager</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Internal</fullName>
+        <active>true</active>
+        <description>SFDC Employee</description>
+        <label>Internal</label>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Owner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Capacity Planner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DBA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Center Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dev Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Developer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Doc Editor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Doc Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Performance Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Owner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Program Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisioning Specialist %2F Asset Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scrum Master</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Site Reliability Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SysAdmin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SysAdmin Linux</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SysAdmin Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SysAdmin Win</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TechOps Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Writer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UE Manager</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Planned</fullName>
+        <active>true</active>
+        <description>Planned head count</description>
+        <label>Planned</label>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Architect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Owner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Capacity Planner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DBA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Center Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dev Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Developer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Doc Editor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Doc Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Performance Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Product Owner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Program Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisioning Specialist %2F Asset Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scrum Master</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Site Reliability Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SysAdmin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TechOps Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Writer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Engineer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UE Manager</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Allocate_over_limit</fullName>
+        <active>true</active>
+        <errorConditionFormula>Allocation__c &gt; 1.00</errorConditionFormula>
+        <errorDisplayField>Allocation__c</errorDisplayField>
+        <errorMessage>Allocation percent should not exceed 100%</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Allocation_above_0</fullName>
+        <active>true</active>
+        <description>Allocation should not be below zero</description>
+        <errorConditionFormula>Allocation__c  &lt; 0</errorConditionFormula>
+        <errorDisplayField>Allocation__c</errorDisplayField>
+        <errorMessage>Allocation should not be a negative number</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Allocation_cant_exceed_100</fullName>
+        <active>true</active>
+        <description>Allocation should not exceed 100%</description>
+        <errorConditionFormula>Allocation__c  &gt; 100</errorConditionFormula>
+        <errorDisplayField>Allocation__c</errorDisplayField>
+        <errorMessage>Allocation should not exceed 100%</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>View_Members_and_Allocations</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>View Members and Allocations</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>window.location = &quot;https://gus.soma.salesforce.com/apex/ScrumTeamMemberAllocations?id={!ADM_Scrum_Team_Member__c.Scrum_TeamId__c}&quot;;</url>
+    </webLinks>
+</CustomObject>

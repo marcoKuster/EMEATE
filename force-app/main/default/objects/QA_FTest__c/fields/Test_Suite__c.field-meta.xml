@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Suite__c</fullName>
+    <externalId>false</externalId>
+    <label>Test Suite</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>basic</fullName>
+                <default>true</default>
+                <label>basic</label>
+            </value>
+            <value>
+                <fullName>standard</fullName>
+                <default>false</default>
+                <label>standard</label>
+            </value>
+            <value>
+                <fullName>extended</fullName>
+                <default>false</default>
+                <label>extended</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

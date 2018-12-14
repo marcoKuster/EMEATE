@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duration_By_Work_Days__c</fullName>
+    <description>This is duration by business days. How many days is between Time Left and Time entered
+https://help.salesforce.com/help/pdfs/en/formula_date_time_tipsheet.pdf</description>
+    <externalId>false</externalId>
+    <formula>(5 * ( FLOOR( (DATEVALUE (IF( ISBLANK(Time_Left__c) , NOW() , Time_Left__c)) - DATE( 1900, 1, 8) ) / 7 ) ) + 
+			MIN( 5, MOD( DATEVALUE(IF( ISBLANK(Time_Left__c) , NOW() , Time_Left__c)) - DATE( 1900,
+				        1, 8), 7 )
+		       ) )
+
+-
+(5 * ( FLOOR( ( DATEVALUE(Time_Entered__c)- DATE( 1900, 1, 8) ) / 7 ) )  + MIN( 5, MOD( DATEVALUE(Time_Entered__c) - DATE( 1900,
+1, 8), 7 ) ) )</formula>
+    <label>Duration_By_Work_Days</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

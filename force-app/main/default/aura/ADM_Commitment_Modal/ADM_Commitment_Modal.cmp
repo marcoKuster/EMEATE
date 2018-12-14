@@ -1,0 +1,80 @@
+<aura:component controller="ADM_ScopeChangeController">
+    <ltng:require scripts="{!$Resource.ADM_Util}"/>
+
+    <aura:attribute name="bugCount" type="Integer"/>
+    <aura:attribute name="errors" type="Object"/>
+    <aura:attribute name="userStoryCount" type="Integer"/>
+    <aura:attribute name="investigationCount" type="Integer"/>
+    <aura:attribute name="todoCount" type="Integer"/>
+    <aura:attribute name="nonVelocityStatusesInSprint" type="String[]"/>
+    <aura:attribute name="storyPoints" type="Integer"/>
+    <aura:attribute name="workCount" type="Integer"/>
+    <aura:attribute name="sprintId" type="String"/>
+    <aura:attribute name="sprintInfo" type="Object"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+    
+    <aura:if isTrue="{!v.errors!=null}">
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Error">
+                <lightning:icon iconName="utility:error" size="small" alternativeText="{!$Label.c.ADM_Error}" variant="inverse"/>
+            </span>
+            <aura:iteration items="{!v.errors}" var="error">
+                <h2><ui:outputText value="{!error.message}" /></h2>
+            </aura:iteration>
+        </div>   
+    </aura:if>
+
+    <div class="slds-m-bottom_small">
+        <p>{!$Label.c.ADM_Sprint_Commitment_Proceed}</p>
+    </div>
+    <aura:if isTrue="{!v.nonVelocityStatusesInSprint.length > 0}">
+        <div class="slds-m-bottom_small">
+            <p>{!$Label.c.ADM_Sprint_Commitment_Sprint_Contains_NonVelocity_Items_1}</p>
+            <aura:iteration items="{!v.nonVelocityStatusesInSprint}" var="status">
+                <p>- <ui:outputText value="{!status}" /></p>
+            </aura:iteration>
+            <p>{!$Label.c.ADM_Sprint_Commitment_Sprint_Contains_NonVelocity_Items_2}</p>
+        </div>
+    </aura:if>
+    <div class="slds-p-vertical_small slds-box slds-theme_shade">
+        <div class="slds-m-bottom_xx-small">
+            <span class="adm-bold">{!$Label.c.ADM_Story_Points}:</span>&nbsp;{!v.storyPoints}
+        </div>
+        <div class="slds-m-bottom_xx-small">
+            <span class="adm-bold">{!$Label.c.ADM_Sprint_Commitment_Total_Work_Count}:</span>&nbsp;{!v.workCount}
+        </div>
+        <aura:if isTrue="{!v.bugCount > 0}">
+            <div class="slds-m-bottom_xx-small slds-p-left_small">
+                <span class="adm-italic">{!$Label.c.ADM_Bugs}:</span>&nbsp;{!v.bugCount}
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.userStoryCount > 0}">
+            <div class="slds-m-bottom_xx-small slds-p-left_small">
+                <span class="adm-italic">{!$Label.c.ADM_User_Stories}:</span>&nbsp;{!v.userStoryCount}
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.investigationCount > 0}">
+            <div class="slds-m-bottom_xx-small slds-p-left_small">
+                <span class="adm-italic">{!$Label.c.ADM_Investigations}:</span>&nbsp;{!v.investigationCount}
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.todoCount > 0}">
+            <div class="slds-m-bottom_xx-small slds-p-left_small">
+                <span class="adm-italic">{!$Label.c.ADM_To_Do}:</span>&nbsp;{!v.todoCount}
+            </div>
+        </aura:if>
+    </div>
+
+    <div class="slds-p-vertical_small">
+        <lightning:input aura:id="DefinitionOfReady" type="checkbox" checked="{!v.sprintInfo.Definition_of_Ready_Met__c}" label="{!$Label.c.ADM_Definition_of_Ready_Met}" name="Definition of Ready Met" />
+    </div>
+    
+    <footer class="slds-modal__footer">
+        <lightning:button name="cancel" label="{!$Label.c.ADM_Cancel}" onclick="{!c.handleCancel}"/>
+        <lightning:button name="ok" label="{!$Label.c.ADM_OK}" variant="brand" onclick="{!c.handleOK}"/>
+    </footer>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+</aura:component>

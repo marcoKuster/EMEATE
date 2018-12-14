@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Scrum Team Cache</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Scrum Team Caches</value>
+    </caseValues>
+    <fields>
+        <label><!-- Completed --></label>
+        <name>Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deleted --></label>
+        <name>Deleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group ID --></label>
+        <name>Group_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Inserted --></label>
+        <name>Inserted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scrumteam Or Scrumteam Member --></label>
+        <name>ScrumteamOrScrumteamMember__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

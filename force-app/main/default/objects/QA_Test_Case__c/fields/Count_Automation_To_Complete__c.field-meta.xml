@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Count_Automation_To_Complete__c</fullName>
+    <description>Counts the number of automated executions that are not done</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Counts the number of automated executions that are not done</inlineHelpText>
+    <label>Count Automation To Complete</label>
+    <summaryFilterItems>
+        <field>QA_Test_Execution__c.Type__c</field>
+        <operation>equals</operation>
+        <value>Ftest, Silktest, Utest, .Net, Client Automation, Selenium, ProdTest - Extended, ProdTest - API, ProdTest - Selenium</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>QA_Test_Execution__c.Status__c</field>
+        <operation>notEqual</operation>
+        <value>Passed, Failed</value>
+    </summaryFilterItems>
+    <summaryForeignKey>QA_Test_Execution__c.Test_Case__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

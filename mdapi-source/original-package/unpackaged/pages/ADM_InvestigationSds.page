@@ -1,0 +1,231 @@
+<apex:page id="workSds" standardController="ADM_Work__c" extensions="ADM_InvestigationExtension,ADM_WorkRemoteActionsExtension" showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <title>
+        <apex:outputPanel layout="none" rendered="{!isNew}">Create {!ADM_Work__c.RecordType.Name}</apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!NOT(isNew)}">{!ADM_Work__c.Name}: {!ADM_Work__c.Subject__c}</apex:outputPanel>
+    </title>
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS042, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+    <apex:styleSheet value="{!$Resource.ADM_work_css}" />
+    <apex:styleSheet value="{!$Resource.extended}" />
+    <apex:includeScript value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'js/jquery-ui-1.9.2.custom.min.js')}" />
+    <apex:includeScript value="{!$Resource.ADM_common_js}" />
+    <apex:includeScript value="{!$Resource.productTagSds_js}" />
+    <apex:includeScript value="{!$Resource.ADM_autocomplete2js}" />
+    <apex:includeScript value="{!$Resource.ADM_Work_js}" />
+    <script type="text/javascript">
+    var view;
+    $(function() {
+        view = new UserStoryEditView({
+            app: window,
+            controller: {
+                getWorkAssignments: window.getWorkAssignments
+            },
+            productTagComponent: window.productTag,
+            recordTypeId: '{!JSINHTMLENCODE(ADM_Work__c.RecordTypeId)}',
+            isNew: {!isNew}
+        });
+
+
+
+    });
+    </script>
+    <style>
+    #tabpanel_details div.slds-form-element{border-bottom:1px solid #D8DDE6;}
+    .slds .slds-modal--large .slds-modal__container{width:90%;max-width:960px;min-width:640px;}
+    .slds #editModal .slds-pill{display:block;}
+    .slds #editModal .slds-pill:hover{background-color:#fff;}
+    .slds #editModal .slds-pill__label{max-width:15.5rem;}
+    .slds #editModal .productTagItemRemove{position:absolute;bottom:9px;right:7px;}
+    .slds .slds-form-element__label{font-size:.75rem;color:#54698D;font-weight:600;}
+    .slds .slds-form-element__static,.sfdc_richtext{font-family:"Salesforce Sans", Arial, sans-serif;font-size:.875rem;color:#16325C;line-height:normal;font-weight:400;}
+
+    .slds .gusRichAutoCompleteProfileImage{position:absolute;left:5px;bottom:6px;width:24px;height:24px;border-radius:5px;}
+    .slds .gusRichAutoCompleteInput{padding-left:35px;}
+    .has-avatar span.slds-avatar{position:absolute;bottom:6px;left:7px;}
+    .has-avatar input.slds-input{padding-left:38px;}
+    .ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;}
+    .slds .sfdc_richtext ul{margin:1em;margin-left:40px;list-style-type:disc;}
+    .slds .work-subject-display {word-break: break-word;white-space: normal;}
+    </style>
+</head>
+<body class="slds">
+
+<script>
+$(function() {
+    $('#editModal form').on('submit', function(e) {
+        if ($('#editModal .subjectInput').val().length == 0) {
+            if ($('#editModal .slds-modal__content .slds-notify--error').length == 0) {
+                $('#editModal .slds-modal__content').prepend('<div class="slds-notify slds-notify--alert slds-notify--error slds-theme--inverse-text slds-theme--alert-texture">Please correct the following error(s): Subject is a required field.</div>');
+            }
+            e.preventDefault();
+        } else {
+            $('#editModal .slds-modal__content .slds-notify--error').remove();
+            $('#editModal .slds-modal').removeClass('slds-fade-in-open');
+        }
+    }).on('keypress', function (e) {
+        if (e.keyCode == 13 && e.target.nodeName != "TEXTAREA") {
+            return false;
+        }
+    });
+});
+
+$(function() {
+    if ($('#editModal .slds-notify--error').length > 0) {
+        $('#editModal .slds-modal').addClass('slds-fade-in-open');
+        $('#editModal .slds-modal-backdrop').addClass('slds-modal-backdrop--open');
+    }
+});
+
+$(function() {
+    var cb;
+    if ({!AND(NOT(isNew),clonedRecord == '0')}) {
+        cb = function() {
+            sforce.one.navigateToURL('/{!ADM_Work__c.Id}');
+            return false;
+        }
+    } else if ({!AND(isNew,NOT(isReturnUrl))}) { // new without return url
+        cb = function() {
+            sforce.one.navigateToURL('/{!ADM_Work__c.Id}');
+            return false;
+        }
+    } else if ({!OR(AND(isNew,isReturnUrl),clonedRecord == '1') }) {
+        cb = function() { // new
+            $('#editModal form')[0].reset();
+            sforce.one.navigateToURL('{!retUrl}');
+        }
+    }
+
+    makeModalAccessible('#editModal', 'input[type=text]:first', 'input[type=submit]:last', cb);
+});
+
+</script>
+
+    <div id="editModal">
+        <apex:form id="storyWorkForm">
+        <apex:actionFunction name="callgetAdditionalFields" action="{!getMyAdditionalFieldsForAll}" rerender="refreshPanelId,productTagFieldsId,myId,myId1">
+                <apex:param name="myParamId" value="" assignTo="{!myProdTag}"/>
+            </apex:actionFunction>
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-modal--large{!IF(showEditDialog,' slds-fade-in-open','')}">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading--medium">
+                            <apex:outputPanel layout="none" rendered="{!OR(isNew,clonedRecord == '1')}">Create {!ADM_Work__c.RecordType.Name}</apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!AND(NOT(isNew),clonedRecord == '0')}">Edit Work: {!ADM_Work__c.Name}</apex:outputPanel>
+                        </h2>
+                        <apex:outputPanel layout="none" rendered="{!AND(NOT(showEditDialog),clonedRecord == '0')}">
+                            <button class="slds-button slds-modal__close" onClick="console.log('Close button clicked');$('#editModal form')[0].reset();$('#editModal .slds-modal').removeClass('slds-fade-in-open');$('#editModal .slds-modal-backdrop').removeClass('slds-modal-backdrop--open');return false">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS042, 'assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!AND(isNew,NOT(isReturnUrl))}">
+                            <button class="slds-button slds-modal__close" onClick="console.log('Close button clicked for New Work');$('#editModal form')[0].reset();$('#editModal .slds-modal').removeClass('slds-fade-in-open');$('#editModal .slds-modal-backdrop').removeClass('slds-modal-backdrop--open');sforce.one.navigateToObjectHome('ADM_Work__c');return false">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS042, 'assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!OR(AND(isNew,isReturnUrl),clonedRecord == '1')}">
+                            <button class="slds-button slds-modal__close" onClick="console.log('Close button clicked for New Work');$('#editModal form')[0].reset();$('#editModal .slds-modal').removeClass('slds-fade-in-open');$('#editModal .slds-modal-backdrop').removeClass('slds-modal-backdrop--open');sforce.one.navigateToURL('{!retUrl}');">
+                                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS042, 'assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </apex:outputPanel>
+                    </div>
+                        <div class="slds-modal__content">
+                            <div>
+                                <apex:messages styleClass="slds-notify slds-notify--alert slds-notify--error slds-theme--inverse-text slds-theme--alert-texture" />
+
+                                <div class="slds-grid slds-wrap slds-p-top--medium slds-p-bottom--medium">
+                                    <c:ADM_InputSds inputStyleClass="slds-input    subjectInput"        id="subjectInput"       object="{!ADM_Work__c}" inputFieldName="Subject__c"                         inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" required="true" />
+                                    <c:ADM_InputSds inputStyleClass="slds-textarea dstpInput"           id="dstpInput"          object="{!ADM_Work__c}" inputFieldName="Details_And_Steps_To_Reproduce__c"  inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" />
+                                </div>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-col--padded slds-p-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-3">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="{!$Component.inputWithContainer}">{!$ObjectType.ADM_Work__c.fields.Product_Tag__c.Label}</label>
+                                            <div class="slds-form-element__control">
+                                                <c:ADM_ProductTagInputSds id="productTagInput" work="{!ADM_Work__c}" recordType="{!ADM_Work__c.RecordType}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <c:ADM_InputSds inputStyleClass="slds-select statusInput"                   id="statusInput"                    object="{!ADM_Work__c}" inputFieldName="Status__c"                      inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+
+                                    <c:ADM_InputSds inputStyleClass="slds-select severityLevelInput"            id="severityLevel"                  object="{!ADM_Work__c}" inputFieldName="Severity_Level__c"              inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" required="true" />
+                                    <c:ADM_InputSds inputStyleClass="slds-input    backlogRankInput"            id="backlogRankInput"          object="{!ADM_Work__c}" inputFieldName="Priority_Rank__c"           inputObjectName="ADM_Work__c"                               renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+
+                                    <c:ADM_InputSds inputStyleClass="slds-input    sprintInput"              id="sprintInput"               object="{!ADM_Work__c}" inputFieldName="Sprint__c"                  inputObjectName="ADM_Work__c" lookupObject="ADM_Sprint__c"  renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    
+                                    <c:ADM_InputSds inputStyleClass="slds-select dealAtRiskInput"               id="dealAtRiskInput"                object="{!ADM_Work__c}" inputFieldName="Deal_at_Risk__c"                inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-input estimatedFinancialImpactInput"  id="estimatedFinancialImpactInput"  object="{!ADM_Work__c}" inputFieldName="Estimated_Financial_Impact__c"  inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-input minorFuncAreaInput"             id="minorFuncAreaInput"             object="{!ADM_Work__c}" inputFieldName="Minor_Func_Area__c"             inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-input rootCauseAnalysisInput"         id="rootCauseAnalysisInput"         object="{!ADM_Work__c}" inputFieldName="Root_Cause_Analysis_2__c"       inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-checkbox requestMgrReviewInput"       id="requestMgrReviewInput"          object="{!ADM_Work__c}" inputFieldName="Request_RD_Mgr_Review__c"       inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-checkbox executiveInvolvedInput"      id="executiveInvolvedInput"         object="{!ADM_Work__c}" inputFieldName="Executive_Involved__c"          inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-checkbox redAccountInput"             id="redAccountInput"                object="{!ADM_Work__c}" inputFieldName="Red_Account__c"                 inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-checkbox criticalCRMFeatureInput"     id="criticalCRMFeatureInput"        object="{!ADM_Work__c}" inputFieldName="Critical_CRM_Feature__c"        inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                    <c:ADM_InputSds inputStyleClass="slds-input casesInput"                     id="casesInput"                     object="{!ADM_Work__c}" inputFieldName="Number_of_Cases__c"             inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--2-of-3" readOnly="true"/>
+                                </div>
+
+                                <h4>Assignments</h4>
+                                <div class="slds-grid slds-wrap">
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input assigneeInput"              id="assigneeInput"              object="{!ADM_Work__c}" inputFieldName="Assignee__c"                inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.Assignee__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input qaEngineerInput"            id="qaEngineerInput"            object="{!ADM_Work__c}" inputFieldName="QA_Engineer__c"             inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.QA_Engineer__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input productOwnerInput"          id="productOwnerInput"          object="{!ADM_Work__c}" inputFieldName="Product_Owner__c"           inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.Product_Owner__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input performanceEngineerInput"   id="performanceEngineerInput"   object="{!ADM_Work__c}" inputFieldName="System_Test_Engineer__c"    inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.System_Test_Engineer__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input ueEngineerInput"            id="ueEngineerInput"            object="{!ADM_Work__c}" inputFieldName="UE_Engineer__c"             inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.UE_Engineer__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input techWriterInput"            id="techWriterInput"            object="{!ADM_Work__c}" inputFieldName="Tech_Writer__c"             inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.Tech_Writer__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input seniorManagementPOCInput"   id="seniorManagementPOCInput"   object="{!ADM_Work__c}" inputFieldName="Senior_Management_POC__c"   inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.Senior_Management_POC__r.SmallPhotoUrl}" />
+                                    <c:ADM_InputUserSds inputStyleClass="slds-input supportContactInput"        id="supportContactInput"        object="{!ADM_Work__c}" inputFieldName="CS_Contact__c"              inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" smallPhotoUrl="{!ADM_Work__c.CS_Contact__r.SmallPhotoUrl}" />
+                                </div>
+                                <apex:outputPanel id="refreshPanelId" >
+                                    <apex:outputPanel rendered="{!additionalFieldsForInvestigation.size > 0}" id="productTagFieldsId">
+                                        <h4>Product Tag Fields</h4>
+                                        <div class="slds-grid slds-wrap">
+                                            <apex:repeat var="af" value="{!additionalFieldsForInvestigation}">
+                                                <c:ADM_InputSds required="{!IF(af.Investigation_Setting__c=='Required',true,false)}" inputStyleClass="slds-input" object="{!ADM_Work__c}" inputFieldName="{!af.Field_API_Name__c}" inputObjectName="ADM_Work__c" renderRow="true" inputColumnStyleClass="slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                                            </apex:repeat>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <apex:outputPanel layout="none" rendered="{!AND(NOT(isNew),clonedRecord == '0')}">
+                                <button class="slds-button slds-button--neutral" onClick="sforce.one.navigateToURL('/{!ADM_Work__c.Id}');return false">Cancel</button>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!AND(isNew,NOT(isReturnUrl))}">
+                                <button id="cancelButtonForNewWithoutReturnUrl" class="newButton1 slds-button slds-button--neutral"
+                                onClick="sforce.one.navigateToURL('/{!ADM_Work__c.Id}');return false">Cancel</button>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel layout="none" rendered="{!OR(AND(isNew,isReturnUrl),clonedRecord == '1') }">
+                                <button id="cancelButtonForNew" class="newButton slds-button slds-button--neutral"
+                                onClick="console.log('Cancel button clicked');$('#editModal form')[0].reset();$('#editModal .slds-modal').removeClass('slds-fade-in-open');$('#editModal .slds-modal-backdrop').removeClass('slds-modal-backdrop--open');
+                                sforce.one.navigateToURL('{!retUrl}');">Cancel</button>
+                            </apex:outputPanel>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" action="{!doSaveAndDetail}" value="Save" />
+
+                        </div>
+                </div>
+            </div>
+            <div class="slds-modal-backdrop{!IF(showEditDialog,' slds-modal-backdrop--open','')}"></div>
+        </apex:form>
+    </div>
+
+
+
+</body>
+</html>
+</apex:page>

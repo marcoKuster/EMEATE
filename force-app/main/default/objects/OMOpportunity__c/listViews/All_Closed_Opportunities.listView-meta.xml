@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Closed_Opportunities</fullName>
+    <columns>NAME</columns>
+    <columns>Team__c</columns>
+    <columns>Function__c</columns>
+    <columns>Level__c</columns>
+    <columns>Hiring_Manager__c</columns>
+    <columns>Status__c</columns>
+    <columns>Release__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Closed-Filled,Closed-Canceled</value>
+    </filters>
+    <label>All Closed Opportunities</label>
+</ListView>

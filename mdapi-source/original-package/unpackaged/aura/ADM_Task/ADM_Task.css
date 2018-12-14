@@ -1,0 +1,63 @@
+.THIS .adm-task-footer {
+	display: flex;
+	align-items: center;
+}
+
+.THIS .adm-task-actions {
+	width: 100%;
+}
+
+.THIS .adm-task-description {
+	width: 85%;
+}
+
+.THIS .adm-task-assignee {
+	width: 15%;
+}
+
+.THIS .slds-textarea, .THIS .slds-textarea:active {
+	border: 0px;
+	resize: none;
+	box-shadow: none;
+}
+
+.THIS.slds-card {
+	width: 95%;
+	margin: .5rem auto;
+}
+
+.THIS .adm-task-hours-input, .THIS .slds-form-element__control {
+    display: inline;
+}
+
+.THIS .adm-task-hours-input.slds-input {
+    width: 30px;
+    line-height: normal;
+    padding: 0 .25rem 0 .25rem;
+    min-height: 0;
+}
+
+.THIS .uiInput--checkbox input {
+    display: inline-block;
+}
+
+.THIS .adm-rem-hours-row {
+	min-width: 110px;
+}
+
+.THIS .gripper {
+	cursor: move;
+}
+
+.THIS .gripper button {
+	pointer-events: none;
+}
+
+.THIS .adm-capex-chkbox .slds-form-element__label {
+	float: left;
+	margin-right: .25rem;
+}
+
+.THIS .adm-capex-chkbox .slds-checkbox--faux {
+	margin-right: 0;
+}

@@ -1,0 +1,26 @@
+.THIS .adm-text-color_orange {
+    color: #ffa500;
+}
+
+.THIS .adm-header-data p.slds-text-heading--medium {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.THIS .adm-header-data  p.adm-text-data {
+    margin: 0;
+}
+
+.THIS .adm-data-box {
+    display: inline-flex;
+}
+
+.THIS .adm-sidebar-button-box {
+    width: 100%;
+    border-bottom: 0px;
+    border-radius: .25rem .25rem 0 0;
+}
+
+.THIS .adm-commitment-navigate-menu {
+    float: right;
+}

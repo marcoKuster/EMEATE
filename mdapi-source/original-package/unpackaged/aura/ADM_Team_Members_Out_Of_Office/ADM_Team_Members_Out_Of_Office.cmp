@@ -1,0 +1,80 @@
+<aura:component controller="ADM_ScrumTeamMembersOutOfOffice" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="outOfOfficeList" type="List"/>
+
+    <article class="slds-card">
+      <div class="slds-card__header slds-grid">
+        <header class="slds-media slds-media--center slds-has-flexi-truncate">
+
+          <div class="slds-media__body slds-truncate">
+            <h2>
+              <a href="javascript:void(0);" class="slds-text-link--reset">
+                <span class="slds-text-heading--small">Team Members Out of Office</span>
+              </a>
+            </h2>
+          </div>
+        </header>
+      </div>
+        <aura:if isTrue="{!v.outOfOfficeList.length == 0}">
+      <ui:outputText class="slds-m-left--large" value="No scrum team members have any upcoming time off scheduled."></ui:outputText>
+            <aura:set attribute="else">
+              <div class="slds-card__body slds-scrollable--x">
+                    <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer">
+                      <thead>
+                        <tr class="slds-text-title--caps">
+                          <th scope="col">
+                            <div class="slds-truncate" title="Member Name">Scrum Team Member</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="Record Type">Record Type</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="Start Date">Start Date</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="End Date">End Date</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="% Allocation">% Allocation</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="Description">Description</div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <aura:iteration items="{!v.outOfOfficeList}" var="outOfOffice">
+                            <tr class="slds-hint-parent">
+                              <td scope="row">
+                              <aura:if isTrue="{!outOfOffice.User__r != null}">
+                                    <div class="slds-truncate" title="Member Name"><a href="{!'/'+outOfOffice.User__c}">{!outOfOffice.User__r.Name}</a></div>
+                                </aura:if>
+                              </td>
+                              <td>
+                                <aura:if isTrue="{!outOfOffice.RecordType != null}">
+                                    <div class="slds-truncate" title="Record Type">{!outOfOffice.RecordType.Name}</div>
+                                </aura:if>
+                              </td>
+                              <td>
+                                <div class="slds-truncate" title="Start Date">{!outOfOffice.Start_Date__c}</div>
+                              </td>
+                              <td>
+                                <div class="slds-truncate" title="End Date">{!outOfOffice.End_Date__c}</div>
+                              </td>
+                              <td>
+                                <div class="slds-truncate" title="% Allocation">{!outOfOffice.Allocation__c}</div>
+                              </td>
+                              <td>
+                                <div class="slds-truncate" title="Description">{!outOfOffice.Description__c}</div>
+                              </td>
+                            </tr>
+                        </aura:iteration>
+                      </tbody>
+                    </table>
+              </div>
+            </aura:set>
+       </aura:if>
+      </article>
+
+
+</aura:component>

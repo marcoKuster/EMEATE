@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X508_Compliance_Complete__c</fullName>
+    <description>Code and the UI have been reviewed to ensure 508 compliance and features that cannot be made compliant have been brought to the attention of the UE team.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Code and the UI have been reviewed to ensure 508 compliance and features that cannot be made compliant have been brought to the attention of the UE team.  See the compliance checklist:  http://wikiforce/pmwiki.php/Main/Accessibility508.</inlineHelpText>
+    <label>508 Compliance Complete</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>False</fullName>
+                <default>true</default>
+                <label>False</label>
+            </value>
+            <value>
+                <fullName>True</fullName>
+                <default>false</default>
+                <label>True</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

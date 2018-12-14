@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deploy_to_all_Instances__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Select &quot;Yes&quot; if this fix is to be deployed to all instances. Otherwise, select &quot;No&quot; and specify instances that must receive this fix in the &quot;Target Instances&quot; field.</inlineHelpText>
+    <label>Deploy to all Instances?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes - all instances</fullName>
+                <default>false</default>
+                <label>Yes - all instances</label>
+            </value>
+            <value>
+                <fullName>No - specific instances</fullName>
+                <default>false</default>
+                <label>No - specific instances</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

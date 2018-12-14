@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Priority Override</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Priority Overrides</value>
+    </caseValues>
+    <fields>
+        <label><!-- Priority (default) --></label>
+        <name>Priority_Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority Mapping --></label>
+        <name>Priority_Mapping__c</name>
+        <relationshipLabel><!-- Priority Overrides --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority Override Explanation --></label>
+        <name>Priority_Override_Explanation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work --></label>
+        <name>Work__c</name>
+        <relationshipLabel><!-- Priority Overrides --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

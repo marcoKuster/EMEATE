@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Property_Description__c</fullName>
+    <description>Description on what this key value pair is. Making this field required so that a description is entered on what this field is used for, to make it easy for somebody who is looking at it later</description>
+    <externalId>false</externalId>
+    <label>Property Description</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

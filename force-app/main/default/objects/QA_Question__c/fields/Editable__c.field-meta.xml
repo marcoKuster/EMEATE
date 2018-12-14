@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Editable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field determines if the question can be editable. It is only set through the UI so that the question can not be edited from API calls.</description>
+    <externalId>false</externalId>
+    <label>Editable</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

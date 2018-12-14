@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_Remaining__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( TODAY() &lt; Start_Date__c, &#39;NOT STARTED&#39;, IF( End_Date__c &gt;= TODAY(), TEXT( ROUND(End_Date__c - TODAY(), 0) + 1 ), &#39;CLOSED&#39; ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Days Remaining</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

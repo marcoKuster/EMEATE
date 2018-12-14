@@ -1,0 +1,60 @@
+<aura:component controller="ADM_AssignmentRuleCreateController">
+	<aura:attribute name="productTagId" type="String"/>
+    <aura:attribute name="recordType" type="String"/>
+    <!-- populate this will the default values you would like, if any -->
+    <aura:attribute name="defaultRule" type="ADM_Assignment_Rule__c" default="{'sobjectType' : 'ADM_Assignment_Rule__c', 'Name' : ''}"/>
+
+
+<div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+      <h3 class="slds-truncate" title="Assignment Rule"><a href="javascript:void(0);">{!v.recordType} Assignment Rule</a></h3>
+
+
+</div>
+<div style="padding-top:3px;padding-bottom:3px">
+	A {!v.recordType} created using this Product Tag will be assigned to the following users.
+</div>
+ 
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-01">Assignee</label>
+</div>
+<force:inputField aura:id="assigneeinput" value="{!v.defaultRule.Assignee_Assignment__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-02">QA Engineer</label>
+</div>
+<force:inputField aura:id="qainput" value="{!v.defaultRule.QA_Assignment__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-03">Product Owner</label>
+</div>
+<force:inputField aura:id="poinput" value="{!v.defaultRule.Product_Owner__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-04">Tech Writer</label>
+</div>
+<force:inputField aura:id="twinput" value="{!v.defaultRule.Tech_Writer_Assignment__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-05">Performance Engineer</label>
+</div>
+<force:inputField aura:id="perfinput" value="{!v.defaultRule.Systest_Assignment__c}"/>
+
+<div class="slds-form-element">
+  <label class="slds-form-element__label" for="text-input-06">UE Engineer</label>
+</div>
+<force:inputField aura:id="ueinput" value="{!v.defaultRule.UE_Engineer__c}"/>
+
+
+
+
+<div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate" style="padding-top:5px">
+      <div>&nbsp;</div>
+      <div class="slds-shrink-none">
+      	 <lightning:button variant="brand" label="Save Changes" onclick="{! c.handleSaveBugClick }" />
+
+      </div>
+</div>
+
+
+
+</aura:component>

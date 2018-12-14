@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Explain_Java_Package_and_PL_SQL_Coverage__c</fullName>
+    <description>Explain if the Java Package or PL/SQL Coverage is &lt; 20%</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Explain if the Java Package or PL/SQL Coverage is &lt; 20%</inlineHelpText>
+    <label>Explain Java Package and PL/SQL Coverage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

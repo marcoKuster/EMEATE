@@ -1,0 +1,102 @@
+<aura:component controller="ADM_TasksController" extends="c:ADM_Work_Shared" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+
+    <aura:attribute name="maxCapHoursWarningGiven" type="Boolean" default="false"/>
+    <aura:attribute name="previousFieldValue" type="Object"/>
+    <aura:attribute name="scrumTeamMembers" type="Object"/>
+    <aura:attribute name="task" type="Object"/>
+    <aura:attribute name="userPrefs" type="Object"/>
+    <aura:attribute name="spinnerVisible" type="Boolean"/>
+    <aura:attribute name="displayModal" type="Boolean"/>
+
+    <aura:handler event="c:ADM_Event_Show_Spinner" action="{!c.handleShowSpinner}"/>
+    <aura:handler event="c:ADM_Event_Update_TaskData" action="{!c.updateTaskData}"/>
+
+    <aura:registerEvent name="updateUserPref" type="c:ADM_Event_Update_User_Pref"/>
+    <aura:registerEvent name="deleteTask" type="c:ADM_Event_Delete_Unsaved_Task"/>
+    <aura:registerEvent name="updateSprintData" type="c:ADM_Event_Update_SprintData"/>
+    <aura:registerEvent name="newTask" type="c:ADM_Event_New_Task"/>
+
+    <article class="slds-card slds-theme--default" data-task-id="{!v.task.Id}">
+        <div class="slds-form-element__control">
+            <div class="slds-grid slds-wrap">
+                <div class="adm-task-description">
+                    <textarea aura:id="taskSubject" onblur="{!c.saveSubject}" onfocus="{!c.setPreviousValue}" onkeypress="{!c.subjectKeyPress}" value="{!v.task.Subject__c}" maxlength="255" label="subject" class="slds-textarea"/>
+                </div>
+                <div class="adm-task-assignee slds-p-top--xx-small">
+                    <c:ADM_Assignee_Selector assignee="{!v.task.Assigned_To__r}" assigneeField="Assigned_To__c" record="{!v.task}" recordType="Task" team="{!v.scrumTeamMembers}" dropdownPosition="{!v.task.Status__c == 'Completed' ? 'right' : 'left'}"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-theme--shade slds-p-around--xx-small adm-task-footer">
+            <aura:if isTrue="{! v.spinnerVisible }">
+                <div class="slds-transition-hide">
+                    <lightning:buttonIcon iconName="utility:rows" variant="bare" alternativeText="Move Task" tabindex="-1"/>
+                </div>
+            <aura:set attribute="else">
+                <div class="gripper slds-transition-show">
+                    <lightning:buttonIcon iconName="utility:rows" variant="bare" alternativeText="Move Task" tabindex="-1"/>
+                </div>
+            </aura:set>
+            </aura:if>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size--1-of-1 adm-rem-hours-row">
+                    <div class="slds-float--right slds-align-middle">
+                        <span class="slds-p-left--x-small">
+                            <label>Remaining: </label>
+                        </span>
+                        <input aura:id="remainingHours" onfocus="{!c.selectText}" onblur="{!c.saveRemainingHours}" value="{!v.task.Hours_Remaining__c}" class="slds-input adm-task-hours-input" tabindex="0"/>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.task.Capex_Enabled__c}">
+                    <div class="slds-size--1-of-1">
+                        <div class="slds-m-top--xx-small slds-float--right slds-align-middle">
+                            <span class="slds-p-left--x-small">
+                                <label>Actual: </label>
+                            </span>
+                            <input aura:id="actualHours" onfocus="{!c.selectText}" onblur="{!c.saveActualHours}" value="{!v.task.Actual_Hours__c}" class="slds-input adm-task-hours-input" tabindex="0"/>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+            <div class="adm-task-actions">
+                <div class="slds-p-right--x-small slds-float--right">
+                    <div class='slds-float--left'>
+                        <aura:if isTrue="{! v.task.Work__r.Capex_Enabled__c || v.task.Capex_Enabled__c }">
+                            <lightning:input type="checkbox" label="Quality: " onchange="{!c.saveCapitalizable}" checked="{!v.task.Capex_Enabled__c}" class="adm-capex-chkbox"/>
+                        </aura:if>
+                    </div>
+                    <aura:if isTrue="{!v.task.Id != null}">
+                        <lightning:buttonicon iconName="utility:new_window" onclick="{!c.openTask}" variant="border" size="x-small" alternativeText="New Window" />
+                        <lightning:buttonIcon iconName="utility:delete" onclick="{!c.confirmDeleteTask}" variant="border" size="x-small" alternativeText="Delete Task" tabindex="0"/>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.displayModal}">
+            <div aura:id="confirmDeleteTask" role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-modal--prompt">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header slds-notify slds-notify--alert">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeDeleteConfirm}" variant="bare" alternativeText="Close" class="slds-button slds-modal__close slds-button--icon-inverse"/>
+                        <h2 class="slds-text-heading--medium" id="prompt-heading-id">Are you sure?</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <p>
+                            This will permanently delete the task. To undo, press Cancel.
+                        </p>
+                        <p class="slds-m-top--small">
+                            <lightning:input aura:id="showDeleteTaskDialogChkbox" type="checkbox" label="Don't ask me again"/>
+                        </p>
+                    </div>
+                    <div class="slds-modal__footer slds-theme--default">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.deleteTask}">Delete</button>
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeDeleteConfirm}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop"></div>
+        </aura:if>
+
+    </article>
+
+</aura:component>

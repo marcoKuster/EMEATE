@@ -1,0 +1,628 @@
+<apex:component controller="ADM_SprintTabsController" layout="none">
+<apex:attribute name="sprint" type="ADM_Sprint__c" description="The sprint to be shown" required="true" />
+<apex:attribute name="selectedTabId" type="String" description="The ID of the selected tab" />
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+	<title>{!sprint.Name}</title>
+	<meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<apex:styleSheet value="{!URLFOR($Resource.jquery_ui_1813_redmond, 'css/redmond/jquery-ui-1.8.13.custom.css')}" />
+	<apex:includeScript value="{!$Resource.json2}" />
+	<apex:includeScript value="{!$Resource.jquery_1_7_2_min}" />
+	<apex:includeScript value="{!$Resource.jquery_ui_1_8_21_min}" />
+	<apex:includeScript value="{!$Resource.touchpunch}" />
+	<apex:includeScript value="{!$Resource.cometd_2_2_0}" />
+	<apex:includeScript value="{!$Resource.jquery_cometd_2_2_0}" />
+	<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','true', 'false')}">
+		<apex:stylesheet value="{!URLFOR($Resource.SLDS042, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	</apex:outputPanel>
+</head>
+<body class="{!IF($CurrentPage.parameters.isdtp == 'p1','slds', '')}">
+
+<script type="text/javascript">
+/*-----------------------------------------------------------------------------------------------------------------------------------
+UPDATE NOTIFICATION AREA
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function showNotification(txt){
+    var msgId = startNotification(txt);
+    setTimeout(function() {
+        endNotification(msgId);
+    }, 3000);
+}
+
+function startNotification(txt, obj){
+    var msgId = (new Date()).getTime();
+    $('#activity').removeClass('error').addClass('working').data('message_id', msgId);
+    if (obj) {
+        $(obj).find('.task_hint').html('<img class="task_working" src="{!$Resource.icon_activity_gray}" />');
+    }
+    $('#activity .ui-button-text').stop().show().html(txt);
+    return msgId;
+}
+
+/**
+ * @param {String|Object} error  The error message or object with message property.
+ * @param {String} [msg] A friendly message to be shown to the user
+ */
+
+function errorNotification(error, msg){
+    var msgId = (new Date()).getTime();
+    $('#activity').removeClass('working').addClass('error').data('message_id', msgId);
+    
+    var errorMsg = null;
+    if(typeof error === 'string') {
+        errorMsg = error;
+    } else if(typeof error === 'object' && error.message) {
+        errorMsg = error.message;
+    }
+    
+    $('#activity .ui-button-text').stop().show().html(msg||'An error has occurred');
+
+        /* show dropdown */
+        $('button#activity').addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        var activityDropdown = $('#menu_activity');
+        activityDropdown.data('active-button', this);
+        activityDropdown.html(errorMsg);
+        activityDropdown.menu('deactivate').show();
+        activityDropdown.position({my:"right top",at:"right bottom",of:$('#activity'),offset:"0px -1px", collision:"none"});
+        $(document).click(hide_dd);
+        
+    $('.task_hint img').remove();
+    return msgId;
+}
+
+function endNotification(){
+    var currentMessageId = $('#activity').data('message_id');
+    
+    //if we are given a message id as an argument and that message is currently 
+    //being shown to the user, then end it. otherwise continue showing it. 
+    if(arguments.length == 0 || (currentMessageId && arguments[0] && currentMessageId == arguments[0])) {
+        $('#activity .ui-button-text').fadeOut(500, function() {
+            $('#activity').removeClass('working').removeClass('error').data('message_id', null);
+            $('.task_hint img').remove();
+            $(this).html('No activity').fadeIn(500);
+       });
+    }
+}
+</script>
+
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','true', 'false')}">
+	<div class="slds-anchor">
+		<div class="slds-grid">
+			<c:ADM_SprintNavigation_Sds currentSprint="{!sprint}" />
+			<div class="slds-col slds-no-flex slds-align-bottom">
+				<div class="slds-button-group" role="group">
+					<button id="buttonCreateWork" class="slds-button slds-button--neutral">New</button>
+				</div>
+			</div>
+			<div class="slds-col slds-no-flex slds-align-bottom slds-m-left--small">
+				<div class="slds-button-group" role="group">
+					<button id="fullWorkView" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#snippet')}"></use></svg>
+						<span class="slds-assistive-text">Tile View</span>
+					</button>
+					<button id="compactWorkView" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#rows')}"></use></svg>
+						<span class="slds-assistive-text">List View</span>
+					</button>
+				</div>
+			</div>
+			<div class="slds-col slds-no-flex slds-align-bottom slds-m-left--small">
+				<div class="slds-button-group" role="group">
+					<button id="buttonFilter" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#filterList')}"></use></svg>
+						<span class="slds-assistive-text">Filter</span>
+					</button>
+					<button id="buttonCharts" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#chart')}"></use></svg>
+						<span class="slds-assistive-text">Charts</span>
+					</button>
+					<!--button id="buttonChatter" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#chat')}"></use></svg>
+						<span class="slds-assistive-text">Chatter</span>
+					</button-->
+					<!--button id="buttonFullscreen" class="slds-button slds-button--icon-border">
+						<svg aria-hidden="true" class="slds-button__icon"><use xlink:href="{!URLFOR($Resource.SLDS042, '/assets/icons/utility-sprite/svg/symbols.svg#expand')}"></use></svg>
+						<span class="slds-assistive-text">Full Screen</span>
+					</button-->
+				</div>
+			</div>
+		</div>
+		<!--div class="slds-grid slds-anchor--rec-home__detail-row">
+			<div class="slds-col--padded slds-size--1-of-4">
+				<dl class="anchor--rec-home__detail-item">
+					<dt><p class="slds-text-heading--label slds-truncate">Actual Velocity</p></dt>
+					<dd><p class="slds-text-body--regular slds-truncate">
+		                <apex:outputText value="{0,number,#}">
+		                    <apex:param value="{!sprint.Completed_Story_Points__c}" />
+		                </apex:outputText>
+					</p></dd>
+				</dl>
+			</div>
+			<div class="slds-col--padded slds-size--1-of-4">
+				<dl class="anchor--rec-home__detail-item">
+					<dt><p class="slds-text-heading--label slds-truncate">Planned Velocity</p></dt>
+					<dd><p class="slds-text-body--regular slds-truncate">{!plannedVelocity}</p></dd>
+				</dl>
+			</div>
+			<div class="slds-col--padded slds-size--1-of-4">
+				<dl class="anchor--rec-home__detail-item">
+					<dt><p class="slds-text-heading--label slds-truncate">Days Left</p></dt>
+					<dd><p class="slds-text-body--regular slds-truncate">{!sprint.Days_Remaining__c}<apex:outputText rendered="{!sprint.Days_Remaining__c == NULL}">-</apex:outputText></p></dd>
+				</dl>
+			</div>
+			<div class="slds-col--padded slds-size--1-of-4">
+				<dl class="anchor--rec-home__detail-item">
+					<dt><p class="slds-text-heading--label slds-truncate">Total Story Points</p></dt>
+					<dd><p class="slds-text-body--regular slds-truncate">3</p></dd>
+				</dl>
+			</div>
+		</div-->
+	</div>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}">
+	<div class="bPageTitle">
+	    <div class="ptBody">
+	        <div class="content">
+	           <!--   <img src="{!$Resource.clockicon}" alt="Sprint" class="pageTitleIcon" title="Sprint" />
+	            <h1 class="pageType">Sprint<span class="titleSeparatingColon">:</span></h1>
+	            <h2 class="pageDescription">{!sprint.Name}</h2><div class="blank">&nbsp;</div> -->
+	            <c:ADM_SprintNavigation currentSprint="{!sprint}" /> 
+	        </div>
+	
+	        <div class="content_options">
+	            <h1 class="pageType">Actual Velocity<span class="titleSeparatingColon">:</span></h1>
+	            <h2 class="pageDescription">
+	                <apex:outputText value="{0,number,#}">
+	                    <apex:param value="{!sprint.Completed_Story_Points__c}" />
+	                </apex:outputText>
+	            </h2>
+	            <div class="blank">&nbsp;</div>
+	        </div>  
+	
+	        <div class="content_options">
+	            <h1 class="pageType">Planned Velocity<span class="titleSeparatingColon">:</span></h1>
+	            <h2 class="pageDescription"><div id="plannedVelocityId">{!plannedVelocity}</div></h2><div class="blank">&nbsp;</div>
+	        </div>                     
+	                                    
+	        <div class="content_options">
+	            <h1 class="pageType">Days Left<span class="titleSeparatingColon">:</span></h1>
+	            <h2 class="pageDescription">{!sprint.Days_Remaining__c}<apex:outputText rendered="{!sprint.Days_Remaining__c == NULL}">-</apex:outputText></h2><div class="blank">&nbsp;</div>
+	        </div>                      
+	
+	        <div id="helpLinks" class="links">
+	            <apex:outputPanel rendered="{!LOWER(selectedTabId) == 'virtualwall'}" layout="none">
+	                <a href="#" onClick="showTour();return false">Guided Tour</a> | 
+	            </apex:outputPanel>
+	        </div>
+	    </div>
+	</div>
+	
+	<div id="subnav" class="zen">
+	    <div id="sprint_buttons">
+	        <button id="activity">No activity</button>
+	        <apex:outputPanel rendered="{!LOWER(selectedTabId) == 'virtualwall'}" layout="none">
+	        <button id="newButton">New Work</button>
+	        <button id="filterOptions">Filter</button>
+	        </apex:outputPanel>
+	        <input type="checkbox" id="chatterOption" /><label id="chatterOptionLabel" for="chatterOption" title="Chatter">Chatter</label>
+	        <input type="checkbox" id="fullScreenOption" /><label id="fullScreenOptionLabel" for="fullScreenOption" title="Full Screen">Full Screen</label>
+	    </div>
+	
+	    <ul class="zen-inlineList zen-tabMenu" id="tabBar">
+	        <c:ADM_Sprint_Tab tabIndex="0" label="Virtual Wall" url="{!$Page.ADM_SprintDetail_VirtualWall}?id={!sprint.Id}" selected="{!LOWER(selectedTabId) == 'virtualwall'}" />
+	        <c:ADM_Sprint_Tab tabIndex="1" label="Sprint Details" url="{!$Page.ADM_SprintDetail_Details}?id={!sprint.Id}" selected="{!LOWER(selectedTabId) == 'details'}" />
+	        <c:ADM_Sprint_Tab tabIndex="2" label="Charts" url="{!$Page.ADM_SprintDetail_Charts}?id={!sprint.Id}" selected="{!LOWER(selectedTabId) == 'charts'}" />
+	        <apex:outputPanel layout="none" rendered="{!NOT(packagedOrg)}">
+	       	 <c:ADM_Sprint_Tab tabIndex="3" label="Test Executions" url="{!$Page.ADM_SprintDetail_TestExecutions}?id={!sprint.Id}" selected="{!LOWER(selectedTabId) == 'testexecutions'}" />
+	        </apex:outputPanel>
+	    </ul>
+	</div>
+	<div id="subnavline" class="brdPalette"></div>
+</apex:outputPanel>
+
+<div id="sprint_content">
+    <div id="sprint_leftpanel" class="{!IF(currentUserLightningDesktopPreference,'','ui-tabs ui-widget ui-widget-content ui-corner-all')}">
+        <div class="{!IF(currentUserLightningDesktopPreference,'','ui-tabs-panel ui-widget-content ui-corner-bottom')}"><apex:componentBody /></div>
+    </div>
+    
+    <div id="sprint_rightpanel">
+        <div id="chatterBar">
+            <chatter:follow entityId="{!sprint.Id}" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" />
+        </div>
+        <chatter:feed entityId="{!sprint.Id}" rendered="{!IF($CurrentPage.parameters.isdtp == 'p1','false', 'true')}" />
+    </div>
+
+</div>
+
+<ul id="menu_activity" class="dropdown">
+    There is no activity to display at this time.
+</ul>
+
+<script type="text/javascript">
+/*-----------------------------------------------------------------------------------------------------------------------------------
+HIDE ALL DROPDOWNS
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function hide_dd() {
+    $('.dropdown,.slds-dropdown').css('top','0px','left','0px').hide();
+    $('#headliner #headliner_status button,#headliner #headliner_assignee button,#headliner_qe button,button.storypoints,button#assigneeOptions,button#activity,button#newButton,button#filterOptions,.work_desc .work_desc_status .work_desc_status_view button,.work_desc .work_desc_status .work_desc_status_dropdown button').removeClass('ui-state-active button-active ui-state-focus button-active-left button-active-right');
+    $(document).unbind('click', hide_dd);
+}
+
+function hide_floatingbar_dd() {
+    $('button#activity,button#filterOptions,button#newButton').removeClass('ui-state-active button-active button-active-left button-active-right');
+    $('#menu_activity.dropdown,#menu_filter.dropdown,#menu_new.dropdown').hide();
+    $(document).unbind('click', hide_floatingbar_dd);
+}
+
+/**
+ * Disables a previously disabled menu item in a jQuery.ui.menu. Tested using jQuery 1.8.2
+ */
+function disableMenuItem(selector) {
+    var $menuItem = $(selector);
+    
+    if($menuItem.attr('disabled') == 'disabled') {
+        return;
+    }
+    
+    $menuItem
+        .removeClass('ui-menu-item')
+        .removeAttr('role')
+        .addClass('ui-state-disabled')
+        .attr('disabled', 'disabled')
+        .find('a').replaceWith(function(){
+            return $('<div></div>').append($(this).contents()).css({padding:'0.2em 0.4em', 'lineHeight':'1.5', zoom:1});
+        });
+        
+    //calling the refresh method on the menu should rebuild the menu including the new item 
+    $menuItem.closest('.ui-menu').menu('refresh');
+}
+
+/**
+ * Enables a previously disabled menu item in a jQuery.ui.menu. Tested using jQuery 1.8.2
+ */
+function enableMenuItem(selector) {
+    var $menuItem = $(selector);
+    
+    if($menuItem.attr('disabled') != 'disabled') {
+        return;
+    }
+    
+    $menuItem
+        .removeClass('ui-menu-item')
+        .removeAttr('role')
+        .removeClass('ui-state-disabled')
+        .removeAttr('disabled')
+        .find('div').replaceWith(function(){
+            return $('<a></a>').append($(this).contents()).attr('src', '#').css('cursor', 'pointer');
+        });
+        
+    //calling the refresh method on the menu should rebuild the menu including the new item
+    $menuItem.closest('.ui-menu').menu('refresh');
+}
+
+/**
+ * Creates a function that determines if a RemoteAction has failed and triggers
+ * the fail callback.
+ * 
+ * @param {Function} [options.success] Optional function to call when the RemoteAction
+ * successfully returns back a value.
+ * @param {String|Function} [options.fail] Optional message or function to call
+ * when the handled RemoteAction fails. If a String is specified, it is passed to
+ * window.errorNotification. If a function is specified, then the event is passed as
+ * the first parameter.
+ */
+var handle = function(options){
+
+
+    //set up the defaults
+    var settings = $.extend({
+        success: function() {},
+        fail: errorNotification
+    }, options);
+    
+    //create a function to be called when the remote action fails, which
+    //calls the settings/options version.
+    var onFail = function(e) {
+        console.log(e);
+        console.error(e.message);
+        
+        //output the stack if it is available
+        if(e.innerException && e.innerException.stack) {
+            console.error(e.innerException.stack);
+        }
+        
+        if(typeof settings.fail === 'function') {
+           settings.fail(e);
+        } else if(typeof settings.fail === 'string') {
+           errorNotification(e, settings.fail);
+        }
+    };
+    
+    return function(data, event) {
+        if(event.status) {
+            try {
+                settings.success(data);
+            } catch(e) {
+                onFail({message: e.toString(), innerException: e});
+            }
+        } else {
+            onFail({message: event.message});
+        }
+    };
+};
+
+(function($){
+    $(function(){
+        $(window).scroll(function(){
+            if (!$('#guider_overlay').is(':visible')) {
+                hide_floatingbar_dd();
+            }
+            buttonPlacement();
+        });
+
+        $(window).resize(function(){
+            if (!$('#guider_overlay').is(':visible')) {
+                hide_dd();
+            }
+        });
+
+
+    });
+
+    // ACTIVITY
+    var activityDropdown = $('#menu_activity').menu().hide();
+    $('button#activity').button({text: true,icons: {primary: "ui-icon-flag", secondary: "ui-icon-triangle-1-s"}}).live('click', function(event) {
+        if (activityDropdown.is(':visible')) {
+            hide_dd();
+            return false;
+        }
+        hide_dd();
+        $(this).addClass('ui-state-active').addClass('button-active').addClass('button-active-left').addClass('button-active-right');
+        activityDropdown.appendTo($('#sprint_buttons'));
+        activityDropdown.data('active-button', this);
+        activityDropdown.menu('deactivate').show();
+        activityDropdown.position({my:"right top",at:"right bottom",of:this,offset:"0px -1px", collision:"none"});
+        activityDropdown.click(function(e){ return false });
+        $(document).click(hide_dd);
+        return false;
+    }).live('mouseleave', function(event){
+        if (activityDropdown.is(':visible') ){
+            $(this).addClass('ui-state-active');
+        } else {
+            $(this).removeClass('ui-state-active');
+        }
+    });
+    
+    // FULLSCREEN TOGGLE
+    if({!FullscreenCookieValue}) {
+        triggerFullScreen();
+    }
+    $('#fullScreenOption').button({text:false, icons:{primary: "ui-icon-arrow-4-diag"}}).live('click', function(event) {
+        triggerFullScreen();
+        buttonPlacement();
+    });
+
+    // CHATTER TOGGLE
+    if({!ChatterViewPreference}) {
+        $("#chatterOption").attr('checked', 'checked');
+        $('#sprint_rightpanel').show();
+    } else {
+        $('#sprint_rightpanel').hide();
+    }
+    $('#chatterOption').button({text:false, icons:{primary: "ui-icon-comment"}}).live('click', function(event) {
+        var chatterview = false;
+        if ($('#sprint_rightpanel').is(':visible')) {
+            $(this).find('.ui-icon-check').removeClass('ui-icon-check').addClass('ui-icon-blank');
+            $('#chatterOptionLabel').removeClass('ui-state-focus');
+            $('#sprint_rightpanel').hide();
+            chatterview = false;
+        } else {
+            $(this).find('.ui-icon-blank').removeClass('ui-icon-blank').addClass('ui-icon-check');
+            $('#sprint_rightpanel').show();
+            chatterview = true;
+        }
+        RemoteAction.ADM_SprintTabsController.setChatterPreference(chatterview, handle({
+            fail: function(event){
+                console.log('Error when saving the Chatter view preference.');
+            } 
+        }));
+        buttonPlacement();
+    });
+    
+    // run at launch
+    buttonPlacement();
+    
+
+})(jQuery);
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+SPRINT BUTTONS
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function buttonPlacement() {
+    if ($('body').hasClass('fullScreenMode')) {
+
+        if($('#sprint_rightpanel').is(':visible')) {
+            $('#sprint_buttons').addClass('float').css('right','355px');
+        } else if(!$('#sprint_rightpanel').is(':visible')) {
+            $('#sprint_buttons').addClass('float').css('right','10px');
+        }
+
+    } else {
+
+        if($(window).scrollTop() > 164 && $('#sprint_rightpanel').is(':visible')) {
+            $('#sprint_buttons').addClass('float').css('right','355px');
+        } else if($(window).scrollTop() > 164 && !$('#sprint_rightpanel').is(':visible')) {
+            $('#sprint_buttons').addClass('float').css('right','15px');
+        } else {
+            $('#sprint_buttons').removeClass('float').css('right','auto');
+        }
+
+    }
+
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+FULL SCREEN
+/----------------------------------------------------------------------------------------------------------------------------------*/
+function triggerFullScreen(){
+    if ($('body').hasClass('fullScreenMode')) {
+        $('html').css('height','auto').css('width','auto')
+        $('body').css('margin','0px 10px');
+        $('body').css('width','auto')
+        $('#contentWrapper').css('height','auto').css('width','auto')
+        $('.noSidebarCell').css('padding','10px');
+        $('.bodyDiv').css('border-top-width','3px');
+        $('body #AppBodyHeader,body .bPageTitle,.bPageFooter').show();
+        $('#sprint_content').css('padding-top','0px');
+        $('body').removeClass('fullScreenMode');
+        $('#fullScreenOptionLabel').removeClass('ui-state-focus');
+        document.cookie="apex__fullscreen=;path=/";
+        $("#fullScreenOption").removeAttr('checked');
+    } else {
+        $('html').css('height','100%').css('width','100%');
+        $('body').css('margin','0px 0px');
+        $('body').css('width','100%');
+        $('#contentWrapper').css('height','100%').css('width','100%');
+        $('.noSidebarCell').css('padding','0px 10px');
+        $('.bodyDiv').css('border-top-width','0px');
+        $('body #AppBodyHeader,body .bPageTitle,.bPageFooter').hide();
+        $('#sprint_content').css('padding-top','10px');
+        $('body').addClass('fullScreenMode');
+        document.cookie="apex__fullscreen=true;path=/";
+        $("#fullScreenOption").attr('checked', 'checked');
+    }
+    buttonPlacement();
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+RESTRICT INPUT
+/----------------------------------------------------------------------------------------------------------------------------------*/
+var digitsOnly = /[1234567890]/g;
+var integerOnly = /[0-9\.]/g;
+var alphaOnly = /[A-Za-z]/g;
+var usernameOnly = /[0-9A-Za-z\._-]/g;
+
+function restrictInput(e,restrictionType) {
+    var code = e.keyCode || e.which;
+    var character = String.fromCharCode(code);
+
+    if (!e.ctrlKey && code!=9 && code!=8 && code!=36 && code!=37 && code!=38 && (code!=39 || (code==39 && character=="'")) && code!=40) {
+        if (character.match(restrictionType)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+function restrictInputToDigitsOnly(e) {
+    return restrictInput(e, digitsOnly);
+}
+function restrictInputToNumberOnly(e) {
+    return restrictInput(e, /[0-9\.]/g);
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------
+STREAMING API
+/----------------------------------------------------------------------------------------------------------------------------------*/
+$(document).ready(function() {
+    var cometd = $.cometd;
+
+    $(window).unload(function(){
+        cometd.disconnect();
+    });
+    
+    var _connected = false;
+    
+    cometd.onListenerException = function(exception, subscriptionHandle, isListener, message) {
+        console.error(exception.message);
+        console.log(arguments);
+        console.log(exception.stack);
+    };
+    
+    cometd.configure({
+        url: window.location.protocol + '//' + window.location.hostname + '/cometd/29.0/',
+        requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'},
+        logLevel: 'info',
+        appendMessageTypeToURL: false
+    });
+    
+    cometd.addListener('/meta/connect', function(message) {
+        if(cometd.isDisconnected()) {
+            _connected = false;
+            console.log('Disconnected');
+            return;
+        }
+    
+        var wasConnected = _connected;
+        _connected = message.successful === true;
+        
+        if(!wasConnected && _connected) {
+            console.log('Connected');
+        } else if(wasConnected && !_connected){
+            console.log('Connection Broken');
+        }
+    });
+    
+    cometd.addListener('/meta/handshake', function(message) {
+        if(message.successful === false) {
+            console.log('Unable to connect to streaming API' + ((message.error) ? (': ' + message.error):''));
+        }
+    });
+        
+    cometd.handshake();
+    
+    $(document).trigger('cometd-init', cometd);
+    
+    //setup a timer to disconnect after inactivity for an amount of time
+    (function(){
+        var timeoutInMinutes = 60;
+        var inputEvents = 'mousemove keydown mousewheel mousedown touchstart touchmove';
+        var timerId = null;
+        
+        var stopTimer = function() {
+            clearTimeout(timerId);
+        };
+        
+        var startNewTimer = function() {
+            timerId = setTimeout(onTimeout, timeoutInMinutes * 60000);
+        };
+        
+        var onInput = function() {
+            stopTimer();
+            startNewTimer();
+        };
+        
+        var onTimeout = function() {
+            cometd.disconnect();
+            stopTimer();
+            $(document).off(inputEvents, onInput);
+            
+            $('<div title="Disconnected"><p>Due to inactivity you have been disconnected from the page. To continue using the page, click the Reconnect button below.</p></div>')
+                .appendTo(document.body)
+                .dialog({
+                    modal: true,
+                    resizable: false,
+                    buttons: {
+                        "Reconnect": function() {
+                            $(this).dialog('close');
+                        }
+                    },
+                    close: function() {
+                        window.location.reload();
+                    }
+                });
+        };
+        
+        $(document).on(inputEvents, onInput);
+        
+        startNewTimer();
+    })();
+});
+</script>
+
+</body>
+</html>
+</apex:component>

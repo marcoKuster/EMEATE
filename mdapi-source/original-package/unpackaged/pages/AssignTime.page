@@ -1,0 +1,296 @@
+<apex:page standardController="Quarterly_Plan__c" extensions="PartnerPlanRelatedToQPExtension" lightningStylesheets="False">
+
+    <apex:form >
+        <apex:pageBlock title="Quarterly Plan" >
+            <apex:pageBlockButtons location="Top">
+                <apex:commandButton value="Reload Data" action="{!allPP_IDs}"/>
+                <apex:commandButton value="Save" action="{!updateQP}" >
+                    <apex:actionSupport event="onclick" reRender="ActivityPanel,QPUPanel" />
+                    <apex:param assignto="{!page}" name="page" value="Time"/>
+                </apex:commandButton>
+            </apex:pageBlockButtons>
+            <apex:outputPanel id="QPUPanel">
+                <apex:pageBlocksection title="Usage " >
+                    <apex:pageBlockTable value="{!QP}" var="qpu">
+                        <apex:column >
+                            <apex:facet name="header">Total Available Time</apex:facet>
+                            <apex:inputfield value="{!qpu.Total_Available_Time__c}"  /> 
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">#Partners</apex:facet>
+                            <apex:OutputText value="{!allPartners}"/>
+                        </apex:column>
+                        <apex:column value="{!qpu.Total_TR_Planned__c}" style="width:100px;{!if(qpu.Total_TR_Planned__c > 9, 'color:red;','')}" />                    
+                        <apex:column value="{!qpu.Total_DP_Planned__c}" style="width:100px;{!if(qpu.Total_DP_Planned__c > 9, 'color:red;','')}"/>
+                        <apex:column value="{!qpu.Total_SR_Planned__c}" style="width:100px;{!if(qpu.Total_SR_Planned__c > 5, 'color:red;','')}"/>
+                        <apex:column value="{!qpu.Full_Utilisation__c}" style="width:100px;{!if(qpu.Full_Utilisation__c > 140, 'color:red;',if(qpu.Full_Utilisation__c > 120, 'color:MediumSlateBlue ;',''))}"/>
+                        <apex:column value="{!qpu.Partner_Time__c}" style="width:100px;{!if(qpu.Partner_Time__c > 70, 'color:red;','')}"/>                    
+                        <apex:column value="{!qpu.Self_Enablement__c}" style="width:100px;{!if(qpu.Self_Enablement__c < 10, 'color:red;','')}"/>                   
+                        <apex:column value="{!qpu.Expertise_Time__c}" style="width:100px;{!if(qpu.Expertise_Time__c < 5, 'color:red;','')}"/>
+                        <apex:column value="{!qpu.Scale_Activitiesq__c}" style="width:100px" />
+                        <apex:column value="{!qpu.Other_Time__c}" style="width:100px;{!if(qpu.Other_Time__c > 40, 'color:red;',if(qpu.Other_Time__c > 25, 'color:MediumSlateBlue ;',''))}"/>
+                        <apex:column value="{!qpu.Remaining_Time__c}" style="width:100px" />                                    
+                    </apex:pageBlockTable>
+                </apex:pageBlocksection>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="ActivityPanel">
+                <apex:pageBlocksection title="Activity Time " >           
+                    <apex:pageBlockTable value="{!QP}" var="qp">
+                        <apex:column >
+                            <apex:facet name="header">VTO</apex:facet>
+                            <apex:inputField value="{!qp.VTO__c}" style="Width:100px;" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">PTO</apex:facet>
+                            <apex:inputField value="{!qp.PTO__c}" style="Width:100px;" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Training</apex:facet>
+                            <apex:inputField value="{!qp.Training__c}" style="Width:100px;" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Learning</apex:facet>
+                            <apex:inputField value="{!qp.Self_Learning__c}" style="Width:100px;" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Dreamforce</apex:facet>
+                            <apex:inputField value="{!qp.Dreamforce__c}" style="Width:100px;" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Event</apex:facet>
+                            <apex:inputField value="{!qp.Event__c}" style="Width:100px;" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Team Call</apex:facet>
+                            <apex:inputField value="{!qp.Team_Call__c}" style="Width:100px;"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">PAM Call</apex:facet>
+                            <apex:inputField value="{!qp.PAM_Calls__c}" style="Width:100px;"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Internal Strategy</apex:facet>
+                            <apex:inputField value="{!qp.Internal_Strategy__c}" style="Width:100px;"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Expert Area</apex:facet>
+                            <apex:inputField value="{!qp.Expert_Area__c}" style="Width:100px;"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Admin Internal</apex:facet>
+                            <apex:inputField value="{!qp.Admin_Private__c}" style="Width:100px;"/>
+                        </apex:column>
+                        <!-- MK
+                        removed this field 24 Oct 2018
+                        <apex:column >
+                            <apex:facet name="header">PM Activities</apex:facet>
+                            <apex:inputField value="{!qp.PM_Activities__c}" style="width:50px" />
+                        </apex:column>
+                        -->
+                    </apex:pageBlockTable>
+                </apex:pageBlocksection>
+            
+                <apex:pageblockSection title="Default Time assigned per Activity" >                                 
+                    <apex:pageBlockTable value="{!QP}" var="ta" >
+                        <apex:column >                   
+                            <apex:facet name="header">Ad-Hoc Enablement</apex:facet>
+                            <apex:inputField value="{!ta.Average_Ad_Hoc_Enablement__c}" style="Width:100px;" /> 
+                        </apex:column>
+                        <apex:column >                   
+                            <apex:facet name="header">Selling the Platform</apex:facet>
+                            <apex:inputField value="{!ta.Average_Selling_the_Platform__c}" style="Width:100px;" /> 
+                        </apex:column>                        
+                        <apex:column >                   
+                            <apex:facet name="header">TR</apex:facet>
+                            <apex:inputField value="{!ta.Average_TR__c}" style="Width:100px;" /> 
+                        </apex:column>
+                        <apex:column >                   
+                            <apex:facet name="header">DP &amp; Contract</apex:facet>
+                            <apex:inputField value="{!ta.Average_DP_Contract__c}" style="Width:100px;" /> 
+                        </apex:column>
+                        <apex:column >                   
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!ta.Average_Workshop__c}" style="Width:100px;" /> 
+                        </apex:column>                        
+                        <apex:column >                   
+                            <apex:facet name="header">Security Review</apex:facet>
+                            <apex:inputField value="{!ta.Average_SR__c}" style="Width:100px;" /> 
+                        </apex:column>
+                        <apex:column >                   
+                            <apex:facet name="header">Product Review</apex:facet>
+                            <apex:inputField value="{!ta.Average_Product_Review__c}" style="Width:100px;" /> 
+                        </apex:column>
+                        <apex:column >                   
+                            <apex:facet name="header">Design Sprint</apex:facet>
+                            <apex:inputField value="{!ta.Average_Design_Sprint__c}" style="Width:100px;" /> 
+                        </apex:column>               
+                    </apex:pageBlockTable>
+                </apex:pageblockSection>
+                
+                <apex:pageblockSection title="Actual Time assigned per Activity" rendered="{!$User.FirstName == 'Marco'}" >                                 
+                    <apex:pageBlockTable value="{!QP}" var="ta" >
+                        <apex:column value="{!ta.Current_Av_Ad_Hoc_Enablement__c}" width="100px" />                                           
+                        <apex:column value="{!ta.Current_Av_Selling_the_Platform__c}" width="100px" /> 
+                        <apex:column value="{!ta.Current_Av_TR__c}" width="100px" /> 
+                        <apex:column value="{!ta.Current_Av_DP_Contract__c}" width="100px" /> 
+                        <apex:column value="{!ta.Current_Av_Workshop__c}" width="100px" />                         
+                        <apex:column value="{!ta.Current_Av_SR__c}" width="100px" /> 
+                        <apex:column value="{!ta.Current_Av_Product_Review__c}" width="100px" />
+                        <apex:column value="{!ta.Current_Av_Design_Sprint__c}" width="100px" />                        
+                    </apex:pageBlockTable>
+                </apex:pageblockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <apex:form >    
+    	<apex:outputPanel id="Form" >
+            <apex:pageBlock title="Partners Plans" >
+                <apex:pageBlockButtons >
+                    <apex:selectList value="{!SelectedPAM}" multiselect="false" size="1" title="Filter by PAM">
+                        <apex:actionSupport event="onchange" action="{!FilterPAM}" reRender="TargetPanel,MarketPanel,QPUPanel" />
+               			<apex:selectOptions value="{!PAMs}" />
+            		</apex:selectList>
+                    <apex:commandButton value="Save" action="{!updatePPT}" >
+                        <apex:actionSupport event="onclick" reRender="TargetPanel,QPUPanel,ATAPanel,MarketPanel,PDOPanel,OthersPanel" />
+                        <apex:param assignto="{!page}" name="page" value="Time"/>
+                    </apex:commandButton>                    
+                </apex:pageBlockButtons>
+				<apex:pageBlockSection title="Prospect Partners{!Targetsize}" rendered="{!hasTarget}" id="TargetPanel" >
+                	<apex:pageBlockTable value="{!Target}" var="t" id="TargetTable" >                        
+                        <apex:column value="{!t.Account__r.name}" style="width:120px" headerClass="headerClass"/>
+                        <apex:column headerClass="headerClass" style="width:50px">
+                            <apex:facet name="header">Priority</apex:facet>
+                            <apex:outputField value="{!t.Priority__c}"/>
+                        </apex:column>
+                        <apex:column headerClass="headerClass" style="width:100px">
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!t.Ad_Hoc__c}" />
+                        </apex:column> 
+                        <apex:column headerClass="headerClass" style="width:100px">
+                            <apex:facet name="header">Selling the Platform</apex:facet>
+                            <apex:inputField value="{!t.Selling_the_Platform__c}" style="{!if(and(t.Needs_Selling_the_Platform__c == True,or(t.Selling_the_Platform__c ==0, t.Selling_the_Platform__c == null)),'background-color:red;',if(and(Not(t.Selling_the_Platform__c == null),t.Needs_Selling_the_Platform__c == False,t.Selling_the_Platform__c >0),'color:red;',''))}"  />                      
+                       </apex:column>                                                
+                        <apex:column headerClass="headerClass" style="width:100px" >
+                            <apex:facet name="header">TR</apex:facet>
+                            <apex:inputField value="{!t.TR__c}" style="{!if(and(t.Needs_TR__c == True,or(t.TR__c==null,t.TR__c==0)),'background-color:red;width:50px',if(and(not(t.TR__c==null),t.Needs_TR__c == False,t.TR__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                        <apex:column headerClass="headerClass" style="width:100px">
+                            <apex:facet name="header">DP &amp; Contract</apex:facet>
+                            <apex:inputField value="{!t.DP_Contract__c}" style="{!if(and(t.Needs_DP_Contract__c == True,or(t.DP_Contract__c==null,t.DP_Contract__c==0)),'background-color:red;width:50px',if(and(not(t.DP_Contract__c==null),t.Needs_DP_Contract__c == False,t.DP_Contract__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                       <apex:column headerClass="headerClass" style="width:100px">
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!t.Workshop__c}" style="{!if(and(t.Needs_Workshop__c == True,or(t.Workshop__c==null,t.Workshop__c==0)),'background-color:red;width:50px',if(and(not(t.Workshop__c==null),t.Needs_Workshop__c == False,t.Workshop__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                       <apex:column headerClass="headerClass" style="width:100px">
+                            <apex:facet name="header">Security Review</apex:facet>
+                            <apex:inputField value="{!t.Security_Review__c}" style="{!if(and(t.Needs_SR__c == True,or(t.Security_Review__c==null,t.Security_Review__c==0)),'background-color:red;width:50px',if(and(not(t.Security_Review__c==null),t.Needs_SR__c == False,t.Security_Review__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                       <apex:column headerClass="headerClass" style="width:100px">
+                            <apex:facet name="header">Design Sprint</apex:facet>
+                            <apex:inputField value="{!t.Design_Sprint__c}" style="{!if(and(t.Needs_Design_Sprint__c == True,or(t.Design_Sprint__c==null,t.Design_Sprint__c==0)),'background-color:red;width:50px',if(and(not(t.Design_Sprint__c==null),t.Needs_Design_Sprint__c == False,t.Design_Sprint__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                        <apex:column headerClass="headerClass" value="{!t.Total_Time__c}" style="{!if(t.Total_Time__c >50, 'color:red;',if(t.Total_Time__c >20, 'color:MediumSlateBlue ;',''))}"/>                       
+                    </apex:pageBlockTable>             
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="In-Market Partners{!InMarketsize}" rendered="{!hasInMarket}" id="MarketPanel" >
+					<apex:pageBlockTable value="{!InMarket}" var="i" id="InMarketTable">                       
+                        <apex:column value="{!i.Account__r.name}" headerClass="hc2"/>
+                        <apex:column >
+                            <apex:facet name="header">Priority</apex:facet>
+                            <apex:outputField value="{!i.Priority__c}"/>
+                        </apex:column>
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!i.Ad_Hoc__c}" style="width:50px" />
+                        </apex:column>
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!i.Workshop__c}" style="{!if(and(i.Needs_Workshop__c == True,or(i.Workshop__c==null,i.Workshop__c==0)),'background-color:red;width:50px',if(and(not(i.Workshop__c==null),i.Needs_Workshop__c == False,i.Workshop__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">Product Review</apex:facet>
+                            <apex:inputField value="{!i.Product_review__c}" style="{!if(and(i.Needs_Product_review__c == True,or(i.Product_review__c==null,i.Product_review__c==0)),'background-color:red;width:50px',if(and(not(i.Product_review__c==null),i.Needs_Product_review__c == False,i.Product_review__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>                        
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">Selling the Platform</apex:facet>
+                            <apex:inputField value="{!i.Selling_the_Platform__c}" style="{!if(And(i.Needs_Selling_the_Platform__c == True,or(i.Selling_the_Platform__c==null,i.Selling_the_Platform__c==0)),'background-color:red;width:50px',if(And(not(i.Selling_the_Platform__c==null),i.Needs_Selling_the_Platform__c == False,i.Selling_the_Platform__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>                         
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">TR</apex:facet>
+                            <apex:inputField value="{!i.TR__c}" style="{!if(and(i.Needs_TR__c == True,or(i.TR__c==null,i.TR__c==0)),'background-color:red;width:50px',if(and(not(i.TR__c==null),i.Needs_TR__c == False,i.TR__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">DP &amp; Contract</apex:facet>
+                            <apex:inputField value="{!i.DP_Contract__c}" style="{!if(and(i.Needs_DP_Contract__c == True,or(i.DP_Contract__c==null,i.DP_Contract__c==0)),'background-color:red;width:50px',if(and(not(i.DP_Contract__c=null),i.Needs_DP_Contract__c == False,i.DP_Contract__c>0),'color:red;width:50px','width:50px;'))}"/>
+                        </apex:column>
+                       <apex:column headerClass="hc2" >
+                            <apex:facet name="header">Security Review</apex:facet>
+                            <apex:inputField value="{!i.Security_Review__c}" style="{!if(and(i.Needs_SR__c == True,or(i.Security_Review__c==null,i.Security_Review__c==0)),'background-color:red;width:50px',if(and(not(i.Security_Review__c==null),i.Needs_SR__c == False,i.Security_Review__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                        <apex:column headerClass="hc2" >
+                            <apex:facet name="header">Design Sprint</apex:facet>
+                            <apex:inputField value="{!i.Design_Sprint__c}" style="{!if(and(i.Needs_Design_Sprint__c == True,or(i.Design_Sprint__c==null,i.Design_Sprint__c==0)),'background-color:red;width:50px',if(and(not(i.Design_Sprint__c==null),i.Needs_Design_Sprint__c == False,i.Design_Sprint__c>0),'color:red;width:50px','width:50px;'))}" />
+                        </apex:column>
+                        <apex:column value="{!i.Total_Time__c}" headerClass="hc2" style="{!if(i.Total_Time__c >50, 'color:red;',if(i.Total_Time__c >20, 'color:MediumSlateBlue ;',''))}"/>                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="PDO Partners{!PDOsize}" rendered="{!hasPDO}" id="PDOPanel" >
+					<apex:pageBlockTable value="{!PDO}" var="p">
+                        <apex:column value="{!p.Account__r.name}"/>
+                        <apex:column >
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!p.Ad_Hoc__c}" style="width:50px" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!p.Workshop__c}" style="width:50px" />
+                        </apex:column>                        
+                        <apex:column value="{!p.Total_Time__c}" style="{!if(p.Total_Time__c >50, 'color:red;',if(p.Total_Time__c >20, 'color:MediumSlateBlue ;',''))}"/>
+                        <apex:column >
+                            <apex:facet name="header">Comments</apex:facet>
+                            <apex:inputField value="{!p.Comments__c}" style="width:200px" />
+                        </apex:column>
+                        <apex:column value="{!p.Account_Plan__c}"/>
+                        <apex:column headerValue="Action">
+                            <apex:commandlink value="Delete" action="{!deletePP}" reRender="PDOForm" >
+                                <apex:param assignto="{!selectedPP_ID}" name="selectedPP_ID" value="{!p.id}"/>
+                                <apex:param assignto="{!page}" name="page" value="Time"/>
+                            </apex:commandlink>                             
+                        </apex:column>                       
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Others{!othersSize}" rendered="{!hasOthers}" id="OthersPanel" >
+					<apex:pageBlockTable value="{!Others}" var="o">
+                        <apex:column value="{!o.Account__r.name}"/>
+                        <apex:column >
+                            <apex:facet name="header">Ad-Hoc Tech Enablement</apex:facet>
+                            <apex:inputField value="{!o.Ad_Hoc__c}" style="width:50px" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Workshop</apex:facet>
+                            <apex:inputField value="{!o.Workshop__c}" style="width:50px" />
+                        </apex:column>                        
+                        <apex:column value="{!o.Total_Time__c}" style="{!if(o.Total_Time__c >50, 'color:red;',if(o.Total_Time__c >20, 'color:MediumSlateBlue ;',''))}"/>
+                        <apex:column >
+                            <apex:facet name="header">Comments</apex:facet>
+                            <apex:inputField value="{!o.Comments__c}" />
+                        </apex:column>
+                        <apex:column value="{!o.Account_Plan__c}"/>
+                        <apex:column headerValue="Action">
+                            <apex:commandlink value="Delete" action="{!deletePP}" reRender="hasOtherForm" >
+                                <apex:param assignto="{!selectedPP_ID}" name="selectedPP_ID" value="{!o.id}"/>
+                                <apex:param assignto="{!page}" name="page" value="Time"/>
+                            </apex:commandlink>                           
+                        </apex:column>                       
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+	</apex:form>
+</apex:page>

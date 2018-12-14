@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Description_255__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Short description of this goal</inlineHelpText>
+    <label>Description (255)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ShowChatteronVirtualWall__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Indicates if the user will want to show or hide the chatter component on virtual wall.</description>
+    <externalId>false</externalId>
+    <label>Show Chatter on Virtual Wall</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

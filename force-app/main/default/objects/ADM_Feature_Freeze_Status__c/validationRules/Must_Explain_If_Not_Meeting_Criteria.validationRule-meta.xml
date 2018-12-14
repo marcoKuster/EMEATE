@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_Explain_If_Not_Meeting_Criteria</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(ISBLANK( Team_Signoff_Status_Details__c),
+   OR( ISPICKVAL( Team_Signoff_Status__c, &quot;Yes / does not meet criteria&quot;),
+        ISPICKVAL( Team_Signoff_Status__c, &quot;No&quot;)),
+    false)</errorConditionFormula>
+    <errorDisplayField>Team_Signoff_Status_Details__c</errorDisplayField>
+    <errorMessage>You must provide details if signing off without meeting criteria or when setting Signoff Status to &quot;No&quot;.</errorMessage>
+</ValidationRule>

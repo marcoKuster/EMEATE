@@ -1,0 +1,134 @@
+<apex:component controller="ADM_WorkTreeController" allowDML="true">
+
+<apex:attribute name="AWorkID" description="Reference to the ID of the object" type="Id" required="required" assignTo="{!workid}"/>   
+<style>
+        .tooltipheader {
+            width:300px;
+            background:     #FFCC66;
+            border:1px solid    #FFCC66;
+            font-weight:bold;
+            padding:10px;
+         }
+         
+         .tooltipbody {
+            width:300px;
+            background:#FFFFFF;
+            border-left:1px solid       #FFCC66;
+            border-right:1px solid      #FFCC66;
+            border-bottom:1px solid     #FFCC66;
+            padding:10px;
+         }
+</style>         
+
+<apex:outputPanel layout="block" id="WorkTreePageWrapper">  
+
+<apex:repeat value="{!FatalErrorMessages}" var="childerror" id="childfatalerrors">
+    <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/exclamation.png')}" style="vertical-align:text-top;padding-bottom:4px" /> &nbsp;<apex:outputText value="{!childerror}" styleClass="errorMsg" /><br/>
+</apex:repeat>
+
+
+    <apex:repeat value="{!workTreeContainer}" var="container">
+        
+           
+                
+                <apex:repeat value="{!ErrorMessages}" var="error" id="errors">
+                    <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/exclamation.png')}" style="vertical-align:text-top;padding-bottom:4px" /> &nbsp;<apex:outputText value="{!error}" styleClass="errorMsg" /><br/>
+                </apex:repeat>
+                
+                    <div  id="workTreeWrapper">
+                    
+                        <table width="100%" class="list" border="0" id="childWorkRecordTree" cellspacing="0"> 
+                            <tr class="headerRow">
+                                
+                                <th width="3%"></th>
+                                <th width="10%">Work ID</th>
+                                <th width="10%">Assignee</th>
+                                <th width="40%">Subject</th>
+                                <!-- <th>Status</th> -->
+                                <th width="8%">Type</th>
+                                <th width="5%">Priority</th>
+                                <!-- <th>Severity</th>  -->
+                                <th width="5%">Build</th>
+                                <th width="5%">Resolved</th>
+                                <th width="5%">Closed</th> 
+                            </tr> 
+                            <apex:repeat value="{!container.familyTree}" var="fmd" id="workTree">
+                                <tr>
+                                    <td style="text-align:center;"><apex:image url="{!URLFOR($Resource.silkIcons, 'icons/page_white_copy.png')}" rendered="{!fmd.duplicate == true && fmd.generation == 0}" alt="Duplicate of {!work.Name}" title="Duplicate of {!work.Name}" /></td>
+                                    <td>  
+                                       
+                                        <apex:outputLink value="/{!fmd.work.id}" target="_parent"  >
+                                             <apex:outputText value="{!fmd.work.Name}"/>
+                                        </apex:outputLink>                         
+                                    </td>
+                                    <td>                        
+                                        <apex:outputText value="{!fmd.work.Assignee__r.Name}"/>
+                                    </td>
+                                    <td>
+                                       <div style="padding-left:{!fmd.padding}px"> 
+                                       <apex:outputLink value="/{!fmd.work.id}" target="_parent"  > 
+                                            {!LEFT(fmd.work.Subject__c,30)} <apex:outputPanel rendered="{!LEN(fmd.work.Subject__c) >=30}">...</apex:outputPanel>
+                       
+                                       </apex:outputLink> 
+                                       </div>  
+                                    </td>
+                                   <!--  <td>
+                                        <apex:outputText value="{!fmd.work.Status__c}"/>
+                                    </td>  -->
+                                    <td>
+                                        <apex:outputText value="{!fmd.work.Type__c}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputText value="{!fmd.work.Priority__c}"/>
+                                    </td>
+                                    <!-- 
+                                    <td>
+                                        <apex:outputText value="{!fmd.work.Severity__c}"/>
+                                    </td>
+                                     -->
+                                     <td>
+                                        <apex:outputText value="{!fmd.work.Scheduled_Build__r.Name}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputText rendered="{!fmd.work.Resolved__c == 0.0}" >
+                                            <apex:image url="{!$Resource.cross}" alt="This item remains unresolved" title="This item remains unresolved"  />                
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!fmd.work.Resolved__c == 1.0}" >
+                                            <apex:image url="{!$Resource.tick}" alt="This item's status is {!fmd.work.Status__c}" title="This items status is {!fmd.work.Status__c}" />  
+                                        </apex:outputText>
+                                    </td>
+                                     <td>
+                                        <apex:outputText rendered="{!fmd.work.Closed__c == 0.0}" >
+                                            <apex:image url="{!$Resource.cross}" alt="This item remains open" title="This item remains open" />                
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!fmd.work.Closed__c == 1.0}" >
+                                            <apex:image url="{!$Resource.tick}" alt="This item is is closed" title="This item is closed" />  
+                                        </apex:outputText>
+                                    </td>                       
+                                </tr>
+                            </apex:repeat>
+                                
+                        </table>
+                    </div>
+                    
+                     <apex:outputText rendered="{!container.sizeOfFamily == 0}">
+                         <br/>No records to display.  
+                     </apex:outputText>    
+                  
+                    <apex:outputText rendered="{!container.sizeOfFamily > 0}">
+                            <br/>1&nbsp;to&nbsp;<apex:outputText value="{!container.sizeOfFamily}" />&nbsp;of&nbsp;<apex:outputText value="{!container.sizeOfFamily}" />
+                    </apex:outputText>     
+          
+        
+        
+                
+    </apex:repeat>
+
+
+
+
+</apex:outputPanel> 
+
+
+
+</apex:component>

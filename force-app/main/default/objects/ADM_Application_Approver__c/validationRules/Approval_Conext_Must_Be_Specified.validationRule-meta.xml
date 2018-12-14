@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_Conext_Must_Be_Specified</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL( Approval_Context__c, &quot;&quot; )</errorConditionFormula>
+    <errorDisplayField>Approval_Context__c</errorDisplayField>
+    <errorMessage>The Approval Context must be specified.</errorMessage>
+</ValidationRule>

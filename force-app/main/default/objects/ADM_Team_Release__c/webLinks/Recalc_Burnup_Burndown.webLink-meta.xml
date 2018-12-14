@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recalc_Burnup_Burndown</fullName>
+    <availability>online</availability>
+    <description>Forces a recalculation of the release burnup &amp; burndown charts</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Recalc Burnup/Burndown</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)}
+
+// Now make a synchronous call to the Apex Web service method to update release burndown
+
+try {
+  var result = sforce.connection.query(&quot;select id,Name, Build__c,Scrum_Team__c from ADM_Team_Release__c where id = &#39;{!ADM_Team_Release__c.Id}&#39; &quot;);
+  if (result .size &lt;= 0) {throw (&quot;Error: Unable to retrieve team release record&quot;);}
+  var teamReleaseArray  = result.getArray(&quot;records&quot;);
+
+  var result = sforce.apex.execute(
+  &quot;ADM_ReleaseBurndownUtils&quot;, // class
+  &quot;updateReleaseBurndownForTeamReleases&quot;, // method
+  {teamReleaseList: teamReleaseArray}); // method arguments
+
+  location.reload(true);
+
+} catch(error) {
+  alert(error);
+}</url>
+</WebLink>

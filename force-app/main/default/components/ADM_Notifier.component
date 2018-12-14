@@ -1,0 +1,436 @@
+<apex:component controller="ADM_NotifierController" allowDML="true" id="ADM_NotifierComponent">
+    <apex:attribute name="workObject" description="Reference to the work object" type="SObject" required="required" assignTo="{!sObjectWork}"/>  
+    <apex:attribute name="hiddenInputID" description="Reference to the hidden input used for client side storage" type="String" required="required"/>  
+    
+    <style>
+        .curvedHighlight {
+            
+            -moz-border-radius-topleft: 20px;
+            -moz-border-radius-topright: 20px;
+            -moz-border-radius-bottomright: 20px;
+            -moz-border-radius-bottomleft: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            
+        background:#3F6075;  /*1797c0;*/   /*#08C; */
+            color:white;
+            height:17px;
+            font-size:11px;
+            font-weight:bold;
+            color:#fff;
+            margin-bottom:10px;
+            margin-right:5px;
+            padding:3px;
+            padding-left:5px;
+            padding-right:5px;
+            
+        } 
+    
+        .standardRecipients .state-highlight {
+            text-shadow: 0 0 3px rgba(0, 64, 100, 0.5);
+        }
+        
+        #panelOtherRecipients .state-highlight {
+            box-shadow: 0 0 3px 3px rgba(0, 64, 100, 0.2);
+        }
+    
+    </style>
+    
+    <apex:actionRegion immediate="true">
+        <apex:pageBlockSection id="pageBlockSectionNotifications" title="Email Notifications" columns="1" showHeader="true">                    
+            All users and email addresses listed here receive an email when you save this record.
+            <!--  Product Area Select List -->
+            <apex:pageBlockSectionItem id="pageBlockSectionItemEmailAssignees">
+                <apex:outputPanel >                          
+                    <c:helpHover label="Assignees" id="helpHoverAssignees" body="Assignees of this Work record receive an email on save. Any changes made to the Assignees section while editing this record will not be reflected in this field until the record is saved." type="help"/>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleClass="requiredInput standardRecipients" id="stdRecipients">
+                    {!StandardRecipients}                      
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem id="pageBlockSectionItemAlsoEmail">
+                <apex:outputPanel >
+                    <c:helpHover label="Other Recipients" id="helpHoverOtherRecipients" body="Enter the name of a GUS user or any salesforce.com email address" type="help"/>
+                </apex:outputPanel>
+                <div id="panelOtherRecipients">
+                    &nbsp;
+                </div>                            
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem id="pageBlockSectionItemRecipientInput">
+                <apex:outputLabel value=" "/>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <div style="display: inline">
+                        <c:ADM_AutoComplete2 id="recipientInput" ObjectName="User" obj="{!subscriber}" inputFieldName="Recipient_Input__c" inputStyle="width:300px;" />                                        
+                    </div> 
+                   
+                    <div style="display: inline;">
+                        <input id="addRecipientButtonClientSide" type="button" value="Add" alt="Add" title="Add" class="btn" />                                               
+                    </div>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>      
+        </apex:pageBlockSection>                                
+    </apex:actionRegion>
+    
+    <script type="text/javascript">
+        var stdRecipients = '{!JSINHTMLENCODE(STANDARDRECIPIENTS)}'.split(",");
+        var hiddenInput = document.getElementById('{!hiddenInputID}');
+       
+        //[ALEXIS] todo add in a input var for the component to take in this array for flexibility in the future!
+        var assigneeEls = new Array();
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemAssignee:aField');          
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemQA:qaField');         
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemPO:poField');           
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemUE:ueField');         
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemTW:twField');
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemSTE:steField');
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemSeniorManagementPOC:smField');
+        assigneeEls.push('pageEdit:formEdit:pageBlockEdit:assignments:pageBlockSectionItemCsContact:csField');
+        
+        function getAssignees(oldUser) {
+            var assigneeEl;
+            
+            //get the dom elements
+            var validElements = [];
+            var notValidIndices = [];
+            for(var i = 0; i < assigneeEls.length; i++) {
+                var id = assigneeEls[i];
+                if(id == null || id === '') {
+                    continue;
+                }
+                
+                var assigneeEl = autocomplete2.getInputElement(id);
+                if(assigneeEl != null) {
+                    validElements.push(assigneeEl);
+                } else {
+                    notValidIndices.push(i);
+                }
+            }
+            
+            //remove the IDs that are not valid
+            for(var i = notValidIndices.length - 1; i > -1; i--) {
+                assigneeEls.splice(notValidIndices[i], 1);
+            }
+            
+            //get the values from each of the input fields
+            var assigneeVals = new Array();
+            for(var i = 0; i < validElements.length; i++) {
+                var assigneeEl = validElements[i];
+                if(!isEmpty(assigneeEl)) {
+                    assigneeVals.push(assigneeEl.value);
+                }
+            }
+            
+            if(!isEmptyString(oldUser)) {
+                assigneeVals.push(oldUser);
+                
+            }
+            
+            return assigneeVals;
+        }
+        
+        /**
+         * given an array of string it will return an array of the unique values,
+         * ignoring case and whitespace within the strings
+         */
+        function _uniqueNames(/**String[]*/values) {
+            //we need to grab a list of unique values from an array
+            var map = {};
+            for(var index = 0; index < values.length; index++) {
+                var value = values[index];
+                
+                //we want to ignore all whitespace and case
+                var key = (removeSpacesFromString(value) || '').toLowerCase();
+                
+                if(value != null && key.length > 0 && value != null && value.length > 0 && !(key in map)) {
+                    map[key] = value;
+                }
+            }
+            
+            var unique = [];
+            for(var key in map) {
+                unique.push(map[key]);
+            }
+            
+            return unique;
+        }
+        
+        function refreshStandardRecipients() {
+            var assignees = getAssignees();
+            var uniqueRecipients = _uniqueNames(assignees);
+            
+            var stdEls = document.getElementById('{!$Component.pageEdit.formEdit.pageBlockEdit.workEditNotifier.ADM_NotifierComponent.pageBlockSectionNotifications.pageBlockSectionItemEmailAssignees.stdRecipients}');
+            $(stdEls).empty();
+            
+            for(var index = 0; index < uniqueRecipients.length; index++) {
+                if(index > 0) {
+                    $(stdEls).append(document.createTextNode(', '));
+                }
+                $('<span></span>').attr('data-recipient', uniqueRecipients[index]).text(uniqueRecipients[index]).appendTo($(stdEls));
+            }
+        }
+        
+        function updateStandardRecipients(newUser, oldUser) {
+            newUser = escapeHTML(newUser);
+            var allAssignees = getAssignees(oldUser);
+            var numOfOldUser = numberOfInArray(allAssignees, oldUser);
+            var idxOldUser = indexOfArray(stdRecipients, oldUser);
+            var stdEls = document.getElementById('{!$Component.pageEdit.formEdit.pageBlockEdit.workEditNotifier.ADM_NotifierComponent.pageBlockSectionNotifications.pageBlockSectionItemEmailAssignees.stdRecipients}');
+            
+ 
+            
+            if(oldUser != '' && numOfOldUser <= 1) {
+                if(idxOldUser > -1) { 
+                    stdRecipients.splice(idxOldUser, 1);
+                } 
+            }
+            
+            var idxNewUser = indexOfArray(stdRecipients, newUser);
+            
+            
+            if(idxNewUser < 0) {
+                stdRecipients.push(newUser);
+            }
+            
+            stdRecipients = cleanupArray(stdRecipients);
+            
+            refreshStandardRecipients();
+        }
+        
+        function addPersonToHiddenRecipients(/**String*/ newRecipient) {
+            
+            if(newRecipient != null && newRecipient != '') {
+                var mySplitResult = getAllRecipients();
+                var newUser = removeSpacesFromEmail(newRecipient);
+                
+                if(indexOfArray(mySplitResult, newUser) < 0) {
+                    if(hiddenInput.value != '') { 
+                        hiddenInput.value += "::";
+                    }
+                    hiddenInput.value += "M==" + newUser;    
+                } else {
+                    console.log('Not adding recipient because they are already a recipient');
+                }
+                
+                return true;
+            }
+            
+            return false;
+        }
+        function appendNewItemDom($container, user) {
+            var $newItem = $('<div class="curvedHighlight" style="display:inline-block; position: relative;vertical-align:bottom;"></div>')
+                .attr('data-recipient', user)
+                .append(document.createTextNode(user))
+                .append($('<img src="{!URLFOR($Resource.crossicon)}" style="padding-left:7px;cursor: pointer;vertical-align:middle;" alt="Remove" title="Remove" />').bind('click', function() {
+                    removeRep(user);
+                }))
+                .appendTo($container);
+            return $newItem;
+        }
+        
+        function otherRepsList() {
+            var mySplitResult = hiddenInput.value.split("::");
+            var assigneeList = new Array();
+            
+            if(mySplitResult != null) {
+                for(i = 0; i < mySplitResult.length; i++){
+                    if(mySplitResult[i] != null && mySplitResult[i] != '') {
+                        var myInnerSplitResult = mySplitResult[i].split("==");
+                        var user = myInnerSplitResult[1];
+                        var type = myInnerSplitResult[0];
+                        assigneeList.push(user);
+                    }
+                }
+            }
+            
+            return assigneeList;
+        }
+        
+        function getAllRecipients() {
+            var allUsers = new Array();         
+            allUsers = allUsers.concat(getAssignees(), otherRepsList());
+            
+            return allUsers;
+        }
+        
+        function populateOtherRepsList() {
+            var otherReps = otherRepsList();
+            
+            for(var i = 0; i < otherReps.length; i++){                    
+                var user = removeSpacesFromEmail(otherReps[i]);
+                if(indexOfArray(stdRecipients, user) > -1) {
+                    removeRep(user);
+                }
+            }
+            
+            populateOtherRepsListAfterRemoval();
+        }
+        
+        function populateOtherRepsListAfterRemoval() {
+            var mySplitResult = hiddenInput.value.split("::");
+            var hiddenEls = new Array();
+            var $container = $('#panelOtherRecipients').empty();
+            
+            for(i = 0; i < mySplitResult.length; i++){
+                if(mySplitResult[i] != null && mySplitResult[i] != '') {
+                    var myInnerSplitResult = mySplitResult[i].split("==");
+                    var user = myInnerSplitResult[1];
+                    var manualOrAssigned = myInnerSplitResult[0];
+                    if (manualOrAssigned === 'A') {
+                    	// When loaded from hiddenReps, the email addresses may not be lower cased yet. Do it here
+                    	user = user.toLowerCase();
+                    }
+                    appendNewItemDom($container, user);
+                }
+            }
+        }
+        
+        function removeRep(repname) {
+            var mySplitResult = hiddenInput.value.split("::");
+            var hiddenReps = '';
+            
+            for(i = 0; i < mySplitResult.length; i++){
+                var currentItem = mySplitResult[i];
+                if(currentItem != null && currentItem != '') {
+                	var lowerCaseCurrentItem = currentItem.toLowerCase();
+                	var lowerCaseRepname = repname.toLowerCase();
+                    if(currentItem != 'M==' + repname && lowerCaseCurrentItem != 'a==' + lowerCaseRepname)
+                        hiddenReps = hiddenReps + "::" + currentItem;
+                }
+            }
+            
+            hiddenInput.value = hiddenReps;
+            //refresh display
+            populateOtherRepsListAfterRemoval();
+        }
+        
+        function highlightRep(/**String*/ repName) {
+            $('[data-recipient="' + repName + '"]').addClass('state-highlight');
+            setTimeout(function() {
+                $('[data-recipient="' + repName + '"]').removeClass('state-highlight');
+            }, 2000)
+        }
+        
+        (function($){
+            var recipientInputId = '{!$Component.pageBlockSectionNotifications:pageBlockSectionItemRecipientInput:recipientInput:autoCompleteComp:autoComp}';
+            var $recipientInput = $byId(recipientInputId, $);
+            var $addRecipientButton = $('#addRecipientButtonClientSide');
+            
+            var getRecipientFromInput = function() {
+                return $(document.getElementById(recipientInputId)).val();
+            };
+            
+            var clearRecipientInput = function() {
+                $(document.getElementById(recipientInputId)).val('');
+            }
+            
+            var addInputToHiddenRecipients = function() {
+                var newRecipient = getRecipientFromInput();
+                clearRecipientInput();
+                addRecipient(newRecipient);
+            };
+            
+            var addRecipient = function(newRecipient) {
+                addPersonToHiddenRecipients(newRecipient);
+                populateOtherRepsListAfterRemoval();
+                highlightRep(newRecipient);
+            };
+            
+            //on enter keypress, add the user in the recipient input to the other recipients 
+            $recipientInput.keyup(function(event){
+                //keycode 13 = enter
+                if(event.keyCode == 13 && ($recipientInput.data('selected') || false) == false) {
+                    event.stopPropagation();
+                    
+                    addInputToHiddenRecipients();
+                    $recipientInput.autocomplete('close');
+                }
+                $recipientInput.data('selected', false);
+            });
+            
+            //when the 'add' button is clicked, then we need to add the value 
+            //in the input field into the hidden recipients
+            $addRecipientButton.click(function(event) {
+                addInputToHiddenRecipients();
+            });
+            
+            //link the recipient input field to the notifier so that when an
+            //item on the autocomplete is selected, it updates the recipients.
+            //the jquery ui sets the value of the input AFTER the select event
+            //is triggered which means that you can't simply clear the input
+            //during the select. To get around this we have to set the 
+            //clearOnClose to clear the input when the menu is closed.
+            var clearOnClose = false;
+            $recipientInput.bind('autocompleteselect', function(event, data) {
+                //data.item should be an sObject
+                addRecipient(data.item.Name);
+                $recipientInput.val('');
+                clearOnClose = true;
+                $recipientInput.data('selected', true);
+            });
+            $recipientInput.bind('autocompleteclose', function(event, data) {
+                if(clearOnClose === true) {
+                    clearOnClose = false;
+                    $recipientInput.val('');
+                }
+            });
+            
+            /**
+             * @namespace
+             */
+            window.notifier = {};
+            
+            /** 
+             * @function
+             * @description links an input field to the standard recipients so
+             * that on field blur, the standard recipients are updated.
+             */
+            window.notifier.linkInputToStandardRecipients = function(inputDom) { 
+                if(inputDom == null) {
+                    console.debug('inputDom is null so nothing to link');
+                    return;
+                }
+                
+                var $field = $(inputDom);
+                if($field != null) {
+                    var update = function(){
+                        var newValue = $field.val();
+                        var previousValue = $field.data('notifier-previousValue') || '';
+                        $field.data('notifier-previousValue', newValue);
+                        updateStandardRecipients(newValue, previousValue);
+                    };
+                
+                    $field.bind('autocompleteselect', function(event, ui){
+                        $field.val(ui.item.value);
+                        update();
+                    });
+                
+                    $field.blur(function(event){
+                        update();
+                    });
+                }
+            };
+            
+            
+            $(document).ready(function() {
+                //link each of the assignment fields to the standard recipients
+                for(var index = 0; index < assigneeEls.length; index++) {
+                    var id = assigneeEls[index];
+                    if(id == null || id === '') {
+                        continue;
+                    }
+                    
+                    var fieldDom = autocomplete2.getInputElement(id);
+                    if(fieldDom != null) {
+                        window.notifier.linkInputToStandardRecipients(fieldDom);
+                    }
+                }
+            });
+        })(jQueryPage);
+        
+        initAutoCompleteBrowserSettings();
+        populateOtherRepsList();
+        refreshStandardRecipients();
+    </script> 
+</apex:component>

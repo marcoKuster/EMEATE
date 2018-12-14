@@ -1,0 +1,2 @@
+public with sharing class ADM_ChatterWorkController {      public Id currentWorkID {get; set;}    public ADM_ChatterWorkController() {  	
+  }    public ADM_ChatterWorkController(ApexPages.StandardController controller) {    currentWorkID = controller.getRecord().Id;  }      public String chatterValue {    get {      return ADM_Chatter.chatterValue(currentWorkID,UserInfo.getUserId());    }    set;  }}

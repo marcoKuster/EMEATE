@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Accessibility_details_required_bugs_open</fullName>
+    <active>true</active>
+    <description>When open Accessibility bugs are reported, details must be provided.</description>
+    <errorConditionFormula>AND(ISPICKVAL(Accessibility_Bugs_Closed__c, &quot;No&quot;), ISBLANK( Provide_open_Accessibility_bug_details__c))</errorConditionFormula>
+    <errorDisplayField>Provide_open_Accessibility_bug_details__c</errorDisplayField>
+    <errorMessage>You must provide details when reporting open Accessibility bugs.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Root_Cause_Messaging__c</fullName>
+    <defaultValue>&quot;Messaging Templates: https://sites.google.com/a/salesforce.com/release-operations-program-management/Home/release-processes/whats-on-the-release-operations-backlog/root-cause-analysis-process&quot;</defaultValue>
+    <description>This field is used to record the customer facing messaging pertaining to a given incident.  The messaging falls under two different categories, &quot;Product&quot; &amp; &quot;Service&quot; related.  There is a template for each that can be found here: https://sites.google.com/a/salesforce.com/release-operations-program-management/Home/release-processes/whats-on-the-release-operations-backlog/root-cause-analysis-process.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This field is in the process of being EOL&#39;d. Please attach the RCM to the appropriate RCA record.</inlineHelpText>
+    <label>Root Cause Messaging</label>
+    <length>32000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

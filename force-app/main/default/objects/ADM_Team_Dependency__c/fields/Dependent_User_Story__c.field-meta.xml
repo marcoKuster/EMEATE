@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dependent_User_Story__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The work that is dependent on the completion of the specified deliverable.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The work that is dependent on the completion of  the specified deliverable.</inlineHelpText>
+    <label>Work With Dependency</label>
+    <referenceTo>ADM_Work__c</referenceTo>
+    <relationshipLabel>Team Dependencies needed for this work</relationshipLabel>
+    <relationshipName>Team_Dependencies_For_Story</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Major_Release_Stagger__c</fullName>
+    <description>This field contains the template for the Major Release Stagger</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the template for the Major Release Stagger</inlineHelpText>
+    <label>Major Release Stagger</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

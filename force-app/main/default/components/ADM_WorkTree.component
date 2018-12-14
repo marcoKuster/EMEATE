@@ -1,0 +1,173 @@
+<apex:component id="workTreeComponent" controller="ADM_WorkTreeController" allowDML="true">
+
+<apex:attribute name="AWorkID" description="Reference to the ID of the object" type="Id" required="required" assignTo="{!workid}"/>   
+<style>
+        .tooltipheader {
+            width:300px;
+            background:     #FFCC66;
+            border:1px solid    #FFCC66;
+            font-weight:bold;
+            padding:10px;
+         }
+         
+         .tooltipbody {
+            width:300px;
+            background:#FFFFFF;
+            border-left:1px solid       #FFCC66;
+            border-right:1px solid      #FFCC66;
+            border-bottom:1px solid     #FFCC66;
+            padding:10px;
+         }
+</style>         
+
+<apex:outputPanel layout="block" id="WorkTreePageWrapper">  
+
+<apex:repeat value="{!FatalErrorMessages}" var="childerror" id="childfatalerrors">
+    <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/exclamation.png')}" style="vertical-align:text-top;padding-bottom:4px" /> &nbsp;<apex:outputText value="{!childerror}" styleClass="errorMsg" /><br/>
+</apex:repeat>
+
+<apex:variable var="container" value="{!workTreeContainer}" />
+
+        
+<apex:pageBlock id="workTreePageBlock" title="Child Work Records"> 
+    <apex:pageBlockButtons location="top" >
+        <apex:commandButton id="redirectToNewChildWorkRecordBtn" action="{!redirectToNewChildWorkRecord}" value="New" /> &nbsp;
+        <apex:outputText rendered="{!container.expandedFlag == 0}"><apex:commandButton styleClass="expandAllBtn" id="expandAllBtn" action="{!ajaxExpandFilter}" value="Expand All" rerender="WorkTreePageWrapper" /> &nbsp; </apex:outputText>
+        <apex:outputText rendered="{!container.expandedFlag == 1}"><apex:commandButton styleClass="collapseAllBtn" id="collapseAllBtn" action="{!ajaxCollapseFilter}" value="Collapse All" rerender="WorkTreePageWrapper" /> &nbsp;</apex:outputText>     
+        <apex:outputText rendered="{!container.openOnlyFilter == 0}"><apex:commandButton styleClass="showOpenOnlyBtn" id="showOpenOnlyBtn" action="{!ajaxOpenOnlyFilter}" value="Show Open Only" rerender="WorkTreePageWrapper" /></apex:outputText>
+        <apex:outputText rendered="{!container.openOnlyFilter == 1}"><apex:commandButton styleClass="showAllBtn" id="showAllBtn" action="{!ajaxOpenOnlyFilter}" value="Show All" rerender="WorkTreePageWrapper" /></apex:outputText>    
+    </apex:pageBlockButtons>
+    <apex:repeat value="{!ErrorMessages}" var="error" id="errors">
+        <apex:image url="{!URLFOR($Resource.silkIcons, 'icons/exclamation.png')}" style="vertical-align:text-top;padding-bottom:4px" /> &nbsp;<apex:outputText value="{!error}" styleClass="errorMsg" /><br/>
+    </apex:repeat>
+    <apex:pageMessages id="child-pm"/>
+    <div id="workTreeWrapper">
+<table width="100%" class="list" id="childWorkRecordTree" cellspacing="0"> 
+<tr class="headerRow">
+	<th width="5%">Action</th>
+    <th width="3%"></th>
+	<th width="10%">Work ID</th>
+	<th width="10%">Assignee</th>
+	<th width="40%">Subject</th>
+	<th width="8%">Type</th>
+	<th width="5%">Priority</th>
+	<th width="5%">Scheduled Build</th>
+	<th width="5%">Resolved</th>
+	<th width="5%">Closed</th> 
+</tr> 
+<apex:repeat value="{!container.familyTree}" var="fmd" id="workTree">
+<tr>
+	<td>
+		<apex:outputText > 
+		<apex:image url="{!$Resource.IconDelete}" id="deleteChildWorkIcon" alt="Remove Relationship" title="Remove Relationship" style="cursor:pointer;">
+			<apex:actionSupport event="onclick"   action="{!deleteChildWork}" rerender="WorkTreePageWrapper"  onsubmit="document.getElementById('{!$Component.deleteChildWorkIcon}').className='hidden';document.getElementById('inlineDeleteStatus{!fmd.work.id}').className=''">
+                <apex:param assignTo="{!ChildIDBeingModified}" name="cid" value="{!fmd.work.id}" />
+                <apex:param assignTo="{!ParentIDOfChildBeingModified}" name="pid" value="{!fmd.work.Parent_ID__c}" />
+			</apex:actionSupport>
+		</apex:image>
+		<img src="{!$Resource.ajaxloadersmall}" id="inlineDeleteStatus{!fmd.work.id}" class="hidden" /></apex:outputText>     
+	</td>
+    <td style="text-align:center;"><apex:image url="{!URLFOR($Resource.silkIcons, 'icons/page_white_copy.png')}" rendered="{!fmd.duplicate == true && fmd.generation == 0}" alt="Duplicate of {!work.Name}" title="Duplicate of {!work.Name}" /></td>
+	<td><apex:outputLink value="/{!fmd.work.id}" target="_parent"><apex:outputText value="{!fmd.work.Name}"/></apex:outputLink></td>
+	<td><apex:outputText value="{!fmd.work.Assignee__r.Name}"/></td>
+	<td>
+		<div style="padding-left:{!fmd.padding}px"> 
+		<apex:outputLink value="/{!fmd.work.id}" target="_parent"><apex:outputText value="{!fmd.work.Subject__c}"/></apex:outputLink> 
+		</div>  
+	</td>
+	<td><apex:outputText value="{!fmd.work.Type__c}"/></td>
+	<td><apex:outputText value="{!fmd.work.Priority__c}"/></td>
+	<td><apex:outputText value="{!fmd.work.Scheduled_Build__r.Name}"/></td>
+	<td>
+		<apex:outputText rendered="{!fmd.work.Resolved__c == 0.0}"><apex:image url="{!$Resource.cross}" alt="This item remains unresolved" title="This item remains unresolved" /></apex:outputText>
+		<apex:outputText rendered="{!fmd.work.Resolved__c == 1.0}"><apex:image url="{!$Resource.tick}" alt="This item's status is {!fmd.work.Status__c}" title="This items status is {!fmd.work.Status__c}" /></apex:outputText>
+	</td>
+	<td>
+		<apex:outputText rendered="{!fmd.work.Closed__c == 0.0}"><apex:image url="{!$Resource.cross}" alt="This item remains open" title="This item remains open" /></apex:outputText>
+		<apex:outputText rendered="{!fmd.work.Closed__c == 1.0}"><apex:image url="{!$Resource.tick}" alt="This item is is closed" title="This item is closed" /></apex:outputText>
+	</td>                       
+</tr>
+</apex:repeat>
+
+<tr class="actionFooter">
+	<td colspan="10" style="vertical-align:middle;height:28px;">
+		<apex:outputPanel id="childWorkIcons">
+			<apex:actionStatus id="childRelatedWorkStatus">
+				<apex:facet name="start"><apex:image url="{!$Resource.ajaxloadersmall}" style="vertical-align:middle;margin-right:10px;" /></apex:facet>
+			</apex:actionStatus>
+			<apex:image url="{!URLFOR($Resource.silkIcons, 'icons/add.png')}" style="vertical-align:middle;cursor:pointer;" id="addChildWorkIcon" styleClass="addChildWorkIcon" rendered="{!NOT(RelatedChildWorkCreateFlag)}" alt="Add New Child Relationship" title="Add New Child Relationship" />
+			<apex:image url="{!URLFOR($Resource.silkIcons, 'icons/cross.png')}" style="vertical-align:middle;margin-right:10px;cursor:pointer;" styleClass="hidden cancelChildWorkIcon" id="cancelChildWorkIcon" alt="Cancel" />
+			<apex:image url="{!URLFOR($Resource.customlookup)}" style="vertical-align:middle;margin-right:5px;cursor:pointer;" styleClass="hidden childlookupIcon" id="childlookupIcon" />
+		</apex:outputPanel>
+		<apex:outputPanel id="newChildWork" styleClass="hidden newChildWork">                       
+			<apex:inputText value="{!newChildWorkName}" id="newChildWorkInput" styleClass="newChildWorkInput gusStyle" style="width:75px;min-width:0px;height:26px;" />
+			<span style="font-weight:normal"> is this record's </span>
+			<apex:selectList id="relationshipType" value="{!relationshipType}" size="1" styleClass="gusStyle" style="width:auto;min-width:0px;padding-right:16px;height:26px;">
+                <apex:selectOption itemValue="child" itemLabel="Child"/>
+                <apex:selectOption itemValue="duplicate" itemLabel="Duplicate"/>
+			</apex:selectList> 
+			<apex:commandButton action="{!createNewChildWork}" value="Save" status="childRelatedWorkStatus" id="saveChildWorkBtn" styleClass="saveChildWorkBtn" rerender="WorkTreePageWrapper" style="vertical-align:middle;" />
+		</apex:outputPanel>
+	</td>
+</tr>
+</table>
+</div>
+
+<div style="padding:0px 10px;">
+    <apex:messages > 
+        <apex:outputText rendered="{!container.sizeOfFamily == 0}">
+            <br/>No records to display.  Click the plus icon to create a new record.
+        </apex:outputText>    
+    </apex:messages>
+    <apex:outputText rendered="{!container.sizeOfFamily > 0}">
+            <br/>1&nbsp;to&nbsp;<apex:outputText value="{!container.sizeOfFamily}" />&nbsp;of&nbsp;<apex:outputText value="{!container.sizeOfFamily}" />
+    </apex:outputText>     
+</div>
+
+</apex:pageBlock>
+</apex:outputPanel>
+
+<script type="text/javascript">
+//using jQuery.delegate because this component is used on ADM_WorkDetail, which still uses jQuery 1.5.2
+
+$(document).delegate('.addChildWorkIcon', 'click', function() {
+    $('.addChildWorkIcon').addClass('hidden');
+    $('.newChildWork').removeClass('hidden');
+    $('.cancelChildWorkIcon').removeClass('hidden');
+    $('.childlookupIcon').removeClass('hidden');
+});
+
+$(document).delegate('.cancelChildWorkIcon', 'click', function() {
+    $('.cancelChildWorkIcon').addClass('hidden');
+    $('.childlookupIcon').addClass('hidden');
+    $('.addChildWorkIcon').removeClass('hidden');
+    $('.newChildWork').addClass('hidden');
+});
+
+$(document).delegate('.childlookupIcon', 'click', function() {
+    registerLookup('{!$Component.workTreePageBlock.newChildWorkInput}');
+    openCustomPopup(this);
+});
+
+$(document).delegate('.saveChildWorkBtn', 'click', function() {
+    $('.cancelChildWorkIcon').addClass('hidden');
+    $('.saveChildWorkBtn').addClass('btnDisabled');
+});
+
+$(document).delegate('.expandAllBtn', 'click', function() {
+	$('.expandAllBtn').addClass('btnDisabled');
+});
+
+$(document).delegate('.collapseAllBtn', 'click', function() {
+	$('.collapseAllBtn').addClass('btnDisabled');
+});
+
+$(document).delegate('.showOpenOnlyBtn', 'click', function() {
+	$('.showOpenOnlyBtn').addClass('btnDisabled');
+});
+
+$(document).delegate('.showAllBtn', 'click', function() {
+	$('.showAllBtn').addClass('btnDisabled');
+});
+</script>
+</apex:component>

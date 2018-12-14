@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Plan_if_Exception_Denied__c</fullName>
+    <description>What are the options if this exception request is not approved?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>What are the options if this exception request is not approved?</inlineHelpText>
+    <label>Plan if Exception Denied</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

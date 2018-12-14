@@ -1,0 +1,125 @@
+<apex:component controller="ADM_ErrorBlockController">
+<style>
+#errorsContainer {
+    background-color: #ffc;
+    background-image: url(/img/msg_icons/error24.png);
+    background-position: 6px 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #c00;
+    color: #000;
+    min-height: 24px;
+    padding: 6px 8px 6px 39px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+#errorsContainer h4 {
+    color: #cc0000;
+    display: block;
+}
+#errorsContainer ul {
+    display: block !important;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+</style>
+<div id="errorsContainer" style="display: none">
+    <h4>Error:</h4>
+    <span class="errorBody"></span>
+</div>
+<script type="text/javascript">
+    /*global $:true, isString:true, console:true, alert:true, form:true, escapeHTML:true */
+    (function($, container){
+        "use strict";
+        
+        /**
+         * Clears the list of error messages on the page.
+         */
+        container.clearErrors = function() {
+            $('#errorsContainer')
+                .hide()
+                .find('.errorBody')
+                    .empty()
+                    .end();
+        };
+        
+        /**
+         * Shows only the errors specified. 
+         *
+         * When this method is invoked, all error messages that are currently being 
+         * displayed are cleared and replaced with the current ones.  If you want to 
+         * keep the previous error messages and display new ones, use #addError()
+         * instead.
+         *
+         * @param {String|String[]} errors An array (or a single) error message to display.
+         */
+        container.showErrors = function(errors) {
+            try {
+                container.clearErrors();
+                container.addErrors(errors);
+            } catch(e) {
+                console.warn('Unable to show page error messages to the user. Running errors to fatal error message. Reason: ' + e);
+                var fullMessage = '';
+                
+                //convert to an array if a string
+                if(isString(errors)) {
+                    errors = [errors];
+                }
+                
+                for(var index = 0; index < errors.length; index++) {
+                    fullMessage += escapeHTML(errors[index]) + '\n';
+                }
+                alert(fullMessage);
+            }
+        };
+        
+        /**
+         * Appends the error message to the page.
+         *
+         * @param {String|String[]} errors An array (or a single) error message to display.
+         */
+        container.addErrors = function(errors) {
+            //convert to an array if a string
+            if(isString(errors)) {
+                errors = [errors];
+            }
+            
+            var $errorBody = $('#errorsContainer').show().find('.errorBody');
+            var errorBodyText = $errorBody.text();
+            
+            //add each of the error messages
+            if(errors.length === 1 && errorBodyText.length === 0) {
+                $('#errorsContainer')
+                    .show()
+                    .find('.errorBody').text(errors[0]);
+            } else {
+                var $ul = $errorBody.find('ul');
+                if($ul.length === 0) {
+                    $ul = $('<ul>').appendTo($errorBody.empty());
+                    if(errorBodyText.length > 0) {
+                        $('<li>').text(errorBodyText).appendTo($ul);
+                    }
+                }
+                
+                $.each(errors, function(index, value) {
+                    $('<li>')
+                        .text(value)
+                        .appendTo($('#errorsContainer .errorBody ul'));
+                });
+            }
+        };
+        
+        $(document).ready(function() {
+            var errorMessages = {!errorMessagesAsJSON};
+            if(errorMessages.length > 0) {
+                container.addErrors(errorMessages);
+            }
+        
+            //augment the form if on the page
+            if('form' in window) {
+                form.errorHandler = window;
+            }
+        });
+    })($, window);
+</script>
+</apex:component>

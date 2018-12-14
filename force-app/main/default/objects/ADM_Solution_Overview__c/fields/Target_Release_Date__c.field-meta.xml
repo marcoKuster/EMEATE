@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Release_Date__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>If you chose &#39;Off-Cycle&#39; for your feature enablement timing, please provide the TARGET date of this enablement/release.
+&#39;Off Cycle&#39; requires Exec Approval. You should have received an automated email with instructions on how to obtain this Exec Approval.</inlineHelpText>
+    <label>Off Cycle Target Release Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

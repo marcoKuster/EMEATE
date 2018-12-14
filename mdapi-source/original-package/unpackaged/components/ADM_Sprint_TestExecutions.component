@@ -1,0 +1,69 @@
+<apex:component controller="QA_TEReportExtension">
+<apex:attribute name="SobjectType" description="Reference to the type of object" type="String" assignTo="{!sobjectType}"/>
+<apex:attribute name="objectId" description="The ID of the object to display" type="Id" assignTo="{!id}" />
+
+	<style type="text/css">
+      fieldset .topbar {
+        float: right;
+      }
+	  fieldset .col2 { 
+        display: table;
+	  	margin-right: auto; 
+	  	margin-left: auto; 
+        width: 50%;
+	  }
+	  fieldset .col2 .field {
+        display: table-row;
+	  }
+	  fieldset .col2 .field label {
+        display: table-cell;
+	  	line-height: 2;
+        padding-right: 2em;
+	  	text-align: right;
+        width: 10em;
+	  }
+	  fieldset .col2 .field .textExec {
+        display: table-cell; 
+        max-width: 1030px;
+        min-height: 25px;
+        padding-left: 10px; 
+        padding-top: 4px;
+	  }
+	  
+	</style>
+	
+		<fieldset class="ui-widget ui-widget-content  ui-corner-all">
+			
+			<div class="topbar">
+                <c:helpHover id="teReportHelp" body="The Test Execution Report indicates the total number of all Test Executions associated with stories in the sprint, with a breakdown by status." type="help"/>
+			</div>
+			
+			<div class="col2">
+			  <div class="field">
+			    <label>In Progress : %</label>
+			    <div id="sprint.InProgress" class="testExec" name="sprint.InProgress">{!inProgress}&nbsp;</div>
+			  </div>
+			  <div class="field">
+			    <label>Passed : %</label>
+			    <div id="sprint.Passed" class="testExec">{!passed}&nbsp;</div>
+			  </div>
+			  <div class="field">
+			    <label>Failed : %</label>
+			    <div class="testExec">{!failed}&nbsp;</div>
+			  </div>
+			  <div class="field">
+			    <label>Blocked : %</label>
+			    <div class="testExec">{!blocked}&nbsp;</div>
+			  </div>
+			  <div class="field">
+			    <label>Planned : %</label>
+			    <div class="testExec">{!planned}&nbsp;</div>
+			  </div>
+			  <div class="field">
+			    <label>Total</label>
+			    <div class="testExec">{!total}&nbsp;</div>
+			  </div>
+			</div>
+		</fieldset>
+		
+</apex:component>

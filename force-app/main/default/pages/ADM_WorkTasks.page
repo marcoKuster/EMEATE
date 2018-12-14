@@ -1,0 +1,31 @@
+<apex:page id="workTasksPage" standardController="ADM_Work__c" extensions="ADM_UserStoryExtension,ADM_WorkRemoteActionsExtension" showHeader="false" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        <head>
+        	<title>
+        		<apex:outputPanel layout="none" rendered="{!isNew}">Create {!ADM_Work__c.RecordType.Name}</apex:outputPanel>
+        		<apex:outputPanel layout="none" rendered="{!NOT(isNew)}">{!ADM_Work__c.Name}: {!ADM_Work__c.Subject__c}</apex:outputPanel>
+        	</title>
+        	<meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+        	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+        	<apex:stylesheet value="{!URLFOR($Resource.SLDS042, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'css/redmond/jquery-ui-1.9.2.custom.css')}" />
+        	<apex:includeScript value="{!$Resource.jquery_1_8_3_min}" />
+        	<apex:styleSheet value="{!$Resource.ADM_work_css}" />
+        	<apex:styleSheet value="{!$Resource.extended}" />
+        	<apex:includeScript value="{!URLFOR($Resource.jquery_ui_1_9_2_redmond, 'js/jquery-ui-1.9.2.custom.min.js')}" />
+        	<apex:includeScript value="{!$Resource.ADM_common_js}" />
+        	<apex:includeScript value="{!$Resource.productTagSds_js}" />
+        	<apex:includeScript value="{!$Resource.ADM_autocomplete2js}" />
+        	<apex:includeScript value="{!$Resource.ADM_Work_js}" />
+        	<style>
+        	.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;}
+        	
+        	.work-tasks {background: none;}
+        	</style>
+        </head>
+        <body class="work-tasks">
+            <c:ADM_Tasks object="{!ADM_Work__c}" />
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,36 @@
+<apex:component controller="ADM_WorkCommentsController" layout="none">
+<apex:attribute name="workObject" description="Reference to the work object" type="ADM_Work__c" required="required" assignTo="{!work}"/>
+
+<style type="text/css">
+div#gusCommentTopSection{background-color:#85C8DD;color:#fff;height:20px;}
+div#gusCommentBlock{padding:0px 8px;}
+div#gusCommentBlock div#gusCommentNotice{border:2px #E4D083 solid;border-radius:5px;background:#FFFFCC;padding:9px;margin:10px 0px 12px 0px;color:#AD994D;font-weight:bold;}
+div#gusCommentBlock div#gusCommentNotice a{color:#AD994D;}
+div#gusCommentBlock div#gusCommentNotice a:hover{color:#8D7A31;}
+td.gusCommentCreatedBy{background-color:#E5F0F1;border-top:1px #85C8DD solid;font-weight:bold;border-bottom-left-radius:5px;vertical-align:middle;}
+td.gusCommentCreatedBy a{color:#015BA7;text-decoration:none;}
+td.gusCommentCreatedBy a:hover{text-decoration:underline;}
+td.gusCommentCreatedDate{background-color:#E5F0F1;border-top:1px #85C8DD solid;text-align:right;color:#A5A5A5;border-bottom-right-radius:5px;font-weight:bold;font-size:10px;vertical-align:middle;}
+td.gusCommentBlock{padding-bottom:20px;color:#555;word-wrap:break-word;word-break:break-word;max-width:730px;}
+td.gusCommentBlock a{color:#015BA7;text-decoration:none;}
+td.gusCommentBlock a:hover{text-decoration:underline;}
+</style>
+
+<div id="gusCommentTopSection"></div>
+<div id="gusCommentBlock">
+	<div id="gusCommentNotice">Comments have been replaced by Chatter. Please click the <a href="#" onClick="selectTab('chatter', 'work');return false">Chatter tab</a> to leave a comment.</div>
+
+	<table border="0" cellpadding="8" cellspacing="0" width="100%">
+		<apex:repeat value="{!comments}" var="comment">
+			<tr>
+				<td class="gusCommentCreatedBy"><apex:outputLink value="/{!comment.Comment_Created_By__c}"><apex:outputText value="{!comment.Comment_Created_By__r.Name}" /></apex:outputLink></td>
+				<td class="gusCommentCreatedDate"><apex:outputText value="{!comment.LocaleCreatedDate__c}" /></td>
+			</tr>
+			<tr>
+				<td class="gusCommentBlock" colspan="2"><apex:outputField value="{!comment.Body__c}" /></td>
+			</tr>
+		</apex:repeat>
+	</table>
+</div>
+
+</apex:component>

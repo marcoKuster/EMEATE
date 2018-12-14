@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Division__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Division</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Analytics</fullName>
+                <default>false</default>
+                <label>Analytics</label>
+            </value>
+            <value>
+                <fullName>Core - Architecture</fullName>
+                <default>false</default>
+                <label>Core - Architecture</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - Content</fullName>
+                <default>false</default>
+                <label>CRM Apps - Content</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - Google Apps</fullName>
+                <default>false</default>
+                <label>CRM Apps - Google Apps</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - Ideas</fullName>
+                <default>false</default>
+                <label>CRM Apps - Ideas</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - Marketing/SFGA</fullName>
+                <default>false</default>
+                <label>CRM Apps - Marketing/SFGA</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - PRM</fullName>
+                <default>false</default>
+                <label>CRM Apps - PRM</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - SFA</fullName>
+                <default>false</default>
+                <label>CRM Apps - SFA</label>
+            </value>
+            <value>
+                <fullName>CRM Apps - SSS</fullName>
+                <default>false</default>
+                <label>CRM Apps - SSS</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Platform - Admin</fullName>
+                <default>false</default>
+                <label>Platform - Admin</label>
+            </value>
+            <value>
+                <fullName>Platform - API/Integration/Security</fullName>
+                <default>false</default>
+                <label>Platform - API/Integration/Security</label>
+            </value>
+            <value>
+                <fullName>Platform - Application Development</fullName>
+                <default>false</default>
+                <label>Platform - Application Development</label>
+            </value>
+            <value>
+                <fullName>Platform - Appstore</fullName>
+                <default>false</default>
+                <label>Platform - Appstore</label>
+            </value>
+            <value>
+                <fullName>Platform - Desktop Clients</fullName>
+                <default>false</default>
+                <label>Platform - Desktop Clients</label>
+            </value>
+            <value>
+                <fullName>Platform - Mobile</fullName>
+                <default>false</default>
+                <label>Platform - Mobile</label>
+            </value>
+            <value>
+                <fullName>Platform - Other</fullName>
+                <default>false</default>
+                <label>Platform - Other</label>
+            </value>
+            <value>
+                <fullName>SFA - Verticals Marketing</fullName>
+                <default>false</default>
+                <label>SFA - Verticals Marketing</label>
+            </value>
+            <value>
+                <fullName>SFA - Verticals Product</fullName>
+                <default>false</default>
+                <label>SFA - Verticals Product</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

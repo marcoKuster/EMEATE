@@ -1,0 +1,167 @@
+.THIS:hover {
+	background-color: #f4f6f9;
+}
+
+.THIS .sprint-work-subject:hover + .subjectEditIcon span.slds-icon-utility-edit,
+.THIS .subjectEditIcon:hover span.slds-icon-utility-edit {
+	visibility: visible;
+}
+
+.THIS .sprint-work-subject.editing + .subjectEditIcon span.slds-icon-utility-edit {
+	visibility: hidden;
+
+}
+
+.THIS .slds-form-element > label.slds-form-element__label {
+	position: absolute !important;
+	margin: -1px !important;
+	border: 0 !important;
+	padding: 0 !important;
+	width: 1px !important;
+	height: 1px !important;
+	overflow: hidden !important;
+	clip: rect(0 0 0 0) !important;
+}
+
+.THIS .slds-input:hover {
+	box-shadow: 0 0 3px #0070d2;
+}
+
+.THIS .draggable {
+    cursor: move;
+}
+
+.THIS .undraggable {
+    pointer-events:none;
+}
+
+.THIS .sprint-work-type button {
+	line-height: 1rem;
+}
+
+.THIS .sprint-work-type .slds-button .slds-icon_container {
+	pointer-events: none;
+}
+
+.THIS .adm-subject-col {
+	overflow-wrap: break-word;
+	max-height: 36px;
+}
+
+.THIS .sprint-work-subject {
+	padding-top: .5rem;
+    padding-bottom: .3rem;
+}
+
+.THIS.adm-task-layout .adm-work-container {
+	padding: 0;
+}
+
+.THIS.adm-task-layout .adm-work-build,
+.THIS.adm-task-layout .adm-work-theme {
+	display: none;
+}
+
+.THIS.adm-task-layout .sprint-gripper,
+.THIS.adm-task-layout .sprint-work-status,
+.THIS.adm-task-layout .adm-work-pts,
+.THIS.adm-task-layout .sprint-actions {
+	float: left;
+	padding-right: 0;
+}
+
+.THIS.adm-task-layout .sprint-gripper {
+	margin-top: 7px;
+	width: 40px;
+}
+
+.THIS.adm-task-layout .adm-work-id {
+	position: absolute;
+	margin-left: 60px;
+	margin-top: 8px;
+	min-width: 100px;
+}
+
+.THIS.adm-task-layout .sprint-work-type {
+	padding-left: 0;
+	padding-top: 5px;
+}
+
+.THIS.adm-task-layout .sprint-work-assignee,
+.THIS.adm-task-layout .sprint-work-qa {
+	position: absolute;
+	top: 2px;
+}
+
+.THIS.adm-task-layout .sprint-work-assignee {
+	margin-left: 140px;
+}
+
+.THIS.adm-task-layout .sprint-work-qa {
+	margin-left: 180px;
+}
+
+.THIS.adm-task-layout .sprint-work-subject {
+	/*margin-left: 27px;*/
+	margin-top: 10px;
+	min-width: 240px;
+	width: 20%;
+	max-width: 270px;
+	padding-left: .5rem;
+	padding-top: 0;
+    padding-bottom: 0;
+}
+
+.THIS.adm-task-layout .sprint-work-status {
+	margin-left: 27px;
+	margin-top: 10px;
+	min-width: 120px;
+	max-width: 150px;
+}
+
+.THIS.adm-task-layout .adm-work-pts {
+	margin-top: 10px;
+	width: 65px;
+}
+
+.THIS.adm-task-layout .sprint-actions {
+	margin-top: 15px;
+}
+
+.THIS.adm-task-layout .agfADM_Work_Tasks {
+	float: right;
+	width: calc(100% - 300px);
+}
+
+.THIS.adm-task-layout .agfADM_Work_Tasks .adm-tasks-container {
+	margin: 0;
+}
+
+.THIS.adm-task-layout .subjectEditIcon {
+	float: left;
+	margin-top: 10px;
+	width: 30px;
+	padding-left: 1rem;
+	min-width: 30px;
+}
+
+.THIS .adm-work-container::after {
+    content:"";
+    display:block;
+    clear:both;
+}
+
+.THIS .fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

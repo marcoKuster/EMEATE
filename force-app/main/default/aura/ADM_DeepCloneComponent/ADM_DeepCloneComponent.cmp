@@ -1,0 +1,595 @@
+<aura:component controller="ADM_WorkDeepCloneController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+  <style>
+
+       .bucket {
+        border:1px solid #C0C0C0;
+        -moz-border-radius:5px;
+        -webkit-border-radius:5px;
+        padding:10px;
+        margin:5px 0px 10px 0px;
+    }
+        
+    .THIS.toggle {
+    display: none;
+    }
+
+    
+      
+    .bucketTitle {
+        background-color:#1797C0;
+        color:#FFFFFF;
+        padding:0;
+        margin-right:2px;
+        margin:-10px -10px 10px;
+        -moz-border-radius:5px 5px 0 0;
+        -webkit-border-radius:5px 5px 0 0;
+    }
+    
+    .bucketTitle h2 {
+        display:block;
+        padding:5px 9px;
+    }
+    
+    .column-1 {
+        float: left;
+        width:30%;
+        padding-right:20px;
+        padding-top:15px;
+        padding-left:20px;
+    }
+    .column-2 {
+        float: left;
+        width:65%;
+        padding-top:15px;
+    }
+    .buttonClass{
+   
+  }
+    .selectClass{
+      width:200px;
+  }
+    .saveButtonClass{
+       
+        padding-left:170px;
+        padding-top:10px;
+        padding-bottom:10px;
+    }
+
+
+</style>
+    
+    <ltng:require styles="/resource/fbk__SLDS202/assets/styles/salesforce-lightning-design-system.css" afterScriptsLoaded="{!c.doInitPicker}"/>
+    <ltng:require styles="/resource/ADM_common_js"/>
+     <ltng:require scripts="/resource/kanban_jquery, /resource/kanban_jqueryui"/>
+    <ltng:require styles="/resource/kanban_mobilestyle, /resource/kanban_fontawesome" />
+    <aura:attribute name="workId" type="String"/>
+    <aura:attribute name="workObj" type="ADM_Work__c"/>
+    <aura:attribute name="workDetails" type="Object"/>
+    <aura:attribute name="deepCloneOptionValue" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInitPicker}" />
+    <div aura:id="deepCloneWizard" class="">
+    <div class="column-1">
+    <div class="bucket">
+        <div class="bucketTitle"><h2>Deep Clone</h2></div>
+        Please select what you'd like to clone from the options below.
+    <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+
+    <thead>
+
+      <tr class="slds-hint-parent">
+      <td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">
+        <span class="slds-checkbox">
+          <input type="checkbox" checked="checked" class="themeCheckBox" name="options" id="checkbox-theme" />
+          <label class="slds-checkbox__label" for="checkbox-theme">
+            <span class="slds-checkbox--faux"></span>
+             <span class="slds-form-element__label slds-assistive-text">Would you like to clone Theme Assignments?</span>
+          </label>
+        </span>
+      </td>
+          <td role="gridcell">
+        <div class="slds-truncate" title="Theme">Would you like to clone Theme Assignments?</div>
+      </td>
+        </tr>
+        
+        
+        <tr class="slds-hint-parent">
+      <td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">
+        <span class="slds-checkbox">
+          <input type="checkbox" checked="checked" class="acCheckBox" name="ac" id="checkbox-ac" />
+          <label class="slds-checkbox__label" for="checkbox-ac">
+            <span class="slds-checkbox--faux"></span>
+            <span class="slds-form-element__label slds-assistive-text">Would you like to clone Acceptance Criteria?</span>
+          </label>
+        </span>
+      </td>
+          <td role="gridcell">
+        <div class="slds-truncate" title="ac">Would you like to clone Acceptance Criteria?</div>
+      </td>
+        </tr>
+        
+        
+        <tr class="slds-hint-parent">
+      <td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">
+        <span class="slds-checkbox">
+          <input type="checkbox" checked="checked" class="taskCheckBox" name="Tasks" id="checkbox-task" />
+          <label class="slds-checkbox__label" for="checkbox-task">
+            <span class="slds-checkbox--faux"></span>
+              <span class="slds-form-element__label slds-assistive-text">Would you like to clone Tasks?</span>
+          </label>
+        </span>
+      </td>
+          <td role="gridcell">
+        <div class="slds-truncate" title="Tasks">Would you like to clone Tasks?</div>
+      </td>
+        </tr>
+        
+        
+        
+        
+        <tr class="slds-hint-parent">
+      <td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">
+        <span class="slds-checkbox">
+          <input type="checkbox" checked="checked" class="parentCheckBox" name="options" id="checkbox-parent" />
+          <label class="slds-checkbox__label" for="checkbox-parent">
+            <span class="slds-checkbox--faux"></span>
+              <span class="slds-form-element__label slds-assistive-text">Would you like to clone Parents of work</span>
+          </label>
+        </span>
+      </td>
+          <td role="gridcell">
+        <div class="slds-truncate" title="Parent Select">Would you like to clone Parent 
+            <div class="selectClass slds-form-element" >
+        <div class="slds-form-element__control">
+           <div class="slds-select_container">
+                    <ui:inputSelect multiple="false" aura:id="parentSelect" class="parentSelect selectClass slds-select">
+                      <ui:inputSelectOption text="Records and Relationships" label="Records and Relationships"/>
+                      <ui:inputSelectOption text="Records" label="Records"/>
+                    </ui:inputSelect>
+              </div>
+             </div>
+            </div>   
+        </div>
+      </td>
+        </tr>
+        
+        <tr class="slds-hint-parent">
+      <td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">
+        <span class="slds-checkbox">
+          <input type="checkbox" checked="checked" class="childCheckBox" name="options" id="checkbox-child" />
+          <label class="slds-checkbox__label" for="checkbox-child">
+            <span class="slds-checkbox--faux"></span>
+              <span class="slds-form-element__label slds-assistive-text">Would you like to clone Children of work</span>
+          </label>
+        </span>
+      </td>
+          <td role="gridcell">
+    <div class="slds-truncate" title="Child Select">Would you like to clone Child 
+            <div class="selectClass slds-form-element" >
+        <div class="slds-form-element__control">
+           <div class="slds-select_container">
+                    <ui:inputSelect multiple="false" aura:id="childSelect" class="parentSelect selectClass slds-select">
+                      <ui:inputSelectOption text="Records and Relationships" label="Records and Relationships"/>
+                      <ui:inputSelectOption text="Records" label="Records"/>
+                    </ui:inputSelect>
+              </div>
+             </div>
+            </div>   
+        </div>
+      </td>
+        </tr>
+        <tr class="slds-hint-parent">
+            <div class="saveButtonClass">
+                <ui:button aura:id="saveButton"  class="slds-button" press="{!c.saveWork}">Save</ui:button>
+              <span class="slds-assistive-text">Save Button</span>
+            </div>
+            
+            <div class="spinner slds-spinner_container slds-is-relative saveButtonClass" style="display:none">
+                <ui:button class="slds-button">
+                   <div role="status" class="slds-spinner slds-spinner--medium">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+          </div>
+                    <span>Save</span>
+                </ui:button>
+      </div>
+        </tr>
+
+    </thead>
+
+</table>
+ 
+        
+        
+        
+        </div>
+    </div>
+    <div class="column-2">
+    <div class="bucket">
+        <div class="bucketTitle"><h2>What you're cloning</h2> </div>
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--compact">
+       <tbody>
+                 <!--START OF SUMMARY-->
+                <div class="slds-section closeSummary" style="display:none">
+                    <ui:button class="slds-button slds-section buttonClass" press="{!c.openSummary}">
+                      <lightning:icon iconName="utility:chevronright" size="xx-small" alternativeText="expand"/>
+                        Summary</ui:button>
+                      <div class="slds-section__content"></div>
+                </div>
+                <div class="slds-section slds-is-open openSummary">
+                    <ui:button class="slds-button slds-section buttonClass" press="{!c.closeSummary}">
+                      <lightning:icon iconName="utility:chevrondown" size="xx-small" alternativeText="Close"/>
+                        Summary</ui:button>
+                    <div class="slds-section__content">
+                    </div>
+                    <tr>
+                        <td data-label="Work ID" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Work ID">Work ID</div>
+                        </td>
+                        
+                        <td data-label="workIdValue" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="workIdValue"><a href="" id="{!v.workObj.Id}" class="{!v.workObj.Id}" onclick="{!c.viewRecord}">{!v.workObj.Name}</a></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">Subject</div>
+                        </td>
+                        
+                        <td data-label="SubjectValue" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="SubjectValue">{!v.workObj.Subject__c}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Status" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Status">Status</div>
+                        </td>
+                        
+                        <td data-label="StatusValue" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="StatusValue">{!v.workObj.Status__c}</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td data-label="Team" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Team">Team</div>
+                        </td>
+                        
+                        <td data-label="TeamValue" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="TeamValue"><a id="{!v.workObj.Scrum_Team__r.Id}" class="{!v.workObj.Scrum_Team__r.Id}" onclick="{!c.viewRecord}" href="">{!v.workObj.Scrum_Team__r.Name}</a></div>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                
+                </div> <!---END OF SUMMARY--> 
+                 
+                 <!-- START OF THEME ASSIGNMENTS-->
+                 <tr>
+                 <div class="slds-section closeTheme" style="display:none">
+                    <ui:button class="slds-button slds-section" press="{!c.openTheme}">
+                      <lightning:icon iconName="utility:chevronright" size="xx-small" alternativeText="expand"/>
+                        Theme Assignments</ui:button>
+                    <div class="slds-section__content"></div>
+                </div>
+                <div class="slds-section slds-is-open openTheme">
+                    <ui:button class="slds-button slds-section" press="{!c.closeTheme}">
+                      <lightning:icon iconName="utility:chevrondown" size="xx-small" alternativeText="Close"/>
+                        Theme Assignments</ui:button>
+                    <div class="slds-section__content">
+                     
+                  <tr>
+                        <td data-label="Themes" class="slds-cell-shrink">
+                            <div class="slds-text-title--caps">Themes:</div>
+                        <ul class="slds-has-dividers--top">
+                            <aura:iteration items="{!v.workDetails.themes}" var="theme">
+                                <li class="slds-item"><a value="{!theme.Theme__r.Id}" target="#" id="{!theme.Theme__r.Id}" class="{!theme.Theme__r.Id}"  onclick="{!c.viewRecord}" href="">{!theme.Theme__r.Name}</a></li>
+                            </aura:iteration>
+                        </ul>
+                        </td>
+                        
+                        
+                    </tr>
+
+                  </div>
+                     </div></tr>
+        <!-- END OF THEME ASSIGNMENTS-->  
+                 
+                 <!-- Start OF Acceptance criterion--> 
+                 <div class="slds-section closeAc" style="display:none">
+                    <ui:button class="slds-button slds-section" press="{!c.openAc}">
+                      <lightning:icon iconName="utility:chevronright" size="xx-small" alternativeText="expand"/>
+                        Acceptance Criteria</ui:button>
+ 
+                    <div class="slds-section__content"></div>
+                </div>
+                <div class="slds-section slds-is-open openAc">
+                    <ui:button class="slds-button slds-section" press="{!c.closeAc}">
+                      <lightning:icon iconName="utility:chevrondown" size="xx-small" alternativeText="Close"/>
+                        Acceptance Criteria</ui:button>
+    
+                    <div class="slds-section__content">
+           
+                    <tr class="slds-text-title--caps">
+                        <td data-label="AcName" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Accpetance Criterion Name">Accpetance Criterion Name</div>
+                        </td>
+                        
+                        <td data-label="AcDesc" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Accpetance Criterion Desc">Description</div>
+                        </td>
+                    </tr>
+                      <aura:iteration items="{!v.workDetails.ac}" var="ac">  
+                     <tr>
+                        <td data-label="AcName" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Accpetance Criterion Name">{!ac.Name}</div>
+                        </td>
+                        
+                        <td data-label="AcDesc" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Accpetance Criterion Desc">{!ac.Description__c}</div>
+                        </td>
+                    </tr>
+                      </aura:iteration>
+
+                  </div>
+                </div>
+                  <!-- End OF Acceptance criterion-->
+                 
+                  <!-- start OF tasks-->
+                 <div class="slds-section closeTasks" style="display:none">
+                
+                    <ui:button class="slds-button slds-section" press="{!c.openTasks}">
+                      <lightning:icon iconName="utility:chevronright" size="xx-small" alternativeText="expand"/>
+                        Tasks</ui:button>
+       
+                    <div class="slds-section__content"></div>
+                </div>
+                <div class="slds-section slds-is-open openTasks">
+         
+                    <ui:button class="slds-button slds-section" press="{!c.closeTasks}">
+                      <lightning:icon iconName="utility:chevrondown" size="xx-small" alternativeText="Close"/>
+                       Tasks</ui:button>
+         
+                    <div class="slds-section__content">
+           
+                    <tr class="slds-text-title--caps">
+                        <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">Subject</div>
+                        </td>
+                        
+                        <td data-label="hoursRemaining" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="hoursRemaining">Hours Remaining</div>
+                        </td>
+                    </tr>
+                      <aura:iteration items="{!v.workDetails.tasks}" var="task">  
+                     <tr>
+                        <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">{!task.Subject__c}</div>
+                        </td>
+                        
+                        <td data-label="hoursRemaining" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="hoursRemaining">{!task.Hours_Remaining__c}</div>
+                        </td>
+                    </tr>
+                      </aura:iteration>
+
+                  </div>
+                </div>
+                 
+                 <!-- end OF tasks-->
+                 
+                 <!--Start of parent relationships-->
+                    <div class="slds-section closeParent" style="display:none">
+                
+                    <ui:button class="slds-button slds-section" press="{!c.openParent}">
+                      <lightning:icon iconName="utility:chevronright" size="xx-small" alternativeText="expand"/>
+                        Parent Work Relationships</ui:button>
+       
+                    <div class="slds-section__content"></div>
+                </div>
+                <div class="slds-section slds-is-open openParent">
+         
+                    <ui:button class="slds-button slds-section" press="{!c.closeParent}">
+                      <lightning:icon iconName="utility:chevrondown" size="xx-small" alternativeText="Close"/>
+                       Parent Work Relationships</ui:button>
+         
+                    <div class="slds-section__content">
+           
+                    <tr class="slds-text-title--caps">
+                        <td data-label="Work ID" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Work ID">Work ID</div>
+                        </td>
+                        
+                        <td data-label="Assignee" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Assignee">Assignee</div>
+                        </td>
+                        
+                        <td data-label="Subject" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Subject">Subject</div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </td>
+                        <td data-label="Priority" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Priority">Priority</div>
+                        </td>
+                        
+                        <td data-label="Build" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Build">Build</div>
+                        </td>
+                        
+                         <td data-label="Resolved" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Resolved">Resolved</div>
+                        </td>
+                         <td data-label="Closed" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Closed">Closed</div>
+                        </td>
+                    </tr>
+                      <aura:iteration items="{!v.workDetails.parentWork}" var="pw">  
+                     <tr>
+                        <td data-label="Name" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Name"><a href="" id="{!pw.Id}" onclick="{!c.viewRecord}">{!pw.Name}</a></div>
+                        </td>
+                        
+                        <td data-label="Assignee" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Assignee">{!pw.Assignee__r.Name}</div>
+                        </td>
+                         
+                         <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">{!pw.Subject__c}</div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">{!pw.Type__c}</div>
+                        </td>
+                         <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">{!pw.Priority__c}</div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">{!pw.Scheduled_Build_Name__c}</div>
+                        </td>
+                         <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">
+                        <aura:renderIf isTrue="{!pw.Resolved__c == 0.0}">
+                            <lightning:icon iconName="action:close" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                            
+                        <aura:renderIf isTrue="{!pw.Resolved__c == 1.0}">
+                            <lightning:icon iconName="action:approval" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf>      
+                             
+                        </div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">
+                            <aura:renderIf isTrue="{!pw.Closed__c == 0.0}">
+                            <lightning:icon iconName="action:close" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                            
+                        <aura:renderIf isTrue="{!pw.Closed__c == 1.0}">
+                            <lightning:icon iconName="action:approval" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                            
+                            
+                            </div>
+                        </td>
+                    </tr>
+                      </aura:iteration>
+
+                  </div>
+                </div>
+
+                 <!--End of parent relationships-->
+                 <!--Start of child relationships-->
+                    <div class="slds-section closeChild" style="display:none">
+                
+                    <ui:button class="slds-button slds-section" press="{!c.openChild}">
+                      <lightning:icon iconName="utility:chevronright" size="xx-small" alternativeText="expand"/>
+                        Child Work Relationships</ui:button>
+       
+                    <div class="slds-section__content"></div>
+                </div>
+                <div class="slds-section slds-is-open openChild">
+         
+                    <ui:button class="slds-button slds-section" press="{!c.closeChild}">
+                      <lightning:icon iconName="utility:chevrondown" size="xx-small" alternativeText="Close"/>
+                       Child Work Relationships</ui:button>
+         
+                    <div class="slds-section__content">
+           
+                    <tr class="slds-text-title--caps">
+                        <td data-label="Work ID" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Work ID">Work ID</div>
+                        </td>
+                        
+                        <td data-label="Assignee" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Assignee">Assignee</div>
+                        </td>
+                        
+                        <td data-label="Subject" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Subject">Subject</div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </td>
+                        
+                         <td data-label="Priority" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Priority">Priority</div>
+                        </td>
+                        
+                        <td data-label="Build" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Build">Build</div>
+                        </td>
+                         <td data-label="Resolved" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Resolved">Resolved</div>
+                        </td>
+                         <td data-label="Closed" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Closed">Closed</div>
+                        </td>
+                    </tr>
+                      <aura:iteration items="{!v.workDetails.childWork}" var="cw">  
+                     <tr>
+                        <td data-label="Name" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Name"><a href="" id="{!cw.Id}" onclick="{!c.viewRecord}">{!cw.Name}</a></div>
+                        </td>
+                        
+                        <td data-label="Assignee" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Assignee">{!cw.Assignee__r.Name}</div>
+                        </td>
+                         
+                         <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">{!cw.Subject__c}</div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">{!cw.Type__c}</div>
+                        </td>
+                         <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">{!cw.Priority__c}</div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">{!cw.Scheduled_Build_Name__c}</div>
+                        </td>
+                         <td data-label="Subject" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Subject">
+                        <aura:renderIf isTrue="{!cw.Resolved__c == 0.0}">
+                            <lightning:icon iconName="action:close" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                            
+                        <aura:renderIf isTrue="{!cw.Resolved__c == 1.0}">
+                            <lightning:icon iconName="action:approval" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                             
+                        </div>
+                        </td>
+                        
+                        <td data-label="Type" class="slds-cell-shrink">
+                            <div class="slds-truncate" title="Type">
+                            <aura:renderIf isTrue="{!cw.Closed__c == 0.0}">
+                            <lightning:icon iconName="action:close" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                            
+                        <aura:renderIf isTrue="{!cw.Closed__c == 1.0}">
+                            <lightning:icon iconName="action:approval" size="xx-small" alternativeText="expand"/>
+                        </aura:renderIf> 
+                            
+                            </div>
+                        </td>
+                    </tr>
+                      </aura:iteration>
+
+                  </div>
+                </div>
+
+                 <!--End of child relationships-->
+                  </tbody>
+            </table>
+        
+    </div>
+    </div>
+        </div>
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dev_Leadership_Sign_Off_Confirmed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>For confirming that the Cloud Engineering Lead associated to that team has reviewed the status and confirmed the signoff, especially if the team has not signed off or is signing off without meeting criteria.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used by the Engineering Cloud Lead (or their delegate) to confirm the Team Signoff Status.</inlineHelpText>
+    <label>Cloud Leadership Sign Off Confirmed</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

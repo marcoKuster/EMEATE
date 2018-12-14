@@ -1,0 +1,17 @@
+<apex:component controller="ADM_PriorityMatrixIndicator">
+    <apex:attribute name="priority" type="String" description="priority will determine the color of the indicator displayed."
+    assignTo="{!priority}" required="true"/>
+    
+    <table class="nMatrix" align="center">
+       <tbody>
+           <tr>
+               <td>
+                   <div style="background:{!indicatorColor}; margin:1px; width:12px !important; height:12px !important;">&nbsp;</div>
+               </td>
+               <td>
+                   <apex:outputtext >{!priority}</apex:outputtext>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+</apex:component>

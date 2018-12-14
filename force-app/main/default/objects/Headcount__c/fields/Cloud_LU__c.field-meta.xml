@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cloud_LU__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field has been replaced by Parent_Cloud__c field</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use Parent_Cloud__c instead of this field as this field is deprecated now. Use this field only to refer to old values</inlineHelpText>
+    <label>Cloud_Deprecated(Use Parent Cloud)</label>
+    <referenceTo>ADM_Cloud__c</referenceTo>
+    <relationshipLabel>Positions</relationshipLabel>
+    <relationshipName>Roster_Positions</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

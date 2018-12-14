@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Day_Offset_required_with_Start_Time</fullName>
+    <active>true</active>
+    <description>Day Offset must be specified when Start Time is set.</description>
+    <errorConditionFormula>ISBLANK(Day_Offset__c) &amp;&amp; NOT(ISBLANK(Start_Time__c))</errorConditionFormula>
+    <errorDisplayField>Day_Offset__c</errorDisplayField>
+    <errorMessage>Day Offset cannot be blank when Start Time is set. Either set Day Offset to zero (if event is for the same day) or another value.</errorMessage>
+</ValidationRule>

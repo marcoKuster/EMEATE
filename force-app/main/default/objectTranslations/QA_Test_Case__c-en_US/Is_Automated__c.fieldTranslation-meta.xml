@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- A test case is automated when the ftest ID field of any of its children if non-null OR when there is a child execution with type=ftest/prodtest/silk/selenium and its status is Passed --></help>
+    <label><!-- Automation Completed? --></label>
+    <name>Is_Automated__c</name>
+</CustomFieldTranslation>

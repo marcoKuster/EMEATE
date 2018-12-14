@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action__c</fullName>
+    <externalId>false</externalId>
+    <label>Action</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Copy</fullName>
+                <default>true</default>
+                <label>Copy</label>
+            </value>
+            <value>
+                <fullName>Copy All</fullName>
+                <default>false</default>
+                <label>Copy All</label>
+            </value>
+            <value>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+                <label>Transfer</label>
+            </value>
+            <value>
+                <fullName>Transfer All</fullName>
+                <default>false</default>
+                <label>Transfer All</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

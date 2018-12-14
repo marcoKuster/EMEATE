@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role__c</fullName>
+    <externalId>false</externalId>
+    <label>Role</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Analyst</fullName>
+                <default>false</default>
+                <label>Analyst</label>
+            </value>
+            <value>
+                <fullName>Architect</fullName>
+                <default>false</default>
+                <label>Architect</label>
+            </value>
+            <value>
+                <fullName>Capacity Planner</fullName>
+                <default>false</default>
+                <label>Capacity Planner</label>
+            </value>
+            <value>
+                <fullName>CCE</fullName>
+                <default>false</default>
+                <label>CCE</label>
+            </value>
+            <value>
+                <fullName>CoE</fullName>
+                <default>false</default>
+                <label>CoE</label>
+            </value>
+            <value>
+                <fullName>Contractor-Dev</fullName>
+                <default>false</default>
+                <label>Contractor-Dev</label>
+            </value>
+            <value>
+                <fullName>Contractor-Other</fullName>
+                <default>false</default>
+                <label>Contractor-Other</label>
+            </value>
+            <value>
+                <fullName>Contractor-Quality Engineer</fullName>
+                <default>false</default>
+                <label>Contractor-Quality Engineer</label>
+            </value>
+            <value>
+                <fullName>Contractor-Sys Eng</fullName>
+                <default>false</default>
+                <label>Contractor-Sys Eng</label>
+            </value>
+            <value>
+                <fullName>Contractor-UX</fullName>
+                <default>false</default>
+                <label>Contractor-UX</label>
+            </value>
+            <value>
+                <fullName>Co-Prime</fullName>
+                <default>false</default>
+                <label>Co-Prime</label>
+            </value>
+            <value>
+                <fullName>CPIO</fullName>
+                <default>false</default>
+                <label>CPIO</label>
+            </value>
+            <value>
+                <fullName>Data Center Engineer</fullName>
+                <default>false</default>
+                <label>Data Center Engineer</label>
+            </value>
+            <value>
+                <fullName>DBA</fullName>
+                <default>false</default>
+                <label>DBA</label>
+            </value>
+            <value>
+                <fullName>Developer</fullName>
+                <default>false</default>
+                <label>Developer</label>
+            </value>
+            <value>
+                <fullName>Executive</fullName>
+                <default>false</default>
+                <label>Executive</label>
+            </value>
+            <value>
+                <fullName>Executive Assistant</fullName>
+                <default>false</default>
+                <label>Executive Assistant</label>
+            </value>
+            <value>
+                <fullName>General G&amp;A</fullName>
+                <default>false</default>
+                <label>General G&amp;A</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>Manager</fullName>
+                <default>false</default>
+                <label>Manager</label>
+            </value>
+            <value>
+                <fullName>Marketing Support</fullName>
+                <default>false</default>
+                <label>Marketing Support</label>
+            </value>
+            <value>
+                <fullName>Network Engineer</fullName>
+                <default>false</default>
+                <label>Network Engineer</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Performance Engineer</fullName>
+                <default>false</default>
+                <label>Performance Engineer</label>
+            </value>
+            <value>
+                <fullName>Product Manager</fullName>
+                <default>false</default>
+                <label>Product Manager</label>
+            </value>
+            <value>
+                <fullName>Product Marketing Manager</fullName>
+                <default>false</default>
+                <label>Product Marketing Manager</label>
+            </value>
+            <value>
+                <fullName>Program Manager</fullName>
+                <default>false</default>
+                <label>Program Manager</label>
+            </value>
+            <value>
+                <fullName>Project Management</fullName>
+                <default>false</default>
+                <label>Project Management</label>
+            </value>
+            <value>
+                <fullName>Provisioning Specialist / Asset Manager</fullName>
+                <default>false</default>
+                <label>Provisioning Specialist / Asset Manager</label>
+            </value>
+            <value>
+                <fullName>Quality Engineer</fullName>
+                <default>false</default>
+                <label>Quality Engineer</label>
+            </value>
+            <value>
+                <fullName>Real Estate Management</fullName>
+                <default>false</default>
+                <label>Real Estate Management</label>
+            </value>
+            <value>
+                <fullName>Release Engineer</fullName>
+                <default>false</default>
+                <label>Release Engineer</label>
+            </value>
+            <value>
+                <fullName>Release Manager</fullName>
+                <default>false</default>
+                <label>Release Manager</label>
+            </value>
+            <value>
+                <fullName>Sales</fullName>
+                <default>false</default>
+                <label>Sales</label>
+            </value>
+            <value>
+                <fullName>Security Engineer</fullName>
+                <default>false</default>
+                <label>Security Engineer</label>
+            </value>
+            <value>
+                <fullName>Site Reliability Engineer</fullName>
+                <default>false</default>
+                <label>Site Reliability Engineer</label>
+            </value>
+            <value>
+                <fullName>Storage Engineer</fullName>
+                <default>false</default>
+                <label>Storage Engineer</label>
+            </value>
+            <value>
+                <fullName>System Admin</fullName>
+                <default>false</default>
+                <label>System Admin</label>
+            </value>
+            <value>
+                <fullName>Systems Engineer</fullName>
+                <default>false</default>
+                <label>Systems Engineer</label>
+            </value>
+            <value>
+                <fullName>Technical Writer</fullName>
+                <default>false</default>
+                <label>Technical Writer</label>
+            </value>
+            <value>
+                <fullName>TPM</fullName>
+                <default>false</default>
+                <label>TPM</label>
+            </value>
+            <value>
+                <fullName>Trust</fullName>
+                <default>false</default>
+                <label>Trust</label>
+            </value>
+            <value>
+                <fullName>UE</fullName>
+                <default>false</default>
+                <label>UE</label>
+            </value>
+            <value>
+                <fullName>UX</fullName>
+                <default>false</default>
+                <label>UX</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

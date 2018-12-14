@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scrum_Team__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The Scrum Team that is building this feature.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Scrum Team that is building this feature.</inlineHelpText>
+    <label>Product Scrum Team</label>
+    <referenceTo>ADM_Scrum_Team__c</referenceTo>
+    <relationshipLabel>Security Questionnaires</relationshipLabel>
+    <relationshipName>SecQ_Scrum_Team</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

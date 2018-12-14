@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dependent_Team__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The team that is dependent on another team to provide the deliverable.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The team that is dependent on another team to provide the deliverable.</inlineHelpText>
+    <label>Team With Dependency</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>The Team With Dependency you selected is not active.</errorMessage>
+        <filterItems>
+            <field>ADM_Scrum_Team__c.Active__c</field>
+            <operation>notEqual</operation>
+            <value>False</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>ADM_Scrum_Team__c</referenceTo>
+    <relationshipLabel>Dependencies we have on other teams</relationshipLabel>
+    <relationshipName>Our_Dependencies</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scrum_Team_Is_Active</fullName>
+    <active>true</active>
+    <errorConditionFormula>Scrum_Team__r.Active__c = false</errorConditionFormula>
+    <errorMessage>The scrum team you selected is not active.</errorMessage>
+</ValidationRule>

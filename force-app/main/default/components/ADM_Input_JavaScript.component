@@ -1,0 +1,57 @@
+<apex:component layout="none">
+<!-- This file must be used by ADM_Input.component. This is only used to reduce the amount of code replication since it's called 4 times. -->
+	<apex:attribute required="true" name="componentId" type="Object" description="ID of the element needing binding" />
+    <apex:attribute required="true" name="lookupObject" type="String" description="ex: ADM_Sprint__c" />
+    <apex:attribute required="true" name="readonly" type="boolean" description="Which version to show" />
+	<apex:attribute required="false" name="scrumTeamId" type="String" description="Used to limit the results based upon the scrum team" />
+	
+	<!-- This code block is used if you are using inlineEdit - It has a double-click event that binds the autocomplete to the input field. -->
+    <apex:outputPanel rendered="{!IF(readonly,true,false)}" layout="none">
+	<script type="text/javascript" language="javascript">
+    $byId('{!componentId}', $).find('> span').one("dblclick", function() {
+        var $input = $byId('{!componentId}', $).find('input[type=text]');
+        
+        var selected = null,
+            isLookup = gus.sfdc.isLookup($input);
+        if(isLookup) {
+            selected = gus.sfdc.getSobjectFromLookup($input);
+        }
+        
+        var input = autocomplete2.initialize({queryName: '{!JSINHTMLENCODE(lookupObject)}', scrumteamId: '{!JSINHTMLENCODE(scrumTeamId)}', $input: $input, selected: selected});
+        input.render();
+        
+        if(isLookup) {
+            input.on('select', function() {
+                var selected = input.getSelected();
+                gus.sfdc.setLookup($input, selected);
+            });
+        }
+    });
+	</script>
+    </apex:outputPanel>
+    
+    <!-- This code block is used if you are NOT using inlineEdit. It will bind the autocomplete to the input field on page load. -->
+    <apex:outputPanel rendered="{!IF(readonly,false,true)}" layout="none">
+    <script type="text/javascript" language="javascript">
+    (function($){
+        var $input = $byId('{!componentId}', $);
+        
+        var selected = null,
+            isLookup = gus.sfdc.isLookup($input);
+        if(isLookup) {
+            selected = gus.sfdc.getSobjectFromLookup($input);
+        }
+        
+        var input = autocomplete2.initialize({queryName: '{!JSINHTMLENCODE(lookupObject)}', scrumteamId: '{!JSINHTMLENCODE(scrumTeamId)}', $input: $input, selected: selected});
+        input.render();
+        
+        if(isLookup) {
+            input.on('select', function() {
+                var selected = input.getSelected();
+                gus.sfdc.setLookup($input, selected);
+            });
+        }
+    })(window.jQueryPage || window.$);
+    </script>
+    </apex:outputPanel>
+</apex:component>

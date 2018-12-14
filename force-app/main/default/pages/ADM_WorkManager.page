@@ -1,0 +1,286 @@
+<apex:page showHeader="true" sidebar="false" controller="ADM_BacklogController" tabStyle="Work_Manager__tab" applyBodyTag="false">
+<apex:remoteObjects >
+	<apex:remoteObjectModel jsShorthand="Sprints" name="ADM_Sprint__c" fields="Id,Name,Start_Date__c,End_Date__c"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Epics" name="ADM_Epic__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Teams" name="ADM_Scrum_Team__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Themes" name="ADM_Theme__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="Builds" name="ADM_Build__c" fields="Id,Name"></apex:remoteObjectModel>
+	<apex:remoteObjectModel jsShorthand="ProductTags" name="ADM_Product_Tag__c" fields="Id,Name"></apex:remoteObjectModel>
+</apex:remoteObjects>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+	<title>{!teamName} Backlog</title>
+	<apex:stylesheet value="{!URLFOR($Resource.SLDS091, '/assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	<apex:stylesheet value="{!$Resource.react_virtualized_css}" />
+
+	<!-- <apex:stylesheet value="{!$Resource.design_system_react_css}" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA6tJREFUeNrMV01IVFEU/u67b3Js/MVMpUwk0U2E2Q+uQrCNq4Ii2wYtgmjRtlWbitYSSJsiqDZWRIEt+pGMAgvTNmWWv1CTmaWOOuO8n865773Z+Gac55h14DjjvWfO+c6559xzj7BtGx6dvj67hT7aiFuIm4hrkTsZxJPE/cQ9xN2dJ4unvU3hASDjrfRxlvgw/i49IO4gEE9TAFzjl4gPYGOoj/g8g5DRmnMc9ovErdg42kZc/Ggg8URzzzxw2AUfrgWYlvN9DcQ223Q34VYaIK2cHj9jljJSGtGQR9IWrWm0N7tkK8Pqf3KjKCxSewnDxq8FG5LWywq0lC4fatHdbF9JbHzeQntzPnQJ3Hm9hGiClArH89pyidOtESSSNjqfLWJs2iQ5AdO0UZgvcKplM+K0d/vVEsoLtXRRaNL9So0R/5izUF+p49iBsFrbtV1H30gSC3EbVaUaDjbkoSjfCf6V9kL0Di2r3/DavtoQdlboau/taBKfvhkoL9L8olCr+zpvO16eaA6n1upIYV2Fr7gK85G9Yd+94+TAhfuxdEcA39j8XrCwp0bH7h2hnNO9sSaEJtLFOeFHvi4l6O4qL5ReKrh/1kDCqZAy0rVsGvCrF18AW4s19I8lce7WnMpke40AOJe4guaoYiqKtOwi4GG0yO2ZmK1yIRfSya4uHc3CJ5grACRNx+iZQxHUV+nq/1woRKXJVXD1yYILRmQGwCFjwQYqQafMRM6JyOXMOpVuuUoVSEIYTwJT8+a6XfxTc6bSKaVYvQwZaYxuvOistW4AWBfr1LUs7wHO+uHo+kVgOGoEu4j47AfGkzByTEAvqQcmjNS1nRWASJ7AlykDLz4u5wyAdYyQroJwAABCRUFD15s4eZCL98Bd0sG6EOQIWLYkIjA5Y+Ha88U1A+Dfsg7Wle4w0zZqi4qgqkTD4/dxFYmg1NUXR/dgXOmwMhQUAxhNt8l9gPv4zd5F3OjNPhIse/PlEiqop0gto+go34TV6Xa5dMK6oOYklUefv5s4uj9Mrdq/TXMDu0fRGphIorJEYpN0nmwZqFp3h4aytEdBCkLkRXWZxIevBi4/jGF3dUi9FxqqnJt8iO76d+MGBskwy7MsH7q1ehVP6u7E0phJynsTcEvlRsWG+Knl1Ta325B0Hq4B23e/5o5LWZH36uUnWCWd7ya625n5O69pIvDboYcBdLvjUvBeL1d2t4AjWrfmDood7ri0UdTnzofT/8dw+i/H8z8CDABNo3wVGT1wUQAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon" />
+	<style>
+
+	.body.slds{overflow:hidden;}
+	.slds-page-header{cursor:default;}
+	.slds-page-header *{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+	.slds-page-header .slds-input{-webkit-user-select:auto;-moz-user-select:auto;-ms-user-select:auto;user-select:auto;}
+	.slds-page-header.fixed{position:fixed;left:10px;right:10px;top:0;z-index:1;}
+	.noSidebarCell, .sidebarCell .fixed{padding:0 !important;}
+	#dataTable{overflow:auto;min-height:300px;}
+	#dataTable .ui-sortable-helper td{border-bottom:1px #D8DDE6 solid;}
+	#dataTable tr.placeholder.multiple td{background:#6193DF;height:1px;padding:1px;}
+	#dataTable tr.sprintline td{position:static;background-color:#F7B15A;height:2px;padding:1px;border-top:4px #fff solid;border-bottom:4px #fff solid;text-align:center;}
+	#dataTable td[data-label="Subject"] {word-break:break-word;}
+	#dataTable td[data-label="Assignee"] a,
+	#dataTable td[data-label="QA Engineer"] a,
+	#dataTable td[data-label="Epic"] a{display:block;max-width:150px;}
+	#dataTable td[data-label="Subject"] a{overflow:hidden;display:-webkit-inline-box;text-overflow:ellipsis;-webkit-box-orient:vertical;-webkit-line-clamp:2;}
+	/*#dataTable tr.sprintline td div{display:none;position:absolute;background:#EFAB57;padding:3px 7px;border-radius:5px;font-size:9px;font-weight:bold;z-index:2;margin:-10px auto 0 auto;left:50%;}*/
+	#dataTable tr.sprintline td:hover div{display:block;}
+	.slds .slds-table th, .slds .slds-table td{padding:4px 8px;}
+	.slds .slds-text-body--small{font-size:11px;}
+	#quickSearch::-webkit-input-placeholder{color:#ccc;}
+	#quickSearch::-moz-input-placeholder{color:#ccc;}
+	#quickSearch:-moz-input-placeholder{color:#ccc;}
+	#quickSearch::-ms-input-placeholder{color:#ccc;}
+	#quickSearchClear{display:none;position:absolute;right:8px;top:50%;margin-top:-8px;cursor:pointer;}
+	#buttonFilter.tristate:not(.slds-is-selected){background-color:#B4C1D4;}
+	/* filter button half-checked: #E1E3E6 */
+	.slds-button-group+.slds-button-group{margin-left: 0.25rem;}
+	.slds .slds-dropdown__item{margin-left:0;}
+	#header-fixed{position:absolute;}
+	#header-fixed.fixed{position:fixed;}
+	body.slds #header-fixed{top:0px;position:fixed;}
+	#header-fixed.shadow{box-shadow:rgba(0, 0, 0, 0.3) 0px 2px 4px 0px;border-bottom-color:#fff;}
+	.slds .slds-is-sortable.descending{background-color:#f4f6f9;color:#0070d2;}
+	.slds .slds-is-sortable.descending .slds-button{visibility:visible;}
+	.slds .slds-is-sortable.ascending{background-color:#f4f6f9;color:#0070d2;}
+	.slds .slds-is-sortable.ascending .slds-button{visibility:visible;}
+	.slds tr.group td{background-color:#54698D;color:#fff;font-size:11px;font-weight:bold;-webkit-transition-duration:0.1s;-moz-transition-duration:0.1s;-o-transition-duration:0.1s;transition-duration:0.1s;padding:6px 8px;}
+	.slds tr.group td a{color:#fff;text-decoration:none;}
+	.slds tr.group td a:hover{text-decoration:underline;}
+	tr.selected td,
+	tr.notsaved.selected td{background-color:#F3F5F8;}
+	tr.notsaved td,
+	tr td.notsaved{background-color:#faf7e0;}
+	tr.notsaved td.notsaved{background-color:#eae5c0;}
+	tr.selected td.notsaved,
+	tr.notsaved.selected td.notsaved{background-color:#e5eaf1;}
+	/*#holderButtonSaveOrder{display:none;}*/
+	#storyPointsCount{display:none;}
+	#loading{position:absolute;top:50%;left:50%;margin-left:-34px;margin-top:-34px;}
+	#workTable,#table-fixed{visibility:hidden;}
+	#sideContainer{background:#fff;position:absolute;right:0;top:0;bottom:0;padding:0px;width:300px;box-shadow:-1px 2px 4px 0px rgba(0,0,0,.4);overflow-y:auto;border-bottom-right-radius:5px;}
+	#sideContainer.fixed{position:fixed;top:0px;right:10px;bottom:51px;}
+	body.slds #sideContainer{border-bottom-right-radius:0px;}
+	.sideContainerBox{overflow-y:auto;}
+	.slds .slds-picklist__options{overflow-y:auto;height:340px;}
+	.slds-row-select .slds-button__icon{cursor:move;}
+	li[data-required=true] span:after {content:" *";color:#a62f2f;}
+	#sortLabel, #filterLabel {font-weight:bold;}
+	#filterCount span:hover{cursor:pointer;text-decoration:underline;}
+	/* filter dialog */
+	.filterTopic:not(:first-child){margin-top:15px;}
+	.filterTopic > div:first-child{font-size:12px;line-height:1.25;text-transform:uppercase;letter-spacing:.0625em;color:#54698d;}
+	.itemList{margin-top:5px;display:table;width:100%;background:#f5f5f5;border-radius:5px;border:1px #e5e5e5 solid;padding:5px;overflow-y:auto;user-select:none;-webkit-user-select:none;-moz-user-select:none;}
+	.itemList .spacer{padding-top:5px;text-align:center;}
+	#boxFilter{position:relative;}
+	#clearFilters{font-size:10px;position:absolute;right:20px;top:10px;}
+	/*.itemRow:first-child > div{padding-top:10px;}*/
+	.itemRow{display:table-row;}
+	.itemRow > div{display:table-cell;padding:2px 3px;font-size:11px;}
+	.itemRow > div.itemTitle{width:100%;}
+	.itemRow > div.itemTitle label{display:block;}
+	.itemRow > div.itemTitle label div{width:9px;height:9px;display:inline-block;border-radius:2px;vertical-align:middle;margin-right:5px;margin-top:-2px;border:1px rgba(0,0,0,0.13) solid;}
+	#filterDialog input[type=text]{margin:5px 0px 15px 0px;display:block;background:#F0F0F0;border:1px #C0C0C0 solid;border-radius:5px;padding:5px;outline:0;width:100%;}
+	#filterDialog input[type=text]:focus{background-color:#FFE;border-color:#AAA;}
+	#filterDialog #filterResults{margin-bottom:15px;}
+	#filterDialog .filterTopic{margin-bottom:15px;display:none;}
+	#boxMassEdit #massEditNone{position:absolute;text-align:center;top:40%;left:50px;right:50px;}
+	/*#boxMassEdit #massEditOptions{display:none;}*/
+	#boxCharts div.chartTitle{width:300px;padding:7px;background:#54698D;color:#fff;font-size:11px;font-weight:bold;z-index:1;border-bottom:1px #8E95A7 solid;cursor:pointer;}
+	#boxCharts div.chartTitle.selected{background:#2D3D58;}
+	#boxCharts div.chartTitle svg{fill:#fff;width:10px;height:10px;margin-right:5px;}
+	#boxCharts div.chart{/*display:none;*/padding:10px 0px;border-bottom:1px #D0D5DE solid;}
+	#boxCharts div.chart .slds-spinner--small{display:block;margin:20px auto;text-align:center;}
+	#boxCharts div.chart .nodata{text-align:center;font-size:11px;padding:30px 0px;}
+	.slds #listAvailableFields .slds-picklist__item,
+	.slds #listVisibleFields .slds-picklist__item{line-height:1;font-size:11px;}
+	.ui-widget-content{border:1px solid #AAA;background:#FFF;color:#222;}
+	.ui-slider-horizontal{height:7px;}
+	.ui-slider{position:relative;text-align:left;background-color:#0070D2;}
+	.ui-slider-horizontal .ui-slider-range-max{right:0;background-color:#fff;}
+	.ui-slider-horizontal .ui-slider-range{top:0;height:100%;}
+	.ui-slider .ui-slider-range{position:absolute;z-index:1;font-size:.7em;display: block;border: 0;background-position: 0 0;}
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{border: 1px solid #d3d3d3;background: #e6e6e6;font-weight: normal;color: #555;}
+	.ui-slider-horizontal .ui-slider-handle{top: -.4em;margin-left: -.6em;}
+	.ui-slider .ui-slider-handle{outline:none;position:absolute;z-index:2;width:1.2em;height:1.2em;cursor:default;-ms-touch-action:none;touch-action:none;border-radius:1.2em;background-color:#0070D2;}
+	input[type=checkbox]{-webkit-appearance:none;border:1px #D8DDE6 solid;width:16px;height:16px;border-radius:3px;background-color:#fff;outline:none;vertical-align:text-bottom;}
+	input[type=checkbox]:checked:after{display:block;content:'';height:0.25rem;width:0.5rem;position:relative;top:50%;left:50%;-webkit-transform:translate3d(-50%, -50%, 0) rotate(-45deg);transform:translate3d(-50%, -50%, 0) rotate(-45deg);border-bottom:2px solid #1589ee;border-left:2px solid #1589ee;}
+	/*.itemCheckbox input[type=checkbox]:checked:after{display:block;content:'';height:0.5rem;width:0.5rem;border-radius:0.5rem;position:relative;top:50%;left:50%;background:#1589ee;margin-left:-0.25rem;margin-top:-0.25rem;-webkit-transform:inherit;transform:inherit;border:0;}*/
+	.slds .slds-dropdown__item > a.selected{background-color:#E1E7F1;}
+	#dropdownDataSources{max-width:none;}
+	#dropdownDataSourcesSidePanel{display:none;vertical-align:top;padding:0px 4px 0px 0px;width:200px;}
+	#dropdownDataSourcesSidePanel > div{background-color:#E1E7F1;padding:8px;border-radius:4px;}
+	#dropdownDataSourcesSidePanel.firstChild > div{border-top-left-radius:0px;}
+	#dropdownDataSourcesSidePanel.lastChild > div{border-bottom-left-radius:0px;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch{margin-bottom:10px;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch::-webkit-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch::-moz-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch:-moz-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearch::-ms-input-placeholder{color:#ccc;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesSearchClear{display:none;position:absolute;right:21px;top:30px;margin-top:-8px;cursor:pointer;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesRecents{text-transform:uppercase;font-size:8px;font-weight:bold;padding-bottom:5px;color:#54698d;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults{overflow-x:auto;max-height:181px;min-height:181px;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a{padding:8px 12px;border-radius:4px;display:block;color:#16325c;text-decoration:none;white-space:nowrap;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a:hover,
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a.hover{background-color:#D3DAE6;}
+	#dropdownDataSourcesSidePanel #dropdownDataSourcesResults a.selected{background-color:#C8D0DC;}
+
+	/* fullscreen changes */
+	html.fullscreen{height:100%;}
+	html.fullscreen body{height:100%;margin:0px;background:#fff;overflow:hidden !important;}
+	html.fullscreen.issfx body{overflow:hidden auto !important;}
+	html.fullscreen .slds-page-header{position:fixed;left:0px;right:0px;top:0;z-index:1;}
+	html.fullscreen #header-fixed{position:fixed;top:110px !important;}
+	html.fullscreen #workTable{margin-top:110px !important;}
+	html.fullscreen div#contentWrapper{height:100%}
+	html.fullscreen div.bPageHeader,
+	html.fullscreen div.bPageFooter{display:none;}
+	html.fullscreen div.bodyDiv{box-shadow:none;-webkit-box-shadow:none;background:none;border:0px;}
+	html.fullscreen table#bodyTable{height:100%;padding:0px;}
+	html.fullscreen td.noSidebarCell{padding:0px;vertical-align:top;height:100%;background:#fff;}
+
+	/* React-Virtualized Table Classes Mixed With slds-lightning */
+	.FlexTable {overflow: scroll;}
+	.FlexTable__headerRow {font-size: .75rem;line-height: 1.25;letter-spacing: .0625em;color: #54698d;font-weight: inherit;box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px 0px;border-bottom-color: #fff;}
+	.FlexTable__row {border-top: 1px solid #d8dde6;}
+	.FlexTable__rowColumn {margin-right: 0px;}
+	.FlexTable__headerColumn {padding: 4px;margin-right:0px}
+	.FlexTable__Grid:focus, .FlexTable__headerColumn {outline: none;}
+	.FlexTable__truncatedColumnText {height: 100%};
+
+	.groupCell {background-color: #54698D;color: #fff;font-size: 11px;font-weight: bold;-webkit-transition-duration: 0.1s;-moz-transition-duration: 0.1s;-o-transition-duration: 0.1s;transition-duration: 0.1s;/*padding: 6px 8px;*/}
+	.group-row-header {background-color:#54698D;color:#fff;font-size:11px;font-weight:bold;-webkit-transition-duration:0.1s;-moz-transition-duration:0.1s;-o-transition-duration:0.1s;transition-duration:0.1s;border-right: none;position: absolute;top: 10px;}
+	.group-row-header a{color:#fff;text-decoration:none;cursor: pointer;}
+	.slds .group-row-header a:hover{text-decoration:underline;}
+	.work-manager-cell {padding: 8px 4px;word-break:break-word;height:100%;display:flex;align-items:center;}
+	/*.slds .slds-dropdown {left: 185px;}*/
+	.selected {background-color:#F3F5F8;}
+	.moved {background-color: #FAF7E0;}
+	.moved-dark {background-color: #eae5c0;}
+	.moved-light {background-color: #FAF7E0;}
+	.testShowWorkContainer {border-bottom: 1px solid #d8dde6;padding: 10px;}
+	.testChange {font-size: 11px;position: absolute;right: 25px;color: #0070d2;cursor: pointer;}
+	.testShowWork {font-size: 12px;line-height: 1.25;text-transform: uppercase;letter-spacing: .0625em;color: #54698d;}
+	.long-subject-cell {overflow: hidden;display: -webkit-inline-box;text-overflow: ellipsis;-webkit-box-orient: vertical;-webkit-line-clamp: 2;color:#0070d2;cursor:pointer;max-height:29px;}
+	.work-manager-column-header {height: 28px;}
+	.full-height {height: 100%;}
+	.groupCell {background-color: #54698D;color: #fff;font-size: 11px;font-weight: bold;-webkit-transition-duration: 0.1s;-moz-transition-duration: 0.1s;-o-transition-duration: 0.1s;transition-duration: 0.1s;/*padding: 6px 8px;*/}
+	.saving-indicator {display: flex;align-items: center;}
+	.header-x-small-spinner {width: 16px;height: 16px;margin-right:5px;}
+	.header-small-text-container {display:flex;justify-content:space-between;}
+	.velocity-line {border-top: 2px solid #F7B15A;}
+	/*.velocity-line:after {background-color: #F7B15A;color: white;content: "Velocity";display: block;margin-top: -16px;z-index: 1000;position: absolute;font-size: 10px;padding: 2px;left: 2px;}*/
+	.velocity-line-option-text {color: #F7B15A;}
+	#boxCharts div.chart  {padding: 10px 0px;border-bottom: 1px #D0D5DE solid;}
+	#buttonListViewControls {height: 32px;}
+	#sideContainer {z-index: 10;top: 111px;overflow: auto;}
+
+	/*Copying the toggle functionality*/
+	.slds-checkbox--toggle [type=checkbox] {width: 1px;height: 1px;border: 0;clip: rect(0 0 0 0);margin: -1px;overflow: hidden;padding: 0;position: absolute;}
+	.slds-checkbox--toggle [type=checkbox]+.slds-checkbox--faux_container {font-size: .625rem;color: #54698d;}
+	.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux, .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux, .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux {border-color: #0070d2;background-color: #0070d2;}
+	.slds-checkbox--toggle .slds-checkbox--faux {display: block;position: relative;width: 3rem;height: 1.5rem;border: 1px solid #9faab5;padding: .125rem;background-color: #9faab5;border-radius: 15rem;transition: background-color .2s cubic-bezier(.75,0,.08,1);}
+	.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux:before, .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux:before, .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux:before {content: '';position: absolute;top: 1px;right: 1px;width: 1.25rem;height: 1.25rem;background-color: #fff;border-radius: 15rem;transition: transform .2s cubic-bezier(.75,0,.08,1);}
+	.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux:after, .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux:after, .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux:after {content: ' ';position: absolute;top: .25rem;left: .6rem;height: .7rem;width: .45rem;border-bottom: 2px solid #fff;border-right: 2px solid #fff;border-radius: 0;background-color: transparent;transform: rotate(45deg);}
+	.slds-checkbox--toggle .slds-checkbox--faux:after {content: '';position: absolute;top: 1px;left: 1px;width: 1.25rem;height: 1.25rem;background-color: #fff;border-radius: 15rem;}
+	.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--on {display: block;}
+	.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--off {display: block;}
+	/*End copying the toggle functionality*/
+
+    .adm-workmanager--error {left: 50%;position: fixed;top: 12em;transform: translate(-50%, -50%);z-index: 100;}
+
+	@media all and (max-width: 900px) {
+	    .slds-page-header .slds-media__figure{display:none;}
+	    #managerToolbar > .slds-grid{display:block;}
+	    #managerToolbar > .slds-grid > div.slds-button-group:not(#holderButtonSaveOrder){display:inline-flex;margin-top:10px;}
+	}
+	@media all and (max-width: 650px) {
+	    #managerToolbar,
+	    #buttonListViewControls,
+	    #workTable .slds-row-select,
+	    #workTable th:not([data-label="Rank"]):not([data-label="Subject"]):not([data-label="Status"]),
+	    #workTable td:not([data-label="Rank"]):not([data-label="Subject"]):not([data-label="Status"]),
+	    #header-fixed th:not([data-label="Rank"]):not([data-label="Subject"]):not([data-label="Status"]){display:none;}
+	}
+	@media all and (max-width: 450px) {
+	    html,html body{overflow:auto;/*-webkit-overflow-scrolling:touch;*/}
+	    body{position:absolute;left:0;right:0;top:0;bottom:0;}
+	    .slds a:link, .slds a:visited{text-decoration:none;color:#54698d;}
+	    #workTable thead, #workTable td:not([data-label="Subject"]), #header-fixed{display:none;}
+	    #workManagerTable #FlexTable div:not([aria-label="Subject"])
+	    body{overflow:auto;}
+	    #dataTable{overflow:visible;height:auto !important;}
+	    .slds .slds-table th, .slds .slds-table td{font-size:13px;padding:10px;}
+	    #attentionBlock{display:none;}
+	}
+	</style>
+
+	<apex:includeScript value="{!$Resource.moment_1_7_2_min_js}" />
+	<apex:includeScript value="{!$Resource.jquery2_1_4}" />
+	<apex:includeScript value="{!$Resource.handlebars4_0_2}" />
+	<apex:includeScript value="{!$Resource.jqueryui1_11_4}" />
+	<apex:includeScript value="{!$Resource.highcharts4_1_8}" />
+	<apex:includeScript value="{!$Resource.underscore_1_4_3_min_js}" />
+	<!-- <apex:includeScript value="{!$Resource.react_with_addons_0_14_7}" /> -->
+	<apex:includeScript value="{!$Resource.react_with_addons_0_14_7_min_js}" />
+	<apex:includeScript value="{!$Resource.react_dom_0_14_7}" />
+	<apex:includeScript value="{!$Resource.ReactDnD_2_1_4_js}" />
+	<apex:includeScript value="{!$Resource.ReactDnDHTML5Backend_min_js}" />
+	<apex:includeScript value="{!$Resource.redux_js}" />
+	<apex:includeScript value="{!$Resource.react_redux_4_4_5_min_js}" />
+	<apex:includeScript value="{!$Resource.react_virtualized_js}" />
+	<apex:includeScript value="{!$Resource.redux_thunk_js}" />
+	<!-- <apex:includeScript value="{!$Resource.design_system_react_js}" /> -->
+	<!-- <apex:includeScript value="{!$Resource.design_system_react_0_0_29_min_js}" /> -->
+	<!-- <apex:includeScript value="{!$Resource.dataObject}" /> -->
+	<!-- <apex:includeScript value="{!$Resource.ReactDnD_2_0_2_js}" /> -->
+</head>
+<body class="slds">
+<div class="slds" id="workManagerOutputPanelWrapper">
+	<c:ADM_TeamSelector rendered="{!NOT(showBoard)}" destinationurl="/apex/{!nameSpace}ADM_WorkManager" destinationlabel="Work Manager" destinationparam="teamId"></c:ADM_TeamSelector>
+	<apex:outputPanel layout="block" rendered="{!showBoard}">
+		<c:ADM_WorkDialogSds rendered="{!showBoard}" teamid="{!teamId}" />
+
+		<div id="work-manager-app">
+			<div class="slds-spinner--large" style="margin:0px auto">
+				<img src="{!URLFOR($Resource.SLDS091, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." />
+			</div>
+		</div>
+
+		<script>
+			var ADM_BACKLOG_PAGE_VARS = {
+				teamId: '{!teamid}',
+				sprintId: '{!JSENCODE($CurrentPage.parameters.sprintId)}',
+				getPanelWorkItemsAsJSON: '{!$RemoteAction.ADM_BacklogController.getPanelWorkItemsAsJson}',
+				getUserPreferencesAsJSON: '{!$RemoteAction.ADM_BacklogController.getUserPreferencesAsJSON}',
+				saveUserPreferenceAsJSON: '{!$RemoteAction.ADM_BacklogController.saveUserPreferenceAsJSON}',
+				getSprintChart: '{!$RemoteAction.ADM_BacklogController.getSprintChart}',
+				getThroughputChart: '{!$RemoteAction.ADM_BacklogController.getThroughputChart}',
+				updateSprintOrder: '{!$RemoteAction.ADM_BacklogController.updateSprintOrder}',
+				saveWorks: '{!$RemoteAction.ADM_BacklogController.saveWorks}'
+			}
+
+			var globalWorkModalSaveCB;
+			var globalWorkManagerIsInAloha = {!IF(JSENCODE($CurrentPage.parameters.isdtp) == 'p1',false, true)};
+		</script>
+
+		<apex:includeScript loadOnReady="true" value="{!$Resource.ADM_Backlog_bundle_js}" />
+
+
+	</apex:outputPanel>
+
+</div>
+
+</body>
+</html>
+</apex:page>

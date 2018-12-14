@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allocate_over_limit</fullName>
+    <active>true</active>
+    <errorConditionFormula>Allocation__c &gt; 1.00</errorConditionFormula>
+    <errorDisplayField>Allocation__c</errorDisplayField>
+    <errorMessage>Allocation percent should not exceed 100%</errorMessage>
+</ValidationRule>

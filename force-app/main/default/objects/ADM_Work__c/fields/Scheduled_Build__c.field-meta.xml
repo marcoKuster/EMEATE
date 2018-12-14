@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduled_Build__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <inlineHelpText>The Scheduled Build field is a lookup to the Build object.  Enter a pre-existing build where the change will be made.</inlineHelpText>
+    <label>Scheduled Build</label>
+    <referenceTo>ADM_Build__c</referenceTo>
+    <relationshipLabel>Work (Scheduled Build)</relationshipLabel>
+    <relationshipName>Scheduled_Build</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

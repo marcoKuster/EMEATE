@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Field_TE</fullName>
+    <columns>Subject__c</columns>
+    <columns>Account__c</columns>
+    <columns>Product_Tag__c</columns>
+    <columns>Sprint_Name__c</columns>
+    <columns>Story_Points__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>ADM_Work__c.User_Story</value>
+    </filters>
+    <filters>
+        <field>Stage__c</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <label>Field Kanban</label>
+</ListView>

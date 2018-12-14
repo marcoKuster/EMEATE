@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>planned: the test will be executed some point in the future
+in progress: test has started, result is not ready yet
+passed: test executed and passed
+failed: test executed and failed
+blocked: test execution cannot progress until obstacles are removed</description>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Planned</fullName>
+                <color>#0B6FCE</color>
+                <default>true</default>
+                <label>Planned</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <color>#FFFF66</color>
+                <default>false</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Passed</fullName>
+                <color>#419249</color>
+                <default>false</default>
+                <label>Passed</label>
+            </value>
+            <value>
+                <fullName>Failed</fullName>
+                <color>#FF0000</color>
+                <default>false</default>
+                <label>Failed</label>
+            </value>
+            <value>
+                <fullName>Blocked</fullName>
+                <color>#FF6600</color>
+                <default>false</default>
+                <label>Blocked</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

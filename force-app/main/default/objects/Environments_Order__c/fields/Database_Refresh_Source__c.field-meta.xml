@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Database_Refresh_Source__c</fullName>
+    <description>what source image should be used for the refresh?</description>
+    <externalId>false</externalId>
+    <label>Database Refresh Source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Database_Refresh_Requested__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>something</fullName>
+                <default>false</default>
+                <label>something</label>
+            </value>
+            <value>
+                <fullName>something else</fullName>
+                <default>false</default>
+                <label>something else</label>
+            </value>
+            <value>
+                <fullName>something else NA5</fullName>
+                <default>false</default>
+                <label>something else NA5</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>something</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>something else</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>something else NA5</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
